@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.DS_Store
+sanity/.DS_Store
+sanity/lib/.DS_Store
+sanity/schemaTypes/.DS_Store
+.env
+.env.local
+.vercel/
+node_modules/
