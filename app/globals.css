@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   THE COMMENTATOR — 2025 EDITORIAL SYSTEM
+   ========================================================= */
+
+:root {
+  color-scheme: dark;
+  --bg: #0B0D10;
+  --text: #E6E9EE;
+  --muted: #9AA1AB;
+  --rule: rgba(230, 233, 238, 0.12);
+  --accent: #7DA2FF;
+  --copper: #C67C4E;
+  --radius: 0px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  line-height: 1.6;
+  position: relative;
+  font-kerning: normal;
+}
+
+/* =========================================================
+   ATMOSPHERIC BACKGROUND
+   ========================================================= */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.03) 0%,
+      rgba(198,124,78,0.08) 22%,
+      rgba(11,13,16,0.0) 55%,
+      rgba(125,162,255,0.05) 82%,
+      rgba(11,13,16,0.0) 100%
+    ),
+    radial-gradient(
+      2200px 1500px at 12% 10%,
+      rgba(198,124,78,0.16),
+      rgba(11,13,16,0.0) 70%
+    ),
+    radial-gradient(
+      2100px 1400px at 90% 14%,
+      rgba(198,124,78,0.12),
+      rgba(11,13,16,0.0) 68%
+    ),
+    radial-gradient(
+      2400px 1500px at 50% 96%,
+      rgba(198,124,78,0.08),
+      rgba(11,13,16,0.0) 62%
+    ),
+    radial-gradient(
+      1600px 1100px at 58% 58%,
+      rgba(125,162,255,0.10),
+      rgba(11,13,16,0.0) 60%
+    ),
+    radial-gradient(
+      2000px 1600px at 50% 100%,
+      rgba(0,0,0,0.62),
+      rgba(11,13,16,0.0) 56%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.04),
+      rgba(255,255,255,0.04) 1px,
+      rgba(0,0,0,0.0) 2px,
+      rgba(0,0,0,0.0) 4px
+    );
+}
+
+#__next,
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  color: var(--text);
+}
+
+/* =========================================================
+   BASE PROSE
+   ========================================================= */
+
+.prose {
+  font-size: 17px;
+  line-height: 1.85;
+  letter-spacing: 0.0035em;
+}
+
+@media (min-width: 768px) {
+  .prose {
+    font-size: 18px;
+  }
+}
+
+.prose p {
+  margin: 0 0 1.05em 0;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   DROP CAP — DEFAULT (Commentary + About + Freedom Reloaded + Contact)
+   ========================================================= */
+
+.prose p:first-of-type::first-letter {
+  float: left;
+  font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+  font-weight: 500;
+  font-size: 3.9em;
+  line-height: 0.88;
+  padding-right: 0.04em;
+  margin-right: -0.01em;
+  padding-top: 0.02em;
+  color: rgba(230, 233, 238, 0.80);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+}
+
+/* =========================================================
+   DROP CAP OVERRIDE — allow opting out per-page (e.g., News)
+   ========================================================= */
+
+.no-dropcap.prose p:first-of-type::first-letter,
+.no-dropcap .prose p:first-of-type::first-letter {
+  float: none !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  text-shadow: none !important;
+}
+
+/* =========================================================
+   NEWS — PREMIUM, UNIFORM BODY (NO DROP CAP)
+   ========================================================= */
+
+.news .prose {
+  font-size: 16.5px;
+  line-height: 1.72;
+  letter-spacing: 0.0015em;
+}
+
+@media (min-width: 768px) {
+  .news .prose {
+    font-size: 17px;
+  }
+}
+
+.news .prose p {
+  margin: 0 0 0.9em 0;
+}
+
+/* Explicitly disable drop cap in News */
+.news .prose p:first-of-type::first-letter {
+  float: none;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-shadow: none;
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.prose a {
+  color: var(--copper);
+  border-bottom: 1px solid transparent;
+}
+
+.prose a:hover {
+  border-bottom-color: var(--copper);
+}
+
+/* =========================================================
+   RULES
+   ========================================================= */
+
+hr {
+  border-top: 1px solid var(--rule);
+}
+
+.thread {
+  height: 1px;
+  background: var(--rule);
+}
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+  border-radius: var(--radius) !important;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgba(198,124,78,0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   FOOTER — COMPACT, NO PURPLE, NO HARD BORDER
+   ========================================================= */
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+
+  /* Slightly lighter than body, but FULLY OPAQUE to stop gradient bleed */
+  background: #111418;
+
+  /* No hard border line */
+  border-top: none;
+
+  /* Cut the depth (compact) */
+  padding: 14px 0;
+}
+
+.site-footer-inner {
+  max-width: 72rem; /* 6xl */
+  padding: 0 24px;
+  margin: 0 auto;
+
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+
+  /* Opacity target: 38% */
+  color: rgba(230, 233, 238, 0.38);
+}
