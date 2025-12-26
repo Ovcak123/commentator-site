@@ -6,23 +6,28 @@ export default function Header() {
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
       {/* Top band: masthead */}
       <div className="border-b border-white/5">
-        {/* +16px total header depth preserved */}
         <div className="mx-auto flex max-w-6xl items-center px-6 py-11 sm:py-12">
           <Link
             href="/"
             aria-label="Go to homepage"
             className="group block no-underline hover:no-underline focus:outline-none"
           >
-            {/* Title line — logo sits on SAME LINE as “THE” */}
+            {/* Title line — mobile stays ONE LINE; desktop unchanged */}
             <span
-              className="block text-[28px] font-bold tracking-[0.22em] transition-colors duration-200 group-hover:text-white sm:text-[32px]"
+              className={[
+                "block font-bold transition-colors duration-200 group-hover:text-white",
+                // Mobile: slightly smaller + less tracking + no wrap
+                "text-[26px] tracking-[0.14em] whitespace-nowrap",
+                // Desktop: your original feel
+                "sm:text-[32px] sm:tracking-[0.22em]",
+              ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
             >
               <img
                 src="/commentator-mark.png"
                 alt=""
                 aria-hidden="true"
-                className="inline-block -ml-[2px] mr-4 opacity-[0.62]"
+                className="inline-block opacity-[0.62] -ml-[2px] mr-3 sm:mr-4"
                 style={{
                   width: "32px",
                   height: "32px",
@@ -32,12 +37,23 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle — subtly brightened, alignment preserved */}
+            {/* Subtitle — Option A: mobile is normal left-aligned; desktop keeps your aligned version */}
             <span
-              className="mt-1 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE]"
+              className="mt-1 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
               style={{
                 color: "#D6DAE1",
-                paddingLeft: "calc(46px + 0.22em)",
+                textDecoration: "none",
+                borderBottom: "none",
+              }}
+            >
+              Freedom in the Age of AI. An OPMM by Robin Shepherd
+            </span>
+
+            <span
+              className="mt-1 hidden text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
+              style={{
+                color: "#D6DAE1",
+                paddingLeft: "calc(46px + 0.22em)", // your original desktop alignment
                 textDecoration: "none",
                 borderBottom: "none",
               }}
@@ -54,9 +70,9 @@ export default function Header() {
       <nav
         className={[
           "mx-auto max-w-6xl px-6 py-4 text-[10px] font-semibold uppercase text-[#9AA1AB]",
-          // Mobile: keep to ONE line. Reduce tracking a bit so it fits on iPhone.
+          // Mobile: one line; reduced tracking already applied
           "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
-          // Desktop: preserve original tracking and spacing feel.
+          // Desktop: preserve original feel
           "sm:gap-8 sm:tracking-[0.24em]",
         ].join(" ")}
         aria-label="Primary navigation"
