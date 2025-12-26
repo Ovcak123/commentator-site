@@ -53,11 +53,11 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#9AA1AB]",
-          // Mobile: single line, never wrap. If the screen is extremely tight, allow horizontal scroll rather than wrapping.
-          "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap",
-          // Desktop: preserve your original spacing/feel
-          "sm:gap-8",
+          "mx-auto max-w-6xl px-6 py-4 text-[10px] font-semibold uppercase text-[#9AA1AB]",
+          // Mobile: keep to ONE line. Reduce tracking a bit so it fits on iPhone.
+          "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
+          // Desktop: preserve original tracking and spacing feel.
+          "sm:gap-8 sm:tracking-[0.24em]",
         ].join(" ")}
         aria-label="Primary navigation"
       >
