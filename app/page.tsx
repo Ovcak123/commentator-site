@@ -225,7 +225,7 @@ function DoubleBlueRules() {
 /* Mobile-only mode indicator: COMMENTARY (active) · NEWS POINT (jump) */
 function MobileModeLine() {
   return (
-    <div className="lg:hidden -mt-4">
+    <div className="lg:hidden">
       <div className="inline-flex items-center gap-3">
         {/* Active mode: Commentary */}
         <span className="inline-block">
@@ -394,11 +394,14 @@ export default async function HomePage() {
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
+      <div className="mx-auto max-w-6xl px-6 py-8 lg:py-10">
+        <div className="grid grid-cols-1 gap-12 lg:gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
-          <section className="space-y-10">
-            <SectionHeader title="Commentary" />
+          <section className="space-y-8 lg:space-y-10">
+            {/* Desktop header stays exactly as before; mobile uses the mode line instead */}
+            <div className="hidden lg:block">
+              <SectionHeader title="Commentary" />
+            </div>
 
             {/* MOBILE-ONLY: Commentary (active) · News Point (jump) */}
             <MobileModeLine />
@@ -502,10 +505,11 @@ export default async function HomePage() {
 
               {/* MOBILE-ONLY: News Point inserted here (after hero + two commentaries) */}
               <div id="news-point-mobile" className="sm:col-span-2 lg:hidden">
-                <div className="space-y-5">
+                {/* tightened: reduce padding above first rules and below last rules */}
+                <div className="space-y-3">
                   <DoubleBlueRules />
 
-                  <div className="space-y-5 pt-2">
+                  <div className="space-y-4 pt-1">
                     <SectionHeader title="News Point" />
                     <NewsList items={newsItems} compact />
                   </div>
