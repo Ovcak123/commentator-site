@@ -15,14 +15,14 @@ export default function Header() {
           >
             {/* Title line — logo sits on SAME LINE as “THE” */}
             <span
-              className="block text-[28px] font-bold tracking-[0.22em] sm:text-[32px] transition-colors duration-200 group-hover:text-white"
+              className="block text-[28px] font-bold tracking-[0.22em] transition-colors duration-200 group-hover:text-white sm:text-[32px]"
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
             >
               <img
                 src="/commentator-mark.png"
                 alt=""
                 aria-hidden="true"
-                className="inline-block opacity-[0.62] -ml-[2px] mr-4"
+                className="inline-block -ml-[2px] mr-4 opacity-[0.62]"
                 style={{
                   width: "32px",
                   height: "32px",
@@ -36,8 +36,8 @@ export default function Header() {
             <span
               className="mt-1 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE]"
               style={{
-                color: "#D6DAE1", // subtle brightness lift
-                paddingLeft: "calc(46px + 0.22em)", // alignment preserved
+                color: "#D6DAE1",
+                paddingLeft: "calc(46px + 0.22em)",
                 textDecoration: "none",
                 borderBottom: "none",
               }}
@@ -51,19 +51,27 @@ export default function Header() {
       </div>
 
       {/* Nav band */}
-      <nav className="mx-auto flex max-w-6xl flex-wrap gap-8 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#9AA1AB]">
-        <Link href="/" className="no-underline hover:no-underline hover:text-[#E6E9EE]">
-          Home
-        </Link>
+      <nav
+        className={[
+          "mx-auto max-w-6xl px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#9AA1AB]",
+          // Mobile: single line, never wrap. If the screen is extremely tight, allow horizontal scroll rather than wrapping.
+          "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap",
+          // Desktop: preserve your original spacing/feel
+          "sm:gap-8",
+        ].join(" ")}
+        aria-label="Primary navigation"
+      >
         <Link href="/about" className="no-underline hover:no-underline hover:text-[#E6E9EE]">
           About
         </Link>
+
         <Link
           href="/freedom-reloaded"
           className="no-underline hover:no-underline hover:text-[#E6E9EE]"
         >
           Freedom Reloaded
         </Link>
+
         <Link href="/contact" className="no-underline hover:no-underline hover:text-[#E6E9EE]">
           Contact
         </Link>
