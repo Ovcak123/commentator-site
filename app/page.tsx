@@ -196,10 +196,10 @@ function HoverAccent() {
   );
 }
 
-/* NEWS-specific accent: permanent but softened */
+/* NEWS-specific accent: permanent but softened (mobile tightened only) */
 function NewsAccent() {
   return (
-    <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-[#C67C4E]/25 transition-colors group-hover:bg-[#C67C4E]/90" />
+    <span className="pointer-events-none absolute -left-3 top-1.5 bottom-1.5 sm:top-2 sm:bottom-2 w-px bg-[#C67C4E]/25 transition-colors group-hover:bg-[#C67C4E]/90" />
   );
 }
 
@@ -266,13 +266,15 @@ function NewsList({
   maxItems?: number;
 }) {
   return (
-    <ul className="space-y-3">
+    // MOBILE tighter; desktop unchanged
+    <ul className="space-y-2 sm:space-y-3">
       {items.slice(0, maxItems).map((n) => (
         <li key={n.id} className="group relative overflow-visible">
           <NewsAccent />
           <Link
             href={n.slug ? `/news/${n.slug}` : "#"}
-            className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            // MOBILE tighter; desktop unchanged
+            className="block py-1.5 sm:py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
           >
             <span
               className="font-semibold"
