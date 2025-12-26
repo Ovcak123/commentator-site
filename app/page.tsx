@@ -226,23 +226,28 @@ function DoubleBlueRules() {
 function MobileModeLine() {
   return (
     <div className="lg:hidden">
-      <div className="inline-flex items-center gap-3">
-        {/* Active mode: Commentary */}
-        <span className="inline-block">
+      {/* Use identical vertical structure for both labels to guarantee baseline alignment */}
+      <div className="inline-flex items-end gap-3">
+        {/* Active: Commentary */}
+        <span className="inline-flex flex-col leading-none">
           <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
             Commentary
           </span>
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
         </span>
 
-        <span className="text-white/35">·</span>
+        <span className="text-white/35 leading-none">·</span>
 
-        {/* Inactive but clickable: News Point */}
+        {/* Inactive but clickable: News Point (with invisible underline spacer for perfect alignment) */}
         <a
           href="#news-point-mobile"
-          className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9AA1AB] no-underline hover:no-underline hover:text-[#E6E9EE] transition-colors duration-150"
+          className="inline-flex flex-col leading-none no-underline hover:no-underline"
         >
-          News Point
+          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9AA1AB] transition-colors duration-150 hover:text-[#E6E9EE]">
+            News Point
+          </span>
+          {/* spacer underline to match Commentary’s underline height */}
+          <span className="mt-2 block h-[2px] w-full bg-transparent" />
         </a>
       </div>
     </div>
@@ -394,10 +399,11 @@ export default async function HomePage() {
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      <div className="mx-auto max-w-6xl px-6 py-8 lg:py-10">
+      {/* Mobile: reduce top padding (cuts nav→mode-line gap); Desktop unchanged */}
+      <div className="mx-auto max-w-6xl px-6 py-6 lg:py-10">
         <div className="grid grid-cols-1 gap-12 lg:gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
-          <section className="space-y-8 lg:space-y-10">
+          <section className="space-y-6 lg:space-y-10">
             {/* Desktop header stays exactly as before; mobile uses the mode line instead */}
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
@@ -504,12 +510,16 @@ export default async function HomePage() {
               ))}
 
               {/* MOBILE-ONLY: News Point inserted here (after hero + two commentaries) */}
-              <div id="news-point-mobile" className="sm:col-span-2 lg:hidden">
-                {/* tightened: reduce padding above first rules and below last rules */}
-                <div className="space-y-3">
+              {/* Key fix: counteract the grid row-gap above/below this block (mobile only) */}
+              <div
+                id="news-point-mobile"
+                className="sm:col-span-2 lg:hidden -my-7"
+              >
+                <div className="space-y-2">
                   <DoubleBlueRules />
 
-                  <div className="space-y-4 pt-1">
+                  {/* Tighten inner spacing as well */}
+                  <div className="space-y-4 pt-0">
                     <SectionHeader title="News Point" />
                     <NewsList items={newsItems} compact />
                   </div>
