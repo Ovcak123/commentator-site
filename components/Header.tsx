@@ -10,8 +10,8 @@ export default function Header() {
           className={[
             "mx-auto flex max-w-6xl items-center px-6 py-7",
             "sm:py-12",
-            // Mobile-only optical nudge to pull masthead away from right edge
-            "-mr-1 sm:mr-0",
+            // Give mobile a little extra right breathing room
+            "pr-8 sm:pr-6",
           ].join(" ")}
         >
           <Link
@@ -19,11 +19,12 @@ export default function Header() {
             aria-label="Go to homepage"
             className="group block no-underline hover:no-underline focus:outline-none"
           >
-            {/* Title line — mobile stays ONE LINE; desktop unchanged */}
+            {/* Title line — mobile stays ONE LINE; tuned so it doesn't crash into right edge */}
             <span
               className={[
                 "block font-bold transition-colors duration-200 group-hover:text-white",
-                "text-[26px] tracking-[0.14em] whitespace-nowrap",
+                // Slightly smaller + tighter tracking on mobile to prevent right-edge clipping
+                "text-[25px] tracking-[0.12em] whitespace-nowrap",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
