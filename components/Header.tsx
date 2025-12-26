@@ -6,7 +6,7 @@ export default function Header() {
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
       {/* Top band: masthead */}
       <div className="border-b border-white/5">
-        <div className="mx-auto flex max-w-6xl items-center px-6 py-8 sm:py-12">
+        <div className="mx-auto flex max-w-6xl items-center px-6 py-7 sm:py-12">
           <Link
             href="/"
             aria-label="Go to homepage"
@@ -35,7 +35,7 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle — Option A: mobile is normal left-aligned; desktop keeps your aligned version */}
+            {/* Subtitle — mobile left-aligned; desktop keeps aligned version */}
             <span
               className="mt-0.5 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
               style={{
@@ -67,7 +67,7 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 py-3 text-[10px] font-semibold uppercase text-[#9AA1AB]",
+          "mx-auto max-w-6xl px-6 py-2.5 text-[10px] font-semibold uppercase text-[#9AA1AB]",
           "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
           "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
         ].join(" ")}
