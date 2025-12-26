@@ -6,7 +6,14 @@ export default function Header() {
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
       {/* Top band: masthead */}
       <div className="border-b border-white/5">
-        <div className="mx-auto flex max-w-6xl items-center px-6 py-7 sm:py-12">
+        <div
+          className={[
+            "mx-auto flex max-w-6xl items-center px-6 py-7",
+            "sm:py-12",
+            // Mobile-only optical nudge to pull masthead away from right edge
+            "-mr-1 sm:mr-0",
+          ].join(" ")}
+        >
           <Link
             href="/"
             aria-label="Go to homepage"
@@ -73,7 +80,10 @@ export default function Header() {
         ].join(" ")}
         aria-label="Primary navigation"
       >
-        <Link href="/about" className="no-underline hover:no-underline hover:text-[#E6E9EE]">
+        <Link
+          href="/about"
+          className="no-underline hover:no-underline hover:text-[#E6E9EE]"
+        >
           About
         </Link>
 
@@ -84,7 +94,10 @@ export default function Header() {
           Freedom Reloaded
         </Link>
 
-        <Link href="/contact" className="no-underline hover:no-underline hover:text-[#E6E9EE]">
+        <Link
+          href="/contact"
+          className="no-underline hover:no-underline hover:text-[#E6E9EE]"
+        >
           Contact
         </Link>
       </nav>
