@@ -8,23 +8,23 @@ export default function Header() {
       <div className="border-b border-white/5">
         <div
           className={[
-            "mx-auto flex max-w-6xl items-center px-6 py-7",
-            "sm:py-12",
-            // Give mobile a little extra right breathing room
-            "pr-8 sm:pr-6",
+            "mx-auto flex max-w-6xl items-center",
+            // Stronger mobile breathing room to prevent right-edge collision
+            "px-5 pr-12 py-7",
+            "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
           <Link
             href="/"
             aria-label="Go to homepage"
-            className="group block no-underline hover:no-underline focus:outline-none"
+            className="group block max-w-full no-underline hover:no-underline focus:outline-none"
           >
-            {/* Title line — mobile stays ONE LINE; tuned so it doesn't crash into right edge */}
+            {/* Title line — MUST stay one line; force-fit on mobile */}
             <span
               className={[
-                "block font-bold transition-colors duration-200 group-hover:text-white",
-                // Slightly smaller + tighter tracking on mobile to prevent right-edge clipping
-                "text-[25px] tracking-[0.12em] whitespace-nowrap",
+                "block max-w-full font-bold transition-colors duration-200 group-hover:text-white",
+                // Force-fit on iPhone: smaller + tighter tracking
+                "text-[24px] tracking-[0.10em] whitespace-nowrap",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
