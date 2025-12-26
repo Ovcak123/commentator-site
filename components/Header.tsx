@@ -6,7 +6,7 @@ export default function Header() {
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
       {/* Top band: masthead */}
       <div className="border-b border-white/5">
-        <div className="mx-auto flex max-w-6xl items-center px-6 py-11 sm:py-12">
+        <div className="mx-auto flex max-w-6xl items-center px-6 py-8 sm:py-12">
           <Link
             href="/"
             aria-label="Go to homepage"
@@ -16,9 +16,7 @@ export default function Header() {
             <span
               className={[
                 "block font-bold transition-colors duration-200 group-hover:text-white",
-                // Mobile: slightly smaller + less tracking + no wrap
                 "text-[26px] tracking-[0.14em] whitespace-nowrap",
-                // Desktop: your original feel
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
@@ -39,7 +37,7 @@ export default function Header() {
 
             {/* Subtitle — Option A: mobile is normal left-aligned; desktop keeps your aligned version */}
             <span
-              className="mt-1 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
+              className="mt-0.5 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
               style={{
                 color: "#D6DAE1",
                 textDecoration: "none",
@@ -53,7 +51,7 @@ export default function Header() {
               className="mt-1 hidden text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
               style={{
                 color: "#D6DAE1",
-                paddingLeft: "calc(46px + 0.22em)", // your original desktop alignment
+                paddingLeft: "calc(46px + 0.22em)",
                 textDecoration: "none",
                 borderBottom: "none",
               }}
@@ -69,11 +67,9 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 py-4 text-[10px] font-semibold uppercase text-[#9AA1AB]",
-          // Mobile: one line; reduced tracking already applied
+          "mx-auto max-w-6xl px-6 py-3 text-[10px] font-semibold uppercase text-[#9AA1AB]",
           "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
-          // Desktop: preserve original feel
-          "sm:gap-8 sm:tracking-[0.24em]",
+          "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
         ].join(" ")}
         aria-label="Primary navigation"
       >
