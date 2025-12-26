@@ -183,8 +183,6 @@ function SectionHeader({ title }: { title: string }) {
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
         </div>
       </div>
-
-      {/* Removed the full-width grey divider to reduce busyness */}
     </div>
   );
 }
@@ -196,10 +194,10 @@ function HoverAccent() {
   );
 }
 
-/* NEWS-specific accent: permanent but softened (mobile tightened only) */
+/* NEWS-specific accent: permanent but softened */
 function NewsAccent() {
   return (
-    <span className="pointer-events-none absolute -left-3 top-1.5 bottom-1.5 sm:top-2 sm:bottom-2 w-px bg-[#C67C4E]/25 transition-colors group-hover:bg-[#C67C4E]/90" />
+    <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-[#C67C4E]/25 transition-colors group-hover:bg-[#C67C4E]/90" />
   );
 }
 
@@ -213,6 +211,42 @@ function FeaturedAccent() {
 function inlineMeta(item: ExternalReadItem): string {
   const bits = [item.author, item.source].filter(Boolean) as string[];
   return bits.join(", ");
+}
+
+function DoubleBlueRules() {
+  return (
+    <div className="space-y-1">
+      <div className="h-px w-full bg-[#7DA2FF]/25" />
+      <div className="h-px w-full bg-[#7DA2FF]/25" />
+    </div>
+  );
+}
+
+/* Mobile-only mode indicator: COMMENTARY (active) · NEWS POINT (jump) */
+function MobileModeLine() {
+  return (
+    <div className="lg:hidden -mt-4">
+      <div className="inline-flex items-center gap-3">
+        {/* Active mode: Commentary */}
+        <span className="inline-block">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
+            Commentary
+          </span>
+          <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
+        </span>
+
+        <span className="text-white/35">·</span>
+
+        {/* Inactive but clickable: News Point */}
+        <a
+          href="#news-point-mobile"
+          className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9AA1AB] no-underline hover:no-underline hover:text-[#E6E9EE] transition-colors duration-150"
+        >
+          News Point
+        </a>
+      </div>
+    </div>
+  );
 }
 
 /* ---------- lists ---------- */
@@ -261,20 +295,23 @@ function AggregatorList({
 function NewsList({
   items,
   maxItems = 6,
+  compact = false,
 }: {
   items: NewsItem[];
   maxItems?: number;
+  compact?: boolean;
 }) {
   return (
-    // MOBILE tighter; desktop unchanged
-    <ul className="space-y-2 sm:space-y-3">
+    <ul className={compact ? "space-y-2" : "space-y-3"}>
       {items.slice(0, maxItems).map((n) => (
         <li key={n.id} className="group relative overflow-visible">
           <NewsAccent />
           <Link
             href={n.slug ? `/news/${n.slug}` : "#"}
-            // MOBILE tighter; desktop unchanged
-            className="block py-1.5 sm:py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            className={[
+              "block text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white",
+              compact ? "py-1.5" : "py-2",
+            ].join(" ")}
           >
             <span
               className="font-semibold"
@@ -344,7 +381,12 @@ export default async function HomePage() {
     await getHomeData();
 
   const lead = commentaryPosts[0];
+
+  // Featured cards (desktop: 6; mobile insertion after first 2)
   const featuredCards = commentaryPosts.slice(1, 7);
+  const featuredFirstTwo = featuredCards.slice(0, 2);
+  const featuredRest = featuredCards.slice(2);
+
   const listStartIndex = 7;
   const commentaryStream = commentaryPosts.slice(listStartIndex);
 
@@ -357,6 +399,9 @@ export default async function HomePage() {
           {/* LEFT */}
           <section className="space-y-10">
             <SectionHeader title="Commentary" />
+
+            {/* MOBILE-ONLY: Commentary (active) · News Point (jump) */}
+            <MobileModeLine />
 
             {lead && lead.slug && (
               <article className="space-y-5">
@@ -395,9 +440,10 @@ export default async function HomePage() {
               </article>
             )}
 
-            {/* 6 featured cards (3x2) */}
+            {/* FEATURED: desktop stays 3x2; mobile we insert News Point after first two cards */}
             <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
-              {featuredCards.map((p) => (
+              {/* First two featured cards */}
+              {featuredFirstTwo.map((p) => (
                 <article key={p.id} className="space-y-6">
                   <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
                     {p.heroImageUrl && (
@@ -416,7 +462,78 @@ export default async function HomePage() {
                       className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                     >
                       <FeaturedAccent />
+                      <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
+                        {p.title}
+                      </h4>
 
+                      {p.excerpt ? (
+                        <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                          {p.excerpt}
+                        </p>
+                      ) : null}
+
+                      {p.author ? (
+                        <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                          {p.author}
+                        </p>
+                      ) : null}
+                    </Link>
+                  ) : (
+                    <>
+                      <h4 className="text-[18px] font-semibold leading-tight text-white/92">
+                        {p.title}
+                      </h4>
+
+                      {p.excerpt ? (
+                        <p className="text-[13.5px] leading-relaxed text-white/62">
+                          {p.excerpt}
+                        </p>
+                      ) : null}
+
+                      {p.author ? (
+                        <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                          {p.author}
+                        </p>
+                      ) : null}
+                    </>
+                  )}
+                </article>
+              ))}
+
+              {/* MOBILE-ONLY: News Point inserted here (after hero + two commentaries) */}
+              <div id="news-point-mobile" className="sm:col-span-2 lg:hidden">
+                <div className="space-y-5">
+                  <DoubleBlueRules />
+
+                  <div className="space-y-5 pt-2">
+                    <SectionHeader title="News Point" />
+                    <NewsList items={newsItems} compact />
+                  </div>
+
+                  <DoubleBlueRules />
+                </div>
+              </div>
+
+              {/* Remaining featured cards */}
+              {featuredRest.map((p) => (
+                <article key={p.id} className="space-y-6">
+                  <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                    {p.heroImageUrl && (
+                      <img
+                        src={p.heroImageUrl}
+                        alt={p.title}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+
+                  {p.slug ? (
+                    <Link
+                      href={`/posts/${p.slug}`}
+                      className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                    >
+                      <FeaturedAccent />
                       <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                         {p.title}
                       </h4>
@@ -470,10 +587,35 @@ export default async function HomePage() {
                 </Link>
               </div>
             </div>
+
+            {/* MOBILE-ONLY: below commentary, the rest in desired order */}
+            <div className="space-y-14 lg:hidden pt-6">
+              <section className="space-y-6">
+                <SectionHeader title="Most Read" />
+                <AggregatorList
+                  items={mostRead.map((m) => ({
+                    id: m.id,
+                    title: m.title,
+                    href: m.href,
+                  }))}
+                  maxItems={5}
+                />
+              </section>
+
+              <section className="space-y-6">
+                <SectionHeader title="Feed Read" />
+                <AggregatorList items={feedRead} maxItems={8} />
+              </section>
+
+              <section className="space-y-6">
+                <SectionHeader title="Strategic Insights" />
+                <AggregatorList items={strategicInsights} maxItems={5} />
+              </section>
+            </div>
           </section>
 
-          {/* RIGHT */}
-          <aside className="space-y-14">
+          {/* RIGHT (desktop/laptop only — unchanged) */}
+          <aside className="hidden lg:block space-y-14">
             <section className="space-y-6">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
