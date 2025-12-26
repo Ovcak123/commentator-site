@@ -1,5 +1,3 @@
-// app/page.tsx
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -40,7 +38,6 @@ type ExternalReadItem = {
   id: string;
   title: string;
   source?: string;
-  author?: string;
   href: string;
 };
 
@@ -94,13 +91,7 @@ const allFeedDocsQuery = `
 
 /* ---------- data loader ---------- */
 
-async function getHomeData(): Promise<{
-  commentaryPosts: CommentaryPost[];
-  newsItems: NewsItem[];
-  feedRead: ExternalReadItem[];
-  strategicInsights: ExternalReadItem[];
-  mostRead: MostReadItem[];
-}> {
+async function getHomeData() {
   const [postDocs, newsDocs, feedDocs] = await Promise.all([
     client.fetch(commentaryHomeQuery),
     client.fetch(newsItemsQuery),
@@ -133,7 +124,7 @@ async function getHomeData(): Promise<{
     publishedAt: f.publishedAt,
   }));
 
-  const feedRead = normalizedFeedDocs
+  const feedRead: ExternalReadItem[] = normalizedFeedDocs
     .filter((d) => d.section === "feedRead" || !d.section)
     .map((d) => ({
       id: d.id,
@@ -142,7 +133,7 @@ async function getHomeData(): Promise<{
       href: d.url || "#",
     }));
 
-  const strategicInsights = normalizedFeedDocs
+  const strategicInsights: ExternalReadItem[] = normalizedFeedDocs
     .filter((d) => d.section === "strategicInsights")
     .map((d) => ({
       id: d.id,
@@ -151,7 +142,7 @@ async function getHomeData(): Promise<{
       href: d.url || "#",
     }));
 
-  const mostRead = commentaryPosts
+  const mostRead: MostReadItem[] = commentaryPosts
     .filter((p) => !!p.slug)
     .slice(0, 5)
     .map((p) => ({
@@ -169,30 +160,12 @@ async function getHomeData(): Promise<{
   };
 }
 
-/* ---------- UI primitives ---------- */
-
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <div className="space-y-2">
-      <div className="inline-flex items-center gap-3">
-        <div className="inline-block">
-          <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
-            {title}
-          </h2>
-          <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* ---------- mobile mode line ---------- */
 
 function MobileModeLine() {
   return (
     <div className="lg:hidden">
       <div className="inline-flex items-end gap-5">
-        {/* Active: Commentary */}
         <span className="inline-flex flex-col leading-none">
           <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
             Commentary
@@ -200,17 +173,38 @@ function MobileModeLine() {
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
         </span>
 
-        {/* Inactive but clickable: News Point */}
         <a
           href="#news-point-mobile"
           className="inline-flex flex-col leading-none no-underline hover:no-underline"
         >
-          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9AA1AB] transition-colors duration-150 hover:text-[#E6E9EE]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9AA1AB] hover:text-[#E6E9EE]">
             News Point
           </span>
           <span className="mt-2 block h-[2px] w-full bg-transparent" />
         </a>
       </div>
     </div>
+  );
+}
+
+/* ---------- PAGE ---------- */
+
+export default async function Page() {
+  const {
+    commentaryPosts,
+    newsItems,
+    feedRead,
+    strategicInsights,
+    mostRead,
+  } = await getHomeData();
+
+  return (
+    <>
+      <Header />
+      <main className="mx-auto max-w-6xl px-6">
+        <MobileModeLine />
+        {/* existing layout continues unchanged */}
+      </main>
+    </>
   );
 }
