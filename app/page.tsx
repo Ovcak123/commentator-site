@@ -388,7 +388,7 @@ export default async function HomePage() {
 
       <div className="mx-auto max-w-6xl px-6 py-10">
         {/* Mobile-only mode line (COMMENTARY | NEWS POINT scroll) */}
-        <div className="pb-8">
+        <div className="pb-5">
           <MobileModeLine />
         </div>
 
@@ -509,7 +509,7 @@ export default async function HomePage() {
                         <NewsList items={newsItems} maxItems={6} />
                       </section>
 
-                      <div className="my-6">
+                      <div className="my-3">
                         <DoubleBlueRule />
                       </div>
                     </div>
