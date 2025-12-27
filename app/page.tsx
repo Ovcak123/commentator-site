@@ -183,8 +183,44 @@ function SectionHeader({ title }: { title: string }) {
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Removed the full-width grey divider to reduce busyness */}
+/* Mobile top line: COMMENTARY highlighted + NEWS POINT scroll link */
+function MobileModeLine() {
+  return (
+    <div className="lg:hidden">
+      <div className="inline-flex items-end gap-8">
+        {/* Commentary (active) */}
+        <span className="inline-flex flex-col leading-none">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
+            Commentary
+          </span>
+          <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
+        </span>
+
+        {/* News Point (scroll link) */}
+        <a
+          href="#news-point-mobile"
+          className="inline-flex flex-col leading-none no-underline hover:no-underline"
+        >
+          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-white/55 transition-colors duration-150 hover:text-[#E6E9EE]">
+            News Point
+          </span>
+          <span className="mt-2 block h-[2px] w-full bg-transparent" />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/* Two thin blue lines (used as separators around mobile News Point block) */
+function DoubleBlueRule() {
+  return (
+    <div className="space-y-2">
+      <div className="h-px w-full bg-[#3B82F6]/55" />
+      <div className="h-px w-full bg-[#3B82F6]/28" />
     </div>
   );
 }
@@ -351,10 +387,18 @@ export default async function HomePage() {
       <Header />
 
       <div className="mx-auto max-w-6xl px-6 py-10">
+        {/* Mobile-only mode line (COMMENTARY | NEWS POINT scroll) */}
+        <div className="pb-8">
+          <MobileModeLine />
+        </div>
+
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
           <section className="space-y-10">
-            {/* (Removed rogue SectionHeader here so the hero sits higher on mobile) */}
+            {/* Desktop-only section header (avoid the rogue extra header on mobile) */}
+            <div className="hidden lg:block">
+              <SectionHeader title="Commentary" />
+            </div>
 
             {lead && lead.slug && (
               <article className="space-y-5">
@@ -393,64 +437,84 @@ export default async function HomePage() {
               </article>
             )}
 
-            {/* 6 featured cards (3x2) */}
+            {/* Featured cards */}
             <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
-              {featuredCards.map((p) => (
-                <article key={p.id} className="space-y-6">
-                  <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                    {p.heroImageUrl && (
-                      <img
-                        src={p.heroImageUrl}
-                        alt={p.title}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                      />
+              {featuredCards.map((p, idx) => (
+                <div key={p.id} className="space-y-6">
+                  <article className="space-y-6">
+                    <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                      {p.heroImageUrl && (
+                        <img
+                          src={p.heroImageUrl}
+                          alt={p.title}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+
+                    {p.slug ? (
+                      <Link
+                        href={`/posts/${p.slug}`}
+                        className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                      >
+                        <FeaturedAccent />
+
+                        <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
+                          {p.title}
+                        </h4>
+
+                        {p.excerpt ? (
+                          <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                            {p.excerpt}
+                          </p>
+                        ) : null}
+
+                        {p.author ? (
+                          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                            {p.author}
+                          </p>
+                        ) : null}
+                      </Link>
+                    ) : (
+                      <>
+                        <h4 className="text-[18px] font-semibold leading-tight text-white/92">
+                          {p.title}
+                        </h4>
+
+                        {p.excerpt ? (
+                          <p className="text-[13.5px] leading-relaxed text-white/62">
+                            {p.excerpt}
+                          </p>
+                        ) : null}
+
+                        {p.author ? (
+                          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                            {p.author}
+                          </p>
+                        ) : null}
+                      </>
                     )}
-                  </div>
+                  </article>
 
-                  {p.slug ? (
-                    <Link
-                      href={`/posts/${p.slug}`}
-                      className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                    >
-                      <FeaturedAccent />
+                  {/* MOBILE: insert News Point AFTER the second card (hero counts as 1st item overall) */}
+                  {idx === 1 ? (
+                    <div className="lg:hidden">
+                      <div className="my-6">
+                        <DoubleBlueRule />
+                      </div>
 
-                      <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
-                        {p.title}
-                      </h4>
+                      <section id="news-point-mobile" className="space-y-6">
+                        <SectionHeader title="News Point" />
+                        <NewsList items={newsItems} maxItems={6} />
+                      </section>
 
-                      {p.excerpt ? (
-                        <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
-                          {p.excerpt}
-                        </p>
-                      ) : null}
-
-                      {p.author ? (
-                        <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                          {p.author}
-                        </p>
-                      ) : null}
-                    </Link>
-                  ) : (
-                    <>
-                      <h4 className="text-[18px] font-semibold leading-tight text-white/92">
-                        {p.title}
-                      </h4>
-
-                      {p.excerpt ? (
-                        <p className="text-[13.5px] leading-relaxed text-white/62">
-                          {p.excerpt}
-                        </p>
-                      ) : null}
-
-                      {p.author ? (
-                        <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
-                          {p.author}
-                        </p>
-                      ) : null}
-                    </>
-                  )}
-                </article>
+                      <div className="my-6">
+                        <DoubleBlueRule />
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               ))}
             </div>
 
@@ -470,9 +534,10 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* RIGHT */}
+          {/* RIGHT (desktop sidebar) */}
           <aside className="space-y-14">
-            <section className="space-y-6">
+            {/* Desktop-only News Point (mobile version is inserted into the left stream) */}
+            <section className="hidden lg:block space-y-6">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
             </section>
