@@ -388,15 +388,14 @@ export default async function HomePage() {
 
       <div className="mx-auto max-w-6xl px-6 py-10">
         {/* Mobile-only mode line (COMMENTARY | NEWS POINT scroll) */}
-        {/* Mobile tightened ~40%, desktop unchanged */}
-        <div className="pb-5 lg:pb-8">
+        {/* pb-8 -> pb-5 to cut ~40% of the space above the hero image on mobile */}
+        <div className="pb-5">
           <MobileModeLine />
         </div>
 
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
-          {/* Mobile tightened ~40%, desktop unchanged */}
-          <section className="space-y-6 lg:space-y-10">
+          <section className="space-y-10">
             {/* Desktop-only section header (avoid the rogue extra header on mobile) */}
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
@@ -501,9 +500,9 @@ export default async function HomePage() {
 
                   {/* MOBILE: insert News Point AFTER the second card (hero counts as 1st item overall) */}
                   {idx === 1 ? (
-                    <div className="lg:hidden">
-                      {/* Mobile: reduce gap ~50%, desktop unchanged */}
-                      <div className="my-3 lg:my-6">
+                    // -mb-7 pulls the next featured card up by ~28px on mobile
+                    <div className="lg:hidden -mb-7">
+                      <div className="my-4">
                         <DoubleBlueRule />
                       </div>
 
@@ -512,8 +511,7 @@ export default async function HomePage() {
                         <NewsList items={newsItems} maxItems={6} />
                       </section>
 
-                      {/* Mobile: reduce gap ~50%, desktop unchanged */}
-                      <div className="my-3 lg:my-6">
+                      <div className="my-4">
                         <DoubleBlueRule />
                       </div>
                     </div>
