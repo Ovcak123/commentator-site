@@ -189,32 +189,6 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-/* Mobile mode line: Commentary highlighted, News Point dim + scroll link */
-function MobileModeLine() {
-  return (
-    <div className="lg:hidden">
-      <div className="inline-flex items-end gap-5">
-        <span className="inline-flex flex-col leading-none">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
-            Commentary
-          </span>
-          <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
-        </span>
-
-        <a
-          href="#news-point-mobile"
-          className="inline-flex flex-col leading-none no-underline hover:no-underline"
-        >
-          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9AA1AB] hover:text-[#E6E9EE]">
-            News Point
-          </span>
-          <span className="mt-2 block h-[2px] w-full bg-transparent" />
-        </a>
-      </div>
-    </div>
-  );
-}
-
 /* hover-only accent (used everywhere else) */
 function HoverAccent() {
   return (
@@ -377,15 +351,10 @@ export default async function HomePage() {
       <Header />
 
       <div className="mx-auto max-w-6xl px-6 py-10">
-        {/* mobile-only mode line under header */}
-        <div className="pb-10">
-          <MobileModeLine />
-        </div>
-
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
           <section className="space-y-10">
-            <SectionHeader title="Commentary" />
+            {/* (Removed rogue SectionHeader here so the hero sits higher on mobile) */}
 
             {lead && lead.slug && (
               <article className="space-y-5">
@@ -503,7 +472,7 @@ export default async function HomePage() {
 
           {/* RIGHT */}
           <aside className="space-y-14">
-            <section className="space-y-6" id="news-point-mobile">
+            <section className="space-y-6">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
             </section>
