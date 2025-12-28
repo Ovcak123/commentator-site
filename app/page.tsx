@@ -502,7 +502,7 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              {/* MOBILE: News Point block BETWEEN the two grids (symmetrical top/bottom spacing) */}
+              {/* MOBILE: News Point block BETWEEN the two grids */}
               <div className="my-8">
                 <div className="my-4">
                   <DoubleBlueRule />
@@ -513,7 +513,8 @@ export default async function HomePage() {
                   <NewsList items={newsItems} maxItems={6} />
                 </section>
 
-                <div className="my-4">
+                {/* Only change: give the bottom rule a touch more breathing room */}
+                <div className="mt-6 mb-4">
                   <DoubleBlueRule />
                 </div>
               </div>
