@@ -387,6 +387,8 @@ export default async function HomePage() {
       <Header />
 
       <div className="mx-auto max-w-6xl px-6 py-10">
+        {/* Mobile-only mode line (COMMENTARY | NEWS POINT scroll) */}
+        {/* pb-8 -> pb-5 to cut ~40% of the space above the hero image on mobile */}
         <div className="pb-5">
           <MobileModeLine />
         </div>
@@ -394,6 +396,7 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
           <section className="space-y-10">
+            {/* Desktop-only section header (avoid the rogue extra header on mobile) */}
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
             </div>
@@ -497,19 +500,21 @@ export default async function HomePage() {
 
                   {/* MOBILE: insert News Point AFTER the second card (hero counts as 1st item overall) */}
                   {idx === 1 ? (
-                    <div className="lg:hidden">
-                      {/* Top blue rule — this spacing is the master */}
+                    // -mb-10 cancels most of the mobile grid gap (gap-y-14),
+                    // so bottom blue rule -> next image matches top blue rule spacing.
+                    <div className="lg:hidden -mb-10">
+                      {/* TOP blue rule — master spacing */}
                       <div className="my-4">
                         <DoubleBlueRule />
                       </div>
 
-                      {/* Make header->first item gap match last item->bottom blue rule gap */}
+                      {/* Use space-y-4 so header->list breathes without pushing the bottom */}
                       <section id="news-point-mobile" className="space-y-4">
                         <SectionHeader title="News Point" />
                         <NewsList items={newsItems} maxItems={6} />
                       </section>
 
-                      {/* Bottom blue rule — EXACT same spacing as top */}
+                      {/* BOTTOM blue rule — MUST match top (my-4) */}
                       <div className="my-4">
                         <DoubleBlueRule />
                       </div>
@@ -537,6 +542,7 @@ export default async function HomePage() {
 
           {/* RIGHT (desktop sidebar) */}
           <aside className="space-y-14">
+            {/* Desktop-only News Point (mobile version is inserted into the left stream) */}
             <section className="hidden lg:block space-y-6">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
