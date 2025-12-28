@@ -9,9 +9,9 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center",
-            // Mobile: drop masthead by ~10px for first-impression breathing room
-            // pt-7 (28px) -> pt-9 (36px) = +8px (very close to requested 10px, safer than +12px)
-            "px-5 pr-12 pt-9 pb-9",
+            // Mobile: top drop already locked; now micro-tighten subtitle → nav
+            // pb-9 → pb-8 = ~4px tighter
+            "px-5 pr-12 pt-9 pb-8",
             // Desktop unchanged
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
