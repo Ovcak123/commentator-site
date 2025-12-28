@@ -406,7 +406,7 @@ export default async function HomePage() {
             </div>
 
             {lead && lead.slug && (
-              <article className="space-y-5">
+              <article className="space-y-4 lg:space-y-5">
                 <div className="h-60 overflow-hidden bg-white/5 ring-1 ring-white/10">
                   {lead.heroImageUrl && (
                     <img
@@ -428,7 +428,7 @@ export default async function HomePage() {
                   </h3>
 
                   {lead.excerpt && (
-                    <p className="mt-4 text-[16px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                    <p className="mt-3 text-[16px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
                       {lead.excerpt}
                     </p>
                   )}
@@ -448,7 +448,7 @@ export default async function HomePage() {
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {firstTwoCards.map((p) => (
                   <div key={p.id} className="space-y-6">
-                    <article className="space-y-6">
+                    <article className="space-y-5 sm:space-y-6">
                       <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
                         {p.heroImageUrl && (
                           <img
@@ -472,7 +472,7 @@ export default async function HomePage() {
                           </h4>
 
                           {p.excerpt ? (
-                            <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                            <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
                               {p.excerpt}
                             </p>
                           ) : null}
@@ -532,7 +532,7 @@ export default async function HomePage() {
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {remainingCards.map((p) => (
                   <div key={p.id} className="space-y-6">
-                    <article className="space-y-6">
+                    <article className="space-y-5 sm:space-y-6">
                       <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
                         {p.heroImageUrl && (
                           <img
@@ -556,7 +556,7 @@ export default async function HomePage() {
                           </h4>
 
                           {p.excerpt ? (
-                            <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                            <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
                               {p.excerpt}
                             </p>
                           ) : null}
@@ -600,7 +600,7 @@ export default async function HomePage() {
               <div className="pt-1">
                 <Link
                   href="/commentary"
-                  className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/65 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
+                  className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
                 >
                   <span>More</span>
                   <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
