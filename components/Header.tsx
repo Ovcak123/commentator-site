@@ -9,9 +9,11 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center",
-            // Stronger mobile breathing room to prevent right-edge collision
-            // Mobile: add a touch more bottom air (identity resolves before nav)
-            "px-5 pr-12 pt-7 pb-9",
+            // DO NOT TOUCH: mobile left/right safety for THE COMMENTATOR fit
+            "px-5 pr-12",
+            // Add a touch more vertical breathing room (identity before nav)
+            "pt-8 pb-10",
+            // Desktop unchanged
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
@@ -24,7 +26,7 @@ export default function Header() {
             <span
               className={[
                 "block max-w-full font-bold transition-colors duration-200 group-hover:text-white",
-                // Force-fit on iPhone: smaller + tighter tracking
+                // DO NOT TOUCH: iPhone force-fit rules
                 "text-[24px] tracking-[0.10em] whitespace-nowrap",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
@@ -46,7 +48,7 @@ export default function Header() {
 
             {/* Subtitle — mobile left-aligned; desktop keeps aligned version */}
             <span
-              className="mt-0.5 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
+              className="mt-1 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
               style={{
                 color: "#D6DAE1",
                 textDecoration: "none",
@@ -57,7 +59,7 @@ export default function Header() {
             </span>
 
             <span
-              className="mt-1 hidden text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
+              className="mt-1.5 hidden text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
               style={{
                 color: "#D6DAE1",
                 paddingLeft: "calc(46px + 0.22em)",
@@ -76,7 +78,10 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 py-2.5 text-[10px] font-semibold uppercase text-[#9AA1AB]",
+          "mx-auto max-w-6xl px-6",
+          // Slightly more breathing room under masthead (mobile)
+          "pt-3 pb-3",
+          "text-[10px] font-semibold uppercase text-[#9AA1AB]",
           "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
           "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
         ].join(" ")}
