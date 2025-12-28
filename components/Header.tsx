@@ -1,6 +1,24 @@
 // components/Header.tsx
 import Link from "next/link";
 
+function SearchIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M16.5 16.5 21 21"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function Header() {
   return (
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
@@ -8,18 +26,16 @@ export default function Header() {
       <div className="border-b border-white/5">
         <div
           className={[
-            "mx-auto flex max-w-6xl items-center justify-between gap-4",
-            // Mobile: keep your current padding, but allow a right-side icon
-            "px-5 pr-5 pt-9 pb-8",
-            // Desktop unchanged
-            "sm:px-6 sm:pr-6 sm:py-12",
+            // IMPORTANT: no justify-between here — we want FULL width for the title+subtitle block
+            "mx-auto flex max-w-6xl items-start",
+            "px-5 pt-9 pb-8",
+            "sm:px-6 sm:py-12",
           ].join(" ")}
         >
-          {/* Left: home link block */}
           <Link
             href="/"
             aria-label="Go to homepage"
-            className="group block max-w-full no-underline hover:no-underline focus:outline-none"
+            className="group block w-full max-w-full no-underline hover:no-underline focus:outline-none"
           >
             {/* Title line — MUST stay one line */}
             <span
@@ -44,61 +60,62 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle — mobile */}
-            <span
-              className="mt-0.5 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
-              style={{
-                color: "#D6DAE1",
-                textDecoration: "none",
-                borderBottom: "none",
-              }}
-            >
-              Freedom in the Age of AI. An OPMM by Robin Shepherd
-            </span>
+            {/* Subtitle row (subtitle + search icon on the SAME line) */}
+            <span className="mt-0.5 flex w-full items-center justify-between gap-3 sm:mt-1">
+              {/* Subtitle — mobile (FORCE one line) */}
+              <span
+                className="sm:hidden"
+                style={{
+                  color: "#D6DAE1",
+                  textDecoration: "none",
+                  borderBottom: "none",
+                  // Force single-line + reserve room for icon
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "clip",
+                  maxWidth: "calc(100% - 34px)",
+                  fontSize: "10px",
+                  letterSpacing: "0.02em",
+                  lineHeight: "1.2",
+                }}
+              >
+                Freedom in the Age of AI. An OPMM by Robin Shepherd
+              </span>
 
-            {/* Subtitle — desktop */}
-            <span
-              className="mt-1 hidden text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
-              style={{
-                color: "#D6DAE1",
-                paddingLeft: "calc(46px + 0.22em)",
-                textDecoration: "none",
-                borderBottom: "none",
-              }}
-            >
-              Freedom in the Age of AI. An OPMM by Robin Shepherd
+              {/* Subtitle — desktop (keeps your indent; still one line + room for icon) */}
+              <span
+                className="hidden sm:block"
+                style={{
+                  color: "#D6DAE1",
+                  paddingLeft: "calc(46px + 0.22em)",
+                  textDecoration: "none",
+                  borderBottom: "none",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "clip",
+                  maxWidth: "calc(100% - 40px)",
+                  fontSize: "11px",
+                  letterSpacing: "0.04em",
+                  lineHeight: "1.2",
+                }}
+              >
+                Freedom in the Age of AI. An OPMM by Robin Shepherd
+              </span>
+
+              {/* Search icon — adjacent to subtitle line */}
+              <Link
+                href="/search"
+                aria-label="Search"
+                title="Search"
+                className="shrink-0 rounded-full p-[6px] no-underline hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C67C4E]/55"
+              >
+                <span className="grid place-items-center text-[#C67C4E]/80 transition-opacity duration-150 hover:text-[#C67C4E]/95">
+                  <SearchIcon />
+                </span>
+              </Link>
             </span>
 
             <span className="sr-only">Home</span>
-          </Link>
-
-          {/* Right: search icon (copper), links to /search */}
-          <Link
-            href="/search"
-            aria-label="Search"
-            className="shrink-0 rounded-md p-2 no-underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[#C67C4E]/50"
-            title="Search"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="opacity-90 transition-opacity duration-150 hover:opacity-100"
-              aria-hidden="true"
-            >
-              <path
-                d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
-                stroke="rgba(198,124,78,0.92)"
-                strokeWidth="2"
-              />
-              <path
-                d="M16.5 16.5 21 21"
-                stroke="rgba(198,124,78,0.92)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
           </Link>
         </div>
       </div>
