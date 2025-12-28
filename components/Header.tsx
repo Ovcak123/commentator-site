@@ -8,14 +8,14 @@ export default function Header() {
       <div className="border-b border-white/5">
         <div
           className={[
-            "mx-auto flex max-w-6xl items-center",
-            // Mobile: top drop already locked; now micro-tighten subtitle → nav
-            // pb-9 → pb-8 = ~4px tighter
-            "px-5 pr-12 pt-9 pb-8",
+            "mx-auto flex max-w-6xl items-center justify-between gap-4",
+            // Mobile: keep your current padding, but allow a right-side icon
+            "px-5 pr-5 pt-9 pb-8",
             // Desktop unchanged
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
+          {/* Left: home link block */}
           <Link
             href="/"
             aria-label="Go to homepage"
@@ -70,6 +70,35 @@ export default function Header() {
             </span>
 
             <span className="sr-only">Home</span>
+          </Link>
+
+          {/* Right: search icon (copper), links to /search */}
+          <Link
+            href="/search"
+            aria-label="Search"
+            className="shrink-0 rounded-md p-2 no-underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[#C67C4E]/50"
+            title="Search"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="opacity-90 transition-opacity duration-150 hover:opacity-100"
+              aria-hidden="true"
+            >
+              <path
+                d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+                stroke="rgba(198,124,78,0.92)"
+                strokeWidth="2"
+              />
+              <path
+                d="M16.5 16.5 21 21"
+                stroke="rgba(198,124,78,0.92)"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </Link>
         </div>
       </div>
