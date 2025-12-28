@@ -382,6 +382,10 @@ export default async function HomePage() {
   const listStartIndex = 7;
   const commentaryStream = commentaryPosts.slice(listStartIndex);
 
+  // Mobile insertion point: after the second featured card
+  const firstTwoCards = featuredCards.slice(0, 2);
+  const remainingCards = featuredCards.slice(2);
+
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
@@ -438,88 +442,154 @@ export default async function HomePage() {
               </article>
             )}
 
-            {/* Featured cards */}
-            <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
-              {featuredCards.map((p, idx) => (
-                <div key={p.id} className="space-y-6">
-                  <article className="space-y-6">
-                    <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                      {p.heroImageUrl && (
-                        <img
-                          src={p.heroImageUrl}
-                          alt={p.title}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                        />
+            {/* Featured cards + (MOBILE) standalone News Point inserted between card 2 and 3 */}
+            <div className="space-y-0">
+              {/* First two featured cards */}
+              <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                {firstTwoCards.map((p) => (
+                  <div key={p.id} className="space-y-6">
+                    <article className="space-y-6">
+                      <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                        {p.heroImageUrl && (
+                          <img
+                            src={p.heroImageUrl}
+                            alt={p.title}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+
+                      {p.slug ? (
+                        <Link
+                          href={`/posts/${p.slug}`}
+                          className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                        >
+                          <FeaturedAccent />
+
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
+                            {p.title}
+                          </h4>
+
+                          {p.excerpt ? (
+                            <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              {p.excerpt}
+                            </p>
+                          ) : null}
+
+                          {p.author ? (
+                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                              {p.author}
+                            </p>
+                          ) : null}
+                        </Link>
+                      ) : (
+                        <>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92">
+                            {p.title}
+                          </h4>
+
+                          {p.excerpt ? (
+                            <p className="text-[13.5px] leading-relaxed text-white/62">
+                              {p.excerpt}
+                            </p>
+                          ) : null}
+
+                          {p.author ? (
+                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                              {p.author}
+                            </p>
+                          ) : null}
+                        </>
                       )}
-                    </div>
+                    </article>
+                  </div>
+                ))}
+              </div>
 
-                    {p.slug ? (
-                      <Link
-                        href={`/posts/${p.slug}`}
-                        className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                      >
-                        <FeaturedAccent />
-
-                        <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
-                          {p.title}
-                        </h4>
-
-                        {p.excerpt ? (
-                          <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
-                            {p.excerpt}
-                          </p>
-                        ) : null}
-
-                        {p.author ? (
-                          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                            {p.author}
-                          </p>
-                        ) : null}
-                      </Link>
-                    ) : (
-                      <>
-                        <h4 className="text-[18px] font-semibold leading-tight text-white/92">
-                          {p.title}
-                        </h4>
-
-                        {p.excerpt ? (
-                          <p className="text-[13.5px] leading-relaxed text-white/62">
-                            {p.excerpt}
-                          </p>
-                        ) : null}
-
-                        {p.author ? (
-                          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
-                            {p.author}
-                          </p>
-                        ) : null}
-                      </>
-                    )}
-                  </article>
-
-                  {/* MOBILE: insert News Point AFTER the second card (hero counts as 1st item overall) */}
-                  {idx === 1 ? (
-                    // CRITICAL: cancel the grid's gap-y-14 (56px) exactly on mobile
-                    <div className="lg:hidden -mb-14">
-                      {/* TOP blue rule — master spacing */}
-                      <div className="my-4">
-                        <DoubleBlueRule />
-                      </div>
-
-                      <section id="news-point-mobile" className="space-y-4">
-                        <SectionHeader title="News Point" />
-                        <NewsList items={newsItems} maxItems={6} />
-                      </section>
-
-                      {/* BOTTOM blue rule — MUST match top (my-4) */}
-                      <div className="my-4">
-                        <DoubleBlueRule />
-                      </div>
-                    </div>
-                  ) : null}
+              {/* MOBILE News Point block (standalone, NOT inside the grid) */}
+              <div className="lg:hidden">
+                {/* Symmetric outer spacing: top rule sits the same distance from content above
+                    as bottom rule sits from content below */}
+                <div className="mt-6 mb-6">
+                  <DoubleBlueRule />
                 </div>
-              ))}
+
+                {/* Internal symmetry:
+                    - header -> first item matches last item -> bottom rule
+                    Achieved by section space-y-6 and the bottom rule wrapper mt-6 */}
+                <section id="news-point-mobile" className="space-y-6">
+                  <SectionHeader title="News Point" />
+                  <NewsList items={newsItems} maxItems={6} />
+                </section>
+
+                <div className="mt-6 mb-6">
+                  <DoubleBlueRule />
+                </div>
+              </div>
+
+              {/* Remaining featured cards */}
+              <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                {remainingCards.map((p) => (
+                  <div key={p.id} className="space-y-6">
+                    <article className="space-y-6">
+                      <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                        {p.heroImageUrl && (
+                          <img
+                            src={p.heroImageUrl}
+                            alt={p.title}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+
+                      {p.slug ? (
+                        <Link
+                          href={`/posts/${p.slug}`}
+                          className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                        >
+                          <FeaturedAccent />
+
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
+                            {p.title}
+                          </h4>
+
+                          {p.excerpt ? (
+                            <p className="mt-4 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              {p.excerpt}
+                            </p>
+                          ) : null}
+
+                          {p.author ? (
+                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                              {p.author}
+                            </p>
+                          ) : null}
+                        </Link>
+                      ) : (
+                        <>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92">
+                            {p.title}
+                          </h4>
+
+                          {p.excerpt ? (
+                            <p className="text-[13.5px] leading-relaxed text-white/62">
+                              {p.excerpt}
+                            </p>
+                          ) : null}
+
+                          {p.author ? (
+                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                              {p.author}
+                            </p>
+                          ) : null}
+                        </>
+                      )}
+                    </article>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Commentary stream (Feed Read-style) */}
