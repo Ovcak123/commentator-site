@@ -500,15 +500,13 @@ export default async function HomePage() {
 
                   {/* MOBILE: insert News Point AFTER the second card (hero counts as 1st item overall) */}
                   {idx === 1 ? (
-                    // -mb-10 cancels most of the mobile grid gap (gap-y-14),
-                    // so bottom blue rule -> next image matches top blue rule spacing.
-                    <div className="lg:hidden -mb-10">
+                    // CRITICAL: cancel the grid's gap-y-14 (56px) exactly on mobile
+                    <div className="lg:hidden -mb-14">
                       {/* TOP blue rule — master spacing */}
                       <div className="my-4">
                         <DoubleBlueRule />
                       </div>
 
-                      {/* Use space-y-4 so header->list breathes without pushing the bottom */}
                       <section id="news-point-mobile" className="space-y-4">
                         <SectionHeader title="News Point" />
                         <NewsList items={newsItems} maxItems={6} />
