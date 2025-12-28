@@ -397,7 +397,7 @@ export default async function HomePage() {
           <MobileModeLine />
         </div>
 
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
           {/* LEFT */}
           <section className="space-y-10">
             {/* Desktop-only section header (avoid the rogue extra header on mobile) */}
@@ -609,7 +609,7 @@ export default async function HomePage() {
           </section>
 
           {/* RIGHT (desktop sidebar) */}
-          <aside className="space-y-14">
+          <aside className="flex flex-col gap-14">
             {/* Desktop-only News Point (mobile version is inserted into the left stream) */}
             <section className="hidden lg:block space-y-6">
               <SectionHeader title="News Point" />
