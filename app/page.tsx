@@ -510,7 +510,8 @@ export default async function HomePage() {
                         <NewsList items={newsItems} maxItems={6} />
                       </section>
 
-                      <div className="my-4">
+                      {/* Bottom blue rule: nudged ONE notch lower */}
+                      <div className="mt-5 mb-4">
                         <DoubleBlueRule />
                       </div>
                     </div>
