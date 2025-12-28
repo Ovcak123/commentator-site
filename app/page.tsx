@@ -398,7 +398,7 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr]">
           {/* LEFT */}
           <section className="space-y-10">
-            {/* Desktop-only section header (avoid the rogue extra header on mobile) */}
+            {/* Desktop-only section header */}
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
             </div>
@@ -464,7 +464,6 @@ export default async function HomePage() {
                           className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                         >
                           <FeaturedAccent />
-
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                             {p.title}
                           </h4>
@@ -486,13 +485,11 @@ export default async function HomePage() {
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92">
                             {p.title}
                           </h4>
-
                           {p.excerpt ? (
                             <p className="text-[13.5px] leading-relaxed text-white/62">
                               {p.excerpt}
                             </p>
                           ) : null}
-
                           {p.author ? (
                             <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
                               {p.author}
@@ -505,9 +502,9 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              {/* MOBILE: News Point block BETWEEN the two grids (controls the gap cleanly) */}
-              <div className="mt-8">
-                <div className="mt-0 mb-4">
+              {/* MOBILE: News Point block BETWEEN the two grids (symmetrical top/bottom spacing) */}
+              <div className="my-8">
+                <div className="my-4">
                   <DoubleBlueRule />
                 </div>
 
@@ -516,13 +513,12 @@ export default async function HomePage() {
                   <NewsList items={newsItems} maxItems={6} />
                 </section>
 
-                {/* Key: tighten the bottom gap here */}
-                <div className="mt-4 mb-2">
+                <div className="my-4">
                   <DoubleBlueRule />
                 </div>
               </div>
 
-              {/* Remaining featured cards (starts immediately after tight bottom rule) */}
+              {/* Remaining featured cards */}
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {remainingFeatured.map((p) => (
                   <div key={p.id} className="space-y-6">
@@ -544,7 +540,6 @@ export default async function HomePage() {
                           className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                         >
                           <FeaturedAccent />
-
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                             {p.title}
                           </h4>
@@ -566,13 +561,11 @@ export default async function HomePage() {
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92">
                             {p.title}
                           </h4>
-
                           {p.excerpt ? (
                             <p className="text-[13.5px] leading-relaxed text-white/62">
                               {p.excerpt}
                             </p>
                           ) : null}
-
                           {p.author ? (
                             <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
                               {p.author}
@@ -609,7 +602,6 @@ export default async function HomePage() {
                           className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                         >
                           <FeaturedAccent />
-
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                             {p.title}
                           </h4>
@@ -631,13 +623,11 @@ export default async function HomePage() {
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92">
                             {p.title}
                           </h4>
-
                           {p.excerpt ? (
                             <p className="text-[13.5px] leading-relaxed text-white/62">
                               {p.excerpt}
                             </p>
                           ) : null}
-
                           {p.author ? (
                             <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
                               {p.author}
@@ -651,7 +641,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Commentary stream (Feed Read-style) */}
+            {/* Commentary stream */}
             <div className="space-y-4 pt-2">
               <CommentaryList items={commentaryStream} maxItems={20} />
 
@@ -669,7 +659,6 @@ export default async function HomePage() {
 
           {/* RIGHT (desktop sidebar) */}
           <aside className="space-y-14">
-            {/* Desktop-only News Point (mobile version is inserted into the left stream) */}
             <section className="hidden lg:block space-y-6">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
