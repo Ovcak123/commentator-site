@@ -10,7 +10,8 @@ export default function Header() {
           className={[
             "mx-auto flex max-w-6xl items-center",
             // Stronger mobile breathing room to prevent right-edge collision
-            "px-5 pr-12 py-7",
+            // Mobile: add a touch more bottom air (identity resolves before nav)
+            "px-5 pr-12 pt-7 pb-9",
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
