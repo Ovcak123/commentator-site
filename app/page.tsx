@@ -596,10 +596,11 @@ export default async function HomePage() {
             <div className="space-y-4 pt-2">
               <CommentaryList items={commentaryStream} maxItems={20} />
 
-              <div className="pt-2">
+              {/* tightened gap above MORE: pt-2 -> pt-1 */}
+              <div className="pt-1">
                 <Link
                   href="/commentary"
-                  className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/55 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
+                  className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/65 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
                 >
                   <span>More</span>
                   <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
