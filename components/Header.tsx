@@ -9,10 +9,10 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center",
-            // Stronger mobile breathing room to prevent right-edge collision
-            // Mobile: add a touch more top air (so identity doesn't kiss the iOS status bar)
-            // NOTE: We keep pr-12 + title sizing/tracking EXACTLY as-is to preserve the no-collision win.
-            "px-5 pr-12 pt-9 pb-9",
+            // Mobile: deliberate top drop for first-impression breathing room
+            // Increased pt-7 → pt-10 (≈ +12px)
+            "px-5 pr-12 pt-10 pb-9",
+            // Desktop unchanged
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
@@ -21,11 +21,10 @@ export default function Header() {
             aria-label="Go to homepage"
             className="group block max-w-full no-underline hover:no-underline focus:outline-none"
           >
-            {/* Title line — MUST stay one line; force-fit on mobile */}
+            {/* Title line — MUST stay one line */}
             <span
               className={[
                 "block max-w-full font-bold transition-colors duration-200 group-hover:text-white",
-                // Force-fit on iPhone: smaller + tighter tracking
                 "text-[24px] tracking-[0.10em] whitespace-nowrap",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
@@ -45,7 +44,7 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle — mobile left-aligned; desktop keeps aligned version */}
+            {/* Subtitle — mobile */}
             <span
               className="mt-0.5 block text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
               style={{
@@ -57,6 +56,7 @@ export default function Header() {
               Freedom in the Age of AI. An OPMM by Robin Shepherd
             </span>
 
+            {/* Subtitle — desktop */}
             <span
               className="mt-1 hidden text-[11px] tracking-wide transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
               style={{
