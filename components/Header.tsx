@@ -9,8 +9,8 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center justify-between gap-4",
-            "px-5 pt-9 pb-8",
-            "sm:px-6 sm:py-12",
+            "px-5 pr-5 pt-9 pb-8",
+            "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
           {/* Left: home link block */}
@@ -42,45 +42,54 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle + search icon — unified row */}
-            <div
-              className="mt-1 flex items-center gap-3 whitespace-nowrap"
+            {/* Subtitle — mobile (ONE LINE) */}
+            <span
+              className="mt-0.5 block text-[11px] tracking-wide whitespace-nowrap transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
               style={{ color: "#D6DAE1" }}
             >
-              <span className="text-[11px] tracking-wide">
-                Freedom in the Age of AI. An OPMM by Robin Shepherd
-              </span>
+              Freedom in the Age of AI. An OPMM by Robin Shepherd
+            </span>
 
-              <Link
-                href="/search"
-                aria-label="Search"
-                title="Search"
-                className="shrink-0 rounded-md p-1.5 no-underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[#C67C4E]/50"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="opacity-80 transition-opacity duration-150 hover:opacity-100"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
-                    stroke="rgba(198,124,78,0.92)"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M16.5 16.5 21 21"
-                    stroke="rgba(198,124,78,0.92)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </Link>
-            </div>
+            {/* Subtitle — desktop (ONE LINE) */}
+            <span
+              className="mt-1 hidden text-[11px] tracking-wide whitespace-nowrap transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
+              style={{
+                color: "#D6DAE1",
+                paddingLeft: "calc(46px + 0.22em)",
+              }}
+            >
+              Freedom in the Age of AI. An OPMM by Robin Shepherd
+            </span>
 
             <span className="sr-only">Home</span>
+          </Link>
+
+          {/* Right: search icon — brighter + heavier stroke */}
+          <Link
+            href="/search"
+            aria-label="Search"
+            title="Search"
+            className="shrink-0 rounded-md p-2 no-underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[#C67C4E]/40"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+                stroke="#C67C4E"
+                strokeWidth="2.6"
+              />
+              <path
+                d="M16.5 16.5 21 21"
+                stroke="#C67C4E"
+                strokeWidth="2.6"
+                strokeLinecap="round"
+              />
+            </svg>
           </Link>
         </div>
       </div>
