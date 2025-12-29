@@ -44,14 +44,13 @@ type ExternalReadItem = {
   source?: string;
   author?: string;
   href: string;
-  readTimeMinutes?: number; // <— allow Most Read to use AggregatorList with read-time
 };
 
 type MostReadItem = {
   id: string;
   title: string;
   href: string;
-  readTimeMinutes?: number; // <— FIX: carry read time into Most Read
+  readTimeMinutes?: number;
 };
 
 /* ---------- helpers ---------- */
@@ -69,20 +68,14 @@ function formatDate(dateString?: string) {
   }
 }
 
-/* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
+/* ---------- Read time UI (copper icon + subtle text) ---------- */
 
-/**
- * IMPORTANT:
- * - No hardcoded left margin here.
- * - Spacing is controlled by the parent inline-flex container (gap-x).
- * This prevents “orphaned” badges and keeps alignment consistent.
- */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   if (!minutes || minutes <= 0) return null;
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      className="inline-flex items-center gap-1.5 whitespace-nowrap"
       aria-label={`${minutes} min read`}
       title={`${minutes} min read`}
     >
@@ -107,29 +100,6 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
       <span className="text-[11px] font-medium text-white/55">
         {minutes} min read
       </span>
-    </span>
-  );
-}
-
-/**
- * Title + ReadTime wrapper:
- * - inline-flex keeps it on one “line group”
- * - flex-wrap allows graceful wrap ONLY when forced by width
- * - items-baseline keeps badge visually aligned with text
- */
-function TitleWithReadTime({
-  title,
-  minutes,
-  titleClassName,
-}: {
-  title: string;
-  minutes?: number;
-  titleClassName?: string;
-}) {
-  return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className={titleClassName}>{title}</span>
-      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -225,7 +195,7 @@ async function getHomeData(): Promise<{
       href: d.url || "#",
     }));
 
-  // FIX: Most Read now carries readTimeMinutes through
+  // Most Read: carry readTimeMinutes through (for badge)
   const mostRead = commentaryPosts
     .filter((p) => !!p.slug)
     .slice(0, 5)
@@ -255,7 +225,6 @@ function SectionHeader({ title }: { title: string }) {
           <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
             {title}
           </h2>
-          {/* Copper underline (text width only) */}
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
         </div>
       </div>
@@ -268,7 +237,6 @@ function MobileModeLine() {
   return (
     <div className="lg:hidden">
       <div className="inline-flex items-end gap-8">
-        {/* Commentary (active) */}
         <span className="inline-flex flex-col leading-none">
           <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
             Commentary
@@ -276,7 +244,6 @@ function MobileModeLine() {
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
         </span>
 
-        {/* News Point (scroll link) */}
         <a
           href="#news-point-mobile"
           className="inline-flex flex-col leading-none no-underline hover:no-underline"
@@ -340,67 +307,29 @@ function AggregatorList({
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((it) => {
         const meta = inlineMeta(it);
-        const isInternal = it.href?.startsWith("/");
-
         return (
           <li key={it.id} className="group relative overflow-visible">
             <HoverAccent />
-
-            {isInternal ? (
-              <Link
-                href={it.href}
-                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
-                style={{
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                <span className="font-medium">
-                  <TitleWithReadTime
-                    title={it.title}
-                    minutes={it.readTimeMinutes}
-                    titleClassName="font-medium"
-                  />
-                </span>
-
-                {meta && (
-                  <>
-                    <span className="text-white/45"> — </span>
-                    <span className="text-[#C67C4E] italic">{meta}</span>
-                  </>
-                )}
-              </Link>
-            ) : (
-              <a
-                href={it.href}
-                target="_blank"
-                rel="noreferrer"
-                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
-                style={{
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                <span className="font-medium">
-                  <TitleWithReadTime
-                    title={it.title}
-                    minutes={it.readTimeMinutes}
-                    titleClassName="font-medium"
-                  />
-                </span>
-
-                {meta && (
-                  <>
-                    <span className="text-white/45"> — </span>
-                    <span className="text-[#C67C4E] italic">{meta}</span>
-                  </>
-                )}
-              </a>
-            )}
+            <a
+              href={it.href}
+              target="_blank"
+              rel="noreferrer"
+              className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              <span className="font-medium">{it.title}</span>
+              {meta && (
+                <>
+                  <span className="text-white/45"> — </span>
+                  <span className="text-[#C67C4E] italic">{meta}</span>
+                </>
+              )}
+            </a>
           </li>
         );
       })}
@@ -408,9 +337,6 @@ function AggregatorList({
   );
 }
 
-/**
- * News list: title + read-time should stay inline when possible, wrap only if forced.
- */
 function NewsList({
   items,
   maxItems = 6,
@@ -427,11 +353,10 @@ function NewsList({
             href={n.slug ? `/news/${n.slug}` : "#"}
             className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
           >
-            <TitleWithReadTime
-              title={n.title}
-              minutes={n.readTimeMinutes}
-              titleClassName="font-semibold"
-            />
+            <span className="font-semibold">{n.title}</span>
+            <div className="mt-1">
+              <ReadTimeBadge minutes={n.readTimeMinutes} />
+            </div>
           </Link>
         </li>
       ))}
@@ -439,9 +364,6 @@ function NewsList({
   );
 }
 
-/**
- * Commentary list: same wrapping rule as News.
- */
 function CommentaryList({
   items,
   maxItems,
@@ -461,17 +383,59 @@ function CommentaryList({
             className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
             title={p.title}
           >
-            <TitleWithReadTime
-              title={p.title}
-              minutes={p.readTimeMinutes}
-              titleClassName="font-medium"
-            />
+            <span className="font-medium">{p.title}</span>
+            <div className="mt-1">
+              <ReadTimeBadge minutes={p.readTimeMinutes} />
+            </div>
 
             {p.author ? (
               <span className="mt-1 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
                 {p.author}
               </span>
             ) : null}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * Most Read: clamp TITLE ONLY, NEVER clamp the read-time.
+ * This prevents “3 min re…” truncation and missing badges.
+ */
+function MostReadList({
+  items,
+  maxItems,
+}: {
+  items: MostReadItem[];
+  maxItems: number;
+}) {
+  return (
+    <ul className="space-y-3">
+      {items.slice(0, maxItems).map((m) => (
+        <li key={m.id} className="group relative overflow-visible">
+          <HoverAccent />
+          <Link
+            href={m.href}
+            className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
+          >
+            <span
+              className="font-medium"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+              title={m.title}
+            >
+              {m.title}
+            </span>
+
+            <div className="mt-1">
+              <ReadTimeBadge minutes={m.readTimeMinutes} />
+            </div>
           </Link>
         </li>
       ))}
@@ -487,10 +451,8 @@ export default async function HomePage() {
 
   const lead = commentaryPosts[0];
   const featuredCards = commentaryPosts.slice(1, 7);
-  const listStartIndex = 7;
-  const commentaryStream = commentaryPosts.slice(listStartIndex);
+  const commentaryStream = commentaryPosts.slice(7);
 
-  // Mobile insertion point: after the second featured card
   const firstTwoCards = featuredCards.slice(0, 2);
   const remainingCards = featuredCards.slice(2);
 
@@ -499,8 +461,6 @@ export default async function HomePage() {
       <Header />
 
       <div className="mx-auto max-w-6xl px-6 py-10">
-        {/* Mobile-only mode line (COMMENTARY | NEWS POINT scroll) */}
-        {/* pb-8 -> pb-5 to cut ~40% of the space above the hero image on mobile */}
         <div className="pb-5">
           <MobileModeLine />
         </div>
@@ -508,7 +468,6 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
           {/* LEFT */}
           <section className="space-y-10">
-            {/* Desktop-only section header (avoid the rogue extra header on mobile) */}
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
             </div>
@@ -532,12 +491,12 @@ export default async function HomePage() {
                 >
                   <FeaturedAccent />
                   <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                    <TitleWithReadTime
-                      title={lead.title}
-                      minutes={lead.readTimeMinutes}
-                      titleClassName=""
-                    />
+                    {lead.title}
                   </h3>
+
+                  <div className="mt-2">
+                    <ReadTimeBadge minutes={lead.readTimeMinutes} />
+                  </div>
 
                   {lead.excerpt && (
                     <p className="mt-3 text-[16px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
@@ -580,12 +539,12 @@ export default async function HomePage() {
                           <FeaturedAccent />
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            <TitleWithReadTime
-                              title={p.title}
-                              minutes={p.readTimeMinutes}
-                              titleClassName=""
-                            />
+                            {p.title}
                           </h4>
+
+                          <div className="mt-2">
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                          </div>
 
                           {p.excerpt ? (
                             <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
@@ -599,35 +558,13 @@ export default async function HomePage() {
                             </p>
                           ) : null}
                         </Link>
-                      ) : (
-                        <>
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            <TitleWithReadTime
-                              title={p.title}
-                              minutes={p.readTimeMinutes}
-                              titleClassName=""
-                            />
-                          </h4>
-
-                          {p.excerpt ? (
-                            <p className="text-[13.5px] leading-relaxed text-white/62">
-                              {p.excerpt}
-                            </p>
-                          ) : null}
-
-                          {p.author ? (
-                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
-                              {p.author}
-                            </p>
-                          ) : null}
-                        </>
-                      )}
+                      ) : null}
                     </article>
                   </div>
                 ))}
               </div>
 
-              {/* MOBILE News Point block (standalone, NOT inside the grid) */}
+              {/* MOBILE News Point block */}
               <div className="lg:hidden">
                 <div className="mt-6 mb-6">
                   <DoubleBlueRule />
@@ -667,12 +604,12 @@ export default async function HomePage() {
                           <FeaturedAccent />
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            <TitleWithReadTime
-                              title={p.title}
-                              minutes={p.readTimeMinutes}
-                              titleClassName=""
-                            />
+                            {p.title}
                           </h4>
+
+                          <div className="mt-2">
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                          </div>
 
                           {p.excerpt ? (
                             <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
@@ -686,40 +623,17 @@ export default async function HomePage() {
                             </p>
                           ) : null}
                         </Link>
-                      ) : (
-                        <>
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            <TitleWithReadTime
-                              title={p.title}
-                              minutes={p.readTimeMinutes}
-                              titleClassName=""
-                            />
-                          </h4>
-
-                          {p.excerpt ? (
-                            <p className="text-[13.5px] leading-relaxed text-white/62">
-                              {p.excerpt}
-                            </p>
-                          ) : null}
-
-                          {p.author ? (
-                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
-                              {p.author}
-                            </p>
-                          ) : null}
-                        </>
-                      )}
+                      ) : null}
                     </article>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Commentary stream (Feed Read-style) */}
+            {/* Commentary stream */}
             <div className="space-y-4 pt-2">
               <CommentaryList items={commentaryStream} maxItems={20} />
 
-              {/* tightened gap above MORE: pt-2 -> pt-1 */}
               <div className="pt-1">
                 <Link
                   href="/commentary"
@@ -734,7 +648,6 @@ export default async function HomePage() {
 
           {/* RIGHT (desktop sidebar) */}
           <aside className="flex flex-col gap-14">
-            {/* Desktop-only News Point (mobile version is inserted into the left stream) */}
             <section className="hidden lg:block space-y-6">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
@@ -752,15 +665,7 @@ export default async function HomePage() {
 
             <section className="space-y-6">
               <SectionHeader title="Most Read" />
-              <AggregatorList
-                items={mostRead.map((m) => ({
-                  id: m.id,
-                  title: m.title,
-                  href: m.href,
-                  readTimeMinutes: m.readTimeMinutes,
-                }))}
-                maxItems={5}
-              />
+              <MostReadList items={mostRead} maxItems={5} />
             </section>
           </aside>
         </div>
