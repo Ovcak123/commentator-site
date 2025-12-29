@@ -50,7 +50,6 @@ type MostReadItem = {
   id: string;
   title: string;
   href: string;
-  readTimeMinutes?: number;
 };
 
 /* ---------- helpers ---------- */
@@ -70,25 +69,14 @@ function formatDate(dateString?: string) {
 
 /* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
 
-function normalizeMinutes(value: any): number | undefined {
-  if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
-  // If Sanity ever returns numeric strings (or something truthy), this keeps UI stable
-  if (typeof value === "string") {
-    const n = Number(value);
-    if (Number.isFinite(n) && n > 0) return n;
-  }
-  return undefined;
-}
-
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
-  const m = normalizeMinutes(minutes);
-  if (!m) return null;
+  if (!minutes || minutes <= 0) return null;
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
-      aria-label={`${m} min read`}
-      title={`${m} min read`}
+      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      aria-label={`${minutes} min read`}
+      title={`${minutes} min read`}
     >
       <svg
         width="14"
@@ -108,42 +96,9 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium text-white/55">{m} min read</span>
-    </span>
-  );
-}
-
-/**
- * Smart headline + read time:
- * - Keeps badge inline to the right when space allows
- * - When it wraps, badge drops to the next line and starts at the left margin
- * - Crucially: the badge is NOT inside the clamped element
- */
-function HeadlineWithReadTime({
-  title,
-  minutes,
-  clamp = 2,
-  weight = "font-semibold",
-}: {
-  title: string;
-  minutes?: number;
-  clamp?: 1 | 2;
-  weight?: string;
-}) {
-  return (
-    <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span
-        className={`min-w-0 ${weight}`}
-        style={{
-          display: "-webkit-box",
-          WebkitLineClamp: clamp,
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
-        }}
-      >
-        {title}
+      <span className="text-[11px] font-medium text-white/55">
+        {minutes} min read
       </span>
-      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -199,14 +154,16 @@ async function getHomeData(): Promise<{
     date: formatDate(p.publishedAt),
     slug: p.slug,
     heroImageUrl: p.heroImageUrl,
-    readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
+    readTimeMinutes:
+      typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
   }));
 
   const newsItems: NewsItem[] = (newsDocs || []).map((n: any) => ({
     id: n._id,
     title: n.title,
     slug: n.slug,
-    readTimeMinutes: normalizeMinutes(n.readTimeMinutes),
+    readTimeMinutes:
+      typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
   }));
 
   const normalizedFeedDocs: FeedDoc[] = (feedDocs || []).map((f: any) => ({
@@ -244,7 +201,6 @@ async function getHomeData(): Promise<{
       id: p.id,
       title: p.title,
       href: `/posts/${p.slug}`,
-      readTimeMinutes: p.readTimeMinutes,
     }));
 
   return {
@@ -381,6 +337,11 @@ function AggregatorList({
   );
 }
 
+/**
+ * ✅ FIXED: NewsList no longer uses -webkit-line-clamp around the ReadTimeBadge.
+ * That clamp was breaking inline flow and causing orphaned read-time drops.
+ * Now: inline by default; drops only when genuinely forced.
+ */
 function NewsList({
   items,
   maxItems = 6,
@@ -395,14 +356,12 @@ function NewsList({
           <NewsAccent />
           <Link
             href={n.slug ? `/news/${n.slug}` : "#"}
-            className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
           >
-            <HeadlineWithReadTime
-              title={n.title}
-              minutes={n.readTimeMinutes}
-              clamp={2}
-              weight="font-semibold"
-            />
+            <span className="font-semibold">
+              {n.title}
+              <ReadTimeBadge minutes={n.readTimeMinutes} />
+            </span>
           </Link>
         </li>
       ))}
@@ -410,6 +369,10 @@ function NewsList({
   );
 }
 
+/**
+ * ✅ FIXED: CommentaryList no longer uses -webkit-line-clamp around the ReadTimeBadge.
+ * Same rationale as NewsList.
+ */
 function CommentaryList({
   items,
   maxItems,
@@ -426,51 +389,19 @@ function CommentaryList({
           <HoverAccent />
           <Link
             href={`/posts/${p.slug}`}
-            className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
             title={p.title}
           >
-            <HeadlineWithReadTime
-              title={p.title}
-              minutes={p.readTimeMinutes}
-              clamp={2}
-              weight="font-medium"
-            />
+            <span className="font-medium">
+              {p.title}
+              <ReadTimeBadge minutes={p.readTimeMinutes} />
+            </span>
 
             {p.author ? (
               <span className="mt-1 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
                 {p.author}
               </span>
             ) : null}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function MostReadList({
-  items,
-  maxItems = 5,
-}: {
-  items: MostReadItem[];
-  maxItems?: number;
-}) {
-  return (
-    <ul className="space-y-3">
-      {items.slice(0, maxItems).map((m) => (
-        <li key={m.id} className="group relative overflow-visible">
-          <HoverAccent />
-          <Link
-            href={m.href}
-            className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
-            title={m.title}
-          >
-            <HeadlineWithReadTime
-              title={m.title}
-              minutes={m.readTimeMinutes}
-              clamp={2}
-              weight="font-medium"
-            />
           </Link>
         </li>
       ))}
@@ -530,11 +461,9 @@ export default async function HomePage() {
                   className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                 >
                   <FeaturedAccent />
-                  <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
-                    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                      <span className="min-w-0">{lead.title}</span>
-                      <ReadTimeBadge minutes={lead.readTimeMinutes} />
-                    </span>
+                  <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                    {lead.title}
+                    <ReadTimeBadge minutes={lead.readTimeMinutes} />
                   </h3>
 
                   {lead.excerpt && (
@@ -577,11 +506,9 @@ export default async function HomePage() {
                         >
                           <FeaturedAccent />
 
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
-                            <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                              <span className="min-w-0">{p.title}</span>
-                              <ReadTimeBadge minutes={p.readTimeMinutes} />
-                            </span>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                            {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -598,11 +525,9 @@ export default async function HomePage() {
                         </Link>
                       ) : (
                         <>
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92">
-                            <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                              <span className="min-w-0">{p.title}</span>
-                              <ReadTimeBadge minutes={p.readTimeMinutes} />
-                            </span>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -662,11 +587,9 @@ export default async function HomePage() {
                         >
                           <FeaturedAccent />
 
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
-                            <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                              <span className="min-w-0">{p.title}</span>
-                              <ReadTimeBadge minutes={p.readTimeMinutes} />
-                            </span>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                            {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -683,11 +606,9 @@ export default async function HomePage() {
                         </Link>
                       ) : (
                         <>
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92">
-                            <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                              <span className="min-w-0">{p.title}</span>
-                              <ReadTimeBadge minutes={p.readTimeMinutes} />
-                            </span>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -746,7 +667,14 @@ export default async function HomePage() {
 
             <section className="space-y-6">
               <SectionHeader title="Most Read" />
-              <MostReadList items={mostRead} maxItems={5} />
+              <AggregatorList
+                items={mostRead.map((m) => ({
+                  id: m.id,
+                  title: m.title,
+                  href: m.href,
+                }))}
+                maxItems={5}
+              />
             </section>
           </aside>
         </div>
