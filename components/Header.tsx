@@ -64,12 +64,24 @@ export default function Header() {
             <span className="sr-only">Home</span>
           </Link>
 
-          {/* Right: search icon — brighter + heavier stroke */}
+          {/* Right: search icon — editorial instrument styling */}
           <Link
             href="/search"
             aria-label="Search"
             title="Search"
-            className="shrink-0 rounded-md p-2 no-underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-[#C67C4E]/40"
+            className={[
+              "group shrink-0",
+              // Proper hit-area without “button” feel
+              "grid h-10 w-10 place-items-center rounded-full",
+              // Copper as a system accent (calm default, subtle lift)
+              "text-[#C67C4E]/90 hover:text-[#D89A6A]",
+              // Almost invisible affordance on hover/focus, not a box
+              "hover:bg-white/[0.04]",
+              // Clean focus for keyboard users
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C67C4E]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0D10]",
+              "transition-colors duration-200",
+              "no-underline hover:no-underline",
+            ].join(" ")}
           >
             <svg
               width="20"
@@ -80,14 +92,17 @@ export default function Header() {
             >
               <path
                 d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
-                stroke="#C67C4E"
-                strokeWidth="2.6"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M16.5 16.5 21 21"
-                stroke="#C67C4E"
-                strokeWidth="2.6"
+                stroke="currentColor"
+                strokeWidth="2.5"
                 strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </Link>
