@@ -1,3 +1,5 @@
+// app/news/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -57,6 +59,15 @@ const latestCommentaryQuery = `
   }
 `;
 
+function normalizeMinutes(value: any): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
+  if (typeof value === "string") {
+    const n = Number(value);
+    if (Number.isFinite(n) && n > 0) return n;
+  }
+  return undefined;
+}
+
 function formatDate(dateString?: string): string {
   if (!dateString) return "";
   const d = new Date(dateString);
@@ -93,6 +104,19 @@ function ClockIcon({ className = "" }: { className?: string }) {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+function ReadTimeBadge({ minutes }: { minutes?: number }) {
+  const m = normalizeMinutes(minutes);
+  if (!m) return null;
+  return (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[12px] leading-none text-white/55">
+      <span className="text-[#C67C4E]/82">
+        <ClockIcon />
+      </span>
+      <span>{m} min read</span>
+    </span>
   );
 }
 
@@ -136,10 +160,7 @@ function SidebarList({
   return (
     <ul>
       {items.slice(0, limit).map((it) => (
-        <li
-          key={it.id}
-          className={`group relative ${pyClass} pl-4 overflow-visible`}
-        >
+        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
           <HoverAccent />
           <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
 
@@ -160,14 +181,7 @@ function SidebarList({
               {it.title}
             </span>
 
-            {showReadTime && typeof it.readTimeMinutes === "number" ? (
-              <span className="mt-1 inline-flex items-center gap-1.5 text-[11.5px] leading-none text-white/50">
-                <span className="text-[#C67C4E]/82">
-                  <ClockIcon />
-                </span>
-                <span>{it.readTimeMinutes} min read</span>
-              </span>
-            ) : null}
+            {showReadTime ? <span className="mt-1 block"><ReadTimeBadge minutes={it.readTimeMinutes} /></span> : null}
           </Link>
         </li>
       ))}
@@ -205,7 +219,7 @@ export default async function NewsDetailPage({
       id: p._id,
       title: p.title,
       href: `/posts/${p.slug}`,
-      readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
+      readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
   const moreNews: SidebarItem[] = (moreNewsDocs || [])
@@ -214,7 +228,7 @@ export default async function NewsDetailPage({
       id: n._id,
       title: n.title,
       href: `/news/${n.slug}`,
-      readTimeMinutes: typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
+      readTimeMinutes: normalizeMinutes(n.readTimeMinutes),
     }));
 
   const latestCommentary: SidebarItem[] = (latestCommentaryDocs || [])
@@ -223,7 +237,7 @@ export default async function NewsDetailPage({
       id: p._id,
       title: p.title,
       href: `/posts/${p.slug}`,
-      readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
+      readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
   return (
@@ -240,7 +254,10 @@ export default async function NewsDetailPage({
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                {item.title}
+                <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span className="min-w-0">{item.title}</span>
+                  <ReadTimeBadge minutes={item.readTimeMinutes} />
+                </span>
               </h1>
 
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
