@@ -64,81 +64,95 @@ export default function Header() {
             <span className="sr-only">Home</span>
           </Link>
 
-          {/* Right: search icon — Option A (quiet copper, no buttonness) */}
+          {/* (Search removed from masthead — now lives in nav band, right aligned) */}
+          <div className="shrink-0" aria-hidden="true" />
+        </div>
+      </div>
+
+      {/* Nav band + Search (right) */}
+      <div className="mx-auto max-w-6xl px-6 py-2.5 sm:py-4">
+        <div className="flex items-center justify-between gap-4">
+          <nav
+            className={[
+              "text-[10px] font-semibold uppercase text-[#9AA1AB]",
+              "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
+              "sm:gap-8 sm:tracking-[0.24em]",
+            ].join(" ")}
+            aria-label="Primary navigation"
+          >
+            <Link
+              href="/about"
+              className="no-underline hover:no-underline hover:text-[#E6E9EE]"
+            >
+              About
+            </Link>
+
+            <Link
+              href="/freedom-reloaded"
+              className="no-underline hover:no-underline hover:text-[#E6E9EE]"
+            >
+              Freedom Reloaded
+            </Link>
+
+            <Link
+              href="/contact"
+              className="no-underline hover:no-underline hover:text-[#E6E9EE]"
+            >
+              Contact
+            </Link>
+          </nav>
+
+          {/* Right: Search — fixed position, logo-family geometry, quiet copper */}
           <Link
             href="/search"
             aria-label="Search"
             title="Search"
             className={[
               "group shrink-0",
-              // Invisible hit-area (serious utility, not a button)
-              "grid h-10 w-10 place-items-center rounded-full",
-              // Quiet copper default, subtle lift on hover
-              "text-[#B87449]/70 hover:text-[#B87449]/90",
-              // Slight desktop anchoring so it feels less orphaned
-              "sm:translate-y-[1px]",
-              // Keyboard focus only (tasteful)
+              "grid h-9 w-9 place-items-center rounded-full",
+              // Quiet copper default; small lift on hover
+              "text-[#B87449]/70 hover:text-[#B87449]/92",
+              // No “button” background, only keyboard focus ring
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B87449]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0D10]",
               "transition-colors duration-200",
               "no-underline hover:no-underline",
             ].join(" ")}
           >
             <svg
-              width="20"
-              height="20"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden="true"
             >
-              <path
-                d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+              {/* Outer lens */}
+              <circle
+                cx="10.5"
+                cy="10.5"
+                r="7"
                 stroke="currentColor"
-                strokeWidth="2.55"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                strokeWidth="2.35"
               />
-              <path
-                d="M16.5 16.5 21 21"
+              {/* Inner ring — subtle echo of the logo geometry */}
+              <circle
+                cx="10.5"
+                cy="10.5"
+                r="4.2"
                 stroke="currentColor"
-                strokeWidth="2.55"
+                strokeWidth="1.65"
+                opacity="0.55"
+              />
+              {/* Handle */}
+              <path
+                d="M16.2 16.2 21 21"
+                stroke="currentColor"
+                strokeWidth="2.35"
                 strokeLinecap="round"
-                strokeLinejoin="round"
               />
             </svg>
           </Link>
         </div>
       </div>
-
-      {/* Nav band */}
-      <nav
-        className={[
-          "mx-auto max-w-6xl px-6 py-2.5 text-[10px] font-semibold uppercase text-[#9AA1AB]",
-          "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
-          "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
-        ].join(" ")}
-        aria-label="Primary navigation"
-      >
-        <Link
-          href="/about"
-          className="no-underline hover:no-underline hover:text-[#E6E9EE]"
-        >
-          About
-        </Link>
-
-        <Link
-          href="/freedom-reloaded"
-          className="no-underline hover:no-underline hover:text-[#E6E9EE]"
-        >
-          Freedom Reloaded
-        </Link>
-
-        <Link
-          href="/contact"
-          className="no-underline hover:no-underline hover:text-[#E6E9EE]"
-        >
-          Contact
-        </Link>
-      </nav>
     </header>
   );
 }
