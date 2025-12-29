@@ -1,7 +1,31 @@
 // components/Header.tsx
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+
+  const navLinkClass = (href: string) => {
+    const isActive =
+      href === "/"
+        ? pathname === "/"
+        : pathname === href || pathname.startsWith(href + "/");
+
+    return [
+      "relative no-underline hover:no-underline",
+      "transition-colors duration-200",
+      isActive ? "text-[#E6E9EE]" : "text-[#9AA1AB] hover:text-[#E6E9EE]",
+      // underline treatment (matches your editorial copper language)
+      "after:content-[''] after:absolute after:left-0 after:-bottom-[6px]",
+      "after:h-[1px] after:w-full after:bg-[#B87449]/70",
+      "after:opacity-0 after:transition-opacity after:duration-200",
+      "hover:after:opacity-100",
+      isActive ? "after:opacity-100" : "",
+    ].join(" ");
+  };
+
   return (
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
       {/* Top band: masthead */}
@@ -64,95 +88,39 @@ export default function Header() {
             <span className="sr-only">Home</span>
           </Link>
 
-          {/* (Search removed from masthead — now lives in nav band, right aligned) */}
+          {/* Right side intentionally empty (reserved for future banner/utility) */}
           <div className="shrink-0" aria-hidden="true" />
         </div>
       </div>
 
-      {/* Nav band + Search (right) */}
-      <div className="mx-auto max-w-6xl px-6 py-2.5 sm:py-4">
-        <div className="flex items-center justify-between gap-4">
-          <nav
-            className={[
-              "text-[10px] font-semibold uppercase text-[#9AA1AB]",
-              "flex flex-nowrap items-center gap-5 overflow-x-auto whitespace-nowrap tracking-[0.16em]",
-              "sm:gap-8 sm:tracking-[0.24em]",
-            ].join(" ")}
-            aria-label="Primary navigation"
-          >
-            <Link
-              href="/about"
-              className="no-underline hover:no-underline hover:text-[#E6E9EE]"
-            >
-              About
-            </Link>
+      {/* Nav band */}
+      <nav
+        className={[
+          "mx-auto max-w-6xl px-6 py-2.5 text-[10px] font-semibold uppercase",
+          // single row, never wrap, allow horizontal scroll if needed
+          "flex flex-nowrap items-center gap-4 overflow-x-auto whitespace-nowrap",
+          // tracking slightly tightened on mobile to comfortably fit 4 items
+          "tracking-[0.14em]",
+          "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
+        ].join(" ")}
+        aria-label="Primary navigation"
+      >
+        <Link href="/about" className={navLinkClass("/about")}>
+          About
+        </Link>
 
-            <Link
-              href="/freedom-reloaded"
-              className="no-underline hover:no-underline hover:text-[#E6E9EE]"
-            >
-              Freedom Reloaded
-            </Link>
+        <Link href="/freedom-reloaded" className={navLinkClass("/freedom-reloaded")}>
+          Freedom Reloaded
+        </Link>
 
-            <Link
-              href="/contact"
-              className="no-underline hover:no-underline hover:text-[#E6E9EE]"
-            >
-              Contact
-            </Link>
-          </nav>
+        <Link href="/contact" className={navLinkClass("/contact")}>
+          Contact
+        </Link>
 
-          {/* Right: Search — fixed position, logo-family geometry, quiet copper */}
-          <Link
-            href="/search"
-            aria-label="Search"
-            title="Search"
-            className={[
-              "group shrink-0",
-              "grid h-9 w-9 place-items-center rounded-full",
-              // Quiet copper default; small lift on hover
-              "text-[#B87449]/70 hover:text-[#B87449]/92",
-              // No “button” background, only keyboard focus ring
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B87449]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0D10]",
-              "transition-colors duration-200",
-              "no-underline hover:no-underline",
-            ].join(" ")}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              {/* Outer lens */}
-              <circle
-                cx="10.5"
-                cy="10.5"
-                r="7"
-                stroke="currentColor"
-                strokeWidth="2.35"
-              />
-              {/* Inner ring — subtle echo of the logo geometry */}
-              <circle
-                cx="10.5"
-                cy="10.5"
-                r="4.2"
-                stroke="currentColor"
-                strokeWidth="1.65"
-                opacity="0.55"
-              />
-              {/* Handle */}
-              <path
-                d="M16.2 16.2 21 21"
-                stroke="currentColor"
-                strokeWidth="2.35"
-                strokeLinecap="round"
-              />
-            </svg>
-          </Link>
-        </div>
-      </div>
+        <Link href="/search" className={navLinkClass("/search")}>
+          Search
+        </Link>
+      </nav>
     </header>
   );
 }
