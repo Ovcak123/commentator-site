@@ -44,12 +44,14 @@ type ExternalReadItem = {
   source?: string;
   author?: string;
   href: string;
+  readTimeMinutes?: number; // <— allow Most Read to use AggregatorList with read-time
 };
 
 type MostReadItem = {
   id: string;
   title: string;
   href: string;
+  readTimeMinutes?: number; // <— FIX: carry read time into Most Read
 };
 
 /* ---------- helpers ---------- */
@@ -69,12 +71,18 @@ function formatDate(dateString?: string) {
 
 /* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
 
+/**
+ * IMPORTANT:
+ * - No hardcoded left margin here.
+ * - Spacing is controlled by the parent inline-flex container (gap-x).
+ * This prevents “orphaned” badges and keeps alignment consistent.
+ */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   if (!minutes || minutes <= 0) return null;
 
   return (
     <span
-      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      className="inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
       aria-label={`${minutes} min read`}
       title={`${minutes} min read`}
     >
@@ -99,6 +107,29 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
       <span className="text-[11px] font-medium text-white/55">
         {minutes} min read
       </span>
+    </span>
+  );
+}
+
+/**
+ * Title + ReadTime wrapper:
+ * - inline-flex keeps it on one “line group”
+ * - flex-wrap allows graceful wrap ONLY when forced by width
+ * - items-baseline keeps badge visually aligned with text
+ */
+function TitleWithReadTime({
+  title,
+  minutes,
+  titleClassName,
+}: {
+  title: string;
+  minutes?: number;
+  titleClassName?: string;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className={titleClassName}>{title}</span>
+      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -194,6 +225,7 @@ async function getHomeData(): Promise<{
       href: d.url || "#",
     }));
 
+  // FIX: Most Read now carries readTimeMinutes through
   const mostRead = commentaryPosts
     .filter((p) => !!p.slug)
     .slice(0, 5)
@@ -201,6 +233,7 @@ async function getHomeData(): Promise<{
       id: p.id,
       title: p.title,
       href: `/posts/${p.slug}`,
+      readTimeMinutes: p.readTimeMinutes,
     }));
 
   return {
@@ -307,29 +340,67 @@ function AggregatorList({
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((it) => {
         const meta = inlineMeta(it);
+        const isInternal = it.href?.startsWith("/");
+
         return (
           <li key={it.id} className="group relative overflow-visible">
             <HoverAccent />
-            <a
-              href={it.href}
-              target="_blank"
-              rel="noreferrer"
-              className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
-              <span className="font-medium">{it.title}</span>
-              {meta && (
-                <>
-                  <span className="text-white/45"> — </span>
-                  <span className="text-[#C67C4E] italic">{meta}</span>
-                </>
-              )}
-            </a>
+
+            {isInternal ? (
+              <Link
+                href={it.href}
+                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                <span className="font-medium">
+                  <TitleWithReadTime
+                    title={it.title}
+                    minutes={it.readTimeMinutes}
+                    titleClassName="font-medium"
+                  />
+                </span>
+
+                {meta && (
+                  <>
+                    <span className="text-white/45"> — </span>
+                    <span className="text-[#C67C4E] italic">{meta}</span>
+                  </>
+                )}
+              </Link>
+            ) : (
+              <a
+                href={it.href}
+                target="_blank"
+                rel="noreferrer"
+                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                <span className="font-medium">
+                  <TitleWithReadTime
+                    title={it.title}
+                    minutes={it.readTimeMinutes}
+                    titleClassName="font-medium"
+                  />
+                </span>
+
+                {meta && (
+                  <>
+                    <span className="text-white/45"> — </span>
+                    <span className="text-[#C67C4E] italic">{meta}</span>
+                  </>
+                )}
+              </a>
+            )}
           </li>
         );
       })}
@@ -338,9 +409,7 @@ function AggregatorList({
 }
 
 /**
- * ✅ FIXED: NewsList no longer uses -webkit-line-clamp around the ReadTimeBadge.
- * That clamp was breaking inline flow and causing orphaned read-time drops.
- * Now: inline by default; drops only when genuinely forced.
+ * News list: title + read-time should stay inline when possible, wrap only if forced.
  */
 function NewsList({
   items,
@@ -358,10 +427,11 @@ function NewsList({
             href={n.slug ? `/news/${n.slug}` : "#"}
             className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
           >
-            <span className="font-semibold">
-              {n.title}
-              <ReadTimeBadge minutes={n.readTimeMinutes} />
-            </span>
+            <TitleWithReadTime
+              title={n.title}
+              minutes={n.readTimeMinutes}
+              titleClassName="font-semibold"
+            />
           </Link>
         </li>
       ))}
@@ -370,8 +440,7 @@ function NewsList({
 }
 
 /**
- * ✅ FIXED: CommentaryList no longer uses -webkit-line-clamp around the ReadTimeBadge.
- * Same rationale as NewsList.
+ * Commentary list: same wrapping rule as News.
  */
 function CommentaryList({
   items,
@@ -392,10 +461,11 @@ function CommentaryList({
             className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
             title={p.title}
           >
-            <span className="font-medium">
-              {p.title}
-              <ReadTimeBadge minutes={p.readTimeMinutes} />
-            </span>
+            <TitleWithReadTime
+              title={p.title}
+              minutes={p.readTimeMinutes}
+              titleClassName="font-medium"
+            />
 
             {p.author ? (
               <span className="mt-1 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
@@ -462,8 +532,11 @@ export default async function HomePage() {
                 >
                   <FeaturedAccent />
                   <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                    {lead.title}
-                    <ReadTimeBadge minutes={lead.readTimeMinutes} />
+                    <TitleWithReadTime
+                      title={lead.title}
+                      minutes={lead.readTimeMinutes}
+                      titleClassName=""
+                    />
                   </h3>
 
                   {lead.excerpt && (
@@ -507,8 +580,11 @@ export default async function HomePage() {
                           <FeaturedAccent />
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime
+                              title={p.title}
+                              minutes={p.readTimeMinutes}
+                              titleClassName=""
+                            />
                           </h4>
 
                           {p.excerpt ? (
@@ -526,8 +602,11 @@ export default async function HomePage() {
                       ) : (
                         <>
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime
+                              title={p.title}
+                              minutes={p.readTimeMinutes}
+                              titleClassName=""
+                            />
                           </h4>
 
                           {p.excerpt ? (
@@ -588,8 +667,11 @@ export default async function HomePage() {
                           <FeaturedAccent />
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime
+                              title={p.title}
+                              minutes={p.readTimeMinutes}
+                              titleClassName=""
+                            />
                           </h4>
 
                           {p.excerpt ? (
@@ -607,8 +689,11 @@ export default async function HomePage() {
                       ) : (
                         <>
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime
+                              title={p.title}
+                              minutes={p.readTimeMinutes}
+                              titleClassName=""
+                            />
                           </h4>
 
                           {p.excerpt ? (
@@ -672,6 +757,7 @@ export default async function HomePage() {
                   id: m.id,
                   title: m.title,
                   href: m.href,
+                  readTimeMinutes: m.readTimeMinutes,
                 }))}
                 maxItems={5}
               />
