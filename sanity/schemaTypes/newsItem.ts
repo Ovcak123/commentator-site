@@ -12,18 +12,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // ✅ NEW: Read time (minutes)
+    // ✅ NEW: Read time (minutes) — optional by default
     defineField({
       name: "readTimeMinutes",
       title: "Read time (minutes)",
       type: "number",
       description: "Displayed on site as “X min read” next to the headline.",
-      validation: (Rule) =>
-        Rule
-          .integer()
-          .min(1)
-          .max(30)
-          .optional(),
+      validation: (Rule) => Rule.integer().min(1).max(30),
     }),
 
     defineField({
