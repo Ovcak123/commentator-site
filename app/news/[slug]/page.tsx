@@ -1,3 +1,5 @@
+// app/news/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -14,6 +16,42 @@ type SidebarItem = {
   href: string;
 };
 
+/* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
+
+function ReadTimeBadge({ minutes }: { minutes?: number }) {
+  if (!minutes || minutes <= 0) return null;
+
+  return (
+    <span
+      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      aria-label={`${minutes} min read`}
+      title={`${minutes} min read`}
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="shrink-0 text-[#C67C4E]/80"
+      >
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M12 7.5v5l3.25 2"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      <span className="text-[11px] font-medium text-white/55">
+        {minutes} min read
+      </span>
+    </span>
+  );
+}
+
 const singleNewsQuery = `
   *[_type == "newsItem" && slug.current == $slug][0]{
     title,
@@ -24,7 +62,8 @@ const singleNewsQuery = `
     publishedAt,
     excerpt,
     body,
-    heroImage
+    heroImage,
+    readTimeMinutes
   }
 `;
 
@@ -105,7 +144,10 @@ function SidebarList({
     // Removed divider lines between list items
     <ul>
       {items.slice(0, limit).map((it) => (
-        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
+        <li
+          key={it.id}
+          className={`group relative ${pyClass} pl-4 overflow-visible`}
+        >
           <HoverAccent />
           <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
 
@@ -195,6 +237,7 @@ export default async function NewsDetailPage({
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
                 {item.title}
+                <ReadTimeBadge minutes={item.readTimeMinutes} />
               </h1>
 
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}

@@ -1,3 +1,5 @@
+// app/posts/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -19,6 +21,7 @@ type Post = {
   heroImage?: any;
   excerpt?: string;
   body?: any[];
+  readTimeMinutes?: number;
 };
 
 type PageProps = {
@@ -67,6 +70,42 @@ function formatDate(dateString?: string): string {
     day: "numeric",
     year: "numeric",
   });
+}
+
+/* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
+
+function ReadTimeBadge({ minutes }: { minutes?: number }) {
+  if (!minutes || minutes <= 0) return null;
+
+  return (
+    <span
+      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      aria-label={`${minutes} min read`}
+      title={`${minutes} min read`}
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="shrink-0 text-[#C67C4E]/80"
+      >
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M12 7.5v5l3.25 2"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      <span className="text-[11px] font-medium text-white/55">
+        {minutes} min read
+      </span>
+    </span>
+  );
 }
 
 const portableTextComponents: PortableTextComponents = {
@@ -132,7 +171,10 @@ function SidebarList({
     // Removed divider lines between list items
     <ul>
       {items.slice(0, limit).map((it) => (
-        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
+        <li
+          key={it.id}
+          className={`group relative ${pyClass} pl-4 overflow-visible`}
+        >
           <HoverAccent />
 
           {/* Copper square marker */}
@@ -220,6 +262,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
                 {typedPost.title}
+                <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
               </h1>
 
               {typedPost.subtitle ? (

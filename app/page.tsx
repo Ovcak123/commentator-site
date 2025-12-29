@@ -18,12 +18,14 @@ type CommentaryPost = {
   date?: string;
   slug?: string;
   heroImageUrl?: string;
+  readTimeMinutes?: number;
 };
 
 type NewsItem = {
   id: string;
   title: string;
   slug?: string;
+  readTimeMinutes?: number;
 };
 
 type FeedDoc = {
@@ -65,6 +67,42 @@ function formatDate(dateString?: string) {
   }
 }
 
+/* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
+
+function ReadTimeBadge({ minutes }: { minutes?: number }) {
+  if (!minutes || minutes <= 0) return null;
+
+  return (
+    <span
+      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      aria-label={`${minutes} min read`}
+      title={`${minutes} min read`}
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="shrink-0 text-[#C67C4E]/80"
+      >
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M12 7.5v5l3.25 2"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      <span className="text-[11px] font-medium text-white/55">
+        {minutes} min read
+      </span>
+    </span>
+  );
+}
+
 /* ---------- queries ---------- */
 
 const commentaryHomeQuery = `
@@ -74,6 +112,7 @@ const commentaryHomeQuery = `
     excerpt,
     author,
     publishedAt,
+    readTimeMinutes,
     "slug": slug.current,
     "heroImageUrl": heroImage.asset->url
   }
@@ -115,12 +154,14 @@ async function getHomeData(): Promise<{
     date: formatDate(p.publishedAt),
     slug: p.slug,
     heroImageUrl: p.heroImageUrl,
+    readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
   }));
 
   const newsItems: NewsItem[] = (newsDocs || []).map((n: any) => ({
     id: n._id,
     title: n.title,
     slug: n.slug,
+    readTimeMinutes: typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
   }));
 
   const normalizedFeedDocs: FeedDoc[] = (feedDocs || []).map((f: any) => ({
@@ -320,6 +361,7 @@ function NewsList({
               }}
             >
               {n.title}
+              <ReadTimeBadge minutes={n.readTimeMinutes} />
             </span>
           </Link>
         </li>
@@ -356,7 +398,10 @@ function CommentaryList({
                 overflow: "hidden",
               }}
             >
-              <span className="font-medium">{p.title}</span>
+              <span className="font-medium">
+                {p.title}
+                <ReadTimeBadge minutes={p.readTimeMinutes} />
+              </span>
             </span>
 
             {p.author ? (
@@ -425,6 +470,7 @@ export default async function HomePage() {
                   <FeaturedAccent />
                   <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                     {lead.title}
+                    <ReadTimeBadge minutes={lead.readTimeMinutes} />
                   </h3>
 
                   {lead.excerpt && (
@@ -469,6 +515,7 @@ export default async function HomePage() {
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                             {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -487,6 +534,7 @@ export default async function HomePage() {
                         <>
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92">
                             {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -509,15 +557,10 @@ export default async function HomePage() {
 
               {/* MOBILE News Point block (standalone, NOT inside the grid) */}
               <div className="lg:hidden">
-                {/* Symmetric outer spacing: top rule sits the same distance from content above
-                    as bottom rule sits from content below */}
                 <div className="mt-6 mb-6">
                   <DoubleBlueRule />
                 </div>
 
-                {/* Internal symmetry:
-                    - header -> first item matches last item -> bottom rule
-                    Achieved by section space-y-6 and the bottom rule wrapper mt-6 */}
                 <section id="news-point-mobile" className="space-y-6">
                   <SectionHeader title="News Point" />
                   <NewsList items={newsItems} maxItems={6} />
@@ -553,6 +596,7 @@ export default async function HomePage() {
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white">
                             {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -571,6 +615,7 @@ export default async function HomePage() {
                         <>
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92">
                             {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (

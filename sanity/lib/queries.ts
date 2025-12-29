@@ -14,6 +14,7 @@ export const postsQuery = `
     subtitle,
     author,
     publishedAt,
+    readTimeMinutes,
     "slug": slug.current,
     "heroImageUrl": heroImage.asset->url
   }
@@ -28,6 +29,7 @@ export const singlePostQuery = `
     excerpt,
     author,
     publishedAt,
+    readTimeMinutes,
     "slug": slug.current,
     heroImage,
     body
@@ -51,6 +53,7 @@ export const newsItemsQuery = `
     title,
     source,
     publishedAt,
+    readTimeMinutes,
     "slug": slug.current
   }
 `;
