@@ -1,5 +1,3 @@
-// app/posts/[slug]/page.tsx
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -32,6 +30,7 @@ type SidebarItem = {
   id: string;
   title: string;
   href: string;
+  readTimeMinutes?: number;
 };
 
 /* ---------- Most Read (current: latest 5 commentary posts) ---------- */
@@ -39,6 +38,7 @@ const mostReadQuery = `
   *[_type == "post"] | order(publishedAt desc, _createdAt desc)[0...5]{
     _id,
     title,
+    readTimeMinutes,
     "slug": slug.current
   }
 `;
@@ -48,6 +48,7 @@ const moreCommentaryQuery = `
   *[_type == "post" && slug.current != $slug] | order(publishedAt desc, _createdAt desc)[0...5]{
     _id,
     title,
+    readTimeMinutes,
     "slug": slug.current
   }
 `;
@@ -57,6 +58,7 @@ const latestNewsQuery = `
   *[_type == "newsItem"] | order(publishedAt desc, _createdAt desc)[0...5]{
     _id,
     title,
+    readTimeMinutes,
     "slug": slug.current
   }
 `;
@@ -72,39 +74,31 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
-
-function ReadTimeBadge({ minutes }: { minutes?: number }) {
-  if (!minutes || minutes <= 0) return null;
-
+function ClockIcon({ className = "" }: { className?: string }) {
   return (
-    <span
-      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
-      aria-label={`${minutes} min read`}
-      title={`${minutes} min read`}
+    <svg
+      viewBox="0 0 24 24"
+      width="13"
+      height="13"
+      fill="none"
+      aria-hidden="true"
+      className={className}
     >
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-        className="shrink-0 text-[#C67C4E]/80"
-      >
-        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
-        <path
-          d="M12 7.5v5l3.25 2"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-
-      <span className="text-[11px] font-medium text-white/55">
-        {minutes} min read
-      </span>
-    </span>
+      <path
+        d="M12 7v5l3 2"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -141,9 +135,6 @@ function SectionHeader({ title }: { title: string }) {
         </div>
         <span className="h-1.5 w-1.5 bg-[#7DA2FF]" />
       </div>
-
-      {/* Removed the horizontal rule line under section headers */}
-      {/* <div className="h-px w-full bg-white/10" /> */}
     </div>
   );
 }
@@ -159,16 +150,17 @@ function SidebarList({
   limit = 5,
   lineClamp = 2,
   tight = false,
+  showReadTime = false,
 }: {
   items: SidebarItem[];
   limit?: number;
   lineClamp?: 1 | 2;
   tight?: boolean;
+  showReadTime?: boolean;
 }) {
   const pyClass = tight ? "py-[0.32rem]" : "py-2";
 
   return (
-    // Removed divider lines between list items
     <ul>
       {items.slice(0, limit).map((it) => (
         <li
@@ -177,7 +169,6 @@ function SidebarList({
         >
           <HoverAccent />
 
-          {/* Copper square marker */}
           <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
 
           <Link
@@ -196,6 +187,15 @@ function SidebarList({
             >
               {it.title}
             </span>
+
+            {showReadTime && typeof it.readTimeMinutes === "number" ? (
+              <span className="mt-1 inline-flex items-center gap-1.5 text-[11.5px] leading-none text-white/50">
+                <span className="text-[#C67C4E]/82">
+                  <ClockIcon />
+                </span>
+                <span>{it.readTimeMinutes} min read</span>
+              </span>
+            ) : null}
           </Link>
         </li>
       ))}
@@ -229,6 +229,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       id: p._id,
       title: p.title,
       href: `/posts/${p.slug}`,
+      readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
     }));
 
   const moreCommentary: SidebarItem[] = (moreDocs || [])
@@ -237,6 +238,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       id: p._id,
       title: p.title,
       href: `/posts/${p.slug}`,
+      readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
     }));
 
   const latestNews: SidebarItem[] = (latestNewsDocs || [])
@@ -245,6 +247,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       id: n._id,
       title: n.title,
       href: `/news/${n.slug}`,
+      readTimeMinutes: typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
     }));
 
   return (
@@ -262,7 +265,6 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
                 {typedPost.title}
-                <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
               </h1>
 
               {typedPost.subtitle ? (
@@ -321,20 +323,20 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               <div className="space-y-8">
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight />
+                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
                 </div>
 
                 {moreCommentary.length > 0 ? (
                   <div className="space-y-4">
                     <SectionHeader title="More Commentary" />
-                    <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight />
+                    <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
                   </div>
                 ) : null}
 
                 {latestNews.length > 0 ? (
                   <div className="space-y-4">
                     <SectionHeader title="Latest News" />
-                    <SidebarList items={latestNews} limit={5} lineClamp={1} tight />
+                    <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
                   </div>
                 ) : null}
               </div>
