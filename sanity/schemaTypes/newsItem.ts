@@ -1,4 +1,3 @@
-// sanity/schemaTypes/newsItem.ts
 import { defineField, defineType } from "sanity";
 
 export default defineType({
@@ -11,6 +10,20 @@ export default defineType({
       title: "Title",
       type: "string",
       validation: (Rule) => Rule.required(),
+    }),
+
+    // ✅ NEW: Read time (minutes)
+    defineField({
+      name: "readTimeMinutes",
+      title: "Read time (minutes)",
+      type: "number",
+      description: "Displayed on site as “X min read” next to the headline.",
+      validation: (Rule) =>
+        Rule
+          .integer()
+          .min(1)
+          .max(30)
+          .optional(),
     }),
 
     defineField({
@@ -46,7 +59,6 @@ export default defineType({
         }),
     }),
 
-    // ✅ Optional. Leave blank if you want the site to fall back to "Robin Shepherd".
     defineField({
       name: "author",
       title: "Author",

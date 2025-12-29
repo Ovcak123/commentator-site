@@ -1,4 +1,3 @@
-// sanity/schemaTypes/post.ts
 import { defineType, defineField } from 'sanity'
 
 export default defineType({
@@ -12,6 +11,21 @@ export default defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
+    // ✅ NEW: Read time (minutes)
+    defineField({
+      name: 'readTimeMinutes',
+      title: 'Read time (minutes)',
+      type: 'number',
+      description: 'Displayed on site as “X min read” next to the headline.',
+      validation: (rule) =>
+        rule
+          .integer()
+          .min(1)
+          .max(30)
+          .optional(),
+    }),
+
     defineField({
       name: 'slug',
       title: 'Slug',
