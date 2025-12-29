@@ -44,6 +44,7 @@ type ExternalReadItem = {
   source?: string;
   author?: string;
   href: string;
+  readTimeMinutes?: number; // allow Most Read + future internal items
 };
 
 type MostReadItem = {
@@ -68,14 +69,14 @@ function formatDate(dateString?: string) {
   }
 }
 
-/* ---------- Read time UI (copper icon + subtle text) ---------- */
+/* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
 
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   if (!minutes || minutes <= 0) return null;
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 whitespace-nowrap"
+      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
       aria-label={`${minutes} min read`}
       title={`${minutes} min read`}
     >
@@ -195,7 +196,7 @@ async function getHomeData(): Promise<{
       href: d.url || "#",
     }));
 
-  // Most Read: carry readTimeMinutes through (for badge)
+  // Most Read carries readTimeMinutes through from posts
   const mostRead = commentaryPosts
     .filter((p) => !!p.slug)
     .slice(0, 5)
@@ -232,7 +233,6 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-/* Mobile top line: COMMENTARY highlighted + NEWS POINT scroll link */
 function MobileModeLine() {
   return (
     <div className="lg:hidden">
@@ -258,7 +258,6 @@ function MobileModeLine() {
   );
 }
 
-/* Two thin blue lines (used as separators around mobile News Point block) */
 function DoubleBlueRule() {
   return (
     <div className="space-y-2">
@@ -268,21 +267,18 @@ function DoubleBlueRule() {
   );
 }
 
-/* hover-only accent (used everywhere else) */
 function HoverAccent() {
   return (
     <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-transparent transition-colors group-hover:bg-[#C67C4E]/90" />
   );
 }
 
-/* NEWS-specific accent: permanent but softened */
 function NewsAccent() {
   return (
     <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-[#C67C4E]/25 transition-colors group-hover:bg-[#C67C4E]/90" />
   );
 }
 
-/* COMMENTARY featured accent (hero + 6 cards): permanent but softened */
 function FeaturedAccent() {
   return (
     <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-[#C67C4E]/25 transition-colors group-hover:bg-[#C67C4E]/90" />
@@ -303,33 +299,61 @@ function AggregatorList({
   items: ExternalReadItem[];
   maxItems: number;
 }) {
+  const clamp2 = {
+    display: "-webkit-box",
+    WebkitLineClamp: 2 as any,
+    WebkitBoxOrient: "vertical" as any,
+    overflow: "hidden",
+  };
+
   return (
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((it) => {
         const meta = inlineMeta(it);
+        const isInternal = it.href?.startsWith("/");
+
+        const TitleRow = (
+          <span className="font-medium">
+            <span style={clamp2}>{it.title}</span>
+            <ReadTimeBadge minutes={it.readTimeMinutes} />
+          </span>
+        );
+
         return (
           <li key={it.id} className="group relative overflow-visible">
             <HoverAccent />
-            <a
-              href={it.href}
-              target="_blank"
-              rel="noreferrer"
-              className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
-              <span className="font-medium">{it.title}</span>
-              {meta && (
-                <>
-                  <span className="text-white/45"> — </span>
-                  <span className="text-[#C67C4E] italic">{meta}</span>
-                </>
-              )}
-            </a>
+
+            {isInternal ? (
+              <Link
+                href={it.href}
+                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
+              >
+                {TitleRow}
+
+                {meta && (
+                  <>
+                    <span className="text-white/45"> — </span>
+                    <span className="text-[#C67C4E] italic">{meta}</span>
+                  </>
+                )}
+              </Link>
+            ) : (
+              <a
+                href={it.href}
+                target="_blank"
+                rel="noreferrer"
+                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+              >
+                {TitleRow}
+
+                {meta && (
+                  <>
+                    <span className="text-white/45"> — </span>
+                    <span className="text-[#C67C4E] italic">{meta}</span>
+                  </>
+                )}
+              </a>
+            )}
           </li>
         );
       })}
@@ -353,10 +377,10 @@ function NewsList({
             href={n.slug ? `/news/${n.slug}` : "#"}
             className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
           >
-            <span className="font-semibold">{n.title}</span>
-            <div className="mt-1">
+            <span className="font-semibold">
+              {n.title}
               <ReadTimeBadge minutes={n.readTimeMinutes} />
-            </div>
+            </span>
           </Link>
         </li>
       ))}
@@ -383,59 +407,16 @@ function CommentaryList({
             className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
             title={p.title}
           >
-            <span className="font-medium">{p.title}</span>
-            <div className="mt-1">
+            <span className="font-medium">
+              {p.title}
               <ReadTimeBadge minutes={p.readTimeMinutes} />
-            </div>
+            </span>
 
             {p.author ? (
               <span className="mt-1 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
                 {p.author}
               </span>
             ) : null}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/**
- * Most Read: clamp TITLE ONLY, NEVER clamp the read-time.
- * This prevents “3 min re…” truncation and missing badges.
- */
-function MostReadList({
-  items,
-  maxItems,
-}: {
-  items: MostReadItem[];
-  maxItems: number;
-}) {
-  return (
-    <ul className="space-y-3">
-      {items.slice(0, maxItems).map((m) => (
-        <li key={m.id} className="group relative overflow-visible">
-          <HoverAccent />
-          <Link
-            href={m.href}
-            className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
-          >
-            <span
-              className="font-medium"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-              title={m.title}
-            >
-              {m.title}
-            </span>
-
-            <div className="mt-1">
-              <ReadTimeBadge minutes={m.readTimeMinutes} />
-            </div>
           </Link>
         </li>
       ))}
@@ -451,7 +432,8 @@ export default async function HomePage() {
 
   const lead = commentaryPosts[0];
   const featuredCards = commentaryPosts.slice(1, 7);
-  const commentaryStream = commentaryPosts.slice(7);
+  const listStartIndex = 7;
+  const commentaryStream = commentaryPosts.slice(listStartIndex);
 
   const firstTwoCards = featuredCards.slice(0, 2);
   const remainingCards = featuredCards.slice(2);
@@ -466,7 +448,6 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
-          {/* LEFT */}
           <section className="space-y-10">
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
@@ -492,11 +473,8 @@ export default async function HomePage() {
                   <FeaturedAccent />
                   <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
                     {lead.title}
-                  </h3>
-
-                  <div className="mt-2">
                     <ReadTimeBadge minutes={lead.readTimeMinutes} />
-                  </div>
+                  </h3>
 
                   {lead.excerpt && (
                     <p className="mt-3 text-[16px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
@@ -513,9 +491,7 @@ export default async function HomePage() {
               </article>
             )}
 
-            {/* Featured cards + (MOBILE) standalone News Point inserted between card 2 and 3 */}
             <div className="space-y-0">
-              {/* First two featured cards */}
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {firstTwoCards.map((p) => (
                   <div key={p.id} className="space-y-6">
@@ -540,11 +516,8 @@ export default async function HomePage() {
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
                             {p.title}
-                          </h4>
-
-                          <div className="mt-2">
                             <ReadTimeBadge minutes={p.readTimeMinutes} />
-                          </div>
+                          </h4>
 
                           {p.excerpt ? (
                             <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
@@ -558,13 +531,31 @@ export default async function HomePage() {
                             </p>
                           ) : null}
                         </Link>
-                      ) : null}
+                      ) : (
+                        <>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                          </h4>
+
+                          {p.excerpt ? (
+                            <p className="text-[13.5px] leading-relaxed text-white/62">
+                              {p.excerpt}
+                            </p>
+                          ) : null}
+
+                          {p.author ? (
+                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                              {p.author}
+                            </p>
+                          ) : null}
+                        </>
+                      )}
                     </article>
                   </div>
                 ))}
               </div>
 
-              {/* MOBILE News Point block */}
               <div className="lg:hidden">
                 <div className="mt-6 mb-6">
                   <DoubleBlueRule />
@@ -580,7 +571,6 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* Remaining featured cards */}
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {remainingCards.map((p) => (
                   <div key={p.id} className="space-y-6">
@@ -605,11 +595,8 @@ export default async function HomePage() {
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
                             {p.title}
-                          </h4>
-
-                          <div className="mt-2">
                             <ReadTimeBadge minutes={p.readTimeMinutes} />
-                          </div>
+                          </h4>
 
                           {p.excerpt ? (
                             <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
@@ -623,14 +610,32 @@ export default async function HomePage() {
                             </p>
                           ) : null}
                         </Link>
-                      ) : null}
+                      ) : (
+                        <>
+                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            {p.title}
+                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                          </h4>
+
+                          {p.excerpt ? (
+                            <p className="text-[13.5px] leading-relaxed text-white/62">
+                              {p.excerpt}
+                            </p>
+                          ) : null}
+
+                          {p.author ? (
+                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                              {p.author}
+                            </p>
+                          ) : null}
+                        </>
+                      )}
                     </article>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Commentary stream */}
             <div className="space-y-4 pt-2">
               <CommentaryList items={commentaryStream} maxItems={20} />
 
@@ -646,7 +651,6 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* RIGHT (desktop sidebar) */}
           <aside className="flex flex-col gap-14">
             <section className="hidden lg:block space-y-6">
               <SectionHeader title="News Point" />
@@ -665,7 +669,15 @@ export default async function HomePage() {
 
             <section className="space-y-6">
               <SectionHeader title="Most Read" />
-              <MostReadList items={mostRead} maxItems={5} />
+              <AggregatorList
+                items={mostRead.map((m) => ({
+                  id: m.id,
+                  title: m.title,
+                  href: m.href,
+                  readTimeMinutes: m.readTimeMinutes,
+                }))}
+                maxItems={5}
+              />
             </section>
           </aside>
         </div>
