@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   const navLinkClass = (href: string) => {
     const isActive =
@@ -109,7 +109,10 @@ export default function Header() {
           About
         </Link>
 
-        <Link href="/freedom-reloaded" className={navLinkClass("/freedom-reloaded")}>
+        <Link
+          href="/freedom-reloaded"
+          className={navLinkClass("/freedom-reloaded")}
+        >
           Freedom Reloaded
         </Link>
 
