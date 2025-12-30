@@ -77,7 +77,15 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time (MATCH HOMEPAGE) ---------- */
+/* ---------- Read time (MATCH homepage language + correct wrapping) ---------- */
+/**
+ * Rules:
+ * - Badge is an unbreakable unit (whitespace-nowrap).
+ * - No left margin that would indent when it wraps.
+ * - In headlines we insert {" "} before it, so:
+ *    - stays on same line if room
+ *    - if it wraps, the leading space collapses => badge is flush-left
+ */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
@@ -109,21 +117,6 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
       <span className="text-[11px] font-medium leading-none text-white/55">
         {m} min read
       </span>
-    </span>
-  );
-}
-
-function TitleWithReadTime({
-  title,
-  minutes,
-}: {
-  title: string;
-  minutes?: number;
-}) {
-  return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className="min-w-0 break-words">{title}</span>
-      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -256,19 +249,21 @@ export default async function NewsDetailPage({
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      {/* Mobile: tighten top space; Desktop unchanged */}
-      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            {/* Remove mt-8: this was creating the “too much space” on mobile */}
-            <header className="space-y-3">
+            <header className="space-y-3 mt-8">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
                 News
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
+                <span className="break-words">
+                  {item.title}
+                  {" "}
+                  <ReadTimeBadge minutes={item.readTimeMinutes} />
+                </span>
               </h1>
 
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}

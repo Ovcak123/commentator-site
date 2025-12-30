@@ -83,11 +83,14 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time (MATCH HOMEPAGE) ---------- */
+/* ---------- Read time (MATCH homepage language + correct wrapping) ---------- */
 /**
- * - Copper is applied on the SVG itself (text-[#C67C4E]/80) so it cannot “lose” color via parent styles.
- * - Baseline alignment tuned to sit naturally with headings.
- * - Unbreakable unit.
+ * Rules:
+ * - Badge is an unbreakable unit (whitespace-nowrap).
+ * - No left margin that would indent when it wraps.
+ * - In headlines we insert {" "} before it, so:
+ *    - stays on same line if room
+ *    - if it wraps, the leading space collapses => badge is flush-left
  */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
@@ -120,21 +123,6 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
       <span className="text-[11px] font-medium leading-none text-white/55">
         {m} min read
       </span>
-    </span>
-  );
-}
-
-function TitleWithReadTime({
-  title,
-  minutes,
-}: {
-  title: string;
-  minutes?: number;
-}) {
-  return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className="min-w-0 break-words">{title}</span>
-      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -285,32 +273,27 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     <main className="commentary min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      {/* Mobile: tighten top space; Desktop unchanged */}
-      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            {/* Remove mt-8: this is what was creating the “too much space” on mobile */}
-            <header className="space-y-3">
+            <header className="space-y-3 mt-8">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
                 Commentary
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <TitleWithReadTime
-                  title={typedPost.title}
-                  minutes={typedPost.readTimeMinutes}
-                />
+                <span className="break-words">
+                  {typedPost.title}
+                  {" "}
+                  <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
+                </span>
               </h1>
 
               {typedPost.subtitle ? (
-                <p className="text-[15px] leading-relaxed text-white/70">
-                  {typedPost.subtitle}
-                </p>
+                <p className="text-[15px] leading-relaxed text-white/70">{typedPost.subtitle}</p>
               ) : typedPost.excerpt ? (
-                <p className="text-[15px] leading-relaxed text-white/70">
-                  {typedPost.excerpt}
-                </p>
+                <p className="text-[15px] leading-relaxed text-white/70">{typedPost.excerpt}</p>
               ) : null}
 
               {typedPost.author ? (
@@ -345,9 +328,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 <PortableText value={typedPost.body} components={portableTextComponents} />
               ) : (
                 <p>
-                  This article has no body content yet in Sanity. Once you add
-                  paragraphs to the “Body” field in the Commentary document, they
-                  will appear here.
+                  This article has no body content yet in Sanity. Once you add paragraphs to the “Body” field in the Commentary document, they will appear here.
                 </p>
               )}
             </section>
