@@ -79,14 +79,14 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time UI (MATCHES HOMEPAGE BEHAVIOR) ---------- */
+/* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 whitespace-nowrap align-baseline"
+      className="inline-flex items-baseline gap-1.5 whitespace-nowrap"
       aria-label={`${m} min read`}
       title={`${m} min read`}
     >
@@ -96,7 +96,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
-        className="shrink-0 text-[#C67C4E]/80"
+        className="shrink-0 text-[#C67C4E]/80 relative top-[1px]"
       >
         <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
         <path
@@ -108,18 +108,14 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium text-white/55">{m} min read</span>
+      <span className="text-[11px] font-medium leading-none text-white/55">
+        {m} min read
+      </span>
     </span>
   );
 }
 
-function InlineTitleWithReadTime({
-  title,
-  minutes,
-}: {
-  title: string;
-  minutes?: number;
-}) {
+function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return <>{title}</>;
 
@@ -129,6 +125,23 @@ function InlineTitleWithReadTime({
       {" "}
       <ReadTimeBadge minutes={m} />
     </>
+  );
+}
+
+function TitleWithReadTime({
+  title,
+  minutes,
+  titleClassName = "",
+}: {
+  title: string;
+  minutes?: number;
+  titleClassName?: string;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>
+      <ReadTimeBadge minutes={minutes} />
+    </span>
   );
 }
 
@@ -181,23 +194,21 @@ function SidebarList({
             className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            {showReadTime ? (
-              <span className="font-medium break-words">
+            <span
+              className="font-medium"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: lineClamp,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {showReadTime ? (
                 <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
-              </span>
-            ) : (
-              <span
-                className="font-medium"
-                style={{
-                  display: "-webkit-box",
-                  WebkitLineClamp: lineClamp,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                {it.title}
-              </span>
-            )}
+              ) : (
+                it.title
+              )}
+            </span>
           </Link>
         </li>
       ))}
@@ -266,7 +277,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <InlineTitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
+                <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
               </h1>
 
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
@@ -309,7 +320,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
           {/* SIDEBAR */}
           <aside className="hidden lg:block">
-            <div className="sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto pr-2 overscroll-contain">
+            <div className="sticky top-20">
               <div className="space-y-8">
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
