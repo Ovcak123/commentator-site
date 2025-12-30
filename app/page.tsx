@@ -70,13 +70,18 @@ function formatDate(dateString?: string) {
 }
 
 /* ---------- Read time UI (minimal, copper icon + subtle text) ---------- */
-
+/**
+ * Critical rules enforced here:
+ * - The badge is an unbreakable unit (whitespace-nowrap).
+ * - NO left-margin that would indent when it wraps to a new line.
+ * - Alignment tuned so it sits on the baseline with headline text.
+ */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   if (!minutes || minutes <= 0) return null;
 
   return (
     <span
-      className="ml-2 inline-flex items-center gap-1.5 align-baseline whitespace-nowrap"
+      className="inline-flex items-baseline gap-1.5 whitespace-nowrap"
       aria-label={`${minutes} min read`}
       title={`${minutes} min read`}
     >
@@ -86,7 +91,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
-        className="shrink-0 text-[#C67C4E]/80"
+        className="shrink-0 text-[#C67C4E]/80 relative top-[1px]"
       >
         <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
         <path
@@ -98,9 +103,37 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium text-white/55">
+      <span className="text-[11px] font-medium leading-none text-white/55">
         {minutes} min read
       </span>
+    </span>
+  );
+}
+
+/**
+ * Unified “Title + read time” layout.
+ *
+ * Requirement:
+ * - Badge stays on SAME LINE as last word when possible.
+ * - If there isn’t space, badge drops to next line FLUSH LEFT (no indent).
+ *
+ * Implementation:
+ * - inline-flex + flex-wrap + gap handles the wrap cleanly.
+ * - NO ml-2 on the badge, so if it wraps it lands square on the left.
+ */
+function TitleWithReadTime({
+  title,
+  minutes,
+  titleClassName = "",
+}: {
+  title: string;
+  minutes?: number;
+  titleClassName?: string;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>
+      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -299,25 +332,11 @@ function AggregatorList({
   items: ExternalReadItem[];
   maxItems: number;
 }) {
-  const clamp2 = {
-    display: "-webkit-box",
-    WebkitLineClamp: 2 as any,
-    WebkitBoxOrient: "vertical" as any,
-    overflow: "hidden",
-  };
-
   return (
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((it) => {
         const meta = inlineMeta(it);
         const isInternal = it.href?.startsWith("/");
-
-        const TitleRow = (
-          <span className="font-medium">
-            <span style={clamp2}>{it.title}</span>
-            <ReadTimeBadge minutes={it.readTimeMinutes} />
-          </span>
-        );
 
         return (
           <li key={it.id} className="group relative overflow-visible">
@@ -328,7 +347,9 @@ function AggregatorList({
                 href={it.href}
                 className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
               >
-                {TitleRow}
+                <span className="font-medium">
+                  <TitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
+                </span>
 
                 {meta && (
                   <>
@@ -344,7 +365,9 @@ function AggregatorList({
                 rel="noreferrer"
                 className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
               >
-                {TitleRow}
+                <span className="font-medium">
+                  <TitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
+                </span>
 
                 {meta && (
                   <>
@@ -378,8 +401,7 @@ function NewsList({
             className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
           >
             <span className="font-semibold">
-              {n.title}
-              <ReadTimeBadge minutes={n.readTimeMinutes} />
+              <TitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
             </span>
           </Link>
         </li>
@@ -408,8 +430,7 @@ function CommentaryList({
             title={p.title}
           >
             <span className="font-medium">
-              {p.title}
-              <ReadTimeBadge minutes={p.readTimeMinutes} />
+              <TitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
             </span>
 
             {p.author ? (
@@ -472,8 +493,7 @@ export default async function HomePage() {
                 >
                   <FeaturedAccent />
                   <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                    {lead.title}
-                    <ReadTimeBadge minutes={lead.readTimeMinutes} />
+                    <TitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
                   </h3>
 
                   {lead.excerpt && (
@@ -515,8 +535,7 @@ export default async function HomePage() {
                           <FeaturedAccent />
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -534,8 +553,7 @@ export default async function HomePage() {
                       ) : (
                         <>
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -594,8 +612,7 @@ export default async function HomePage() {
                           <FeaturedAccent />
 
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
@@ -613,8 +630,7 @@ export default async function HomePage() {
                       ) : (
                         <>
                           <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            {p.title}
-                            <ReadTimeBadge minutes={p.readTimeMinutes} />
+                            <TitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                           </h4>
 
                           {p.excerpt ? (
