@@ -113,18 +113,6 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
   );
 }
 
-function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
-  const m = normalizeMinutes(minutes);
-  if (!m) return <>{title}</>;
-
-  return (
-    <>
-      {title}{" "}
-      <ReadTimeBadge minutes={m} />
-    </>
-  );
-}
-
 function TitleWithReadTime({
   title,
   minutes,
@@ -181,34 +169,53 @@ function SidebarList({
 
   return (
     <ul>
-      {items.slice(0, limit).map((it) => (
-        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
-          <HoverAccent />
-          <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
+      {items.slice(0, limit).map((it) => {
+        const m = normalizeMinutes(it.readTimeMinutes);
 
-          <Link
-            href={it.href}
-            className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
-            title={it.title}
-          >
-            <span
-              className="font-medium"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: lineClamp,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
+        return (
+          <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
+            <HoverAccent />
+            <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
+
+            <Link
+              href={it.href}
+              className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+              title={it.title}
             >
               {showReadTime ? (
-                <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
+                // IMPORTANT FIX:
+                // clamp ONLY the title, not title+badge (otherwise badge gets clipped for long titles)
+                <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1 font-medium">
+                  <span
+                    className="min-w-0"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: lineClamp,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {it.title}
+                  </span>
+                  <ReadTimeBadge minutes={m} />
+                </span>
               ) : (
-                it.title
+                <span
+                  className="font-medium"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: lineClamp,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {it.title}
+                </span>
               )}
-            </span>
-          </Link>
-        </li>
-      ))}
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -336,7 +343,13 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 {latestCommentary.length > 0 ? (
                   <div className="space-y-4">
                     <SectionHeader title="Latest Commentary" />
-                    <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight showReadTime />
+                    <SidebarList
+                      items={latestCommentary}
+                      limit={5}
+                      lineClamp={1}
+                      tight
+                      showReadTime
+                    />
                   </div>
                 ) : null}
               </div>
