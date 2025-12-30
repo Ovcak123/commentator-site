@@ -170,7 +170,7 @@ function SidebarTitleRow({
   return (
     <span className="flex items-baseline gap-2 min-w-0 flex-nowrap">
       <span
-        className="min-w-0 break-words"
+        className="min-w-0 flex-1 break-words"
         style={{
           display: "-webkit-box",
           WebkitLineClamp: lineClamp,
