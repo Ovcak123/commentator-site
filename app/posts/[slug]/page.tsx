@@ -84,13 +84,18 @@ function formatDate(dateString?: string): string {
 }
 
 /* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
+/**
+ * IMPORTANT: This badge is inline (inline-flex) + nowrap.
+ * Spacing is handled by the caller using a literal space {" "},
+ * NOT margin classes like ml-2 (which can indent on wrap).
+ */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
 
   return (
     <span
-      className="inline-flex items-baseline gap-1.5 whitespace-nowrap"
+      className="inline-flex items-center gap-1.5 whitespace-nowrap align-baseline"
       aria-label={`${m} min read`}
       title={`${m} min read`}
     >
@@ -100,7 +105,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
-        className="shrink-0 text-[#C67C4E]/80 relative top-[1px]"
+        className="shrink-0 text-[#C67C4E]/80"
       >
         <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
         <path
@@ -112,8 +117,29 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium leading-none text-white/55">{m} min read</span>
+      <span className="text-[11px] font-medium text-white/55">{m} min read</span>
     </span>
+  );
+}
+
+/**
+ * Inline-flow title + badge, to enforce your exact rule:
+ * - Badge stays on same line as last word unless there is truly no room.
+ * - If forced, badge drops to the next line flush-left (no indent).
+ *
+ * This is achieved by normal inline text layout + a nowrap badge,
+ * with spacing provided by a literal space text-node.
+ */
+function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
+  const m = normalizeMinutes(minutes);
+  if (!m) return <>{title}</>;
+
+  return (
+    <>
+      {title}
+      {" "}
+      <ReadTimeBadge minutes={m} />
+    </>
   );
 }
 
@@ -177,42 +203,6 @@ function HoverAccent() {
   );
 }
 
-/**
- * FIX: ensure read-time badge never drops to a new line.
- * - Title is clamped/truncated inside a flex row
- * - Badge is shrink-0 and always visible inline
- * - Does NOT touch sidebar flow/sticky/panel logic
- */
-function SidebarTitleRow({
-  title,
-  minutes,
-  lineClamp,
-}: {
-  title: string;
-  minutes?: number;
-  lineClamp: 1 | 2;
-}) {
-  const m = normalizeMinutes(minutes);
-
-  return (
-    <span className="flex items-baseline gap-2 min-w-0 flex-nowrap">
-      <span
-        className="min-w-0 flex-1 break-words"
-        style={{
-          display: "-webkit-box",
-          WebkitLineClamp: lineClamp,
-          WebkitBoxOrient: "vertical" as any,
-          overflow: "hidden",
-        }}
-      >
-        {title}
-      </span>
-
-      {m ? <ReadTimeBadge minutes={m} /> : null}
-    </span>
-  );
-}
-
 function SidebarList({
   items,
   limit = 5,
@@ -243,11 +233,7 @@ function SidebarList({
           >
             <span className="font-medium">
               {showReadTime ? (
-                <SidebarTitleRow
-                  title={it.title}
-                  minutes={it.readTimeMinutes}
-                  lineClamp={lineClamp}
-                />
+                <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
               ) : (
                 <span
                   style={{
