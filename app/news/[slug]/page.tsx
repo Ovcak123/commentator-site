@@ -1,5 +1,3 @@
-// app/news/[slug]/page.tsx
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -79,43 +77,53 @@ function formatDate(dateString?: string): string {
   });
 }
 
-function ClockIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="13"
-      height="13"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <path
-        d="M12 7v5l3 2"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
+/* ---------- Read time (MATCH HOMEPAGE) ---------- */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
+
   return (
-    <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[12px] leading-none text-white/55">
-      <span className="text-[#C67C4E]/82">
-        <ClockIcon />
+    <span
+      className="inline-flex items-baseline gap-1.5 whitespace-nowrap"
+      aria-label={`${m} min read`}
+      title={`${m} min read`}
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="shrink-0 text-[#C67C4E]/80 relative top-[1px]"
+      >
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M12 7.5v5l3.25 2"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      <span className="text-[11px] font-medium leading-none text-white/55">
+        {m} min read
       </span>
-      <span>{m} min read</span>
+    </span>
+  );
+}
+
+function TitleWithReadTime({
+  title,
+  minutes,
+}: {
+  title: string;
+  minutes?: number;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className="min-w-0 break-words">{title}</span>
+      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -181,7 +189,11 @@ function SidebarList({
               {it.title}
             </span>
 
-            {showReadTime ? <span className="mt-1 block"><ReadTimeBadge minutes={it.readTimeMinutes} /></span> : null}
+            {showReadTime ? (
+              <span className="mt-1 block">
+                <ReadTimeBadge minutes={it.readTimeMinutes} />
+              </span>
+            ) : null}
           </Link>
         </li>
       ))}
@@ -244,20 +256,19 @@ export default async function NewsDetailPage({
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      {/* Mobile: tighten top space; Desktop unchanged */}
+      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            <header className="space-y-3 mt-8">
+            {/* Remove mt-8: this was creating the “too much space” on mobile */}
+            <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
                 News
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span className="min-w-0">{item.title}</span>
-                  <ReadTimeBadge minutes={item.readTimeMinutes} />
-                </span>
+                <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
               </h1>
 
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
