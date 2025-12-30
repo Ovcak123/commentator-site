@@ -1,3 +1,5 @@
+// app/news/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -106,9 +108,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium leading-none text-white/55">
-        {m} min read
-      </span>
+      <span className="text-[11px] font-medium leading-none text-white/55">{m} min read</span>
     </span>
   );
 }
@@ -119,8 +119,7 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
 
   return (
     <>
-      {title}
-      {" "}
+      {title}{" "}
       <ReadTimeBadge minutes={m} />
     </>
   );
@@ -192,24 +191,21 @@ function SidebarList({
             className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            {/* Same critical fix as commentary page */}
-            {showReadTime ? (
-              <span className="font-medium">
+            <span
+              className="font-medium"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: lineClamp,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {showReadTime ? (
                 <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
-              </span>
-            ) : (
-              <span
-                className="font-medium"
-                style={{
-                  display: "-webkit-box",
-                  WebkitLineClamp: lineClamp,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                {it.title}
-              </span>
-            )}
+              ) : (
+                it.title
+              )}
+            </span>
           </Link>
         </li>
       ))}
@@ -272,9 +268,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           {/* MAIN */}
           <div className="max-w-3xl">
             <header className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
-                News
-              </p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">News</p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
                 <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
@@ -283,9 +277,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
 
               {metaParts.length > 0 && (
-                <p className="text-xs text-[rgba(230,233,238,0.55)]">
-                  {metaParts.join(" · ")}
-                </p>
+                <p className="text-xs text-[rgba(230,233,238,0.55)]">{metaParts.join(" · ")}</p>
               )}
 
               {item.externalUrl && (
@@ -320,8 +312,15 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
           {/* SIDEBAR */}
           <aside className="hidden lg:block">
-            <div className="sticky top-20">
-              <div className="space-y-8">
+            <div className="sticky top-16">
+              {/* Bounded “panel” so all three sections are visible together (and stable) */}
+              <div
+                className="pr-3 space-y-6"
+                style={{
+                  maxHeight: "calc(100vh - 6rem)",
+                  overflowY: "auto",
+                }}
+              >
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
                   <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />

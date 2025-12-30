@@ -1,3 +1,5 @@
+// app/posts/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -112,9 +114,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium leading-none text-white/55">
-        {m} min read
-      </span>
+      <span className="text-[11px] font-medium leading-none text-white/55">{m} min read</span>
     </span>
   );
 }
@@ -130,8 +130,7 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
 
   return (
     <>
-      {title}
-      {" "}
+      {title}{" "}
       <ReadTimeBadge minutes={m} />
     </>
   );
@@ -225,27 +224,21 @@ function SidebarList({
             className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            {/* CRITICAL FIX:
-               When showReadTime is true, DO NOT line-clamp using -webkit-box,
-               because it clips the inline read-time badge (this is why "Most Read"
-               lost the badge on article pages). */}
-            {showReadTime ? (
-              <span className="font-medium">
+            <span
+              className="font-medium"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: lineClamp,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {showReadTime ? (
                 <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
-              </span>
-            ) : (
-              <span
-                className="font-medium"
-                style={{
-                  display: "-webkit-box",
-                  WebkitLineClamp: lineClamp,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                {it.title}
-              </span>
-            )}
+              ) : (
+                it.title
+              )}
+            </span>
           </Link>
         </li>
       ))}
@@ -364,8 +357,15 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
           {/* SIDEBAR */}
           <aside className="hidden lg:block">
-            <div className="sticky top-20">
-              <div className="space-y-8">
+            <div className="sticky top-16">
+              {/* Bounded “panel” so all three sections are visible together (and stable) */}
+              <div
+                className="pr-3 space-y-6"
+                style={{
+                  maxHeight: "calc(100vh - 6rem)",
+                  overflowY: "auto",
+                }}
+              >
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
                   <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
