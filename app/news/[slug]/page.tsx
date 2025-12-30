@@ -115,7 +115,13 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
   );
 }
 
-function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
+function InlineTitleWithReadTime({
+  title,
+  minutes,
+}: {
+  title: string;
+  minutes?: number;
+}) {
   const m = normalizeMinutes(minutes);
   if (!m) return <>{title}</>;
 
@@ -128,6 +134,10 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
   );
 }
 
+/**
+ * MAIN H1 TITLE:
+ * homepage-style inline flow (NOT flex-wrap)
+ */
 function TitleWithReadTime({
   title,
   minutes,
@@ -137,23 +147,27 @@ function TitleWithReadTime({
   minutes?: number;
   titleClassName?: string;
 }) {
+  const m = normalizeMinutes(minutes);
+  if (!m) return <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>;
+
   return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+    <>
       <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>
-      <ReadTimeBadge minutes={minutes} />
-    </span>
+      {" "}
+      <ReadTimeBadge minutes={m} />
+    </>
   );
 }
 
 function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="inline-flex items-center gap-3">
         <div className="inline-block">
           <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
             {title}
           </h2>
-          <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
+          <span className="mt-1.5 block h-[2px] w-full bg-[#C67C4E]/35" />
         </div>
         <span className="h-1.5 w-1.5 bg-[#7DA2FF]" />
       </div>
@@ -270,7 +284,6 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            {/* IMPORTANT: remove mt-8 (this is what reintroduced the big mobile gap) */}
             <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
                 News
@@ -321,21 +334,22 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           {/* SIDEBAR */}
           <aside className="hidden lg:block">
             <div className="sticky top-20">
-              <div className="space-y-8">
-                <div className="space-y-4">
+              {/* tightened to keep all 3 sections visible together */}
+              <div className="space-y-6">
+                <div className="space-y-3">
                   <SectionHeader title="Most Read" />
                   <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
                 </div>
 
                 {moreNews.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <SectionHeader title="More News" />
                     <SidebarList items={moreNews} limit={5} lineClamp={1} tight showReadTime />
                   </div>
                 ) : null}
 
                 {latestCommentary.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <SectionHeader title="Latest Commentary" />
                     <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight showReadTime />
                   </div>
