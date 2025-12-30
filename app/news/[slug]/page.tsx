@@ -1,3 +1,5 @@
+// app/news/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -77,15 +79,7 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time (MATCH homepage language + correct wrapping) ---------- */
-/**
- * Rules:
- * - Badge is an unbreakable unit (whitespace-nowrap).
- * - No left margin that would indent when it wraps.
- * - In headlines we insert {" "} before it, so:
- *    - stays on same line if room
- *    - if it wraps, the leading space collapses => badge is flush-left
- */
+/* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
@@ -117,6 +111,23 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
       <span className="text-[11px] font-medium leading-none text-white/55">
         {m} min read
       </span>
+    </span>
+  );
+}
+
+function TitleWithReadTime({
+  title,
+  minutes,
+  titleClassName = "",
+}: {
+  title: string;
+  minutes?: number;
+  titleClassName?: string;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>
+      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -194,11 +205,7 @@ function SidebarList({
   );
 }
 
-export default async function NewsDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function NewsDetailPage({ params }: { params: { slug: string } }) {
   const [item, mostReadDocs, moreNewsDocs, latestCommentaryDocs] = await Promise.all([
     client.fetch(singleNewsQuery, { slug: params.slug }, { cache: "no-store" }),
     client.fetch(mostReadQuery, {}, { cache: "no-store" }),
@@ -208,10 +215,9 @@ export default async function NewsDetailPage({
 
   if (!item || !item.title) notFound();
 
-  const heroUrl =
-    item.heroImage?.asset
-      ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
-      : "";
+  const heroUrl = item.heroImage?.asset
+    ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
+    : "";
 
   const metaParts: string[] = [];
   if (item.author?.trim()) metaParts.push(item.author.trim());
@@ -253,17 +259,14 @@ export default async function NewsDetailPage({
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            <header className="space-y-3 mt-8">
+            {/* IMPORTANT: remove mt-8 (this is what reintroduced the big mobile gap) */}
+            <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
                 News
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <span className="break-words">
-                  {item.title}
-                  {" "}
-                  <ReadTimeBadge minutes={item.readTimeMinutes} />
-                </span>
+                <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
               </h1>
 
               {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
@@ -290,12 +293,7 @@ export default async function NewsDetailPage({
 
             <div className="mt-8 h-52 w-full rounded-xl bg-[rgba(255,255,255,0.06)] overflow-hidden md:h-64">
               {heroUrl && (
-                <img
-                  src={heroUrl}
-                  alt={item.title}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+                <img src={heroUrl} alt={item.title} className="h-full w-full object-cover" loading="lazy" />
               )}
             </div>
 

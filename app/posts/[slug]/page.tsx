@@ -1,3 +1,5 @@
+// app/posts/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -83,15 +85,7 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time (MATCH homepage language + correct wrapping) ---------- */
-/**
- * Rules:
- * - Badge is an unbreakable unit (whitespace-nowrap).
- * - No left margin that would indent when it wraps.
- * - In headlines we insert {" "} before it, so:
- *    - stays on same line if room
- *    - if it wraps, the leading space collapses => badge is flush-left
- */
+/* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
@@ -123,6 +117,23 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
       <span className="text-[11px] font-medium leading-none text-white/55">
         {m} min read
       </span>
+    </span>
+  );
+}
+
+function TitleWithReadTime({
+  title,
+  minutes,
+  titleClassName = "",
+}: {
+  title: string;
+  minutes?: number;
+  titleClassName?: string;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>
+      <ReadTimeBadge minutes={minutes} />
     </span>
   );
 }
@@ -277,17 +288,14 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            <header className="space-y-3 mt-8">
+            {/* IMPORTANT: remove mt-8 (this is what reintroduced the big mobile gap) */}
+            <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
                 Commentary
               </p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <span className="break-words">
-                  {typedPost.title}
-                  {" "}
-                  <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
-                </span>
+                <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
               </h1>
 
               {typedPost.subtitle ? (
@@ -328,7 +336,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 <PortableText value={typedPost.body} components={portableTextComponents} />
               ) : (
                 <p>
-                  This article has no body content yet in Sanity. Once you add paragraphs to the “Body” field in the Commentary document, they will appear here.
+                  This article has no body content yet in Sanity. Once you add paragraphs to the
+                  “Body” field in the Commentary document, they will appear here.
                 </p>
               )}
             </section>
