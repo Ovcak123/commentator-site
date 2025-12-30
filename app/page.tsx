@@ -69,6 +69,27 @@ function formatDate(dateString?: string) {
   }
 }
 
+function normalizeAuthor(value: any): string | undefined {
+  if (typeof value === "string") {
+    const s = value.trim();
+    return s ? s : undefined;
+  }
+  if (value && typeof value === "object") {
+    const candidate =
+      value.name ??
+      value.title ??
+      value.fullName ??
+      value.displayName ??
+      value.author ??
+      undefined;
+    if (typeof candidate === "string") {
+      const s = candidate.trim();
+      return s ? s : undefined;
+    }
+  }
+  return undefined;
+}
+
 /* ---------- Read time UI (copper icon + subtle text) ---------- */
 /**
  * IMPORTANT: This badge is inline (inline-flex) + nowrap.
@@ -102,9 +123,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
         />
       </svg>
 
-      <span className="text-[11px] font-medium text-white/55">
-        {minutes} min read
-      </span>
+      <span className="text-[11px] font-medium text-white/55">{minutes} min read</span>
     </span>
   );
 }
@@ -117,13 +136,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
  * This is achieved by normal inline text layout + a nowrap badge,
  * with spacing provided by a literal space text-node.
  */
-function InlineTitleWithReadTime({
-  title,
-  minutes,
-}: {
-  title: string;
-  minutes?: number;
-}) {
+function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
   if (!minutes || minutes <= 0) return <>{title}</>;
 
   return (
@@ -142,7 +155,7 @@ const commentaryHomeQuery = `
     _id,
     title,
     excerpt,
-    author,
+    "author": coalesce(author, author->name, author.name, author->title, author.title),
     publishedAt,
     readTimeMinutes,
     "slug": slug.current,
@@ -182,20 +195,18 @@ async function getHomeData(): Promise<{
     id: p._id,
     title: p.title,
     excerpt: p.excerpt,
-    author: p.author,
+    author: normalizeAuthor(p.author),
     date: formatDate(p.publishedAt),
     slug: p.slug,
     heroImageUrl: p.heroImageUrl,
-    readTimeMinutes:
-      typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
+    readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
   }));
 
   const newsItems: NewsItem[] = (newsDocs || []).map((n: any) => ({
     id: n._id,
     title: n.title,
     slug: n.slug,
-    readTimeMinutes:
-      typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
+    readTimeMinutes: typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
   }));
 
   const normalizedFeedDocs: FeedDoc[] = (feedDocs || []).map((f: any) => ({
@@ -321,13 +332,7 @@ function inlineMeta(item: ExternalReadItem): string {
 
 /* ---------- lists ---------- */
 
-function AggregatorList({
-  items,
-  maxItems,
-}: {
-  items: ExternalReadItem[];
-  maxItems: number;
-}) {
+function AggregatorList({ items, maxItems }: { items: ExternalReadItem[]; maxItems: number }) {
   return (
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((it) => {
@@ -382,13 +387,7 @@ function AggregatorList({
   );
 }
 
-function NewsList({
-  items,
-  maxItems = 6,
-}: {
-  items: NewsItem[];
-  maxItems?: number;
-}) {
+function NewsList({ items, maxItems = 6 }: { items: NewsItem[]; maxItems?: number }) {
   return (
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((n) => (
@@ -408,13 +407,7 @@ function NewsList({
   );
 }
 
-function CommentaryList({
-  items,
-  maxItems,
-}: {
-  items: CommentaryPost[];
-  maxItems: number;
-}) {
+function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems: number }) {
   const usable = items.filter((p) => !!p.slug);
 
   return (
@@ -446,8 +439,7 @@ function CommentaryList({
 /* ---------- page ---------- */
 
 export default async function HomePage() {
-  const { commentaryPosts, newsItems, feedRead, strategicInsights, mostRead } =
-    await getHomeData();
+  const { commentaryPosts, newsItems, feedRead, strategicInsights, mostRead } = await getHomeData();
 
   const lead = commentaryPosts[0];
   const featuredCards = commentaryPosts.slice(1, 7);
@@ -555,9 +547,7 @@ export default async function HomePage() {
                           </h4>
 
                           {p.excerpt ? (
-                            <p className="text-[13.5px] leading-relaxed text-white/62">
-                              {p.excerpt}
-                            </p>
+                            <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
                           ) : null}
 
                           {p.author ? (
@@ -632,9 +622,7 @@ export default async function HomePage() {
                           </h4>
 
                           {p.excerpt ? (
-                            <p className="text-[13.5px] leading-relaxed text-white/62">
-                              {p.excerpt}
-                            </p>
+                            <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
                           ) : null}
 
                           {p.author ? (

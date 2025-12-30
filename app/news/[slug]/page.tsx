@@ -21,7 +21,7 @@ const singleNewsQuery = `
     slug,
     source,
     externalUrl,
-    author,
+    "author": coalesce(author, author->name, author.name, author->title, author.title),
     publishedAt,
     excerpt,
     body,
@@ -66,6 +66,27 @@ function normalizeMinutes(value: any): number | undefined {
   return undefined;
 }
 
+function normalizeAuthor(value: any): string | undefined {
+  if (typeof value === "string") {
+    const s = value.trim();
+    return s ? s : undefined;
+  }
+  if (value && typeof value === "object") {
+    const candidate =
+      value.name ??
+      value.title ??
+      value.fullName ??
+      value.displayName ??
+      value.author ??
+      undefined;
+    if (typeof candidate === "string") {
+      const s = candidate.trim();
+      return s ? s : undefined;
+    }
+  }
+  return undefined;
+}
+
 function formatDate(dateString?: string): string {
   if (!dateString) return "";
   const d = new Date(dateString);
@@ -78,11 +99,7 @@ function formatDate(dateString?: string): string {
 }
 
 /* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
-/**
- * IMPORTANT: This badge is inline (inline-flex) + nowrap.
- * Spacing is handled by the caller using a literal space {" "},
- * NOT margin classes like ml-2 (which can indent on wrap).
- */
+
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return null;
@@ -233,7 +250,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     : "";
 
   const metaParts: string[] = [];
-  if (item.author?.trim()) metaParts.push(item.author.trim());
+  const authorName = normalizeAuthor(item.author);
+  if (authorName) metaParts.push(authorName);
   if (item.publishedAt) metaParts.push(formatDate(item.publishedAt));
   if (item.source) metaParts.push(item.source);
 
@@ -317,7 +335,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
           {/* SIDEBAR */}
           <aside className="hidden lg:block">
-            {/* ✅ FIX: sticky container owns maxHeight + overflow */}
+            {/* sticky container owns maxHeight + overflow */}
             <div
               className="sticky top-16 pr-3 space-y-6"
               style={{
@@ -340,7 +358,13 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               {latestCommentary.length > 0 ? (
                 <div className="space-y-4">
                   <SectionHeader title="Latest Commentary" />
-                  <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight showReadTime />
+                  <SidebarList
+                    items={latestCommentary}
+                    limit={5}
+                    lineClamp={1}
+                    tight
+                    showReadTime
+                  />
                 </div>
               ) : null}
             </div>

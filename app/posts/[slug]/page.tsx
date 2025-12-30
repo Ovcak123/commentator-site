@@ -13,7 +13,7 @@ type Post = {
   _id: string;
   title: string;
   subtitle?: string;
-  author?: string;
+  author?: any;
   publishedAt?: string;
   slug?: string;
   heroImage?: any;
@@ -73,6 +73,27 @@ function normalizeMinutes(value: any): number | undefined {
   return undefined;
 }
 
+function normalizeAuthor(value: any): string | undefined {
+  if (typeof value === "string") {
+    const s = value.trim();
+    return s ? s : undefined;
+  }
+  if (value && typeof value === "object") {
+    const candidate =
+      value.name ??
+      value.title ??
+      value.fullName ??
+      value.displayName ??
+      value.author ??
+      undefined;
+    if (typeof candidate === "string") {
+      const s = candidate.trim();
+      return s ? s : undefined;
+    }
+  }
+  return undefined;
+}
+
 function formatDate(dateString?: string): string {
   if (!dateString) return "";
   const d = new Date(dateString);
@@ -120,7 +141,8 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
 
   return (
     <>
-      {title}{" "}
+      {title}
+      {" "}
       <ReadTimeBadge minutes={m} />
     </>
   );
@@ -134,6 +156,25 @@ function TitleWithReadTime({ title, minutes }: { title: string; minutes?: number
     </span>
   );
 }
+
+const portableTextComponents: PortableTextComponents = {
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href || value?.url || "";
+      const isExternal = typeof href === "string" && /^https?:\/\//i.test(href);
+      if (!href) return <>{children}</>;
+      return (
+        <a
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noreferrer noopener" : undefined}
+        >
+          {children}
+        </a>
+      );
+    },
+  },
+};
 
 /* ---------- UI ---------- */
 
@@ -162,27 +203,44 @@ function HoverAccent() {
 function SidebarList({
   items,
   limit = 5,
+  lineClamp = 2,
+  tight = false,
   showReadTime = false,
 }: {
   items: SidebarItem[];
   limit?: number;
+  lineClamp?: 1 | 2;
+  tight?: boolean;
   showReadTime?: boolean;
 }) {
+  const pyClass = tight ? "py-[0.32rem]" : "py-2";
+
   return (
     <ul>
       {items.slice(0, limit).map((it) => (
-        <li key={it.id} className="group relative py-[0.32rem] pl-4 overflow-visible">
+        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
           <HoverAccent />
-          <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 group-hover:bg-[#C67C4E]" />
+          <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
+
           <Link
             href={it.href}
-            className="block text-[12.5px] leading-snug text-white/82 group-hover:text-white"
+            className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            title={it.title}
           >
             <span className="font-medium">
               {showReadTime ? (
                 <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
               ) : (
-                it.title
+                <span
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: lineClamp,
+                    WebkitBoxOrient: "vertical" as any,
+                    overflow: "hidden",
+                  }}
+                >
+                  {it.title}
+                </span>
               )}
             </span>
           </Link>
@@ -202,33 +260,45 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     client.fetch(latestNewsQuery, {}, { cache: "no-store" as any }),
   ]);
 
-  if (!post || !post.title) notFound();
+  const typedPost: Post | null = post;
+  if (!typedPost || !typedPost.title) notFound();
+
+  const authorName = normalizeAuthor(typedPost.author);
+  const date = formatDate(typedPost.publishedAt);
 
   const heroUrl =
-    post.heroImage?.asset
-      ? urlFor(post.heroImage).width(1600).height(900).fit("crop").url()
+    typedPost.heroImage && typedPost.heroImage.asset
+      ? urlFor(typedPost.heroImage).width(1600).height(900).fit("crop").url()
+      : typedPost.heroImage
+      ? urlFor(typedPost.heroImage).width(1600).height(900).fit("crop").url()
       : "";
 
-  const mostRead = mostReadDocs.map((p: any) => ({
-    id: p._id,
-    title: p.title,
-    href: `/posts/${p.slug}`,
-    readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
-  }));
+  const mostRead: SidebarItem[] = (mostReadDocs || [])
+    .filter((p: any) => !!p?.slug)
+    .map((p: any) => ({
+      id: p._id,
+      title: p.title,
+      href: `/posts/${p.slug}`,
+      readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
+    }));
 
-  const moreCommentary = moreDocs.map((p: any) => ({
-    id: p._id,
-    title: p.title,
-    href: `/posts/${p.slug}`,
-    readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
-  }));
+  const moreCommentary: SidebarItem[] = (moreDocs || [])
+    .filter((p: any) => !!p?.slug)
+    .map((p: any) => ({
+      id: p._id,
+      title: p.title,
+      href: `/posts/${p.slug}`,
+      readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
+    }));
 
-  const latestNews = latestNewsDocs.map((n: any) => ({
-    id: n._id,
-    title: n.title,
-    href: `/news/${n.slug}`,
-    readTimeMinutes: normalizeMinutes(n.readTimeMinutes),
-  }));
+  const latestNews: SidebarItem[] = (latestNewsDocs || [])
+    .filter((n: any) => !!n?.slug)
+    .map((n: any) => ({
+      id: n._id,
+      title: n.title,
+      href: `/news/${n.slug}`,
+      readTimeMinutes: normalizeMinutes(n.readTimeMinutes),
+    }));
 
   return (
     <main className="commentary min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -238,36 +308,87 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            <h1 className="text-2xl md:text-3xl font-semibold">
-              <TitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
-            </h1>
-            {heroUrl && (
-              <img src={heroUrl} alt={post.title} className="mt-8 w-full object-cover" />
-            )}
-            <section className="mt-10 prose prose-invert max-w-none">
-              <PortableText value={post.body ?? []} />
+            <header className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
+                Commentary
+              </p>
+
+              <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+                <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
+              </h1>
+
+              {typedPost.subtitle ? (
+                <p className="text-[15px] leading-relaxed text-white/70">{typedPost.subtitle}</p>
+              ) : typedPost.excerpt ? (
+                <p className="text-[15px] leading-relaxed text-white/70">{typedPost.excerpt}</p>
+              ) : null}
+
+              {authorName ? (
+                <p className="text-xs">
+                  <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
+                  {date ? (
+                    <span className="text-[rgba(230,233,238,0.55)]">{` · ${date}`}</span>
+                  ) : null}
+                </p>
+              ) : date ? (
+                <p className="text-xs uppercase tracking-[0.16em] text-[rgba(230,233,238,0.55)]">
+                  {date}
+                </p>
+              ) : null}
+            </header>
+
+            {heroUrl ? (
+              <div className="mt-8 h-52 w-full overflow-hidden bg-white/5 ring-1 ring-white/10 md:h-64">
+                <img
+                  src={heroUrl}
+                  alt={typedPost.title}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ) : null}
+
+            <section className="mt-10 prose prose-invert max-w-none text-[17px] leading-relaxed md:text-[18px]">
+              {typedPost.body?.length ? (
+                <PortableText value={typedPost.body} components={portableTextComponents} />
+              ) : (
+                <p>
+                  This article has no body content yet in Sanity. Once you add paragraphs to the
+                  “Body” field in the Commentary document, they will appear here.
+                </p>
+              )}
             </section>
           </div>
 
-          {/* SIDEBAR — FIXED */}
+          {/* SIDEBAR */}
           <aside className="hidden lg:block">
-            <div
-              className="sticky top-16 pr-3 space-y-6 overflow-y-auto"
-              style={{ maxHeight: "calc(100vh - 6rem)" }}
-            >
-              <div className="space-y-4">
-                <SectionHeader title="Most Read" />
-                <SidebarList items={mostRead} showReadTime />
-              </div>
+            <div className="sticky top-16">
+              {/* Bounded “panel” so all three sections are visible together (and stable) */}
+              <div
+                className="pr-3 space-y-6"
+                style={{
+                  maxHeight: "calc(100vh - 6rem)",
+                  overflowY: "auto",
+                }}
+              >
+                <div className="space-y-4">
+                  <SectionHeader title="Most Read" />
+                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
+                </div>
 
-              <div className="space-y-4">
-                <SectionHeader title="More Commentary" />
-                <SidebarList items={moreCommentary} showReadTime />
-              </div>
+                {moreCommentary.length > 0 ? (
+                  <div className="space-y-4">
+                    <SectionHeader title="More Commentary" />
+                    <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
+                  </div>
+                ) : null}
 
-              <div className="space-y-4">
-                <SectionHeader title="Latest News" />
-                <SidebarList items={latestNews} showReadTime />
+                {latestNews.length > 0 ? (
+                  <div className="space-y-4">
+                    <SectionHeader title="Latest News" />
+                    <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
+                  </div>
+                ) : null}
               </div>
             </div>
           </aside>
