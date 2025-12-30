@@ -116,14 +116,6 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
   );
 }
 
-/**
- * Inline-flow title + badge, to enforce your exact rule:
- * - Badge stays on same line as last word unless there is truly no room.
- * - If forced, badge drops to the next line flush-left (no indent).
- *
- * This is achieved by normal inline text layout + a nowrap badge,
- * with spacing provided by a literal space text-node.
- */
 function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return <>{title}</>;
@@ -325,40 +317,32 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
           {/* SIDEBAR */}
           <aside className="hidden lg:block">
-            <div className="sticky top-16">
-              {/* Bounded “panel” so all three sections are visible together (and stable) */}
-              <div
-                className="pr-3 space-y-6"
-                style={{
-                  maxHeight: "calc(100vh - 6rem)",
-                  overflowY: "auto",
-                }}
-              >
-                <div className="space-y-4">
-                  <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
-                </div>
-
-                {moreNews.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="More News" />
-                    <SidebarList items={moreNews} limit={5} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-
-                {latestCommentary.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="Latest Commentary" />
-                    <SidebarList
-                      items={latestCommentary}
-                      limit={5}
-                      lineClamp={1}
-                      tight
-                      showReadTime
-                    />
-                  </div>
-                ) : null}
+            {/* ✅ FIX: sticky container owns maxHeight + overflow */}
+            <div
+              className="sticky top-16 pr-3 space-y-6"
+              style={{
+                maxHeight: "calc(100vh - 6rem)",
+                overflowY: "auto",
+              }}
+            >
+              <div className="space-y-4">
+                <SectionHeader title="Most Read" />
+                <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
               </div>
+
+              {moreNews.length > 0 ? (
+                <div className="space-y-4">
+                  <SectionHeader title="More News" />
+                  <SidebarList items={moreNews} limit={5} lineClamp={1} tight showReadTime />
+                </div>
+              ) : null}
+
+              {latestCommentary.length > 0 ? (
+                <div className="space-y-4">
+                  <SectionHeader title="Latest Commentary" />
+                  <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight showReadTime />
+                </div>
+              ) : null}
             </div>
           </aside>
         </div>
