@@ -141,9 +141,7 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
 
   return (
     <>
-      {title}
-      {" "}
-      <ReadTimeBadge minutes={m} />
+      {title} <ReadTimeBadge minutes={m} />
     </>
   );
 }
@@ -189,10 +187,10 @@ function HoverAccent() {
 
 function SidebarList({
   items,
-  limit = 5,
-  lineClamp = 2,
-  tight = false,
-  showReadTime = false,
+  limit = 3,
+  lineClamp = 1,
+  tight = true,
+  showReadTime = true,
 }: {
   items: SidebarItem[];
   limit?: number;
@@ -335,38 +333,28 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </section>
           </div>
 
-          {/* SIDEBAR */}
+          {/* SIDEBAR (STATIC + STICKY, NO INTERNAL SCROLL) */}
           <aside className="hidden lg:block self-start">
             <div className="sticky top-16">
-              {/* Scroll container with EXTRA bottom padding + spacer so the last item is never clipped */}
-              <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-3 overscroll-contain space-y-6 pb-24">
+              <div className="space-y-6">
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
+                  <SidebarList items={mostRead} limit={3} lineClamp={1} tight showReadTime />
                 </div>
 
                 {moreNews.length > 0 ? (
                   <div className="space-y-4">
                     <SectionHeader title="More News" />
-                    <SidebarList items={moreNews} limit={5} lineClamp={1} tight showReadTime />
+                    <SidebarList items={moreNews} limit={3} lineClamp={1} tight showReadTime />
                   </div>
                 ) : null}
 
                 {latestCommentary.length > 0 ? (
                   <div className="space-y-4">
                     <SectionHeader title="Latest Commentary" />
-                    <SidebarList
-                      items={latestCommentary}
-                      limit={5}
-                      lineClamp={1}
-                      tight
-                      showReadTime
-                    />
+                    <SidebarList items={latestCommentary} limit={3} lineClamp={1} tight showReadTime />
                   </div>
                 ) : null}
-
-                {/* Bigger spacer: forces scroll buffer at the end */}
-                <div className="h-24" aria-hidden="true" />
               </div>
             </div>
           </aside>
