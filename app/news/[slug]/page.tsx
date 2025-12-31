@@ -163,6 +163,8 @@ function TitleWithReadTime({
   );
 }
 
+/* ---------- UI ---------- */
+
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="space-y-2">
@@ -187,10 +189,10 @@ function HoverAccent() {
 
 function SidebarList({
   items,
-  limit = 3,
-  lineClamp = 1,
-  tight = true,
-  showReadTime = true,
+  limit = 4,
+  lineClamp = 2,
+  tight = false,
+  showReadTime = false,
 }: {
   items: SidebarItem[];
   limit?: number;
@@ -232,6 +234,50 @@ function SidebarList({
         </li>
       ))}
     </ul>
+  );
+}
+
+/* ---------- FIXED RIGHT RAIL (STATIC) ---------- */
+
+function FixedRightRail({
+  mostRead,
+  moreNews,
+  latestCommentary,
+}: {
+  mostRead: SidebarItem[];
+  moreNews: SidebarItem[];
+  latestCommentary: SidebarItem[];
+}) {
+  return (
+    <aside
+      className="hidden lg:block fixed z-20 w-[320px]"
+      style={{
+        top: "96px",
+        right: "max(16px, calc(50% - 36rem + 16px))",
+      }}
+      aria-label="Sidebar"
+    >
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <SectionHeader title="Most Read" />
+          <SidebarList items={mostRead} limit={4} lineClamp={2} tight showReadTime />
+        </div>
+
+        {moreNews.length > 0 ? (
+          <div className="space-y-4">
+            <SectionHeader title="More News" />
+            <SidebarList items={moreNews} limit={4} lineClamp={1} tight showReadTime />
+          </div>
+        ) : null}
+
+        {latestCommentary.length > 0 ? (
+          <div className="space-y-4">
+            <SectionHeader title="Latest Commentary" />
+            <SidebarList items={latestCommentary} limit={4} lineClamp={1} tight showReadTime />
+          </div>
+        ) : null}
+      </div>
+    </aside>
   );
 }
 
@@ -286,8 +332,12 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
+      {/* STATIC fixed rail on desktop */}
+      <FixedRightRail mostRead={mostRead} moreNews={moreNews} latestCommentary={latestCommentary} />
+
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
+        {/* Reserve space for the fixed rail on desktop */}
+        <div className="lg:pr-[360px]">
           {/* MAIN */}
           <div className="max-w-3xl">
             <header className="space-y-3">
@@ -332,32 +382,6 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <PortableText value={item.body ?? []} />
             </section>
           </div>
-
-          {/* SIDEBAR (STATIC + STICKY, NO INTERNAL SCROLL) */}
-          <aside className="hidden lg:block self-start">
-            <div className="sticky top-16">
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={3} lineClamp={1} tight showReadTime />
-                </div>
-
-                {moreNews.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="More News" />
-                    <SidebarList items={moreNews} limit={3} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-
-                {latestCommentary.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="Latest Commentary" />
-                    <SidebarList items={latestCommentary} limit={3} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
     </main>

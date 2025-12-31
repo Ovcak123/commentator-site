@@ -137,6 +137,15 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
   );
 }
 
+function TitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className="min-w-0 break-words">{title}</span>
+      <ReadTimeBadge minutes={minutes} />
+    </span>
+  );
+}
+
 function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
   const m = normalizeMinutes(minutes);
   if (!m) return <>{title}</>;
@@ -145,15 +154,6 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
     <>
       {title} <ReadTimeBadge minutes={m} />
     </>
-  );
-}
-
-function TitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
-  return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className="min-w-0 break-words">{title}</span>
-      <ReadTimeBadge minutes={minutes} />
-    </span>
   );
 }
 
@@ -202,10 +202,10 @@ function HoverAccent() {
 
 function SidebarList({
   items,
-  limit = 3,
-  lineClamp = 1,
-  tight = true,
-  showReadTime = true,
+  limit = 4,
+  lineClamp = 2,
+  tight = false,
+  showReadTime = false,
 }: {
   items: SidebarItem[];
   limit?: number;
@@ -247,6 +247,50 @@ function SidebarList({
         </li>
       ))}
     </ul>
+  );
+}
+
+/* ---------- FIXED RIGHT RAIL (STATIC) ---------- */
+
+function FixedRightRail({
+  mostRead,
+  moreCommentary,
+  latestNews,
+}: {
+  mostRead: SidebarItem[];
+  moreCommentary: SidebarItem[];
+  latestNews: SidebarItem[];
+}) {
+  return (
+    <aside
+      className="hidden lg:block fixed z-20 w-[320px]"
+      style={{
+        top: "96px",
+        right: "max(16px, calc(50% - 36rem + 16px))",
+      }}
+      aria-label="Sidebar"
+    >
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <SectionHeader title="Most Read" />
+          <SidebarList items={mostRead} limit={4} lineClamp={2} tight showReadTime />
+        </div>
+
+        {moreCommentary.length > 0 ? (
+          <div className="space-y-4">
+            <SectionHeader title="More Commentary" />
+            <SidebarList items={moreCommentary} limit={4} lineClamp={1} tight showReadTime />
+          </div>
+        ) : null}
+
+        {latestNews.length > 0 ? (
+          <div className="space-y-4">
+            <SectionHeader title="Latest News" />
+            <SidebarList items={latestNews} limit={4} lineClamp={1} tight showReadTime />
+          </div>
+        ) : null}
+      </div>
+    </aside>
   );
 }
 
@@ -304,8 +348,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     <main className="commentary min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
+      {/* STATIC fixed rail on desktop */}
+      <FixedRightRail mostRead={mostRead} moreCommentary={moreCommentary} latestNews={latestNews} />
+
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
+        {/* Reserve space for the fixed rail on desktop */}
+        <div className="lg:pr-[360px]">
           {/* MAIN */}
           <div className="max-w-3xl">
             <header className="space-y-3">
@@ -359,32 +407,6 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               )}
             </section>
           </div>
-
-          {/* SIDEBAR (STATIC + STICKY, NO INTERNAL SCROLL) */}
-          <aside className="hidden lg:block self-start">
-            <div className="sticky top-16">
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={3} lineClamp={1} tight showReadTime />
-                </div>
-
-                {moreCommentary.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="More Commentary" />
-                    <SidebarList items={moreCommentary} limit={3} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-
-                {latestNews.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="Latest News" />
-                    <SidebarList items={latestNews} limit={3} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
     </main>
