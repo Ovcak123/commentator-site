@@ -338,7 +338,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           {/* SIDEBAR */}
           <aside className="hidden lg:block self-start">
             <div className="sticky top-16">
-              <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-3 overscroll-contain pb-16 scroll-pb-16 space-y-6">
+              {/* Scroll container WITH guaranteed bottom spacer so last item is never clipped */}
+              <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-3 overscroll-contain space-y-6">
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
                   <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
@@ -363,6 +364,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                     />
                   </div>
                 ) : null}
+
+                {/* Spacer: creates scroll buffer at the end */}
+                <div className="h-16" aria-hidden="true" />
               </div>
             </div>
           </aside>
