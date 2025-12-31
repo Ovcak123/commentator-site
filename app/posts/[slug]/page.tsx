@@ -361,35 +361,27 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
           </div>
 
           {/* SIDEBAR */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-16">
-              {/* Bounded “panel” so all three sections are visible together (and stable) */}
-              <div
-                className="pr-3 space-y-6"
-                style={{
-                  maxHeight: "calc(100vh - 6rem)",
-                  overflowY: "auto",
-                }}
-              >
-                <div className="space-y-4">
-                  <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
-                </div>
-
-                {moreCommentary.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="More Commentary" />
-                    <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-
-                {latestNews.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="Latest News" />
-                    <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
+          <aside className="hidden lg:block self-start">
+            {/* Sticky only. No nested scroll container (prevents clipping last item). */}
+            <div className="sticky top-16 pr-3 space-y-6 pb-10">
+              <div className="space-y-4">
+                <SectionHeader title="Most Read" />
+                <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
               </div>
+
+              {moreCommentary.length > 0 ? (
+                <div className="space-y-4">
+                  <SectionHeader title="More Commentary" />
+                  <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
+                </div>
+              ) : null}
+
+              {latestNews.length > 0 ? (
+                <div className="space-y-4">
+                  <SectionHeader title="Latest News" />
+                  <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
+                </div>
+              ) : null}
             </div>
           </aside>
         </div>

@@ -334,15 +334,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           </div>
 
           {/* SIDEBAR */}
-          <aside className="hidden lg:block">
-            {/* sticky container owns maxHeight + overflow */}
-            <div
-              className="sticky top-16 pr-3 space-y-6"
-              style={{
-                maxHeight: "calc(100vh - 6rem)",
-                overflowY: "auto",
-              }}
-            >
+          <aside className="hidden lg:block self-start">
+            {/* Sticky only. No maxHeight/overflow scrollbox (prevents clipped last item). */}
+            <div className="sticky top-16 pr-3 space-y-6 pb-10">
               <div className="space-y-4">
                 <SectionHeader title="Most Read" />
                 <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
