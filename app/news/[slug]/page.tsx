@@ -282,6 +282,12 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
+  // OPTION A (News only): slightly stronger first sentence of the lede
+  const ledeText: string = typeof item.excerpt === "string" ? item.excerpt.trim() : "";
+  const firstSentenceMatch = ledeText.match(/^[\s\S]*?[.!?](?=\s)/);
+  const ledeFirstSentence = ledeText ? (firstSentenceMatch ? firstSentenceMatch[0] : ledeText) : "";
+  const ledeRemainder = ledeFirstSentence ? ledeText.slice(ledeFirstSentence.length) : "";
+
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
@@ -297,7 +303,12 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
               </h1>
 
-              {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
+              {ledeText ? (
+                <p className="news-lede">
+                  <span style={{ fontWeight: 450 }}>{ledeFirstSentence}</span>
+                  {ledeRemainder}
+                </p>
+              ) : null}
 
               {metaParts.length > 0 && (
                 <p className="text-xs text-[rgba(230,233,238,0.55)]">{metaParts.join(" · ")}</p>
