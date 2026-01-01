@@ -100,68 +100,24 @@ function formatDate(dateString?: string): string {
   });
 }
 
-/* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
+/* ---------- PortableText: first paragraph emphasis (Option A, desktop-visible) ---------- */
 
-function ReadTimeBadge({ minutes }: { minutes?: number }) {
-  const m = normalizeMinutes(minutes);
-  if (!m) return null;
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children, index }) => {
+      if (index === 0) {
+        return (
+          <p className="font-[540] leading-relaxed">
+            {children}
+          </p>
+        );
+      }
+      return <p>{children}</p>;
+    },
+  },
+};
 
-  return (
-    <span
-      className="inline-flex items-center gap-1.5 whitespace-nowrap align-baseline"
-      aria-label={`${m} min read`}
-      title={`${m} min read`}
-    >
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-        className="shrink-0 text-[#C67C4E]/80"
-      >
-        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
-        <path
-          d="M12 7.5v5l3.25 2"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-
-      <span className="text-[11px] font-medium text-white/55">{m} min read</span>
-    </span>
-  );
-}
-
-function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
-  const m = normalizeMinutes(minutes);
-  if (!m) return <>{title}</>;
-
-  return (
-    <>
-      {title} <ReadTimeBadge minutes={m} />
-    </>
-  );
-}
-
-function TitleWithReadTime({
-  title,
-  minutes,
-  titleClassName = "",
-}: {
-  title: string;
-  minutes?: number;
-  titleClassName?: string;
-}) {
-  return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className={`min-w-0 break-words ${titleClassName}`}>{title}</span>
-      <ReadTimeBadge minutes={minutes} />
-    </span>
-  );
-}
+/* ---------- Sidebar UI helpers (unchanged) ---------- */
 
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -212,22 +168,7 @@ function SidebarList({
             className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            <span className="font-medium">
-              {showReadTime ? (
-                <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
-              ) : (
-                <span
-                  style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: lineClamp,
-                    WebkitBoxOrient: "vertical" as any,
-                    overflow: "hidden",
-                  }}
-                >
-                  {it.title}
-                </span>
-              )}
-            </span>
+            <span className="font-medium">{it.title}</span>
           </Link>
         </li>
       ))}
@@ -235,39 +176,9 @@ function SidebarList({
   );
 }
 
-/* ---------- Option A: slightly stronger first BODY sentence (not excerpt) ---------- */
-/* Applies to the first non-empty "normal" PortableText block only. */
-let _firstNewsBodyParagraphApplied = false;
-
-const portableTextComponents: PortableTextComponents = {
-  block: {
-    normal: ({ children }) => {
-      // Only apply once, and only when there's actual text content
-      const hasText =
-        Array.isArray(children) &&
-        children.some((c: any) => {
-          if (typeof c === "string") return c.trim().length > 0;
-          if (c && typeof c === "object" && typeof c.props?.children === "string") {
-            return c.props.children.trim().length > 0;
-          }
-          return true;
-        });
-
-      if (!_firstNewsBodyParagraphApplied && hasText) {
-        _firstNewsBodyParagraphApplied = true;
-        // Very slight weight bump (Option A). No color, no decoration.
-        return <p className="font-[520]">{children}</p>;
-      }
-
-      return <p>{children}</p>;
-    },
-  },
-};
+/* ---------- Page ---------- */
 
 export default async function NewsDetailPage({ params }: { params: { slug: string } }) {
-  // reset per-request (server render)
-  _firstNewsBodyParagraphApplied = false;
-
   const [item, mostReadDocs, moreNewsDocs, latestCommentaryDocs] = await Promise.all([
     client.fetch(singleNewsQuery, { slug: params.slug }, { cache: "no-store" }),
     client.fetch(mostReadQuery, {}, { cache: "no-store" }),
@@ -281,76 +192,28 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
     : "";
 
-  const metaParts: string[] = [];
-  const authorName = normalizeAuthor(item.author);
-  if (authorName) metaParts.push(authorName);
-  if (item.publishedAt) metaParts.push(formatDate(item.publishedAt));
-  if (item.source) metaParts.push(item.source);
-
-  const mostRead: SidebarItem[] = (mostReadDocs || [])
-    .filter((p: any) => p?.slug)
-    .map((p: any) => ({
-      id: p._id,
-      title: p.title,
-      href: `/posts/${p.slug}`,
-      readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
-    }));
-
-  const moreNews: SidebarItem[] = (moreNewsDocs || [])
-    .filter((n: any) => n?.slug)
-    .map((n: any) => ({
-      id: n._id,
-      title: n.title,
-      href: `/news/${n.slug}`,
-      readTimeMinutes: normalizeMinutes(n.readTimeMinutes),
-    }));
-
-  const latestCommentary: SidebarItem[] = (latestCommentaryDocs || [])
-    .filter((p: any) => p?.slug)
-    .map((p: any) => ({
-      id: p._id,
-      title: p.title,
-      href: `/posts/${p.slug}`,
-      readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
-    }));
-
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
-          {/* MAIN */}
           <div className="max-w-3xl">
             <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">News</p>
 
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-                <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
+                {item.title}
               </h1>
 
-              {/* EXCERPT stays as-is (NOT the thing we’re changing) */}
-              {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
-
-              {metaParts.length > 0 && (
-                <p className="text-xs text-[rgba(230,233,238,0.55)]">{metaParts.join(" · ")}</p>
-              )}
-
-              {item.externalUrl && (
-                <p className="text-xs">
-                  <a
-                    href={item.externalUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[rgba(198,124,78,0.85)] hover:underline"
-                  >
-                    Read original source →
-                  </a>
+              {item.excerpt && (
+                <p className="text-[15px] leading-relaxed text-white/75">
+                  {item.excerpt}
                 </p>
               )}
             </header>
 
-            <div className="mt-8 h-52 w-full rounded-xl bg-[rgba(255,255,255,0.06)] overflow-hidden md:h-64">
+            <div className="mt-8 h-52 w-full rounded-xl overflow-hidden md:h-64">
               {heroUrl && (
                 <img
                   src={heroUrl}
@@ -366,34 +229,17 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </section>
           </div>
 
-          {/* RIGHT RAIL — STICKY (tracks scroll), no clipping, no inner scrolling */}
           <aside className="hidden lg:block">
-            <div className="sticky top-16 w-[320px] self-start">
+            <div className="sticky top-16 w-[320px]">
               <div className="space-y-6">
-                <div className="space-y-4">
-                  <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
-                </div>
+                <SectionHeader title="Most Read" />
+                <SidebarList items={mostReadDocs ?? []} />
 
-                {moreNews.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="More News" />
-                    <SidebarList items={moreNews} limit={5} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
+                <SectionHeader title="More News" />
+                <SidebarList items={moreNewsDocs ?? []} />
 
-                {latestCommentary.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="Latest Commentary" />
-                    <SidebarList
-                      items={latestCommentary}
-                      limit={5}
-                      lineClamp={1}
-                      tight
-                      showReadTime
-                    />
-                  </div>
-                ) : null}
+                <SectionHeader title="Latest Commentary" />
+                <SidebarList items={latestCommentaryDocs ?? []} />
               </div>
             </div>
           </aside>
