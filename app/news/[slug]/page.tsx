@@ -8,7 +8,7 @@ import Link from "next/link";
 import Header from "../../../components/Header";
 import { client } from "../../../sanity/lib/client";
 import { urlFor } from "../../../sanity/lib/image";
-import { PortableText } from "next-sanity";
+import { PortableText, type PortableTextComponents } from "next-sanity";
 
 type SidebarItem = {
   id: string;
@@ -98,24 +98,6 @@ function formatDate(dateString?: string): string {
     day: "numeric",
     year: "numeric",
   });
-}
-
-/**
- * OPTION A (News vs Commentary):
- * Slightly stronger first sentence of News lede only.
- * No other styling changes.
- */
-function splitFirstSentence(text: string): { first: string; rest: string } {
-  const s = (text || "").trim();
-  if (!s) return { first: "", rest: "" };
-
-  // Find the first likely sentence end: ". ", "? ", "! ", or end-of-string.
-  const match = s.match(/^[\s\S]*?[.!?](\s+|$)/);
-  if (!match) return { first: s, rest: "" };
-
-  const first = match[0].trimEnd();
-  const rest = s.slice(match[0].length).trimStart();
-  return { first, rest };
 }
 
 /* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
@@ -253,7 +235,39 @@ function SidebarList({
   );
 }
 
+/* ---------- Option A: slightly stronger first BODY sentence (not excerpt) ---------- */
+/* Applies to the first non-empty "normal" PortableText block only. */
+let _firstNewsBodyParagraphApplied = false;
+
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => {
+      // Only apply once, and only when there's actual text content
+      const hasText =
+        Array.isArray(children) &&
+        children.some((c: any) => {
+          if (typeof c === "string") return c.trim().length > 0;
+          if (c && typeof c === "object" && typeof c.props?.children === "string") {
+            return c.props.children.trim().length > 0;
+          }
+          return true;
+        });
+
+      if (!_firstNewsBodyParagraphApplied && hasText) {
+        _firstNewsBodyParagraphApplied = true;
+        // Very slight weight bump (Option A). No color, no decoration.
+        return <p className="font-[520]">{children}</p>;
+      }
+
+      return <p>{children}</p>;
+    },
+  },
+};
+
 export default async function NewsDetailPage({ params }: { params: { slug: string } }) {
+  // reset per-request (server render)
+  _firstNewsBodyParagraphApplied = false;
+
   const [item, mostReadDocs, moreNewsDocs, latestCommentaryDocs] = await Promise.all([
     client.fetch(singleNewsQuery, { slug: params.slug }, { cache: "no-store" }),
     client.fetch(mostReadQuery, {}, { cache: "no-store" }),
@@ -300,9 +314,6 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
-  const ledeRaw = typeof item.excerpt === "string" ? item.excerpt : "";
-  const lede = splitFirstSentence(ledeRaw);
-
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
@@ -318,13 +329,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
               </h1>
 
-              {/* OPTION A: subtle first-sentence weight increase ONLY for News lede */}
-              {ledeRaw ? (
-                <p className="news-lede">
-                  <span className="font-[460]">{lede.first}</span>
-                  {lede.rest ? <span className="font-normal">{` ${lede.rest}`}</span> : null}
-                </p>
-              ) : null}
+              {/* EXCERPT stays as-is (NOT the thing we’re changing) */}
+              {item.excerpt && <p className="news-lede">{item.excerpt}</p>}
 
               {metaParts.length > 0 && (
                 <p className="text-xs text-[rgba(230,233,238,0.55)]">{metaParts.join(" · ")}</p>
@@ -356,7 +362,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section className="mt-8 prose prose-invert max-w-none">
-              <PortableText value={item.body ?? []} />
+              <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
           </div>
 
