@@ -141,9 +141,7 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
 
   return (
     <>
-      {title}
-      {" "}
-      <ReadTimeBadge minutes={m} />
+      {title} <ReadTimeBadge minutes={m} />
     </>
   );
 }
@@ -335,9 +333,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </section>
           </div>
 
-          {/* SIDEBAR (STATIC RAIL: NO INTERNAL SCROLL) */}
-          <aside className="hidden lg:block self-start">
-            <div className="sticky top-16">
+          {/* RIGHT RAIL — STICKY (tracks scroll), no clipping, no inner scrolling */}
+          <aside className="hidden lg:block">
+            <div className="sticky top-16 w-[320px] self-start">
               <div className="space-y-6">
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
