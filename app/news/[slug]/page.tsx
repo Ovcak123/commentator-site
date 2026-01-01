@@ -100,6 +100,24 @@ function formatDate(dateString?: string): string {
   });
 }
 
+/**
+ * OPTION A (News vs Commentary):
+ * Slightly stronger first sentence of News lede only.
+ * No other styling changes.
+ */
+function splitFirstSentence(text: string): { first: string; rest: string } {
+  const s = (text || "").trim();
+  if (!s) return { first: "", rest: "" };
+
+  // Find the first likely sentence end: ". ", "? ", "! ", or end-of-string.
+  const match = s.match(/^[\s\S]*?[.!?](\s+|$)/);
+  if (!match) return { first: s, rest: "" };
+
+  const first = match[0].trimEnd();
+  const rest = s.slice(match[0].length).trimStart();
+  return { first, rest };
+}
+
 /* ---------- Read time UI (MATCHES HOMEPAGE) ---------- */
 
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
@@ -282,11 +300,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
-  // OPTION A (News only): slightly stronger first sentence of the lede
-  const ledeText: string = typeof item.excerpt === "string" ? item.excerpt.trim() : "";
-  const firstSentenceMatch = ledeText.match(/^[\s\S]*?[.!?](?=\s)/);
-  const ledeFirstSentence = ledeText ? (firstSentenceMatch ? firstSentenceMatch[0] : ledeText) : "";
-  const ledeRemainder = ledeFirstSentence ? ledeText.slice(ledeFirstSentence.length) : "";
+  const ledeRaw = typeof item.excerpt === "string" ? item.excerpt : "";
+  const lede = splitFirstSentence(ledeRaw);
 
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -303,10 +318,11 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 <TitleWithReadTime title={item.title} minutes={item.readTimeMinutes} />
               </h1>
 
-              {ledeText ? (
+              {/* OPTION A: subtle first-sentence weight increase ONLY for News lede */}
+              {ledeRaw ? (
                 <p className="news-lede">
-                  <span style={{ fontWeight: 450 }}>{ledeFirstSentence}</span>
-                  {ledeRemainder}
+                  <span className="font-[460]">{lede.first}</span>
+                  {lede.rest ? <span className="font-normal">{` ${lede.rest}`}</span> : null}
                 </p>
               ) : null}
 
