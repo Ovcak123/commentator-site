@@ -1,10 +1,11 @@
+// app/posts/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
-import MobileShare from "../../../components/MobileShare";
 import { client } from "../../../sanity/lib/client";
 import { singlePostQuery } from "../../../sanity/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
@@ -347,11 +348,6 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </div>
             ) : null}
 
-            {/* MOBILE SHARE (TOP) — below hero, above body */}
-            <div className="mt-3 flex justify-end lg:hidden">
-              <MobileShare title={typedPost.title} />
-            </div>
-
             <section className="mt-10 prose prose-invert max-w-none text-[17px] leading-relaxed md:text-[18px]">
               {typedPost.body?.length ? (
                 <PortableText value={typedPost.body} components={portableTextComponents} />
@@ -362,11 +358,6 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 </p>
               )}
             </section>
-
-            {/* MOBILE SHARE (BOTTOM) — end of article */}
-            <div className="mt-10 flex justify-end lg:hidden">
-              <MobileShare title={typedPost.title} />
-            </div>
           </div>
 
           {/* RIGHT RAIL — STICKY (tracks scroll), no clipping, no inner scrolling */}

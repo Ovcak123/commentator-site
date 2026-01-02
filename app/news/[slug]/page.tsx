@@ -1,10 +1,11 @@
+// app/news/[slug]/page.tsx
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
-import MobileShare from "../../../components/MobileShare";
 import { client } from "../../../sanity/lib/client";
 import { urlFor } from "../../../sanity/lib/image";
 import { PortableText, type PortableTextComponents } from "next-sanity";
@@ -105,7 +106,11 @@ const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children, index }) => {
       if (index === 0) {
-        return <p className="font-[540] leading-relaxed">{children}</p>;
+        return (
+          <p className="font-[540] leading-relaxed">
+            {children}
+          </p>
+        );
       }
       return <p>{children}</p>;
     },
@@ -201,7 +206,11 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 {item.title}
               </h1>
 
-              {item.excerpt && <p className="text-[15px] leading-relaxed text-white/75">{item.excerpt}</p>}
+              {item.excerpt && (
+                <p className="text-[15px] leading-relaxed text-white/75">
+                  {item.excerpt}
+                </p>
+              )}
             </header>
 
             <div className="mt-8 h-52 w-full rounded-xl overflow-hidden md:h-64">
@@ -215,19 +224,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               )}
             </div>
 
-            {/* MOBILE SHARE (TOP) — below hero, above body */}
-            <div className="mt-3 flex justify-end lg:hidden">
-              <MobileShare title={item.title} />
-            </div>
-
             <section className="mt-8 prose prose-invert max-w-none">
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
-
-            {/* MOBILE SHARE (BOTTOM) — end of article */}
-            <div className="mt-10 flex justify-end lg:hidden">
-              <MobileShare title={item.title} />
-            </div>
           </div>
 
           <aside className="hidden lg:block">
