@@ -368,6 +368,28 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
             </div>
+
+            {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
+            <div className="mt-10 space-y-8 lg:hidden">
+              <div className="space-y-4">
+                <SectionHeader title="Most Read" />
+                <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
+              </div>
+
+              {moreCommentary.length > 0 ? (
+                <div className="space-y-4">
+                  <SectionHeader title="More Commentary" />
+                  <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
+                </div>
+              ) : null}
+
+              {latestNews.length > 0 ? (
+                <div className="space-y-4">
+                  <SectionHeader title="Latest News" />
+                  <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
+                </div>
+              ) : null}
+            </div>
           </div>
 
           {/* RIGHT RAIL — STICKY (tracks scroll), no clipping, no inner scrolling */}

@@ -216,6 +216,24 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
+
+            {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
+            <div className="mt-10 space-y-8 lg:hidden">
+              <div className="space-y-4">
+                <SectionHeader title="Most Read" />
+                <SidebarList items={mostRead} />
+              </div>
+
+              <div className="space-y-4">
+                <SectionHeader title="More News" />
+                <SidebarList items={moreNews} />
+              </div>
+
+              <div className="space-y-4">
+                <SectionHeader title="Latest Commentary" />
+                <SidebarList items={latestCommentary} />
+              </div>
+            </div>
           </div>
 
           <aside className="hidden lg:block">
