@@ -58,47 +58,6 @@ const latestCommentaryQuery = `
   }
 `;
 
-function normalizeMinutes(value: any): number | undefined {
-  if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
-  if (typeof value === "string") {
-    const n = Number(value);
-    if (Number.isFinite(n) && n > 0) return n;
-  }
-  return undefined;
-}
-
-function normalizeAuthor(value: any): string | undefined {
-  if (typeof value === "string") {
-    const s = value.trim();
-    return s ? s : undefined;
-  }
-  if (value && typeof value === "object") {
-    const candidate =
-      value.name ??
-      value.title ??
-      value.fullName ??
-      value.displayName ??
-      value.author ??
-      undefined;
-    if (typeof candidate === "string") {
-      const s = candidate.trim();
-      return s ? s : undefined;
-    }
-  }
-  return undefined;
-}
-
-function formatDate(dateString?: string): string {
-  if (!dateString) return "";
-  const d = new Date(dateString);
-  if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
 /* ---------- PortableText: first paragraph emphasis (Option A, desktop-visible) ---------- */
 
 const portableTextComponents: PortableTextComponents = {
@@ -112,7 +71,7 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-/* ---------- Sidebar UI helpers (unchanged) ---------- */
+/* ---------- Sidebar UI helpers ---------- */
 
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -141,13 +100,11 @@ function SidebarList({
   limit = 5,
   lineClamp = 2,
   tight = false,
-  showReadTime = false,
 }: {
   items: SidebarItem[];
   limit?: number;
   lineClamp?: 1 | 2;
   tight?: boolean;
-  showReadTime?: boolean;
 }) {
   const pyClass = tight ? "py-[0.32rem]" : "py-2";
 
@@ -163,7 +120,7 @@ function SidebarList({
             className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            <span className="font-medium">{it.title}</span>
+            <span className="font-medium line-clamp-2">{it.title}</span>
           </Link>
         </li>
       ))}
@@ -183,6 +140,34 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
   if (!item || !item.title) notFound();
 
+  // ✅ Map raw Sanity docs -> SidebarItem (so Link always gets a real href)
+  const mostRead: SidebarItem[] = (mostReadDocs ?? [])
+    .map((d: any) => ({
+      id: d._id,
+      title: d.title ?? "Untitled",
+      href: d.slug ? `/posts/${d.slug}` : "#",
+      readTimeMinutes: d.readTimeMinutes,
+    }))
+    .filter((x: SidebarItem) => x.href !== "#");
+
+  const moreNews: SidebarItem[] = (moreNewsDocs ?? [])
+    .map((d: any) => ({
+      id: d._id,
+      title: d.title ?? "Untitled",
+      href: d.slug ? `/news/${d.slug}` : "#",
+      readTimeMinutes: d.readTimeMinutes,
+    }))
+    .filter((x: SidebarItem) => x.href !== "#");
+
+  const latestCommentary: SidebarItem[] = (latestCommentaryDocs ?? [])
+    .map((d: any) => ({
+      id: d._id,
+      title: d.title ?? "Untitled",
+      href: d.slug ? `/posts/${d.slug}` : "#",
+      readTimeMinutes: d.readTimeMinutes,
+    }))
+    .filter((x: SidebarItem) => x.href !== "#");
+
   const heroUrl = item.heroImage?.asset
     ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
     : "";
@@ -201,7 +186,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 {item.title}
               </h1>
 
-              {item.excerpt && <p className="text-[15px] leading-relaxed text-white/75">{item.excerpt}</p>}
+              {item.excerpt && (
+                <p className="text-[15px] leading-relaxed text-white/75">{item.excerpt}</p>
+              )}
             </header>
 
             <div className="mt-8 h-52 w-full rounded-xl overflow-hidden md:h-64">
@@ -234,13 +221,13 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <div className="sticky top-16 w-[320px]">
               <div className="space-y-6">
                 <SectionHeader title="Most Read" />
-                <SidebarList items={mostReadDocs ?? []} />
+                <SidebarList items={mostRead} />
 
                 <SectionHeader title="More News" />
-                <SidebarList items={moreNewsDocs ?? []} />
+                <SidebarList items={moreNews} />
 
                 <SectionHeader title="Latest Commentary" />
-                <SidebarList items={latestCommentaryDocs ?? []} />
+                <SidebarList items={latestCommentary} />
               </div>
             </div>
           </aside>
