@@ -47,7 +47,7 @@ export default function MobileShare({ title, className }: MobileShareProps) {
         aria-label="Share"
         className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-[12px] font-medium text-[#7DA2FF]/85 ring-1 ring-white/10 transition hover:text-[#7DA2FF] hover:ring-white/20 active:scale-[0.98]"
       >
-        {/* Simple share icon, muted blue */}
+        {/* 3-node share icon (matches your reference), muted blue */}
         <svg
           width="16"
           height="16"
@@ -56,21 +56,17 @@ export default function MobileShare({ title, className }: MobileShareProps) {
           aria-hidden="true"
           className="shrink-0"
         >
+          <circle cx="18" cy="5" r="2" fill="currentColor" />
+          <circle cx="6" cy="12" r="2" fill="currentColor" />
+          <circle cx="18" cy="19" r="2" fill="currentColor" />
           <path
-            d="M12 3v10"
+            d="M8 12l8-6"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
           />
           <path
-            d="M8.5 6.5 12 3l3.5 3.5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M7 10h-.5A2.5 2.5 0 0 0 4 12.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6.5A2.5 2.5 0 0 0 19.5 10H19"
+            d="M8 12l8 6"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
