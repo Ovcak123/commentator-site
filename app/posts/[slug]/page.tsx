@@ -199,6 +199,11 @@ function HoverAccent() {
   );
 }
 
+/**
+ * Shared list renderer (UNCHANGED).
+ * Used by the desktop right rail AND (legacy) any other place.
+ * We keep this untouched to guarantee no desktop drift.
+ */
 function SidebarList({
   items,
   limit = 5,
@@ -229,6 +234,70 @@ function SidebarList({
             <span className="font-medium">
               {showReadTime ? (
                 <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
+              ) : (
+                <span
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: lineClamp,
+                    WebkitBoxOrient: "vertical" as any,
+                    overflow: "hidden",
+                  }}
+                >
+                  {it.title}
+                </span>
+              )}
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * Mobile-only list renderer (NEW).
+ * Used ONLY under the bottom Share icon on mobile.
+ * Option A polish: slightly higher weight + a touch more line-height.
+ */
+function MobileSidebarList({
+  items,
+  limit = 5,
+  lineClamp = 2,
+  tight = false,
+  showReadTime = false,
+}: {
+  items: SidebarItem[];
+  limit?: number;
+  lineClamp?: 1 | 2;
+  tight?: boolean;
+  showReadTime?: boolean;
+}) {
+  const pyClass = tight ? "py-[0.32rem]" : "py-2";
+
+  return (
+    <ul>
+      {items.slice(0, limit).map((it) => (
+        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
+          <HoverAccent />
+          <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
+
+          <Link
+            href={it.href}
+            className="block text-[12.5px] leading-[1.45] text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            title={it.title}
+          >
+            <span className="font-[540]">
+              {showReadTime ? (
+                <span
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: lineClamp,
+                    WebkitBoxOrient: "vertical" as any,
+                    overflow: "hidden",
+                  }}
+                >
+                  <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
+                </span>
               ) : (
                 <span
                   style={{
@@ -373,20 +442,26 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             <div className="mt-10 space-y-8 lg:hidden">
               <div className="space-y-4">
                 <SectionHeader title="Most Read" />
-                <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
+                <MobileSidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
               </div>
 
               {moreCommentary.length > 0 ? (
                 <div className="space-y-4">
                   <SectionHeader title="More Commentary" />
-                  <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
+                  <MobileSidebarList
+                    items={moreCommentary}
+                    limit={5}
+                    lineClamp={1}
+                    tight
+                    showReadTime
+                  />
                 </div>
               ) : null}
 
               {latestNews.length > 0 ? (
                 <div className="space-y-4">
                   <SectionHeader title="Latest News" />
-                  <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
+                  <MobileSidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
                 </div>
               ) : null}
             </div>

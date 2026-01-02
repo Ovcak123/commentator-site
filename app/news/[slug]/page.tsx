@@ -183,9 +183,9 @@ function SidebarList({
 }
 
 /**
- * Mobile-only list renderer (NEW).
+ * Mobile-only list renderer (POLISHED).
  * Used ONLY under the bottom Share icon on mobile to show read time.
- * Desktop remains untouched because desktop does not use this component.
+ * Option A: slight weight bump + a touch more line-height (no brightness change).
  */
 function MobileSidebarList({
   items,
@@ -209,10 +209,10 @@ function MobileSidebarList({
 
           <Link
             href={it.href}
-            className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            className="block text-[12.5px] leading-[1.45] text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            <span className="font-medium">
+            <span className="font-[540]">
               <span
                 style={{
                   display: "-webkit-box",
