@@ -207,8 +207,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <MobileShare title={item.title} />
             </div>
 
-            {/* Tightened: lift body text up by ~one line on mobile */}
-            <section className="mt-4 prose prose-invert max-w-none">
+            {/* Spacing: tighter on mobile after share; looser on desktop after hero */}
+            <section className="mt-2 md:mt-6 prose prose-invert max-w-none">
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
 
