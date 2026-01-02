@@ -352,8 +352,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               <MobileShare title={typedPost.title} />
             </div>
 
-            {/* Tightened: lift body text up by ~one line on mobile */}
-            <section className="mt-6 prose prose-invert max-w-none text-[17px] leading-relaxed md:text-[18px]">
+            {/* Spacing: tighter on mobile after share, looser on desktop after hero */}
+            <section className="mt-4 lg:mt-10 prose prose-invert max-w-none text-[17px] leading-relaxed md:text-[18px]">
               {typedPost.body?.length ? (
                 <PortableText value={typedPost.body} components={portableTextComponents} />
               ) : (
