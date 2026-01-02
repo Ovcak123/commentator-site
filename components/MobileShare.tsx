@@ -45,9 +45,9 @@ export default function MobileShare({ title, className }: MobileShareProps) {
         type="button"
         onClick={handleShare}
         aria-label="Share"
-        className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-[12px] font-medium text-[#7DA2FF]/85 ring-1 ring-white/10 transition hover:text-[#7DA2FF] hover:ring-white/20 active:scale-[0.98]"
+        className="inline-flex items-center gap-2 px-1 py-1 text-[12px] font-medium text-[#7DA2FF]/85 transition hover:text-[#7DA2FF] active:scale-[0.98]"
       >
-        {/* 3-node share icon (matches your reference), muted blue */}
+        {/* 3-node share icon (no box), muted blue */}
         <svg
           width="16"
           height="16"
