@@ -71,6 +71,56 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
+/* ---------- helpers (read time) ---------- */
+
+function normalizeMinutes(value: any): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
+  if (typeof value === "string") {
+    const n = Number(value);
+    if (Number.isFinite(n) && n > 0) return n;
+  }
+  return undefined;
+}
+
+function ReadTimeBadge({ minutes }: { minutes?: number }) {
+  const m = normalizeMinutes(minutes);
+  if (!m) return null;
+
+  return (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap align-baseline">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        className="shrink-0 text-[#C67C4E]/80"
+      >
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M12 7.5v5l3.25 2"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span className="text-[11px] font-medium text-white/55">{m} min read</span>
+    </span>
+  );
+}
+
+function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
+  const m = normalizeMinutes(minutes);
+  if (!m) return <>{title}</>;
+
+  return (
+    <>
+      {title} <ReadTimeBadge minutes={m} />
+    </>
+  );
+}
+
 /* ---------- Sidebar UI helpers ---------- */
 
 function SectionHeader({ title }: { title: string }) {
@@ -95,6 +145,10 @@ function HoverAccent() {
   );
 }
 
+/**
+ * Desktop list renderer (UNCHANGED).
+ * This is used by the right rail on desktop — we are leaving it alone to avoid any desktop changes.
+ */
 function SidebarList({
   items,
   limit = 5,
@@ -128,6 +182,55 @@ function SidebarList({
   );
 }
 
+/**
+ * Mobile-only list renderer (NEW).
+ * Used ONLY under the bottom Share icon on mobile to show read time.
+ * Desktop remains untouched because desktop does not use this component.
+ */
+function MobileSidebarList({
+  items,
+  limit = 5,
+  lineClamp = 2,
+  tight = false,
+}: {
+  items: SidebarItem[];
+  limit?: number;
+  lineClamp?: 1 | 2;
+  tight?: boolean;
+}) {
+  const pyClass = tight ? "py-[0.32rem]" : "py-2";
+
+  return (
+    <ul>
+      {items.slice(0, limit).map((it) => (
+        <li key={it.id} className={`group relative ${pyClass} pl-4 overflow-visible`}>
+          <HoverAccent />
+          <span className="absolute left-0 top-[0.62rem] h-[4px] w-[4px] bg-[#C67C4E]/55 transition-colors duration-150 group-hover:bg-[#C67C4E]" />
+
+          <Link
+            href={it.href}
+            className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            title={it.title}
+          >
+            <span className="font-medium">
+              <span
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: lineClamp,
+                  WebkitBoxOrient: "vertical" as any,
+                  overflow: "hidden",
+                }}
+              >
+                <InlineTitleWithReadTime title={it.title} minutes={it.readTimeMinutes} />
+              </span>
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /* ---------- Page ---------- */
 
 export default async function NewsDetailPage({ params }: { params: { slug: string } }) {
@@ -146,7 +249,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       id: d._id,
       title: d.title ?? "Untitled",
       href: d.slug ? `/posts/${d.slug}` : "#",
-      readTimeMinutes: d.readTimeMinutes,
+      readTimeMinutes: normalizeMinutes(d.readTimeMinutes),
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
@@ -155,7 +258,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       id: d._id,
       title: d.title ?? "Untitled",
       href: d.slug ? `/news/${d.slug}` : "#",
-      readTimeMinutes: d.readTimeMinutes,
+      readTimeMinutes: normalizeMinutes(d.readTimeMinutes),
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
@@ -164,7 +267,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       id: d._id,
       title: d.title ?? "Untitled",
       href: d.slug ? `/posts/${d.slug}` : "#",
-      readTimeMinutes: d.readTimeMinutes,
+      readTimeMinutes: normalizeMinutes(d.readTimeMinutes),
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
@@ -221,21 +324,22 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <div className="mt-10 space-y-8 lg:hidden">
               <div className="space-y-4">
                 <SectionHeader title="Most Read" />
-                <SidebarList items={mostRead} />
+                <MobileSidebarList items={mostRead} />
               </div>
 
               <div className="space-y-4">
                 <SectionHeader title="More News" />
-                <SidebarList items={moreNews} />
+                <MobileSidebarList items={moreNews} />
               </div>
 
               <div className="space-y-4">
                 <SectionHeader title="Latest Commentary" />
-                <SidebarList items={latestCommentary} />
+                <MobileSidebarList items={latestCommentary} />
               </div>
             </div>
           </div>
 
+          {/* DESKTOP RIGHT RAIL — UNCHANGED */}
           <aside className="hidden lg:block">
             <div className="sticky top-16 w-[320px]">
               <div className="space-y-6">
