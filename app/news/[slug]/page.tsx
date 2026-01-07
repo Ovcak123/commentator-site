@@ -27,7 +27,8 @@ const singleNewsQuery = `
     excerpt,
     body,
     heroImage,
-    readTimeMinutes
+    readTimeMinutes,
+    "text": pt::text(body)
   }
 `;
 
@@ -36,7 +37,8 @@ const mostReadQuery = `
     _id,
     title,
     readTimeMinutes,
-    "slug": slug.current
+    "slug": slug.current,
+    "text": pt::text(body)
   }
 `;
 
@@ -45,7 +47,8 @@ const moreNewsQuery = `
     _id,
     title,
     readTimeMinutes,
-    "slug": slug.current
+    "slug": slug.current,
+    "text": pt::text(body)
   }
 `;
 
@@ -54,7 +57,8 @@ const latestCommentaryQuery = `
     _id,
     title,
     readTimeMinutes,
-    "slug": slug.current
+    "slug": slug.current,
+    "text": pt::text(body)
   }
 `;
 
@@ -80,6 +84,17 @@ function normalizeMinutes(value: any): number | undefined {
     if (Number.isFinite(n) && n > 0) return n;
   }
   return undefined;
+}
+
+// Fallback estimator (only used when readTimeMinutes is missing)
+function estimateMinutesFromText(text: any): number | undefined {
+  if (typeof text !== "string") return undefined;
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  if (!Number.isFinite(words) || words <= 0) return undefined;
+
+  // Conservative WPM; clamp to at least 1 minute.
+  const minutes = Math.max(1, Math.round(words / 220));
+  return minutes;
 }
 
 function ReadTimeBadge({ minutes }: { minutes?: number }) {
@@ -146,8 +161,12 @@ function HoverAccent() {
 }
 
 /**
- * Desktop list renderer (UNCHANGED).
- * This is used by the right rail on desktop — we are leaving it alone to avoid any desktop changes.
+ * Desktop list renderer
+ * Goal: match Commentary behavior:
+ * - read-time inline next to headline
+ * - wraps to next line ONLY if space runs out
+ * - NOT forced onto its own line
+ * - NOT clipped/hidden
  */
 function SidebarList({
   items,
@@ -174,7 +193,9 @@ function SidebarList({
             className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
             title={it.title}
           >
-            <span className="font-medium line-clamp-2">{it.title}</span>
+            <span className="font-medium">
+              {it.title} <ReadTimeBadge minutes={it.readTimeMinutes} />
+            </span>
           </Link>
         </li>
       ))}
@@ -183,9 +204,8 @@ function SidebarList({
 }
 
 /**
- * Mobile-only list renderer (POLISHED).
- * Used ONLY under the bottom Share icon on mobile to show read time.
- * Option A: slight weight bump + a touch more line-height (no brightness change).
+ * Mobile-only list renderer (polished).
+ * (UNCHANGED — per instruction: do NOTHING to mobile.)
  */
 function MobileSidebarList({
   items,
@@ -243,13 +263,19 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
   if (!item || !item.title) notFound();
 
-  // ✅ Map raw Sanity docs -> SidebarItem (so Link always gets a real href)
+  // Fallback readtime for the main news item (if readTimeMinutes missing)
+  const itemReadMinutes =
+    normalizeMinutes(item?.readTimeMinutes) ??
+    estimateMinutesFromText(item?.text) ??
+    estimateMinutesFromText(item?.excerpt);
+
+  // ✅ Map raw Sanity docs -> SidebarItem (ensuring readTimeMinutes ALWAYS exists via fallback)
   const mostRead: SidebarItem[] = (mostReadDocs ?? [])
     .map((d: any) => ({
       id: d._id,
       title: d.title ?? "Untitled",
       href: d.slug ? `/posts/${d.slug}` : "#",
-      readTimeMinutes: normalizeMinutes(d.readTimeMinutes),
+      readTimeMinutes: normalizeMinutes(d.readTimeMinutes) ?? estimateMinutesFromText(d.text),
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
@@ -258,7 +284,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       id: d._id,
       title: d.title ?? "Untitled",
       href: d.slug ? `/news/${d.slug}` : "#",
-      readTimeMinutes: normalizeMinutes(d.readTimeMinutes),
+      readTimeMinutes: normalizeMinutes(d.readTimeMinutes) ?? estimateMinutesFromText(d.text),
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
@@ -267,7 +293,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       id: d._id,
       title: d.title ?? "Untitled",
       href: d.slug ? `/posts/${d.slug}` : "#",
-      readTimeMinutes: normalizeMinutes(d.readTimeMinutes),
+      readTimeMinutes: normalizeMinutes(d.readTimeMinutes) ?? estimateMinutesFromText(d.text),
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
@@ -288,6 +314,11 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
                 {item.title}
               </h1>
+
+              {/* Read time (always, via fallback) */}
+              <div className="mt-2">
+                <ReadTimeBadge minutes={itemReadMinutes} />
+              </div>
 
               {item.excerpt && (
                 <p className="text-[15px] leading-relaxed text-white/75">{item.excerpt}</p>
@@ -310,7 +341,6 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <MobileShare title={item.title} />
             </div>
 
-            {/* Spacing: tighter on mobile after share; looser on desktop after hero */}
             <section className="mt-2 md:mt-6 prose prose-invert max-w-none">
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
@@ -339,7 +369,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
           </div>
 
-          {/* DESKTOP RIGHT RAIL — UNCHANGED */}
+          {/* DESKTOP RIGHT RAIL */}
           <aside className="hidden lg:block">
             <div className="sticky top-16 w-[320px]">
               <div className="space-y-6">
