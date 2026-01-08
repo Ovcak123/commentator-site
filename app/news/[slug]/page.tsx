@@ -311,7 +311,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">News</p>
 
-              <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+              {/* ONLY CHANGE: mobile headline +~10% */}
+              <h1 className="text-[26px] font-semibold leading-tight tracking-tight md:text-3xl">
                 {item.title}
               </h1>
 
@@ -349,8 +350,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
-{/* MOBILE ONLY: subtle divider between article and below-article sections */}
-<div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
+
+            {/* MOBILE ONLY: subtle divider between article and below-article sections */}
+            <div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
 
             {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
             <div className="mt-10 space-y-8 lg:hidden">
