@@ -442,14 +442,14 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
 
             {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
-            <div className="mt-10 space-y-8 lg:hidden">
-              <div className="space-y-4">
+            <div className="mt-10 space-y-10 lg:hidden">
+              <div className="space-y-5">
                 <SectionHeader title="Most Read" />
                 <MobileSidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
               </div>
 
               {moreCommentary.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <SectionHeader title="More Commentary" />
                   <MobileSidebarList
                     items={moreCommentary}
@@ -462,7 +462,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               ) : null}
 
               {latestNews.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <SectionHeader title="Latest News" />
                   <MobileSidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
                 </div>
