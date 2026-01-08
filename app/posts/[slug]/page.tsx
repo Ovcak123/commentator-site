@@ -381,7 +381,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 Commentary
               </p>
 
-              <h1 className="text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+              {/* Mobile headline +10% (text-2xl -> text-[1.75rem]) */}
+              <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight md:text-3xl">
                 <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
               </h1>
 
@@ -437,6 +438,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
             </div>
+
             {/* MOBILE ONLY: subtle divider between article and below-article sections */}
             <div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
 
