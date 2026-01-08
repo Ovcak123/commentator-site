@@ -437,6 +437,9 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
             </div>
+            {/* MOBILE ONLY: subtle divider between article and below-article sections */}
+<div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
+
 
             {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
             <div className="mt-10 space-y-8 lg:hidden">
