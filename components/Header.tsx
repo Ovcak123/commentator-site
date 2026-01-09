@@ -33,7 +33,7 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center justify-between gap-4",
-            "px-5 pr-5 pt-[2.43rem] pb-[2.16rem]",
+            "px-5 pr-5 pt-[2.55rem] pb-[2.16rem]",
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
@@ -96,7 +96,7 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 py-2.5 text-[10px] font-semibold uppercase",
+          "mx-auto max-w-6xl px-6 py-2 text-[10px] font-semibold uppercase",
           // single row, never wrap, allow horizontal scroll if needed
           "flex flex-nowrap items-center gap-4 overflow-x-auto whitespace-nowrap",
           // tracking slightly tightened on mobile to comfortably fit 4 items
