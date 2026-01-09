@@ -33,7 +33,7 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center justify-between gap-4",
-            "px-5 pr-5 pt-9 pb-8",
+            "px-5 pr-5 pt-[2.43rem] pb-[2.16rem]",
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
