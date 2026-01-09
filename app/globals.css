@@ -8,7 +8,7 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0B0D10;
+  --bg: #212326;
   --text: #E6E9EE;
   --muted: #9AA1AB;
   --rule: rgba(230, 233, 238, 0.12);
@@ -53,34 +53,34 @@ body::before {
       to bottom,
       rgba(255,255,255,0.03) 0%,
       rgba(198,124,78,0.08) 22%,
-      rgba(11,13,16,0.0) 55%,
+      rgba(33,35,38,0.0) 55%,
       rgba(125,162,255,0.05) 82%,
-      rgba(11,13,16,0.0) 100%
+      rgba(33,35,38,0.0) 100%
     ),
     radial-gradient(
       2200px 1500px at 12% 10%,
       rgba(198,124,78,0.16),
-      rgba(11,13,16,0.0) 70%
+      rgba(33,35,38,0.0) 70%
     ),
     radial-gradient(
       2100px 1400px at 90% 14%,
       rgba(198,124,78,0.12),
-      rgba(11,13,16,0.0) 68%
+      rgba(33,35,38,0.0) 68%
     ),
     radial-gradient(
       2400px 1500px at 50% 96%,
       rgba(198,124,78,0.08),
-      rgba(11,13,16,0.0) 62%
+      rgba(33,35,38,0.0) 62%
     ),
     radial-gradient(
       1600px 1100px at 58% 58%,
       rgba(125,162,255,0.10),
-      rgba(11,13,16,0.0) 60%
+      rgba(33,35,38,0.0) 60%
     ),
     radial-gradient(
       2000px 1600px at 50% 100%,
       rgba(0,0,0,0.62),
-      rgba(11,13,16,0.0) 56%
+      rgba(33,35,38,0.0) 56%
     ),
     repeating-linear-gradient(
       0deg,
