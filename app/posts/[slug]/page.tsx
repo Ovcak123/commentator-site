@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
 import MobileShare from "../../../components/MobileShare";
+import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
 import { singlePostQuery } from "../../../sanity/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
@@ -383,8 +384,19 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
               {/* Mobile headline +10% (text-2xl -> text-[1.75rem]) */}
               <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight md:text-3xl">
-                <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
+                {/* Mobile: title + read-time inline */}
+                <span className="lg:hidden">
+                  <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
+                </span>
+                {/* Desktop: title only (read-time moved to the meta row with Share) */}
+                <span className="hidden lg:inline">{typedPost.title}</span>
               </h1>
+
+              {/* DESKTOP SHARE (TOP) — next to read-time, desktop only */}
+              <div className="hidden items-center justify-between lg:flex">
+                <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
+                <DesktopShare title={typedPost.title} />
+              </div>
 
               {typedPost.subtitle ? (
                 <p className="text-[15px] leading-relaxed text-white/70">{typedPost.subtitle}</p>
@@ -437,6 +449,11 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             {/* MOBILE SHARE (BOTTOM) — end of article */}
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
+            </div>
+
+            {/* DESKTOP SHARE (BOTTOM) — end of article (bottom-right, like mobile) */}
+            <div className="mt-10 hidden justify-end lg:flex">
+              <DesktopShare title={typedPost.title} />
             </div>
 
             {/* MOBILE ONLY: subtle divider between article and below-article sections */}
