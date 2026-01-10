@@ -472,7 +472,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
           {/* RIGHT RAIL — STICKY (tracks scroll), no clipping, no inner scrolling */}
           <aside className="hidden lg:block">
-            <div className="sticky top-16 w-[320px] self-start">
+            <div className="sticky top-16 w-[320px] self-start max-h-[calc(100vh-4rem)] overflow-y-auto pr-1">
+
               <div className="space-y-6">
                 <div className="space-y-4">
                   <SectionHeader title="Most Read" />
