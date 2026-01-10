@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
 import MobileShare from "../../../components/MobileShare";
+import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
 import { urlFor } from "../../../sanity/lib/image";
 import { PortableText, type PortableTextComponents } from "next-sanity";
@@ -179,6 +180,8 @@ function SidebarList({
   lineClamp?: 1 | 2;
   tight?: boolean;
 }) {
+  void lineClamp; // kept for signature compatibility
+
   const pyClass = tight ? "py-[0.32rem]" : "py-2";
 
   return (
@@ -297,8 +300,6 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
-  // IMPORTANT: this is the ONLY valid heroUrl computation.
-  // If you have any stray line like `: "";` above your return, DELETE it.
   const heroUrl =
     item?.heroImage?.asset ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url() : "";
 
@@ -312,14 +313,17 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">News</p>
 
-              {/* ONLY CHANGE: mobile headline +~10% */}
+              {/* mobile headline sizing stays as you had it */}
               <h1 className="text-[26px] font-semibold leading-tight tracking-tight md:text-3xl">
                 {item.title}
               </h1>
 
-              {/* Read time (always, via fallback) */}
-              <div className="mt-2">
+              {/* READ TIME + DESKTOP SHARE (TOP) — match Commentary desktop behavior */}
+              <div className="mt-2 flex items-center justify-between">
                 <ReadTimeBadge minutes={itemReadMinutes} />
+                <div className="hidden lg:block">
+                  <DesktopShare title={item.title} />
+                </div>
               </div>
 
               {item.excerpt && (
@@ -352,6 +356,11 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <MobileShare title={item.title} />
             </div>
 
+            {/* DESKTOP SHARE (BOTTOM) — match where it currently lands on Commentary desktop */}
+            <div className="mt-10 hidden lg:flex justify-center">
+              <DesktopShare title={item.title} />
+            </div>
+
             {/* MOBILE ONLY: subtle divider between article and below-article sections */}
             <div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
 
@@ -377,10 +386,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
           <aside className="hidden lg:block">
             <div className="sticky top-16 w-[320px] self-start">
-              {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
               <div className="origin-top scale-[0.90]">
-  <div className="space-y-5">
-
+                <div className="space-y-5">
                   <div className="space-y-4">
                     <SectionHeader title="Most Read" />
                     <SidebarList items={mostRead} limit={5} lineClamp={2} tight />
