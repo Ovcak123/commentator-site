@@ -378,8 +378,9 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           <aside className="hidden lg:block">
             <div className="sticky top-16 w-[320px] self-start">
               {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
-              <div className="origin-top scale-[0.92]">
-                <div className="space-y-6">
+              <div className="origin-top scale-[0.90]">
+  <div className="space-y-5">
+
                   <div className="space-y-4">
                     <SectionHeader title="Most Read" />
                     <SidebarList items={mostRead} limit={5} lineClamp={2} tight />
