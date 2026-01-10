@@ -180,8 +180,6 @@ function SidebarList({
   lineClamp?: 1 | 2;
   tight?: boolean;
 }) {
-  void lineClamp; // kept for signature compatibility
-
   const pyClass = tight ? "py-[0.32rem]" : "py-2";
 
   return (
@@ -272,7 +270,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     estimateMinutesFromText(item?.text) ??
     estimateMinutesFromText(item?.excerpt);
 
-  // ✅ Map raw Sanity docs -> SidebarItem (ensuring readTimeMinutes ALWAYS exists via fallback)
+  // Map raw Sanity docs -> SidebarItem (ensuring readTimeMinutes exists via fallback)
   const mostRead: SidebarItem[] = (mostReadDocs ?? [])
     .map((d: any) => ({
       id: d._id,
@@ -313,14 +311,16 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">News</p>
 
-              {/* mobile headline sizing stays as you had it */}
+              {/* Mobile headline +~10% */}
               <h1 className="text-[26px] font-semibold leading-tight tracking-tight md:text-3xl">
                 {item.title}
               </h1>
 
-              {/* READ TIME + DESKTOP SHARE (TOP) — match Commentary desktop behavior */}
-              <div className="mt-2 flex items-center justify-between">
+              {/* Read time + DESKTOP share (top-right) */}
+              <div className="mt-2 flex items-center justify-between gap-4">
                 <ReadTimeBadge minutes={itemReadMinutes} />
+
+                {/* Desktop only */}
                 <div className="hidden lg:block">
                   <DesktopShare title={item.title} />
                 </div>
@@ -351,14 +351,14 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
 
+            {/* DESKTOP SHARE (BOTTOM) — end of article (BOTTOM-RIGHT, NOT CENTERED) */}
+            <div className="mt-10 hidden lg:flex justify-end">
+              <DesktopShare title={item.title} />
+            </div>
+
             {/* MOBILE SHARE (BOTTOM) — end of article */}
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
-            </div>
-
-            {/* DESKTOP SHARE (BOTTOM) — match where it currently lands on Commentary desktop */}
-            <div className="mt-10 hidden lg:flex justify-center">
-              <DesktopShare title={item.title} />
             </div>
 
             {/* MOBILE ONLY: subtle divider between article and below-article sections */}
