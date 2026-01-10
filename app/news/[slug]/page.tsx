@@ -297,9 +297,10 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
-  const heroUrl = item.heroImage?.asset
-    ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
-    : "";
+  // IMPORTANT: this is the ONLY valid heroUrl computation.
+  // If you have any stray line like `: "";` above your return, DELETE it.
+  const heroUrl =
+    item?.heroImage?.asset ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url() : "";
 
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -374,21 +375,31 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
           </div>
 
           {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
-<aside className="hidden lg:block">
-  <div className="sticky top-16 w-[320px] self-start">
-    {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
-    <div className="origin-top scale-[0.92]">
-      <div className="space-y-6">
-        <SectionHeader title="Most Read" />
-        <SidebarList items={mostRead} limit={5} lineClamp={2} tight />
+          <aside className="hidden lg:block">
+            <div className="sticky top-16 w-[320px] self-start">
+              {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
+              <div className="origin-top scale-[0.92]">
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <SectionHeader title="Most Read" />
+                    <SidebarList items={mostRead} limit={5} lineClamp={2} tight />
+                  </div>
 
-        <SectionHeader title="More News" />
-        <SidebarList items={moreNews} limit={5} lineClamp={1} tight />
+                  <div className="space-y-4">
+                    <SectionHeader title="More News" />
+                    <SidebarList items={moreNews} limit={5} lineClamp={1} tight />
+                  </div>
 
-        <SectionHeader title="Latest Commentary" />
-        <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight />
+                  <div className="space-y-4">
+                    <SectionHeader title="Latest Commentary" />
+                    <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
-  </div>
-</aside>
-
+    </main>
+  );
+}
