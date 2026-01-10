@@ -373,24 +373,22 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
           </div>
 
-          {/* DESKTOP RIGHT RAIL */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-12 max-h-[calc(100vh-3rem)] overflow-hidden w-[320px]">
+          {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
+<aside className="hidden lg:block">
+  <div className="sticky top-16 w-[320px] self-start">
+    {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
+    <div className="origin-top scale-[0.92]">
+      <div className="space-y-6">
+        <SectionHeader title="Most Read" />
+        <SidebarList items={mostRead} limit={5} lineClamp={2} tight />
 
-              <div className="space-y-6">
-                <SectionHeader title="Most Read" />
-                <SidebarList items={mostRead} />
+        <SectionHeader title="More News" />
+        <SidebarList items={moreNews} limit={5} lineClamp={1} tight />
 
-                <SectionHeader title="More News" />
-                <SidebarList items={moreNews} />
-
-                <SectionHeader title="Latest Commentary" />
-                <SidebarList items={latestCommentary} />
-              </div>
-            </div>
-          </aside>
-        </div>
+        <SectionHeader title="Latest Commentary" />
+        <SidebarList items={latestCommentary} limit={5} lineClamp={1} tight />
       </div>
-    </main>
-  );
-}
+    </div>
+  </div>
+</aside>
+
