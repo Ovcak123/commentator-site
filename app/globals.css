@@ -91,6 +91,22 @@ body::before {
     );
 }
 
+/* NEW: subtle noise texture overlay (expects /public/noise.png) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background-image: url("/noise.png");
+  background-repeat: repeat;
+  background-size: 420px 420px;
+
+  opacity: 0.08; /* adjust 0.05–0.12 if you want */
+  mix-blend-mode: overlay;
+}
+
 #__next,
 main {
   position: relative;
