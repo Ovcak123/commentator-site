@@ -470,29 +470,37 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* RIGHT RAIL — STICKY (tracks scroll), no clipping, no inner scrolling */}
+          {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
           <aside className="hidden lg:block">
-            <div className="sticky top-16 w-[320px] self-start max-h-[calc(100vh-4rem)] overflow-y-auto pr-1">
+            <div className="sticky top-16 w-[320px] self-start">
+              {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
+              <div className="origin-top scale-[0.92]">
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <SectionHeader title="Most Read" />
+                    <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
+                  </div>
 
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <SectionHeader title="Most Read" />
-                  <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
+                  {moreCommentary.length > 0 ? (
+                    <div className="space-y-4">
+                      <SectionHeader title="More Commentary" />
+                      <SidebarList
+                        items={moreCommentary}
+                        limit={5}
+                        lineClamp={1}
+                        tight
+                        showReadTime
+                      />
+                    </div>
+                  ) : null}
+
+                  {latestNews.length > 0 ? (
+                    <div className="space-y-4">
+                      <SectionHeader title="Latest News" />
+                      <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
+                    </div>
+                  ) : null}
                 </div>
-
-                {moreCommentary.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="More Commentary" />
-                    <SidebarList items={moreCommentary} limit={5} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
-
-                {latestNews.length > 0 ? (
-                  <div className="space-y-4">
-                    <SectionHeader title="Latest News" />
-                    <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
-                  </div>
-                ) : null}
               </div>
             </div>
           </aside>
