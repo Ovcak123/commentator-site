@@ -375,7 +375,8 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
 
           {/* DESKTOP RIGHT RAIL */}
           <aside className="hidden lg:block">
-            <div className="sticky top-16 w-[320px]">
+            <div className="sticky top-12 max-h-[calc(100vh-3rem)] overflow-hidden w-[320px]">
+
               <div className="space-y-6">
                 <SectionHeader title="Most Read" />
                 <SidebarList items={mostRead} />
