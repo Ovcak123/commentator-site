@@ -8,7 +8,14 @@
 
 :root {
   color-scheme: dark;
-  --bg: #212326;
+
+  /* Keep the site chrome/header sharp */
+  --bg: #0B0D10;
+
+  /* Reading surface: ~15% lighter charcoal than header
+     +5% darken from #12161C -> #11151B */
+  --page-bg: #11151B;
+
   --text: #E6E9EE;
   --muted: #9AA1AB;
   --rule: rgba(230, 233, 238, 0.12);
@@ -38,6 +45,55 @@ body {
 }
 
 /* =========================================================
+   CRITICAL: GLOBAL CONTROL OVER PAGE SURFACE
+   ---------------------------------------------------------
+   Your pages hardcode bg-[#0B0D10] on <main>.
+   This overrides globals unless we take control here.
+   We ONLY target <main>, so the header keeps its sharp black.
+   ========================================================= */
+
+/* Default: any <main> becomes the reading-surface charcoal */
+main {
+  background: var(--page-bg);
+}
+
+/* Override the explicit Tailwind bg classes used in your pages */
+main[class*="bg-[#0B0D10]"],
+main[class*="bg-[#0E1116]"],
+main[class*="bg-black"],
+main[class*="bg-neutral-9"] {
+  background-color: var(--page-bg) !important;
+}
+
+/* =========================================================
+   FIX: MAKE HEADER MATCH THE BODY (page surface)
+   ---------------------------------------------------------
+   Your header is still rendering on --bg (#0B0D10) and/or has
+   Tailwind bg-[#0B0D10] classes. Force it to --page-bg.
+   ========================================================= */
+
+/* Paint the header itself to the same shade as <main> */
+header {
+  background-color: var(--page-bg) !important;
+}
+
+/* If the Header component uses nested wrappers with bg classes,
+   force those too. This is intentionally broad but scoped to header. */
+header [class*="bg-[#0B0D10]"],
+header [class*="bg-[#0E1116]"],
+header [class*="bg-black"],
+header [class*="bg-neutral-9"] {
+  background-color: var(--page-bg) !important;
+}
+
+/* If your header uses any blur/glass effect, remove it so the shade matches */
+header,
+header * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* =========================================================
    ATMOSPHERIC BACKGROUND
    ========================================================= */
 
@@ -53,34 +109,34 @@ body::before {
       to bottom,
       rgba(255,255,255,0.03) 0%,
       rgba(198,124,78,0.08) 22%,
-      rgba(33,35,38,0.0) 55%,
+      rgba(52,55,60,0.0) 55%,
       rgba(125,162,255,0.05) 82%,
-      rgba(33,35,38,0.0) 100%
+      rgba(52,55,60,0.0) 100%
     ),
     radial-gradient(
       2200px 1500px at 12% 10%,
       rgba(198,124,78,0.16),
-      rgba(33,35,38,0.0) 70%
+      rgba(52,55,60,0.0) 70%
     ),
     radial-gradient(
       2100px 1400px at 90% 14%,
       rgba(198,124,78,0.12),
-      rgba(33,35,38,0.0) 68%
+      rgba(52,55,60,0.0) 68%
     ),
     radial-gradient(
       2400px 1500px at 50% 96%,
       rgba(198,124,78,0.08),
-      rgba(33,35,38,0.0) 62%
+      rgba(52,55,60,0.0) 62%
     ),
     radial-gradient(
       1600px 1100px at 58% 58%,
       rgba(125,162,255,0.10),
-      rgba(33,35,38,0.0) 60%
+      rgba(52,55,60,0.0) 60%
     ),
     radial-gradient(
       2000px 1600px at 50% 100%,
-      rgba(0,0,0,0.62),
-      rgba(33,35,38,0.0) 56%
+      rgba(0,0,0,0.25),
+      rgba(52,55,60,0.0) 56%
     ),
     repeating-linear-gradient(
       0deg,
@@ -91,7 +147,7 @@ body::before {
     );
 }
 
-/* NEW: subtle noise texture overlay (expects /public/noise.png) */
+/* NOISE — EXTREMELY SUBTLE, NON-DOMINANT */
 body::after {
   content: "";
   position: fixed;
@@ -101,10 +157,11 @@ body::after {
 
   background-image: url("/noise.png");
   background-repeat: repeat;
-  background-size: 420px 420px;
+  background-size: 300px 300px;
 
-  opacity: 0.08; /* adjust 0.05–0.12 if you want */
-  mix-blend-mode: overlay;
+  opacity: 0.035;
+  filter: contrast(110%) brightness(102%);
+  mix-blend-mode: normal;
 }
 
 #__next,
@@ -151,7 +208,7 @@ p {
 }
 
 /* =========================================================
-   DROP CAP — DEFAULT (Commentary + About + Freedom Reloaded + Contact)
+   DROP CAP — DEFAULT
    ========================================================= */
 
 .prose p:first-of-type::first-letter {
@@ -168,7 +225,7 @@ p {
 }
 
 /* =========================================================
-   DROP CAP OVERRIDE — allow opting out per-page (e.g., News)
+   DROP CAP OVERRIDE
    ========================================================= */
 
 .no-dropcap.prose p:first-of-type::first-letter,
@@ -185,7 +242,7 @@ p {
 }
 
 /* =========================================================
-   NEWS — PREMIUM, UNIFORM BODY (NO DROP CAP)
+   NEWS
    ========================================================= */
 
 .news .prose {
@@ -204,7 +261,6 @@ p {
   margin: 0 0 0.9em 0;
 }
 
-/* Explicitly disable drop cap in News */
 .news .prose p:first-of-type::first-letter {
   float: none;
   font-size: inherit;
@@ -269,32 +325,24 @@ img {
 }
 
 /* =========================================================
-   FOOTER — COMPACT, NO PURPLE, NO HARD BORDER
+   FOOTER
    ========================================================= */
 
 .site-footer {
   position: relative;
   z-index: 1;
-
-  /* Slightly lighter than body, but FULLY OPAQUE to stop gradient bleed */
   background: #111418;
-
-  /* No hard border line */
   border-top: none;
-
-  /* Cut the depth (compact) */
   padding: 14px 0;
 }
 
 .site-footer-inner {
-  max-width: 72rem; /* 6xl */
+  max-width: 72rem;
   padding: 0 24px;
   margin: 0 auto;
 
   font-size: 12px;
   line-height: 1.4;
   letter-spacing: 0.02em;
-
-  /* Opacity target: 38% */
   color: rgba(230, 233, 238, 0.38);
 }
