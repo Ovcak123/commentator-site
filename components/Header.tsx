@@ -17,7 +17,6 @@ export default function Header() {
       "relative no-underline hover:no-underline",
       "transition-colors duration-200",
       isActive ? "text-[#E6E9EE]" : "text-[#9AA1AB] hover:text-[#E6E9EE]",
-      // underline treatment (matches your editorial copper language)
       "after:content-[''] after:absolute after:left-0 after:-bottom-[6px]",
       "after:h-[1px] after:w-full after:bg-[#B87449]/70",
       "after:opacity-0 after:transition-opacity after:duration-200",
@@ -43,11 +42,11 @@ export default function Header() {
             aria-label="Go to homepage"
             className="group block max-w-full no-underline hover:no-underline focus:outline-none"
           >
-            {/* Title line — MUST stay one line */}
+            {/* Title */}
             <span
               className={[
-                "block max-w-full font-bold transition-colors duration-200 group-hover:text-white",
-                "text-[24px] tracking-[0.10em] whitespace-nowrap",
+                "block max-w-full font-bold text-white/95 transition-colors duration-200 group-hover:text-white",
+                "text-[26px] tracking-[0.08em] whitespace-nowrap",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
@@ -56,7 +55,7 @@ export default function Header() {
                 src="/commentator-mark.png"
                 alt=""
                 aria-hidden="true"
-                className="inline-block opacity-[0.62] -ml-[2px] mr-3 sm:mr-4"
+                className="inline-block -ml-[2px] mr-3 opacity-[0.74] sm:mr-4 sm:opacity-[0.62]"
                 style={{
                   width: "32px",
                   height: "32px",
@@ -66,15 +65,12 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle — mobile (ONE LINE) */}
-            <span
-              className="mt-0.5 block text-[11px] tracking-wide whitespace-nowrap transition-colors duration-200 group-hover:text-[#E6E9EE] sm:hidden"
-              style={{ color: "#D6DAE1" }}
-            >
-              Freedom in the Age of AI. An OPMM by Robin Shepherd
+            {/* Subtitle — mobile (aligned under text, not icon) */}
+            <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-white/78 transition-colors duration-200 group-hover:text-white/88 sm:hidden">
+              Freedom in the Age of AI
             </span>
 
-            {/* Subtitle — desktop (ONE LINE) */}
+            {/* Subtitle — desktop */}
             <span
               className="mt-1 hidden text-[11px] tracking-wide whitespace-nowrap transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
               style={{
@@ -82,13 +78,13 @@ export default function Header() {
                 paddingLeft: "calc(46px + 0.22em)",
               }}
             >
-              Freedom in the Age of AI. An OPMM by Robin Shepherd
+              Freedom in the Age of AI
             </span>
 
             <span className="sr-only">Home</span>
           </Link>
 
-          {/* Right side intentionally empty (reserved for future banner/utility) */}
+          {/* Right side intentionally empty */}
           <div className="shrink-0" aria-hidden="true" />
         </div>
       </div>
@@ -97,9 +93,7 @@ export default function Header() {
       <nav
         className={[
           "mx-auto max-w-6xl px-6 py-2 text-[10px] font-semibold uppercase",
-          // single row, never wrap, allow horizontal scroll if needed
           "flex flex-nowrap items-center gap-4 overflow-x-auto whitespace-nowrap",
-          // tracking slightly tightened on mobile to comfortably fit 4 items
           "tracking-[0.14em]",
           "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
         ].join(" ")}
