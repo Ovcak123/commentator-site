@@ -482,15 +482,15 @@ export default async function HomePage() {
       className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
     >
       <FeaturedAccent />
-      <h3 className="text-[42px] font-semibold leading-[1.08] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
+      <h3 className="mt-5 text-[42px] font-semibold leading-[1.08] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
   <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
 </h3>
 
-      {lead.excerpt && (
-        <p className="mt-4 max-w-[36ch] text-[17px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70 lg:max-w-none lg:text-[16px]">
-          {lead.excerpt}
-        </p>
-      )}
+{lead.excerpt && (
+  <p className="mt-3 max-w-[36ch] text-[17px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70 lg:max-w-none lg:text-[16px]">
+    {lead.excerpt}
+  </p>
+)}
 
       {lead.author ? (
         <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
