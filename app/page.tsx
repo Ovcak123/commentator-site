@@ -482,7 +482,7 @@ export default async function HomePage() {
       className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
     >
       <FeaturedAccent />
-      <h3 className="text-[42px] font-semibold leading-[1.05] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
+      <h3 className="text-[42px] font-semibold leading-[1.08] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
   <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
 </h3>
 
