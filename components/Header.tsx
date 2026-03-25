@@ -16,7 +16,8 @@ export default function Header() {
     return [
       "relative no-underline hover:no-underline",
       "transition-colors duration-200",
-      isActive ? "text-[#E6E9EE]" : "text-[#9AA1AB] hover:text-[#E6E9EE]",
+      // 🔽 ONLY CHANGE IS THIS LINE (9AA1AB → 8A9098)
+      isActive ? "text-[#E6E9EE]" : "text-[#8A9098] hover:text-[#E6E9EE]",
       "after:content-[''] after:absolute after:left-0 after:-bottom-[6px]",
       "after:h-[1px] after:w-full after:bg-[#B87449]/70",
       "after:opacity-0 after:transition-opacity after:duration-200",
@@ -32,7 +33,7 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center justify-between gap-4",
-            "px-5 pr-5 pt-[2.55rem] pb-[2.16rem]",
+            "px-5 pr-5 pt-[1.9rem] pb-[1.6rem]",
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
@@ -65,7 +66,7 @@ export default function Header() {
               THE COMMENTATOR
             </span>
 
-            {/* Subtitle — mobile (aligned under text, not icon) */}
+            {/* Subtitle — mobile */}
             <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-white/78 transition-colors duration-200 group-hover:text-white/88 sm:hidden">
               Freedom in the Age of AI
             </span>

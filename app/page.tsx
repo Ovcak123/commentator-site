@@ -276,22 +276,22 @@ function SectionHeader({ title }: { title: string }) {
 function MobileModeLine() {
   return (
     <div className="lg:hidden">
-      <div className="inline-flex items-end gap-8">
+      <div className="inline-flex items-end gap-6">
         <span className="inline-flex flex-col leading-none">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-[#E6E9EE]">
             Commentary
           </span>
-          <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
+          <span className="mt-1.5 block h-[2px] w-full bg-[#C67C4E]/50" />
         </span>
 
         <a
           href="#news-point-mobile"
           className="inline-flex flex-col leading-none no-underline hover:no-underline"
         >
-          <span className="text-[12px] font-semibold uppercase tracking-[0.32em] text-white/55 transition-colors duration-150 hover:text-[#E6E9EE]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-white/90 transition-colors duration-150 hover:text-[#E6E9EE]">
             News Point
           </span>
-          <span className="mt-2 block h-[2px] w-full bg-transparent" />
+          <span className="mt-1.5 block h-[2px] w-full bg-transparent" />
         </a>
       </div>
     </div>
@@ -454,7 +454,7 @@ export default async function HomePage() {
       <Header />
 
       <div className="mx-auto max-w-6xl px-6 py-10">
-        <div className="pb-5">
+        <div className="pb-2">
           <MobileModeLine />
         </div>
 
@@ -465,41 +465,41 @@ export default async function HomePage() {
             </div>
 
             {lead && lead.slug && (
-  <article className="space-y-4 pb-8 lg:space-y-5 lg:pb-0">
-    <div className="h-64 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-72 lg:h-60">
-      {lead.heroImageUrl && (
-        <img
-          src={lead.heroImageUrl}
-          alt={lead.title}
-          className="h-full w-full object-cover"
-          loading="lazy"
-        />
-      )}
-    </div>
+              <article className="space-y-4 pb-8 lg:space-y-5 lg:pb-0">
+                <div className="h-64 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-72 lg:h-60">
+                  {lead.heroImageUrl && (
+                    <img
+                      src={lead.heroImageUrl}
+                      alt={lead.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
 
-    <Link
-      href={`/posts/${lead.slug}`}
-      className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-    >
-      <FeaturedAccent />
-      <h3 className="mt-5 text-[42px] font-semibold leading-[1.08] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
-  <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
-</h3>
+                <Link
+                  href={`/posts/${lead.slug}`}
+                  className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                >
+                  <FeaturedAccent />
+                  <h3 className="mt-5 text-[42px] font-semibold leading-[1.08] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
+                    <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
+                  </h3>
 
-{lead.excerpt && (
-  <p className="mt-3 max-w-[36ch] text-[17px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70 lg:max-w-none lg:text-[16px]">
-    {lead.excerpt}
-  </p>
-)}
+                  {lead.excerpt && (
+                    <p className="mt-3 max-w-[36ch] text-[17px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70 lg:max-w-none lg:text-[16px]">
+                      {lead.excerpt}
+                    </p>
+                  )}
 
-      {lead.author ? (
-        <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-          {lead.author}
-        </p>
-      ) : null}
-    </Link>
-  </article>
-)}
+                  {lead.author ? (
+                    <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                      {lead.author}
+                    </p>
+                  ) : null}
+                </Link>
+              </article>
+            )}
 
             <div className="space-y-0">
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
