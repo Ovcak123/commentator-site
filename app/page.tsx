@@ -465,41 +465,41 @@ export default async function HomePage() {
             </div>
 
             {lead && lead.slug && (
-              <article className="space-y-4 lg:space-y-5">
-                <div className="h-60 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                  {lead.heroImageUrl && (
-                    <img
-                      src={lead.heroImageUrl}
-                      alt={lead.title}
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
+  <article className="space-y-4 pb-8 lg:space-y-5 lg:pb-0">
+    <div className="h-64 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-72 lg:h-60">
+      {lead.heroImageUrl && (
+        <img
+          src={lead.heroImageUrl}
+          alt={lead.title}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+      )}
+    </div>
 
-                <Link
-                  href={`/posts/${lead.slug}`}
-                  className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                >
-                  <FeaturedAccent />
-                  <h3 className="text-[44px] font-semibold leading-tight text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                    <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
-                  </h3>
+    <Link
+      href={`/posts/${lead.slug}`}
+      className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+    >
+      <FeaturedAccent />
+      <h3 className="text-[42px] font-semibold leading-[1.0] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
+  <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
+</h3>
 
-                  {lead.excerpt && (
-                    <p className="mt-3 text-[16px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
-                      {lead.excerpt}
-                    </p>
-                  )}
+      {lead.excerpt && (
+        <p className="mt-4 max-w-[36ch] text-[17px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70 lg:max-w-none lg:text-[16px]">
+          {lead.excerpt}
+        </p>
+      )}
 
-                  {lead.author ? (
-                    <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                      {lead.author}
-                    </p>
-                  ) : null}
-                </Link>
-              </article>
-            )}
+      {lead.author ? (
+        <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          {lead.author}
+        </p>
+      ) : null}
+    </Link>
+  </article>
+)}
 
             <div className="space-y-0">
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
