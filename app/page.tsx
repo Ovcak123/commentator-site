@@ -563,7 +563,7 @@ export default async function HomePage() {
               </div>
 
               <div className="lg:hidden">
-                <div className="mt-6 mb-6">
+                <div className="mt-8 mb-8">
                   <DoubleBlueRule />
                 </div>
 
