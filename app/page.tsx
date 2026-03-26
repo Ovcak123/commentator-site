@@ -443,12 +443,13 @@ export default async function HomePage() {
 
   const lead = commentaryPosts[0];
   const secondaryLead = commentaryPosts[1];
+  const desktopMidFeature = commentaryPosts[4];
 
   const mobileFirstTwoCards = commentaryPosts.slice(1, 3);
   const mobileRemainingCards = commentaryPosts.slice(3, 7);
 
   const desktopFirstTwoCards = commentaryPosts.slice(2, 4);
-  const desktopRemainingCards = commentaryPosts.slice(4, 7);
+  const desktopRemainingCards = commentaryPosts.slice(5, 7);
 
   const commentaryStream = commentaryPosts.slice(7);
 
@@ -671,6 +672,49 @@ export default async function HomePage() {
                   ))}
                 </div>
               </div>
+
+              {desktopMidFeature && desktopMidFeature.slug && (
+                <article className="hidden lg:block border-t border-white/10 pt-8 pb-6 mt-12">
+                  <Link
+                    href={`/posts/${desktopMidFeature.slug}`}
+                    className="group block no-underline hover:no-underline focus:outline-none"
+                  >
+                    <div className="space-y-5">
+                      <div className="h-44 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                        {desktopMidFeature.heroImageUrl && (
+                          <img
+                            src={desktopMidFeature.heroImageUrl}
+                            alt={desktopMidFeature.title}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+
+                      <div className="max-w-3xl">
+                        <h3 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#E6E9EE] transition-colors duration-150 group-hover:text-white break-words">
+                          <InlineTitleWithReadTime
+                            title={desktopMidFeature.title}
+                            minutes={desktopMidFeature.readTimeMinutes}
+                          />
+                        </h3>
+
+                        {desktopMidFeature.excerpt && (
+                          <p className="mt-3 text-[15px] leading-7 text-white/66 transition-colors duration-150 group-hover:text-white/74">
+                            {desktopMidFeature.excerpt}
+                          </p>
+                        )}
+
+                        {desktopMidFeature.author ? (
+                          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                            {desktopMidFeature.author}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              )}
 
               <div className="lg:hidden">
                 <div className="mt-8 mb-8">
