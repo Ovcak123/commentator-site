@@ -278,7 +278,7 @@ function MobileModeLine() {
     <div className="lg:hidden">
       <div className="inline-flex items-end gap-6">
         <span className="inline-flex flex-col leading-none">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-[#E6E9EE]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.26em] text-[#E6E9EE]">
             Commentary
           </span>
           <span className="mt-1.5 block h-[2px] w-full bg-[#C67C4E]/50" />
@@ -482,7 +482,7 @@ export default async function HomePage() {
                   className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                 >
                   <FeaturedAccent />
-                  <h3 className="mt-5 text-[42px] font-semibold leading-[1.08] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
+                  <h3 className="mt-6 text-[42px] font-semibold leading-[1.12] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
                     <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
                   </h3>
 
