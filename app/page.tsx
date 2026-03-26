@@ -442,12 +442,15 @@ export default async function HomePage() {
   const { commentaryPosts, newsItems, feedRead, strategicInsights, mostRead } = await getHomeData();
 
   const lead = commentaryPosts[0];
-  const featuredCards = commentaryPosts.slice(1, 7);
-  const listStartIndex = 7;
-  const commentaryStream = commentaryPosts.slice(listStartIndex);
+  const secondaryLead = commentaryPosts[1];
 
-  const firstTwoCards = featuredCards.slice(0, 2);
-  const remainingCards = featuredCards.slice(2);
+  const mobileFirstTwoCards = commentaryPosts.slice(1, 3);
+  const mobileRemainingCards = commentaryPosts.slice(3, 7);
+
+  const desktopFirstTwoCards = commentaryPosts.slice(2, 4);
+  const desktopRemainingCards = commentaryPosts.slice(4, 7);
+
+  const commentaryStream = commentaryPosts.slice(7);
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -502,64 +505,171 @@ export default async function HomePage() {
             )}
 
             <div className="space-y-0 mt-8">
-              <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
-                {firstTwoCards.map((p) => (
-                  <div key={p.id} className="space-y-6">
-                    <article className="space-y-5 sm:space-y-6">
-                      <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                        {p.heroImageUrl && (
+              {secondaryLead && secondaryLead.slug && (
+                <article className="hidden lg:block mt-2 mb-12 border-t border-white/10 pt-8">
+                  <Link
+                    href={`/posts/${secondaryLead.slug}`}
+                    className="group block no-underline hover:no-underline focus:outline-none"
+                  >
+                    <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+                      <div className="space-y-4">
+                        <h3 className="text-[31px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#E6E9EE] transition-colors duration-150 group-hover:text-white break-words">
+                          <InlineTitleWithReadTime
+                            title={secondaryLead.title}
+                            minutes={secondaryLead.readTimeMinutes}
+                          />
+                        </h3>
+
+                        {secondaryLead.excerpt && (
+                          <p className="max-w-2xl text-[15px] leading-7 text-white/68 transition-colors duration-150 group-hover:text-white/74">
+                            {secondaryLead.excerpt}
+                          </p>
+                        )}
+
+                        {secondaryLead.author ? (
+                          <p className="text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                            {secondaryLead.author}
+                          </p>
+                        ) : null}
+                      </div>
+
+                      <div className="h-44 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                        {secondaryLead.heroImageUrl && (
                           <img
-                            src={p.heroImageUrl}
-                            alt={p.title}
-                            className="h-full w-full object-cover"
+                            src={secondaryLead.heroImageUrl}
+                            alt={secondaryLead.title}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
                             loading="lazy"
                           />
                         )}
                       </div>
+                    </div>
+                  </Link>
+                </article>
+              )}
 
-                      {p.slug ? (
-                        <Link
-                          href={`/posts/${p.slug}`}
-                          className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                        >
-                          <FeaturedAccent />
+              <div className="lg:hidden">
+                <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                  {mobileFirstTwoCards.map((p) => (
+                    <div key={p.id} className="space-y-6">
+                      <article className="space-y-5 sm:space-y-6">
+                        <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                          {p.heroImageUrl && (
+                            <img
+                              src={p.heroImageUrl}
+                              alt={p.title}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                        </div>
 
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-                          </h4>
+                        {p.slug ? (
+                          <Link
+                            href={`/posts/${p.slug}`}
+                            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                          >
+                            <FeaturedAccent />
 
-                          {p.excerpt ? (
-                            <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
-                              {p.excerpt}
-                            </p>
-                          ) : null}
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
 
-                          {p.author ? (
-                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                              {p.author}
-                            </p>
-                          ) : null}
-                        </Link>
-                      ) : (
-                        <>
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-                          </h4>
+                            {p.excerpt ? (
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                                {p.excerpt}
+                              </p>
+                            ) : null}
 
-                          {p.excerpt ? (
-                            <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
-                          ) : null}
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </Link>
+                        ) : (
+                          <>
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
 
-                          {p.author ? (
-                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
-                              {p.author}
-                            </p>
-                          ) : null}
-                        </>
-                      )}
-                    </article>
-                  </div>
-                ))}
+                            {p.excerpt ? (
+                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </>
+                        )}
+                      </article>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="hidden lg:block">
+                <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                  {desktopFirstTwoCards.map((p) => (
+                    <div key={p.id} className="space-y-6">
+                      <article className="space-y-5 sm:space-y-6">
+                        <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                          {p.heroImageUrl && (
+                            <img
+                              src={p.heroImageUrl}
+                              alt={p.title}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                        </div>
+
+                        {p.slug ? (
+                          <Link
+                            href={`/posts/${p.slug}`}
+                            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                          >
+                            <FeaturedAccent />
+
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
+
+                            {p.excerpt ? (
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                                {p.excerpt}
+                              </p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </Link>
+                        ) : (
+                          <>
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
+
+                            {p.excerpt ? (
+                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </>
+                        )}
+                      </article>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="lg:hidden">
@@ -572,69 +682,133 @@ export default async function HomePage() {
                   <NewsList items={newsItems} maxItems={6} />
                 </section>
 
-                <div className="mt-6 mb-6">
+                <div className="mt-8 mb-8">
                   <DoubleBlueRule />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
-                {remainingCards.map((p) => (
-                  <div key={p.id} className="space-y-6">
-                    <article className="space-y-5 sm:space-y-6">
-                      <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                        {p.heroImageUrl && (
-                          <img
-                            src={p.heroImageUrl}
-                            alt={p.title}
-                            className="h-full w-full object-cover"
-                            loading="lazy"
-                          />
+              <div className="lg:hidden">
+                <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                  {mobileRemainingCards.map((p) => (
+                    <div key={p.id} className="space-y-6">
+                      <article className="space-y-5 sm:space-y-6">
+                        <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                          {p.heroImageUrl && (
+                            <img
+                              src={p.heroImageUrl}
+                              alt={p.title}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                        </div>
+
+                        {p.slug ? (
+                          <Link
+                            href={`/posts/${p.slug}`}
+                            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                          >
+                            <FeaturedAccent />
+
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
+
+                            {p.excerpt ? (
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                                {p.excerpt}
+                              </p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </Link>
+                        ) : (
+                          <>
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
+
+                            {p.excerpt ? (
+                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </>
                         )}
-                      </div>
+                      </article>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-                      {p.slug ? (
-                        <Link
-                          href={`/posts/${p.slug}`}
-                          className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                        >
-                          <FeaturedAccent />
+              <div className="hidden lg:block">
+                <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                  {desktopRemainingCards.map((p) => (
+                    <div key={p.id} className="space-y-6">
+                      <article className="space-y-5 sm:space-y-6">
+                        <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                          {p.heroImageUrl && (
+                            <img
+                              src={p.heroImageUrl}
+                              alt={p.title}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                        </div>
 
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
-                            <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-                          </h4>
+                        {p.slug ? (
+                          <Link
+                            href={`/posts/${p.slug}`}
+                            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                          >
+                            <FeaturedAccent />
 
-                          {p.excerpt ? (
-                            <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
-                              {p.excerpt}
-                            </p>
-                          ) : null}
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
 
-                          {p.author ? (
-                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                              {p.author}
-                            </p>
-                          ) : null}
-                        </Link>
-                      ) : (
-                        <>
-                          <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
-                            <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-                          </h4>
+                            {p.excerpt ? (
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                                {p.excerpt}
+                              </p>
+                            ) : null}
 
-                          {p.excerpt ? (
-                            <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
-                          ) : null}
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </Link>
+                        ) : (
+                          <>
+                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
 
-                          {p.author ? (
-                            <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
-                              {p.author}
-                            </p>
-                          ) : null}
-                        </>
-                      )}
-                    </article>
-                  </div>
-                ))}
+                            {p.excerpt ? (
+                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </>
+                        )}
+                      </article>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -654,22 +828,22 @@ export default async function HomePage() {
           </section>
 
           <aside className="flex flex-col gap-14">
-            <section className="hidden lg:block space-y-6">
+            <section className="hidden lg:block space-y-4">
               <SectionHeader title="News Point" />
               <NewsList items={newsItems} />
             </section>
 
-            <section className="space-y-6">
+            <section className="space-y-4">
               <SectionHeader title="Feed Read" />
               <AggregatorList items={feedRead} maxItems={8} />
             </section>
 
-            <section className="space-y-6">
+            <section className="space-y-4">
               <SectionHeader title="Strategic Insights" />
               <AggregatorList items={strategicInsights} maxItems={5} />
             </section>
 
-            <section className="space-y-6">
+            <section className="space-y-4">
               <SectionHeader title="Most Read" />
               <AggregatorList
                 items={mostRead.map((m) => ({
