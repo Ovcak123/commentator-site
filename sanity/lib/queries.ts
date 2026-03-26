@@ -51,6 +51,7 @@ export const newsItemsQuery = `
   *[_type == "newsItem"] | order(publishedAt desc, _createdAt desc){
     _id,
     title,
+    excerpt,
     source,
     publishedAt,
     readTimeMinutes,

@@ -24,6 +24,7 @@ type CommentaryPost = {
 type NewsItem = {
   id: string;
   title: string;
+  excerpt?: string;
   slug?: string;
   readTimeMinutes?: number;
 };
@@ -205,6 +206,7 @@ async function getHomeData(): Promise<{
   const newsItems: NewsItem[] = (newsDocs || []).map((n: any) => ({
     id: n._id,
     title: n.title,
+    excerpt: n.excerpt,
     slug: n.slug,
     readTimeMinutes: typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
   }));
@@ -332,7 +334,27 @@ function inlineMeta(item: ExternalReadItem): string {
 
 /* ---------- lists ---------- */
 
-function AggregatorList({ items, maxItems }: { items: ExternalReadItem[]; maxItems: number }) {
+function AggregatorList({
+  items,
+  maxItems,
+  tone = "default",
+}: {
+  items: ExternalReadItem[];
+  maxItems: number;
+  tone?: "default" | "subtle" | "quiet";
+}) {
+  const linkToneClass =
+    tone === "quiet"
+      ? "text-white/68 group-hover:text-white/86"
+      : tone === "subtle"
+        ? "text-white/74 group-hover:text-white/90"
+        : "text-white/82 group-hover:text-white";
+
+  const metaToneClass =
+    tone === "quiet" ? "text-[#C67C4E]/82" : tone === "subtle" ? "text-[#C67C4E]/90" : "text-[#C67C4E]";
+
+  const separatorToneClass = tone === "quiet" ? "text-white/38" : "text-white/45";
+
   return (
     <ul className="space-y-3">
       {items.slice(0, maxItems).map((it) => {
@@ -352,14 +374,14 @@ function AggregatorList({ items, maxItems }: { items: ExternalReadItem[]; maxIte
             {isInternal ? (
               <Link
                 href={it.href}
-                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white no-underline hover:no-underline"
+                className={`block py-2 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 no-underline hover:no-underline ${linkToneClass}`}
               >
                 {TitleRow}
 
                 {meta && (
                   <>
-                    <span className="text-white/45"> — </span>
-                    <span className="text-[#C67C4E] italic">{meta}</span>
+                    <span className={separatorToneClass}> — </span>
+                    <span className={`italic ${metaToneClass}`}>{meta}</span>
                   </>
                 )}
               </Link>
@@ -368,14 +390,14 @@ function AggregatorList({ items, maxItems }: { items: ExternalReadItem[]; maxIte
                 href={it.href}
                 target="_blank"
                 rel="noreferrer"
-                className="block py-2 text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+                className={`block py-2 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 ${linkToneClass}`}
               >
                 {TitleRow}
 
                 {meta && (
                   <>
-                    <span className="text-white/45"> — </span>
-                    <span className="text-[#C67C4E] italic">{meta}</span>
+                    <span className={separatorToneClass}> — </span>
+                    <span className={`italic ${metaToneClass}`}>{meta}</span>
                   </>
                 )}
               </a>
@@ -389,17 +411,29 @@ function AggregatorList({ items, maxItems }: { items: ExternalReadItem[]; maxIte
 
 function NewsList({ items, maxItems = 6 }: { items: NewsItem[]; maxItems?: number }) {
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-5">
       {items.slice(0, maxItems).map((n) => (
         <li key={n.id} className="group relative overflow-visible">
           <NewsAccent />
           <Link
             href={n.slug ? `/news/${n.slug}` : "#"}
-            className="block py-2 text-[13.5px] leading-snug text-white/88 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
+            className="block py-2 no-underline hover:no-underline transition-all duration-150 group-hover:translate-x-0.5"
           >
-            <span className="font-semibold">
-              <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+            <span className="block text-[14px] font-semibold leading-[1.34] text-white/90 transition-colors duration-150 group-hover:text-white break-words">
+              {n.title}
             </span>
+
+            {n.readTimeMinutes ? (
+              <div className="mt-2">
+                <ReadTimeBadge minutes={n.readTimeMinutes} />
+              </div>
+            ) : null}
+
+            {n.excerpt ? (
+              <p className="mt-3 text-[11.5px] leading-[1.7] text-white/58 transition-colors duration-150 group-hover:text-white/58">
+                {n.excerpt}
+              </p>
+            ) : null}
           </Link>
         </li>
       ))}
@@ -716,6 +750,19 @@ export default async function HomePage() {
                 </article>
               )}
 
+              <section className="hidden lg:block mt-16 border-t border-white/15 pt-10 mb-8 space-y-5">
+                <SectionHeader title="Most Read" />
+                <AggregatorList
+                  items={mostRead.map((m) => ({
+                    id: m.id,
+                    title: m.title,
+                    href: m.href,
+                    readTimeMinutes: m.readTimeMinutes,
+                  }))}
+                  maxItems={5}
+                />
+              </section>
+
               <div className="lg:hidden">
                 <div className="mt-8 mb-8">
                   <DoubleBlueRule />
@@ -793,7 +840,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="hidden lg:block">
+              <div className="hidden lg:block pt-10">
                 <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                   {desktopRemainingCards.map((p) => (
                     <div key={p.id} className="space-y-6">
@@ -803,7 +850,7 @@ export default async function HomePage() {
                             <img
                               src={p.heroImageUrl}
                               alt={p.title}
-                              className="h-full w-full object-cover"
+                              className="h-full w-full object-cover opacity-[0.92] transition-all duration-300 group-hover:opacity-100"
                               loading="lazy"
                             />
                           )}
@@ -879,25 +926,12 @@ export default async function HomePage() {
 
             <section className="space-y-4">
               <SectionHeader title="Feed Read" />
-              <AggregatorList items={feedRead} maxItems={8} />
+              <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
             </section>
 
             <section className="space-y-4">
               <SectionHeader title="Strategic Insights" />
-              <AggregatorList items={strategicInsights} maxItems={5} />
-            </section>
-
-            <section className="space-y-4">
-              <SectionHeader title="Most Read" />
-              <AggregatorList
-                items={mostRead.map((m) => ({
-                  id: m.id,
-                  title: m.title,
-                  href: m.href,
-                  readTimeMinutes: m.readTimeMinutes,
-                }))}
-                maxItems={5}
-              />
+              <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
             </section>
           </aside>
         </div>
