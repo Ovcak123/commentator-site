@@ -501,7 +501,7 @@ export default async function HomePage() {
               </article>
             )}
 
-            <div className="space-y-0">
+            <div className="space-y-0 mt-8">
               <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {firstTwoCards.map((p) => (
                   <div key={p.id} className="space-y-6">
@@ -577,7 +577,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+              <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
                 {remainingCards.map((p) => (
                   <div key={p.id} className="space-y-6">
                     <article className="space-y-5 sm:space-y-6">
