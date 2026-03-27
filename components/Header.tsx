@@ -93,7 +93,7 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 py-2 text-[10px] font-semibold uppercase",
+          "mx-auto max-w-6xl px-6 pt-2 pb-[17px] text-[10px] font-semibold uppercase",
           "flex flex-nowrap items-center gap-4 overflow-x-auto whitespace-nowrap",
           "tracking-[0.14em]",
           "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
