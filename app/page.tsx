@@ -260,12 +260,22 @@ async function getHomeData(): Promise<{
 
 /* ---------- UI primitives ---------- */
 
-function SectionHeader({ title }: { title: string }) {
+function SectionHeader({
+  title,
+  headlineTone = false,
+}: {
+  title: string;
+  headlineTone?: boolean;
+}) {
   return (
     <div className="space-y-2">
       <div className="inline-flex items-center gap-3">
         <div className="inline-block">
-          <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
+          <h2
+            className={`text-[12px] font-semibold uppercase tracking-[0.32em] ${
+              headlineTone ? "text-[#E3D7C6]" : "text-[#E3D7C6]"
+            }`}
+          >
             {title}
           </h2>
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
@@ -280,7 +290,7 @@ function MobileModeLine() {
     <div className="lg:hidden">
       <div className="inline-flex items-end gap-6">
         <span className="inline-flex flex-col leading-none">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.26em] text-[#E6E9EE]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.26em] text-[#E3D7C6]">
             Commentary
           </span>
           <span className="mt-1.5 block h-[2px] w-full bg-[#C67C4E]/50" />
@@ -290,7 +300,7 @@ function MobileModeLine() {
           href="#news-point-mobile"
           className="inline-flex flex-col leading-none no-underline hover:no-underline"
         >
-          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-white/90 transition-colors duration-150 hover:text-[#E6E9EE]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-[#E3D7C6] transition-colors duration-150 hover:text-[#E3D7C6]">
             News Point
           </span>
           <span className="mt-1.5 block h-[2px] w-full bg-transparent" />
@@ -345,10 +355,10 @@ function AggregatorList({
 }) {
   const linkToneClass =
     tone === "quiet"
-      ? "text-white/68 group-hover:text-white/86"
+      ? "text-[#E3D7C6] group-hover:text-[#E3D7C6]"
       : tone === "subtle"
-        ? "text-white/74 group-hover:text-white/90"
-        : "text-white/82 group-hover:text-white";
+        ? "text-[#E3D7C6] group-hover:text-[#E3D7C6]"
+        : "text-[#E3D7C6] group-hover:text-[#E3D7C6]";
 
   const metaToneClass =
     tone === "quiet" ? "text-[#C67C4E]/82" : tone === "subtle" ? "text-[#C67C4E]/90" : "text-[#C67C4E]";
@@ -419,7 +429,7 @@ function NewsList({ items, maxItems = 6 }: { items: NewsItem[]; maxItems?: numbe
             href={n.slug ? `/news/${n.slug}` : "#"}
             className="block py-2 no-underline hover:no-underline transition-all duration-150 group-hover:translate-x-0.5"
           >
-            <span className="block text-[14px] font-semibold leading-[1.34] text-white/90 transition-colors duration-150 group-hover:text-white break-words">
+            <span className="block text-[14px] font-semibold leading-[1.34] text-[#E3D7C6] transition-colors duration-150 group-hover:text-[#E3D7C6] break-words">
               {n.title}
             </span>
 
@@ -451,7 +461,7 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
           <HoverAccent />
           <Link
             href={`/posts/${p.slug}`}
-            className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white break-words"
+            className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-[#E3D7C6] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words"
             title={p.title}
           >
             <span className="font-medium">
@@ -480,7 +490,8 @@ export default async function HomePage() {
   const desktopMidFeature = commentaryPosts[4];
 
   const mobileFirstTwoCards = commentaryPosts.slice(1, 3);
-  const mobileRemainingCards = commentaryPosts.slice(3, 7);
+  const mobilePostNewsFirstTwoCards = commentaryPosts.slice(3, 5);
+  const mobilePostNewsRemainingCards = commentaryPosts.slice(5, 7);
 
   const desktopFirstTwoCards = commentaryPosts.slice(2, 4);
   const desktopRemainingCards = commentaryPosts.slice(5, 7);
@@ -520,7 +531,7 @@ export default async function HomePage() {
                   className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                 >
                   <FeaturedAccent />
-                  <h3 className="mt-6 text-[42px] font-semibold leading-[1.12] text-white/95 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words sm:text-[44px] lg:text-[44px]">
+                  <h3 className="mt-6 text-[42px] font-semibold leading-[1.12] text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words sm:text-[44px] lg:text-[44px]">
                     <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
                   </h3>
 
@@ -548,7 +559,7 @@ export default async function HomePage() {
                   >
                     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
                       <div className="space-y-4">
-                        <h3 className="text-[31px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#E6E9EE] transition-colors duration-150 group-hover:text-white break-words">
+                        <h3 className="text-[31px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#E3D7C6] transition-colors duration-150 group-hover:text-[#E3D7C6] break-words">
                           <InlineTitleWithReadTime
                             title={secondaryLead.title}
                             minutes={secondaryLead.readTimeMinutes}
@@ -606,7 +617,7 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -624,7 +635,7 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -668,7 +679,7 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -686,7 +697,7 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -726,7 +737,7 @@ export default async function HomePage() {
                       </div>
 
                       <div className="max-w-3xl">
-                        <h3 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#E6E9EE] transition-colors duration-150 group-hover:text-white break-words">
+                        <h3 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#E3D7C6] transition-colors duration-150 group-hover:text-[#E3D7C6] break-words">
                           <InlineTitleWithReadTime
                             title={desktopMidFeature.title}
                             minutes={desktopMidFeature.readTimeMinutes}
@@ -751,7 +762,7 @@ export default async function HomePage() {
               )}
 
               <section className="hidden lg:block mt-16 border-t border-white/15 pt-10 mb-8 space-y-5">
-                <SectionHeader title="Most Read" />
+                <SectionHeader title="Most Read" headlineTone />
                 <AggregatorList
                   items={mostRead.map((m) => ({
                     id: m.id,
@@ -780,7 +791,7 @@ export default async function HomePage() {
 
               <div className="lg:hidden">
                 <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
-                  {mobileRemainingCards.map((p) => (
+                  {mobilePostNewsFirstTwoCards.map((p) => (
                     <div key={p.id} className="space-y-6">
                       <article className="space-y-5 sm:space-y-6">
                         <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
@@ -801,7 +812,7 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -819,7 +830,84 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
+
+                            {p.excerpt ? (
+                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </>
+                        )}
+                      </article>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="lg:hidden">
+                <section className="mt-10 mb-8 space-y-5 border-t border-white/15 pt-8">
+                  <SectionHeader title="Most Read" headlineTone />
+                  <AggregatorList
+                    items={mostRead.map((m) => ({
+                      id: m.id,
+                      title: m.title,
+                      href: m.href,
+                      readTimeMinutes: m.readTimeMinutes,
+                    }))}
+                    maxItems={5}
+                  />
+                </section>
+              </div>
+
+              <div className="lg:hidden">
+                <div className="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-14">
+                  {mobilePostNewsRemainingCards.map((p) => (
+                    <div key={p.id} className="space-y-6">
+                      <article className="space-y-5 sm:space-y-6">
+                        <div className="h-28 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                          {p.heroImageUrl && (
+                            <img
+                              src={p.heroImageUrl}
+                              alt={p.title}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                        </div>
+
+                        {p.slug ? (
+                          <Link
+                            href={`/posts/${p.slug}`}
+                            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+                          >
+                            <FeaturedAccent />
+
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
+                              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                            </h4>
+
+                            {p.excerpt ? (
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                                {p.excerpt}
+                              </p>
+                            ) : null}
+
+                            {p.author ? (
+                              <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                                {p.author}
+                              </p>
+                            ) : null}
+                          </Link>
+                        ) : (
+                          <>
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -863,7 +951,7 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-white break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -881,7 +969,7 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-white/92 break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -925,12 +1013,12 @@ export default async function HomePage() {
             </section>
 
             <section className="space-y-4">
-              <SectionHeader title="Feed Read" />
+              <SectionHeader title="Feed Read" headlineTone />
               <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
             </section>
 
             <section className="space-y-4">
-              <SectionHeader title="Strategic Insights" />
+              <SectionHeader title="Strategic Insights" headlineTone />
               <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
             </section>
           </aside>
