@@ -16,8 +16,7 @@ export default function Header() {
     return [
       "relative no-underline hover:no-underline",
       "transition-colors duration-200",
-      // 🔽 ONLY CHANGE IS THIS LINE (9AA1AB → 8A9098)
-      isActive ? "text-[#E6E9EE]" : "text-[#8A9098] hover:text-[#E6E9EE]",
+      isActive ? "text-[#D8D0C4]" : "text-[#8A9098] hover:text-[#D8D0C4]",
       "after:content-[''] after:absolute after:left-0 after:-bottom-[6px]",
       "after:h-[1px] after:w-full after:bg-[#B87449]/70",
       "after:opacity-0 after:transition-opacity after:duration-200",
@@ -46,8 +45,9 @@ export default function Header() {
             {/* Title */}
             <span
               className={[
-                "block max-w-full font-bold text-white/95 transition-colors duration-200 group-hover:text-white",
+                "block max-w-full font-bold transition-colors duration-200",
                 "text-[26px] tracking-[0.08em] whitespace-nowrap",
+                "text-[#EAE6DF] group-hover:text-[#F2EEE8]",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
@@ -67,15 +67,15 @@ export default function Header() {
             </span>
 
             {/* Subtitle — mobile */}
-            <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-white/78 transition-colors duration-200 group-hover:text-white/88 sm:hidden">
+            <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-[#CFC7BC] transition-colors duration-200 group-hover:text-[#DDD5CA] sm:hidden">
               Freedom in the Age of AI
             </span>
 
             {/* Subtitle — desktop */}
             <span
-              className="mt-1 hidden text-[11px] tracking-wide whitespace-nowrap transition-colors duration-200 group-hover:text-[#E6E9EE] sm:block"
+              className="mt-1 hidden text-[11px] tracking-wide whitespace-nowrap transition-colors duration-200 group-hover:text-[#DDD5CA] sm:block"
               style={{
-                color: "#D6DAE1",
+                color: "#CFC7BC",
                 paddingLeft: "calc(46px + 0.22em)",
               }}
             >

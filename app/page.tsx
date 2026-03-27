@@ -273,7 +273,7 @@ function SectionHeader({
         <div className="inline-block">
           <h2
             className={`text-[12px] font-semibold uppercase tracking-[0.32em] ${
-              headlineTone ? "text-[#E3D7C6]" : "text-[#E3D7C6]"
+              headlineTone ? "text-[#9C9488]" : "text-[#9C9488]"
             }`}
           >
             {title}
@@ -290,7 +290,7 @@ function MobileModeLine() {
     <div className="lg:hidden">
       <div className="inline-flex items-end gap-6">
         <span className="inline-flex flex-col leading-none">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.26em] text-[#E3D7C6]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.26em] text-[#9C9488]">
             Commentary
           </span>
           <span className="mt-1.5 block h-[2px] w-full bg-[#C67C4E]/50" />
@@ -300,7 +300,7 @@ function MobileModeLine() {
           href="#news-point-mobile"
           className="inline-flex flex-col leading-none no-underline hover:no-underline"
         >
-          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-[#E3D7C6] transition-colors duration-150 hover:text-[#E3D7C6]">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.30em] text-[#9C9488] transition-colors duration-150 hover:text-[#B3AA9D]">
             News Point
           </span>
           <span className="mt-1.5 block h-[2px] w-full bg-transparent" />
@@ -355,10 +355,10 @@ function AggregatorList({
 }) {
   const linkToneClass =
     tone === "quiet"
-      ? "text-[#E3D7C6] group-hover:text-[#E3D7C6]"
+      ? "text-[#D8CBB8] group-hover:text-[#E1D6C6]"
       : tone === "subtle"
-        ? "text-[#E3D7C6] group-hover:text-[#E3D7C6]"
-        : "text-[#E3D7C6] group-hover:text-[#E3D7C6]";
+        ? "text-[#D8CBB8] group-hover:text-[#E1D6C6]"
+        : "text-[#D8CBB8] group-hover:text-[#E1D6C6]";
 
   const metaToneClass =
     tone === "quiet" ? "text-[#C67C4E]/82" : tone === "subtle" ? "text-[#C67C4E]/90" : "text-[#C67C4E]";
@@ -429,7 +429,7 @@ function NewsList({ items, maxItems = 6 }: { items: NewsItem[]; maxItems?: numbe
             href={n.slug ? `/news/${n.slug}` : "#"}
             className="block py-2 no-underline hover:no-underline transition-all duration-150 group-hover:translate-x-0.5"
           >
-            <span className="block text-[14px] font-semibold leading-[1.34] text-[#E3D7C6] transition-colors duration-150 group-hover:text-[#E3D7C6] break-words">
+            <span className="block text-[14px] font-semibold leading-[1.34] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
               {n.title}
             </span>
 
@@ -440,7 +440,7 @@ function NewsList({ items, maxItems = 6 }: { items: NewsItem[]; maxItems?: numbe
             ) : null}
 
             {n.excerpt ? (
-              <p className="mt-3 text-[11.5px] leading-[1.7] text-white/58 transition-colors duration-150 group-hover:text-white/58">
+              <p className="mt-3 text-[11.5px] leading-[1.7] text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                 {n.excerpt}
               </p>
             ) : null}
@@ -461,7 +461,7 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
           <HoverAccent />
           <Link
             href={`/posts/${p.slug}`}
-            className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-[#E3D7C6] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words"
+            className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-[#D8CBB8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words"
             title={p.title}
           >
             <span className="font-medium">
@@ -531,12 +531,12 @@ export default async function HomePage() {
                   className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                 >
                   <FeaturedAccent />
-                  <h3 className="mt-6 text-[42px] font-semibold leading-[1.12] text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words sm:text-[44px] lg:text-[44px]">
+                  <h3 className="mt-6 text-[42px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px] lg:text-[44px]">
                     <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
                   </h3>
 
                   {lead.excerpt && (
-                    <p className="mt-3 max-w-[36ch] text-[17px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70 lg:max-w-none lg:text-[16px]">
+                    <p className="mt-3 max-w-[36ch] text-[17px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5] lg:max-w-none lg:text-[16px]">
                       {lead.excerpt}
                     </p>
                   )}
@@ -559,7 +559,7 @@ export default async function HomePage() {
                   >
                     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
                       <div className="space-y-4">
-                        <h3 className="text-[31px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#E3D7C6] transition-colors duration-150 group-hover:text-[#E3D7C6] break-words">
+                        <h3 className="text-[31px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
                           <InlineTitleWithReadTime
                             title={secondaryLead.title}
                             minutes={secondaryLead.readTimeMinutes}
@@ -567,7 +567,7 @@ export default async function HomePage() {
                         </h3>
 
                         {secondaryLead.excerpt && (
-                          <p className="max-w-2xl text-[15px] leading-7 text-white/68 transition-colors duration-150 group-hover:text-white/74">
+                          <p className="max-w-2xl text-[15px] leading-7 text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                             {secondaryLead.excerpt}
                           </p>
                         )}
@@ -617,12 +617,12 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -635,12 +635,12 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
                             ) : null}
 
                             {p.author ? (
@@ -679,12 +679,12 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -697,12 +697,12 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
                             ) : null}
 
                             {p.author ? (
@@ -737,7 +737,7 @@ export default async function HomePage() {
                       </div>
 
                       <div className="max-w-3xl">
-                        <h3 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#E3D7C6] transition-colors duration-150 group-hover:text-[#E3D7C6] break-words">
+                        <h3 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
                           <InlineTitleWithReadTime
                             title={desktopMidFeature.title}
                             minutes={desktopMidFeature.readTimeMinutes}
@@ -745,7 +745,7 @@ export default async function HomePage() {
                         </h3>
 
                         {desktopMidFeature.excerpt && (
-                          <p className="mt-3 text-[15px] leading-7 text-white/66 transition-colors duration-150 group-hover:text-white/74">
+                          <p className="mt-3 text-[15px] leading-7 text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                             {desktopMidFeature.excerpt}
                           </p>
                         )}
@@ -812,12 +812,12 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -830,12 +830,12 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
                             ) : null}
 
                             {p.author ? (
@@ -889,12 +889,12 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -907,12 +907,12 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
                             ) : null}
 
                             {p.author ? (
@@ -951,12 +951,12 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-white/62 transition-colors duration-150 group-hover:text-white/70">
+                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -969,12 +969,12 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#E3D7C6] break-words">
+                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-white/62">{p.excerpt}</p>
+                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
                             ) : null}
 
                             {p.author ? (
