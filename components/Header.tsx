@@ -47,8 +47,8 @@ export default function Header() {
               className={[
                 "block max-w-full font-bold transition-colors duration-200",
                 "text-[26px] tracking-[0.08em] whitespace-nowrap",
-                "text-[#E4DED4] group-hover:text-[#EEE8DE]",
-                "sm:text-[32px] sm:tracking-[0.22em]",
+                "text-[#D8D0C4] group-hover:text-[#E3DCCE]",
+                "sm:text-[32px] sm:tracking-[0.22em] sm:text-[#E4DED4] sm:group-hover:text-[#EEE8DE]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
             >
@@ -56,7 +56,7 @@ export default function Header() {
                 src="/commentator-mark.png"
                 alt=""
                 aria-hidden="true"
-                className="inline-block -ml-[2px] mr-3 opacity-[0.74] sm:mr-4 sm:opacity-[0.62]"
+                className="inline-block -ml-[2px] mr-3 opacity-[0.62] sm:mr-4 sm:opacity-[0.62]"
                 style={{
                   width: "32px",
                   height: "32px",
@@ -67,7 +67,7 @@ export default function Header() {
             </span>
 
             {/* Subtitle — mobile */}
-            <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-[#CFC7BC] transition-colors duration-200 group-hover:text-[#DDD5CA] sm:hidden">
+            <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-[#BFB7AC] transition-colors duration-200 group-hover:text-[#CFC7BC] sm:hidden">
               Freedom in the Age of AI
             </span>
 
