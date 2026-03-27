@@ -98,6 +98,14 @@ function normalizeAuthor(value: any): string | undefined {
  */
 const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
 
+/* ---------- excerpt tone ---------- */
+/**
+ * One further subtle brightness lift to reduce reading friction
+ * while preserving the restrained editorial hierarchy.
+ */
+const EXCERPT_TEXT_CLASS = "text-[#CBC3B8]";
+const EXCERPT_HOVER_TEXT_CLASS = "group-hover:text-[#D8D0C5]";
+
 /* ---------- Read time UI (copper icon + subtle text) ---------- */
 /**
  * IMPORTANT: This badge is inline (inline-flex) + nowrap.
@@ -437,17 +445,13 @@ function NewsList({ items, maxItems = 6 }: { items: NewsItem[]; maxItems?: numbe
             className="block py-2 no-underline hover:no-underline transition-all duration-150 group-hover:translate-x-0.5"
           >
             <span className="block text-[14px] font-semibold leading-[1.34] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
-              {n.title}
+              <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
             </span>
 
-            {n.readTimeMinutes ? (
-              <div className="mt-2">
-                <ReadTimeBadge minutes={n.readTimeMinutes} />
-              </div>
-            ) : null}
-
             {n.excerpt ? (
-              <p className="mt-3 text-[11.5px] leading-[1.7] text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+              <p
+                className={`mt-2 text-[11.5px] leading-[1.7] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+              >
                 {n.excerpt}
               </p>
             ) : null}
@@ -545,7 +549,9 @@ export default async function HomePage() {
                   </h3>
 
                   {lead.excerpt && (
-                    <p className="mt-3 max-w-[36ch] text-[17px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5] lg:max-w-none lg:text-[16px]">
+                    <p
+                      className={`mt-3 max-w-[36ch] text-[17px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS} lg:max-w-none lg:text-[16px]`}
+                    >
                       {lead.excerpt}
                     </p>
                   )}
@@ -564,8 +570,9 @@ export default async function HomePage() {
                 <article className="hidden lg:block mt-2 mb-12 border-t border-white/10 pt-8">
                   <Link
                     href={`/posts/${secondaryLead.slug}`}
-                    className="group block no-underline hover:no-underline focus:outline-none"
+                    className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                   >
+                    <FeaturedAccent />
                     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
                       <div className="space-y-4">
                         <h3
@@ -578,7 +585,9 @@ export default async function HomePage() {
                         </h3>
 
                         {secondaryLead.excerpt && (
-                          <p className="max-w-2xl text-[15px] leading-7 text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                          <p
+                            className={`max-w-2xl text-[15px] leading-7 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                          >
                             {secondaryLead.excerpt}
                           </p>
                         )}
@@ -635,7 +644,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                              <p
+                                className={`mt-3 text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                              >
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -655,7 +666,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
+                              <p className={`text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS}`}>
+                                {p.excerpt}
+                              </p>
                             ) : null}
 
                             {p.author ? (
@@ -701,7 +714,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                              <p
+                                className={`mt-3 text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                              >
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -721,7 +736,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
+                              <p className={`text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS}`}>
+                                {p.excerpt}
+                              </p>
                             ) : null}
 
                             {p.author ? (
@@ -741,8 +758,9 @@ export default async function HomePage() {
                 <article className="hidden lg:block border-t border-white/10 pt-8 pb-6 mt-12">
                   <Link
                     href={`/posts/${desktopMidFeature.slug}`}
-                    className="group block no-underline hover:no-underline focus:outline-none"
+                    className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                   >
+                    <FeaturedAccent />
                     <div className="space-y-5">
                       <div className="h-44 overflow-hidden bg-white/5 ring-1 ring-white/10">
                         {desktopMidFeature.heroImageUrl && (
@@ -766,7 +784,9 @@ export default async function HomePage() {
                         </h3>
 
                         {desktopMidFeature.excerpt && (
-                          <p className="mt-3 text-[15px] leading-7 text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                          <p
+                            className={`mt-3 text-[15px] leading-7 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                          >
                             {desktopMidFeature.excerpt}
                           </p>
                         )}
@@ -782,7 +802,7 @@ export default async function HomePage() {
                 </article>
               )}
 
-              <section className="hidden lg:block mt-16 border-t border-white/15 pt-10 mb-8 space-y-5">
+              <section className="hidden lg:block mt-16 border-t border-white/15 pt-5 mb-8 space-y-4">
                 <SectionHeader title="Most Read" headlineTone />
                 <AggregatorList
                   items={mostRead.map((m) => ({
@@ -840,7 +860,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                              <p
+                                className={`mt-3 text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                              >
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -860,7 +882,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
+                              <p className={`text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS}`}>
+                                {p.excerpt}
+                              </p>
                             ) : null}
 
                             {p.author ? (
@@ -877,7 +901,7 @@ export default async function HomePage() {
               </div>
 
               <div className="lg:hidden">
-                <section className="mt-10 mb-8 space-y-5 border-t border-white/15 pt-8">
+                <section className="mt-10 mb-8 space-y-4 border-t border-white/15 pt-5">
                   <SectionHeader title="Most Read" headlineTone />
                   <AggregatorList
                     items={mostRead.map((m) => ({
@@ -921,7 +945,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                              <p
+                                className={`mt-3 text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                              >
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -941,7 +967,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
+                              <p className={`text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS}`}>
+                                {p.excerpt}
+                              </p>
                             ) : null}
 
                             {p.author ? (
@@ -987,7 +1015,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="mt-3 text-[13.5px] leading-relaxed text-[#B8B1A6] transition-colors duration-150 group-hover:text-[#C7C0B5]">
+                              <p
+                                className={`mt-3 text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                              >
                                 {p.excerpt}
                               </p>
                             ) : null}
@@ -1007,7 +1037,9 @@ export default async function HomePage() {
                             </h4>
 
                             {p.excerpt ? (
-                              <p className="text-[13.5px] leading-relaxed text-[#B8B1A6]">{p.excerpt}</p>
+                              <p className={`text-[13.5px] leading-relaxed ${EXCERPT_TEXT_CLASS}`}>
+                                {p.excerpt}
+                              </p>
                             ) : null}
 
                             {p.author ? (
