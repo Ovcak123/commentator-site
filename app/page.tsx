@@ -93,10 +93,8 @@ function normalizeAuthor(value: any): string | undefined {
 
 /* ---------- typography test ---------- */
 /**
- * Controlled serif test:
- * - Applied only to the homepage's major commentary headlines
- * - Keeps masthead, nav, sidebars, metadata, and utility text in sans
- * - Uses the platform serif stack (font-serif) for a clean, reversible editorial test
+ * Serif is used only for editorial commentary headlines.
+ * Sans remains the system/interface layer.
  */
 const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
 
@@ -473,7 +471,7 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
             className="block py-2 no-underline hover:no-underline focus:outline-none text-[13.5px] leading-snug text-[#D8CBB8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words"
             title={p.title}
           >
-            <span className="font-medium">
+            <span className={`${MAJOR_HEADLINE_SERIF_CLASS} font-medium`}>
               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
             </span>
 
@@ -696,7 +694,9 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -714,7 +714,9 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -831,7 +833,9 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -849,7 +853,9 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -908,7 +914,9 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -926,7 +934,9 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -970,7 +980,9 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -988,7 +1000,9 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
