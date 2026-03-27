@@ -132,7 +132,7 @@ function ReadTimeBadge({ minutes }: { minutes?: number }) {
           strokeLinejoin="round"
         />
       </svg>
-      <span className="text-[11px] font-medium text-white/55">{m} min read</span>
+      <span className="text-[11px] font-medium text-[#A79F95]">{m} min read</span>
     </span>
   );
 }
@@ -183,7 +183,7 @@ function SectionHeader({ title }: { title: string }) {
     <div className="space-y-2">
       <div className="inline-flex items-center gap-3">
         <div className="inline-block">
-          <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6E9EE]">
+          <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#9C9488]">
             {title}
           </h2>
           <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
@@ -229,7 +229,7 @@ function SidebarList({
 
           <Link
             href={it.href}
-            className="block text-[12.5px] leading-snug text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            className="block text-[12.5px] leading-snug text-[#CBC3B8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[#E1D6C6]"
             title={it.title}
           >
             <span className="font-medium">
@@ -284,7 +284,7 @@ function MobileSidebarList({
 
           <Link
             href={it.href}
-            className="block text-[12.5px] leading-[1.45] text-white/82 transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white"
+            className="block text-[12.5px] leading-[1.45] text-[#CBC3B8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[#E1D6C6]"
             title={it.title}
           >
             <span className="font-[540]">
@@ -339,8 +339,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     typedPost.heroImage && typedPost.heroImage.asset
       ? urlFor(typedPost.heroImage).width(1600).height(900).fit("crop").url()
       : typedPost.heroImage
-      ? urlFor(typedPost.heroImage).width(1600).height(900).fit("crop").url()
-      : "";
+        ? urlFor(typedPost.heroImage).width(1600).height(900).fit("crop").url()
+        : "";
 
   const mostRead: SidebarItem[] = (mostReadDocs || [])
     .filter((p: any) => !!p?.slug)
@@ -370,7 +370,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     }));
 
   return (
-    <main className="commentary min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
+    <main className="commentary min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
       <Header />
 
       <div className="mx-auto max-w-6xl px-4 py-10">
@@ -378,12 +378,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
           {/* MAIN */}
           <div className="max-w-3xl">
             <header className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
                 Commentary
               </p>
 
               {/* Mobile headline +10% (text-2xl -> text-[1.75rem]) */}
-              <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight md:text-3xl">
+              <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight text-[#D2C5B3] md:text-3xl">
                 {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
@@ -399,22 +399,18 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </div>
 
               {typedPost.subtitle ? (
-                <p className="text-[15px] leading-relaxed text-white/70">{typedPost.subtitle}</p>
+                <p className="text-[15px] leading-relaxed text-[#CBC3B8]">{typedPost.subtitle}</p>
               ) : typedPost.excerpt ? (
-                <p className="text-[15px] leading-relaxed text-white/70">{typedPost.excerpt}</p>
+                <p className="text-[15px] leading-relaxed text-[#CBC3B8]">{typedPost.excerpt}</p>
               ) : null}
 
               {authorName ? (
                 <p className="text-xs">
                   <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
-                  {date ? (
-                    <span className="text-[rgba(230,233,238,0.55)]">{` · ${date}`}</span>
-                  ) : null}
+                  {date ? <span className="text-[#A79F95]">{` · ${date}`}</span> : null}
                 </p>
               ) : date ? (
-                <p className="text-xs uppercase tracking-[0.16em] text-[rgba(230,233,238,0.55)]">
-                  {date}
-                </p>
+                <p className="text-xs uppercase tracking-[0.16em] text-[#A79F95]">{date}</p>
               ) : null}
             </header>
 
@@ -435,7 +431,19 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </div>
 
             {/* Spacing: tighter on mobile after share, looser on desktop after hero */}
-            <section className="mt-4 lg:mt-10 prose prose-invert max-w-none text-[17px] leading-relaxed md:text-[18px]">
+            <section className="mt-4 max-w-none prose prose-invert text-[17px] leading-relaxed md:text-[18px] lg:mt-10
+  prose-headings:text-[#D8CBB8]
+  prose-p:text-[#CBC3B8]
+  prose-strong:text-[#D8CBB8]
+  prose-em:text-[#CBC3B8]
+  prose-li:text-[#CBC3B8]
+  prose-blockquote:text-[#CBC3B8]
+  prose-a:text-[#D8CBB8]
+  prose-code:text-[#D8CBB8]
+  prose-pre:text-[#CBC3B8]
+  prose-hr:border-white/10
+"
+>
               {typedPost.body?.length ? (
                 <PortableText value={typedPost.body} components={portableTextComponents} />
               ) : (
@@ -457,7 +465,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </div>
 
             {/* MOBILE ONLY: subtle divider between article and below-article sections */}
-            <div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
+            <div className="mx-4 my-6 border-t border-neutral-200/15 lg:hidden" />
 
             {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
             <div className="mt-10 space-y-8 lg:hidden">

@@ -46,18 +46,12 @@ body {
 
 /* =========================================================
    CRITICAL: GLOBAL CONTROL OVER PAGE SURFACE
-   ---------------------------------------------------------
-   Your pages hardcode bg-[#0B0D10] on <main>.
-   This overrides globals unless we take control here.
-   We ONLY target <main>, so the header keeps its sharp black.
    ========================================================= */
 
-/* Default: any <main> becomes the reading-surface charcoal */
 main {
   background: var(--page-bg);
 }
 
-/* Override the explicit Tailwind bg classes used in your pages */
 main[class*="bg-[#0B0D10]"],
 main[class*="bg-[#0E1116]"],
 main[class*="bg-black"],
@@ -66,19 +60,13 @@ main[class*="bg-neutral-9"] {
 }
 
 /* =========================================================
-   FIX: MAKE HEADER MATCH THE BODY (page surface)
-   ---------------------------------------------------------
-   Your header is still rendering on --bg (#0B0D10) and/or has
-   Tailwind bg-[#0B0D10] classes. Force it to --page-bg.
+   HEADER ALIGNMENT
    ========================================================= */
 
-/* Paint the header itself to the same shade as <main> */
 header {
   background-color: var(--page-bg) !important;
 }
 
-/* If the Header component uses nested wrappers with bg classes,
-   force those too. This is intentionally broad but scoped to header. */
 header [class*="bg-[#0B0D10]"],
 header [class*="bg-[#0E1116]"],
 header [class*="bg-black"],
@@ -86,7 +74,6 @@ header [class*="bg-neutral-9"] {
   background-color: var(--page-bg) !important;
 }
 
-/* If your header uses any blur/glass effect, remove it so the shade matches */
 header,
 header * {
   backdrop-filter: none !important;
@@ -147,7 +134,6 @@ body::before {
     );
 }
 
-/* NOISE — EXTREMELY SUBTLE, NON-DOMINANT */
 body::after {
   content: "";
   position: fixed;
@@ -271,6 +257,48 @@ p {
   font-weight: inherit;
   color: inherit;
   text-shadow: none;
+}
+
+/* =========================================================
+   ARTICLE BODY COLOR ALIGNMENT (NEW FIX)
+   ========================================================= */
+
+.commentary .prose p,
+.commentary .prose li,
+.commentary .prose blockquote,
+.commentary .prose ul,
+.commentary .prose ol {
+  color: #BFB6AA;
+}
+
+.commentary .prose strong,
+.commentary .prose b,
+.commentary .prose h1,
+.commentary .prose h2,
+.commentary .prose h3,
+.commentary .prose h4 {
+  color: #D8CBB8;
+}
+
+.commentary .prose p:first-of-type::first-letter {
+  color: rgba(216, 203, 184, 0.82);
+}
+
+.news .prose p,
+.news .prose li,
+.news .prose blockquote,
+.news .prose ul,
+.news .prose ol {
+  color: #CBC3B8;
+}
+
+.news .prose strong,
+.news .prose b,
+.news .prose h1,
+.news .prose h2,
+.news .prose h3,
+.news .prose h4 {
+  color: #D8CBB8;
 }
 
 /* =========================================================
