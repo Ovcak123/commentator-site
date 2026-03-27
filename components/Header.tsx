@@ -47,7 +47,7 @@ export default function Header() {
               className={[
                 "block max-w-full font-bold transition-colors duration-200",
                 "text-[26px] tracking-[0.08em] whitespace-nowrap",
-                "text-[#EAE6DF] group-hover:text-[#F2EEE8]",
+                "text-[#E4DED4] group-hover:text-[#EEE8DE]",
                 "sm:text-[32px] sm:tracking-[0.22em]",
               ].join(" ")}
               style={{ textShadow: "0 1px 0 rgba(0,0,0,0.45)" }}
