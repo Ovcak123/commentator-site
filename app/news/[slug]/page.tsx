@@ -311,27 +311,24 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             <header className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9AA1AB]">News</p>
 
-              {/* Mobile headline +~10% */}
-              <h1 className="text-[26px] font-semibold leading-tight tracking-tight md:text-3xl">
+              <h1 className="text-[26px] font-semibold leading-tight tracking-tight text-[#D2C5B3] md:text-3xl">
                 {item.title}
               </h1>
 
-              {/* Read time + DESKTOP share (top-right) */}
               <div className="mt-2 flex items-center justify-between gap-4">
                 <ReadTimeBadge minutes={itemReadMinutes} />
 
-                {/* Desktop only */}
                 <div className="hidden lg:block">
                   <DesktopShare title={item.title} />
                 </div>
               </div>
 
               {item.excerpt && (
-                <p className="text-[15px] leading-relaxed text-white/75">{item.excerpt}</p>
+                <p className="text-[16px] leading-relaxed text-[#CBC3B8]">{item.excerpt}</p>
               )}
             </header>
 
-            <div className="mt-8 h-52 w-full rounded-xl overflow-hidden md:h-64">
+            <div className="mt-8 h-52 w-full overflow-hidden rounded-xl md:h-64">
               {heroUrl && (
                 <img
                   src={heroUrl}
@@ -342,29 +339,24 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               )}
             </div>
 
-            {/* MOBILE SHARE (TOP) — below hero, above body */}
             <div className="mt-3 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
 
-            <section className="mt-2 md:mt-6 prose prose-invert max-w-none">
+            <section className="mt-2 max-w-none prose prose-invert md:mt-6">
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
 
-            {/* DESKTOP SHARE (BOTTOM) — end of article (BOTTOM-RIGHT, NOT CENTERED) */}
-            <div className="mt-10 hidden lg:flex justify-end">
+            <div className="mt-10 hidden justify-end lg:flex">
               <DesktopShare title={item.title} />
             </div>
 
-            {/* MOBILE SHARE (BOTTOM) — end of article */}
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
 
-            {/* MOBILE ONLY: subtle divider between article and below-article sections */}
-            <div className="lg:hidden mx-4 my-6 border-t border-neutral-200/15" />
+            <div className="mx-4 my-6 border-t border-neutral-200/15 lg:hidden" />
 
-            {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
             <div className="mt-10 space-y-8 lg:hidden">
               <div className="space-y-4">
                 <SectionHeader title="Most Read" />
@@ -383,7 +375,6 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
           </div>
 
-          {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
           <aside className="hidden lg:block">
             <div className="sticky top-16 w-[320px] self-start">
               <div className="origin-top scale-[0.90]">
