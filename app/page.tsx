@@ -91,6 +91,15 @@ function normalizeAuthor(value: any): string | undefined {
   return undefined;
 }
 
+/* ---------- typography test ---------- */
+/**
+ * Controlled serif test:
+ * - Applied only to the homepage's major commentary headlines
+ * - Keeps masthead, nav, sidebars, metadata, and utility text in sans
+ * - Uses the platform serif stack (font-serif) for a clean, reversible editorial test
+ */
+const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
+
 /* ---------- Read time UI (copper icon + subtle text) ---------- */
 /**
  * IMPORTANT: This badge is inline (inline-flex) + nowrap.
@@ -531,7 +540,9 @@ export default async function HomePage() {
                   className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
                 >
                   <FeaturedAccent />
-                  <h3 className="mt-6 text-[42px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px] lg:text-[44px]">
+                  <h3
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[42px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px] lg:text-[44px]`}
+                  >
                     <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
                   </h3>
 
@@ -559,7 +570,9 @@ export default async function HomePage() {
                   >
                     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
                       <div className="space-y-4">
-                        <h3 className="text-[31px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                        <h3
+                          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[31px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                        >
                           <InlineTitleWithReadTime
                             title={secondaryLead.title}
                             minutes={secondaryLead.readTimeMinutes}
@@ -617,7 +630,9 @@ export default async function HomePage() {
                           >
                             <FeaturedAccent />
 
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -635,7 +650,9 @@ export default async function HomePage() {
                           </Link>
                         ) : (
                           <>
-                            <h4 className="text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words">
+                            <h4
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-tight text-[#D8CBB8] break-words`}
+                            >
                               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                             </h4>
 
@@ -737,7 +754,9 @@ export default async function HomePage() {
                       </div>
 
                       <div className="max-w-3xl">
-                        <h3 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                        <h3
+                          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[28px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                        >
                           <InlineTitleWithReadTime
                             title={desktopMidFeature.title}
                             minutes={desktopMidFeature.readTimeMinutes}
