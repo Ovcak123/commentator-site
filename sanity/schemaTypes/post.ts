@@ -12,7 +12,7 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
 
-    // ✅ NEW: Read time (minutes) — optional by default
+    // ✅ Read time (minutes)
     defineField({
       name: 'readTimeMinutes',
       title: 'Read time (minutes)',
@@ -31,33 +31,48 @@ export default defineType({
       },
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
     }),
+
+    // ✅ NEW: Lead checkbox
+    defineField({
+      name: 'isLead',
+      title: 'Lead',
+      type: 'boolean',
+      description: 'Tick to make this the homepage lead story (only one allowed)',
+      initialValue: false,
+    }),
+
     defineField({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',
       rows: 3,
     }),
+
     defineField({
       name: 'subtitle',
       title: 'Subtitle',
       type: 'string',
     }),
+
     defineField({
       name: 'author',
       title: 'Author',
       type: 'string',
     }),
+
     defineField({
       name: 'body',
       title: 'Body',
       type: 'array',
       of: [{ type: 'block' }],
     }),
+
     defineField({
       name: 'heroImage',
       title: 'Hero image',

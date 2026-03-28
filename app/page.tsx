@@ -27,6 +27,21 @@ type NewsItem = {
   excerpt?: string;
   slug?: string;
   readTimeMinutes?: number;
+  source?: string;
+  author?: string;
+  heroImageUrl?: string;
+};
+
+type HomeLead = {
+  id: string;
+  type: "post" | "newsItem";
+  title: string;
+  excerpt?: string;
+  slug?: string;
+  heroImageUrl?: string;
+  readTimeMinutes?: number;
+  author?: string;
+  source?: string;
 };
 
 type FeedDoc = {
@@ -89,6 +104,19 @@ function normalizeAuthor(value: any): string | undefined {
     }
   }
   return undefined;
+}
+
+function getLeadHref(lead?: HomeLead) {
+  if (!lead?.slug) return "#";
+  return lead.type === "newsItem" ? `/news/${lead.slug}` : `/posts/${lead.slug}`;
+}
+
+function getLeadMetaLabel(lead?: HomeLead) {
+  if (!lead) return undefined;
+  if (lead.type === "newsItem") {
+    return lead.source || lead.author;
+  }
+  return lead.author;
 }
 
 /* ---------- typography test ---------- */
@@ -179,6 +207,23 @@ const commentaryHomeQuery = `
   }
 `;
 
+const explicitLeadQuery = `
+  *[
+    _type in ["post", "newsItem"] &&
+    isLead == true
+  ] | order(_updatedAt desc)[0]{
+    _id,
+    _type,
+    title,
+    excerpt,
+    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    source,
+    readTimeMinutes,
+    "slug": slug.current,
+    "heroImageUrl": heroImage.asset->url
+  }
+`;
+
 const allFeedDocsQuery = `
   *[_type == "feedRead"]
   | order(coalesce(priority, 9999) asc, publishedAt desc, _createdAt desc){
@@ -195,19 +240,21 @@ const allFeedDocsQuery = `
 /* ---------- data loader ---------- */
 
 async function getHomeData(): Promise<{
+  lead?: HomeLead;
   commentaryPosts: CommentaryPost[];
   newsItems: NewsItem[];
   feedRead: ExternalReadItem[];
   strategicInsights: ExternalReadItem[];
   mostRead: MostReadItem[];
 }> {
-  const [postDocs, newsDocs, feedDocs] = await Promise.all([
+  const [postDocs, newsDocs, feedDocs, explicitLeadDoc] = await Promise.all([
     client.fetch(commentaryHomeQuery),
     client.fetch(newsItemsQuery),
     client.fetch(allFeedDocsQuery),
+    client.fetch(explicitLeadQuery),
   ]);
 
-  const commentaryPosts: CommentaryPost[] = (postDocs || []).map((p: any) => ({
+  const rawCommentaryPosts: CommentaryPost[] = (postDocs || []).map((p: any) => ({
     id: p._id,
     title: p.title,
     excerpt: p.excerpt,
@@ -218,13 +265,51 @@ async function getHomeData(): Promise<{
     readTimeMinutes: typeof p.readTimeMinutes === "number" ? p.readTimeMinutes : undefined,
   }));
 
-  const newsItems: NewsItem[] = (newsDocs || []).map((n: any) => ({
+  const rawNewsItems: NewsItem[] = (newsDocs || []).map((n: any) => ({
     id: n._id,
     title: n.title,
     excerpt: n.excerpt,
     slug: n.slug,
     readTimeMinutes: typeof n.readTimeMinutes === "number" ? n.readTimeMinutes : undefined,
+    source: typeof n.source === "string" ? n.source : undefined,
+    author: normalizeAuthor(n.author),
+    heroImageUrl: n.heroImageUrl,
   }));
+
+  const explicitLead: HomeLead | undefined = explicitLeadDoc
+    ? {
+        id: explicitLeadDoc._id,
+        type: explicitLeadDoc._type,
+        title: explicitLeadDoc.title,
+        excerpt: explicitLeadDoc.excerpt,
+        slug: explicitLeadDoc.slug,
+        heroImageUrl: explicitLeadDoc.heroImageUrl,
+        readTimeMinutes:
+          typeof explicitLeadDoc.readTimeMinutes === "number"
+            ? explicitLeadDoc.readTimeMinutes
+            : undefined,
+        author: normalizeAuthor(explicitLeadDoc.author),
+        source: typeof explicitLeadDoc.source === "string" ? explicitLeadDoc.source : undefined,
+      }
+    : undefined;
+
+  const fallbackLead: HomeLead | undefined = rawCommentaryPosts[0]
+    ? {
+        id: rawCommentaryPosts[0].id,
+        type: "post",
+        title: rawCommentaryPosts[0].title,
+        excerpt: rawCommentaryPosts[0].excerpt,
+        slug: rawCommentaryPosts[0].slug,
+        heroImageUrl: rawCommentaryPosts[0].heroImageUrl,
+        readTimeMinutes: rawCommentaryPosts[0].readTimeMinutes,
+        author: rawCommentaryPosts[0].author,
+      }
+    : undefined;
+
+  const lead = explicitLead || fallbackLead;
+
+  const commentaryPosts = rawCommentaryPosts.filter((p) => p.id !== lead?.id);
+  const newsItems = rawNewsItems.filter((n) => n.id !== lead?.id);
 
   const normalizedFeedDocs: FeedDoc[] = (feedDocs || []).map((f: any) => ({
     id: f._id,
@@ -265,6 +350,7 @@ async function getHomeData(): Promise<{
     }));
 
   return {
+    lead,
     commentaryPosts,
     newsItems,
     feedRead,
@@ -500,22 +586,23 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
 /* ---------- page ---------- */
 
 export default async function HomePage() {
-  const { commentaryPosts, newsItems, feedRead, strategicInsights, mostRead } = await getHomeData();
+  const { lead, commentaryPosts, newsItems, feedRead, strategicInsights, mostRead } =
+    await getHomeData();
 
-  const lead = commentaryPosts[0];
-  const remainingPosts = commentaryPosts.slice(1);
+  const leadHref = getLeadHref(lead);
+  const leadMeta = getLeadMetaLabel(lead);
 
-  const secondaryLead = remainingPosts[0];
-  const desktopMidFeature = remainingPosts[3];
+  const secondaryLead = commentaryPosts[0];
+  const desktopMidFeature = commentaryPosts[3];
 
-  const mobileFirstTwoCards = remainingPosts.slice(0, 2);
-  const mobilePostNewsFirstTwoCards = remainingPosts.slice(2, 4);
-  const mobilePostNewsRemainingCards = remainingPosts.slice(4, 6);
+  const mobileFirstTwoCards = commentaryPosts.slice(0, 2);
+  const mobilePostNewsFirstTwoCards = commentaryPosts.slice(2, 4);
+  const mobilePostNewsRemainingCards = commentaryPosts.slice(4, 6);
 
-  const desktopFirstTwoCards = remainingPosts.slice(1, 3);
-  const desktopRemainingCards = remainingPosts.slice(4, 6);
+  const desktopFirstTwoCards = commentaryPosts.slice(1, 3);
+  const desktopRemainingCards = commentaryPosts.slice(4, 6);
 
-  const commentaryStream = remainingPosts.slice(6);
+  const commentaryStream = commentaryPosts.slice(6);
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -524,7 +611,7 @@ export default async function HomePage() {
       {lead && lead.slug && (
         <section className="mx-auto max-w-6xl px-6 pt-10 pb-8 lg:pt-12 lg:pb-10">
           <Link
-            href={`/posts/${lead.slug}`}
+            href={leadHref}
             className="group block no-underline hover:no-underline focus:outline-none"
           >
             {/* Mobile: keep current stacked behavior */}
@@ -556,9 +643,9 @@ export default async function HomePage() {
                   </p>
                 )}
 
-                {lead.author ? (
+                {leadMeta ? (
                   <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                    {lead.author}
+                    {leadMeta}
                   </p>
                 ) : null}
               </div>
@@ -599,9 +686,9 @@ export default async function HomePage() {
                     </p>
                   )}
 
-                  {lead.author ? (
+                  {leadMeta ? (
                     <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E] transition-colors duration-150 group-hover:text-[#D58B5D]">
-                      {lead.author}
+                      {leadMeta}
                     </p>
                   ) : null}
                 </div>

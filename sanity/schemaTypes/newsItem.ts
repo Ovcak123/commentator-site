@@ -12,7 +12,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // ✅ NEW: Read time (minutes) — optional by default
     defineField({
       name: "readTimeMinutes",
       title: "Read time (minutes)",
@@ -33,6 +32,14 @@ export default defineType({
       name: "publishedAt",
       title: "Published at",
       type: "datetime",
+    }),
+
+    defineField({
+      name: "isLead",
+      title: "Lead",
+      type: "boolean",
+      description: "Tick to make this the homepage lead story (only one allowed)",
+      initialValue: false,
     }),
 
     defineField({

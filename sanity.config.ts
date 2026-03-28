@@ -1,7 +1,12 @@
 'use client'
 
 import React from 'react'
-import { defineConfig } from 'sanity'
+import {
+  defineConfig,
+  useClient,
+  type DocumentActionComponent,
+  type DocumentActionProps,
+} from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './sanity/schemaTypes'
@@ -23,6 +28,62 @@ function AIToolsAutoOpen() {
   )
 }
 
+function getBaseId(id: string) {
+  return id.replace(/^drafts\./, '')
+}
+
+function createLeadAwarePublishAction(
+  OriginalPublishAction: DocumentActionComponent
+): DocumentActionComponent {
+  return function LeadAwarePublishAction(props: DocumentActionProps) {
+    const originalResult = OriginalPublishAction(props)
+    const client = useClient({ apiVersion: '2025-03-01' })
+
+    if (!originalResult) {
+      return null
+    }
+
+    const isLead = props.draft?.isLead === true || props.published?.isLead === true
+
+    return {
+      ...originalResult,
+      onHandle: async () => {
+        try {
+          if (isLead) {
+            const baseId = getBaseId(props.id)
+            const draftId = `drafts.${baseId}`
+
+            const otherLeadIds: string[] = await client.fetch(
+              `*[
+                _type in ["post", "newsItem"] &&
+                isLead == true &&
+                !(_id in [$baseId, $draftId])
+              ][]._id`,
+              { baseId, draftId }
+            )
+
+            if (otherLeadIds.length > 0) {
+              const tx = client.transaction()
+
+              for (const id of otherLeadIds) {
+                tx.patch(id, {
+                  set: { isLead: false },
+                })
+              }
+
+              await tx.commit()
+            }
+          }
+
+          await originalResult.onHandle?.()
+        } catch (error) {
+          console.error('Lead publish action failed:', error)
+        }
+      },
+    }
+  }
+}
+
 export default defineConfig({
   basePath: '/studio',
 
@@ -38,14 +99,12 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            // Core streams
             S.documentTypeListItem('post').title('Commentary'),
             S.documentTypeListItem('newsItem').title('News'),
             S.documentTypeListItem('feedRead').title('Feed Read'),
 
             S.divider(),
 
-            // Singleton site pages (editable from Studio)
             S.listItem()
               .title('About')
               .child(
@@ -78,7 +137,6 @@ export default defineConfig({
 
             S.divider(),
 
-            // AI tools
             S.listItem()
               .title('AI Tools')
               .child(S.component(AIToolsAutoOpen).title('AI Tools')),
@@ -89,5 +147,19 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, context) => {
+      if (!['post', 'newsItem'].includes(context.schemaType)) {
+        return prev
+      }
+
+      return prev.map((action) => {
+        return action.action === 'publish'
+          ? createLeadAwarePublishAction(action)
+          : action
+      })
+    },
   },
 })
