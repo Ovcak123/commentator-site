@@ -352,6 +352,12 @@ function FeaturedAccent() {
   );
 }
 
+function LeadHoverAccent() {
+  return (
+    <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/90" />
+  );
+}
+
 function inlineMeta(item: ExternalReadItem): string {
   const bits = [item.author, item.source].filter(Boolean) as string[];
   return bits.join(", ");
@@ -497,23 +503,115 @@ export default async function HomePage() {
   const { commentaryPosts, newsItems, feedRead, strategicInsights, mostRead } = await getHomeData();
 
   const lead = commentaryPosts[0];
-  const secondaryLead = commentaryPosts[1];
-  const desktopMidFeature = commentaryPosts[4];
+  const remainingPosts = commentaryPosts.slice(1);
 
-  const mobileFirstTwoCards = commentaryPosts.slice(1, 3);
-  const mobilePostNewsFirstTwoCards = commentaryPosts.slice(3, 5);
-  const mobilePostNewsRemainingCards = commentaryPosts.slice(5, 7);
+  const secondaryLead = remainingPosts[0];
+  const desktopMidFeature = remainingPosts[3];
 
-  const desktopFirstTwoCards = commentaryPosts.slice(2, 4);
-  const desktopRemainingCards = commentaryPosts.slice(5, 7);
+  const mobileFirstTwoCards = remainingPosts.slice(0, 2);
+  const mobilePostNewsFirstTwoCards = remainingPosts.slice(2, 4);
+  const mobilePostNewsRemainingCards = remainingPosts.slice(4, 6);
 
-  const commentaryStream = commentaryPosts.slice(7);
+  const desktopFirstTwoCards = remainingPosts.slice(1, 3);
+  const desktopRemainingCards = remainingPosts.slice(4, 6);
+
+  const commentaryStream = remainingPosts.slice(6);
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      {lead && lead.slug && (
+        <section className="mx-auto max-w-6xl px-6 pt-10 pb-8 lg:pt-12 lg:pb-10">
+          <Link
+            href={`/posts/${lead.slug}`}
+            className="group block no-underline hover:no-underline focus:outline-none"
+          >
+            {/* Mobile: keep current stacked behavior */}
+            <article className="lg:hidden space-y-4">
+              <div className="h-64 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-72">
+                {lead.heroImageUrl && (
+                  <img
+                    src={lead.heroImageUrl}
+                    alt={lead.title}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+
+              <div className="relative overflow-visible">
+                <FeaturedAccent />
+                <h1
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[42px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px]`}
+                >
+                  <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
+                </h1>
+
+                {lead.excerpt && (
+                  <p
+                    className={`mt-3 max-w-[36ch] text-[17px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                  >
+                    {lead.excerpt}
+                  </p>
+                )}
+
+                {lead.author ? (
+                  <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                    {lead.author}
+                  </p>
+                ) : null}
+              </div>
+            </article>
+
+            {/* Desktop: stronger protected dark field behind lead text */}
+            <article className="relative hidden h-[300px] overflow-hidden bg-white/5 lg:-ml-4 lg:block lg:w-[calc(100%+1rem)]">
+              {lead.heroImageUrl && (
+                <img
+                  src={lead.heroImageUrl}
+                  alt={lead.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+              )}
+
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0B0D10] via-[#0B0D10]/84 via-[22%] via-[#0B0D10]/48 via-[46%] to-[#0B0D10]/12" />
+              <div className="absolute left-0 top-0 h-full w-[13rem] bg-gradient-to-r from-[#0B0D10] via-[#0B0D10]/68 to-transparent" />
+              <div className="absolute left-0 top-0 h-full w-[34%] bg-[#0B0D10]/14" />
+              <div className="absolute left-0 top-0 h-full w-[78%] bg-[radial-gradient(circle_at_left_center,rgba(11,13,16,0.58),rgba(11,13,16,0.34)_34%,rgba(11,13,16,0.12)_60%,transparent_84%)]" />
+              <div className="absolute -left-[6%] top-0 h-full w-[26%] bg-[radial-gradient(circle_at_left_center,rgba(11,13,16,0.92),rgba(11,13,16,0.42)_50%,rgba(11,13,16,0.08)_78%,transparent_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.14),rgba(11,13,16,0.30))]" />
+              <div className="absolute inset-0 ring-1 ring-white/10" />
+
+              <div className="relative z-10 flex h-full items-center px-10">
+                <div className="relative max-w-[34rem] translate-y-[6px] overflow-visible">
+                  <LeadHoverAccent />
+
+                  <h1
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[42px] font-semibold leading-[1.08] text-[#E6DDD0] [text-shadow:0_1px_2px_rgba(0,0,0,0.42)] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#F0E7D9] break-words`}
+                  >
+                    <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
+                  </h1>
+
+                  {lead.excerpt && (
+                    <p className="mt-4 max-w-[32ch] text-[16px] leading-[1.72] text-[#D6CCBF] transition-colors duration-150 group-hover:text-[#E1D7CA]">
+                      {lead.excerpt}
+                    </p>
+                  )}
+
+                  {lead.author ? (
+                    <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E] transition-colors duration-150 group-hover:text-[#D58B5D]">
+                      {lead.author}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </article>
+          </Link>
+        </section>
+      )}
+
+      <div className="mx-auto max-w-6xl px-6 pb-10">
         <div className="pb-2">
           <MobileModeLine />
         </div>
@@ -523,47 +621,6 @@ export default async function HomePage() {
             <div className="hidden lg:block">
               <SectionHeader title="Commentary" />
             </div>
-
-            {lead && lead.slug && (
-              <article className="space-y-4 pb-8 lg:space-y-5 lg:pb-0">
-                <div className="h-64 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-72 lg:h-60">
-                  {lead.heroImageUrl && (
-                    <img
-                      src={lead.heroImageUrl}
-                      alt={lead.title}
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
-
-                <Link
-                  href={`/posts/${lead.slug}`}
-                  className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                >
-                  <FeaturedAccent />
-                  <h3
-                    className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[42px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px] lg:text-[44px]`}
-                  >
-                    <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
-                  </h3>
-
-                  {lead.excerpt && (
-                    <p
-                      className={`mt-3 max-w-[36ch] text-[17px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS} lg:max-w-none lg:text-[16px]`}
-                    >
-                      {lead.excerpt}
-                    </p>
-                  )}
-
-                  {lead.author ? (
-                    <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                      {lead.author}
-                    </p>
-                  ) : null}
-                </Link>
-              </article>
-            )}
 
             <div className="space-y-0 mt-8">
               {secondaryLead && secondaryLead.slug && (
