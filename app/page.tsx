@@ -431,25 +431,26 @@ function CommentatorClubPanel() {
       className="group block no-underline hover:no-underline focus:outline-none"
       aria-label="Join The Commentator Club"
     >
-      <section className="relative overflow-hidden px-6 py-7 sm:px-7 sm:py-8 bg-[linear-gradient(135deg,rgba(72,7,16,0.92)_0%,rgba(105,10,23,0.90)_38%,rgba(124,12,28,0.78)_72%,rgba(95,10,22,0.88)_100%)] transition-all duration-200 group-hover:shadow-[0_12px_30px_rgba(0,0,0,0.22)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_34%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.05),transparent_32%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02),rgba(0,0,0,0.06))]" />
+      <section className="relative overflow-hidden rounded-[5px] px-6 py-6 sm:px-7 sm:py-7 bg-[linear-gradient(135deg,rgba(59,8,16,0.88)_0%,rgba(85,12,23,0.88)_38%,rgba(102,16,29,0.80)_72%,rgba(77,11,21,0.86)_100%)] transition-all duration-200 group-hover:shadow-[0_10px_24px_rgba(0,0,0,0.18)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_34%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.03),transparent_32%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(0,0,0,0.06))]" />
 
         <div className="relative">
           <h3
-            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-[1.14] text-[#F3E8DE] transition-colors duration-150 group-hover:text-white`}
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[17.5px] font-semibold leading-[1.12] text-[#F1E4D8] transition-colors duration-150 group-hover:text-[#FAF3EC]`}
           >
             Join The Commentator Club
           </h3>
 
-          <p className="mt-4 text-[13.75px] leading-[1.74] text-[#F0E0D2] transition-colors duration-150 group-hover:text-[#FFF5EE]">
-            A private community of CEOs, founders, political leaders, and serious thinkers.
-            Members can comment, engage directly, easily submit ideas, and shape the
+          <p className="mt-4 max-w-[42ch] text-[13.35px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
+            A private community of CEOs, founders, and political, military, and
+            intelligence leaders — alongside thinkers and innovators from around the
+            world. Members can comment, engage directly, submit ideas, and shape the
             conversation.
           </p>
 
-          <div className="mt-5 inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#F5E8DB] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
+          <div className="mt-5 inline-flex items-center gap-2 text-[13.35px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
             <span>Join for $5 a month</span>
             <span aria-hidden="true">→</span>
           </div>
@@ -626,6 +627,51 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
   );
 }
 
+function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
+  if (!post.slug) return null;
+
+  return (
+    <article className="group relative overflow-visible">
+      <FeaturedAccent />
+      <Link
+        href={`/posts/${post.slug}`}
+        className="block no-underline hover:no-underline focus:outline-none"
+      >
+        {post.heroImageUrl ? (
+          <div className="mb-5 h-32 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-36">
+            <img
+              src={post.heroImageUrl}
+              alt={post.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+              loading="lazy"
+            />
+          </div>
+        ) : null}
+
+        <h3
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[20px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+        >
+          <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
+        </h3>
+
+        {post.excerpt ? (
+          <p
+            className={`mt-3 text-[13px] leading-[1.76] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+          >
+            {post.excerpt}
+          </p>
+        ) : null}
+
+        {post.author ? (
+          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+            {post.author}
+          </p>
+        ) : null}
+      </Link>
+    </article>
+  );
+}
+
 function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   const usable = items.filter((p) => !!p.slug);
 
@@ -638,20 +684,9 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
         >
           <Link
             href={`/posts/${p.slug}`}
-            className="group relative grid grid-cols-[84px_1fr] items-start gap-4 overflow-visible no-underline hover:no-underline focus:outline-none"
+            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
           >
             <FeaturedAccent />
-
-            <div className="h-[64px] overflow-hidden bg-white/5 ring-1 ring-white/10">
-              {p.heroImageUrl ? (
-                <img
-                  src={p.heroImageUrl}
-                  alt={p.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                  loading="lazy"
-                />
-              ) : null}
-            </div>
 
             <div className="min-w-0">
               <h4
@@ -677,7 +712,8 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
 function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
-  const secondary = items.slice(1, 6);
+  const secondaryWithThumbs = items.slice(1, 3);
+  const secondaryTextOnly = items.slice(3, 6);
 
   return (
     <section id="news-point-mobile" className="space-y-7">
@@ -716,9 +752,9 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         </article>
       ) : null}
 
-      {secondary.length > 0 ? (
+      {secondaryWithThumbs.length > 0 ? (
         <div className="space-y-6 border-t border-white/10 pt-6">
-          {secondary.map((n) => (
+          {secondaryWithThumbs.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
               <Link
@@ -754,13 +790,40 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
           ))}
         </div>
       ) : null}
+
+      {secondaryTextOnly.length > 0 ? (
+        <div className="space-y-5 border-t border-white/10 pt-6">
+          {secondaryTextOnly.map((n) => (
+            <article key={n.id} className="group relative overflow-visible">
+              <NewsAccent />
+              <Link
+                href={n.slug ? `/news/${n.slug}` : "#"}
+                className="block no-underline hover:no-underline"
+              >
+                <h4 className="text-[15px] font-semibold leading-[1.3] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+                </h4>
+
+                {n.excerpt ? (
+                  <p
+                    className={`mt-2 text-[12px] leading-[1.7] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                  >
+                    {n.excerpt}
+                  </p>
+                ) : null}
+              </Link>
+            </article>
+          ))}
+        </div>
+      ) : null}
     </section>
   );
 }
 
 function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
-  const secondary = items.slice(1, 6);
+  const secondaryWithThumbs = items.slice(1, 3);
+  const secondaryTextOnly = items.slice(3, 6);
   const compact = items.slice(6, 7);
 
   return (
@@ -800,9 +863,9 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
         </article>
       ) : null}
 
-      {secondary.length > 0 ? (
+      {secondaryWithThumbs.length > 0 ? (
         <div className="space-y-6 border-t border-white/10 pt-6">
-          {secondary.map((n) => (
+          {secondaryWithThumbs.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
               <Link
@@ -839,39 +902,52 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
         </div>
       ) : null}
 
+      {secondaryTextOnly.length > 0 ? (
+        <div className="space-y-5 border-t border-white/10 pt-6">
+          {secondaryTextOnly.map((n) => (
+            <article key={n.id} className="group relative overflow-visible">
+              <NewsAccent />
+              <Link
+                href={n.slug ? `/news/${n.slug}` : "#"}
+                className="block no-underline hover:no-underline"
+              >
+                <h4 className="text-[15px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+                </h4>
+
+                {n.excerpt ? (
+                  <p
+                    className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                  >
+                    {n.excerpt}
+                  </p>
+                ) : null}
+              </Link>
+            </article>
+          ))}
+        </div>
+      ) : null}
+
       {compact.length > 0 ? (
-        <div className="space-y-6 border-t border-white/10 pt-6">
+        <div className="space-y-5 border-t border-white/10 pt-6">
           {compact.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
               <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[1fr_96px] items-start gap-4.5 no-underline hover:no-underline"
+                className="block no-underline hover:no-underline"
               >
-                <div className="min-w-0">
-                  <h4 className="text-[15px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
-                    <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                  </h4>
+                <h4 className="text-[15px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+                </h4>
 
-                  {n.excerpt ? (
-                    <p
-                      className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                    >
-                      {n.excerpt}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="h-[72px] w-[96px] justify-self-end overflow-hidden bg-white/5 ring-1 ring-white/10">
-                  {n.heroImageUrl ? (
-                    <img
-                      src={n.heroImageUrl}
-                      alt={n.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                      loading="lazy"
-                    />
-                  ) : null}
-                </div>
+                {n.excerpt ? (
+                  <p
+                    className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                  >
+                    {n.excerpt}
+                  </p>
+                ) : null}
               </Link>
             </article>
           ))}
@@ -896,18 +972,7 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
             >
               <FeaturedAccent />
 
-              <div className="grid grid-cols-[96px_1fr] items-start gap-5.5">
-                <div className="h-[72px] overflow-hidden bg-white/5 ring-1 ring-white/10">
-                  {p.heroImageUrl ? (
-                    <img
-                      src={p.heroImageUrl}
-                      alt={p.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                      loading="lazy"
-                    />
-                  ) : null}
-                </div>
-
+              <div className="grid grid-cols-[1fr_96px] items-start gap-5.5">
                 <div className="min-w-0">
                   <h4
                     className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[17px] font-semibold leading-[1.18] text-[#DDD1BF] transition-colors duration-150 group-hover:text-[#E6DAC9] break-words`}
@@ -927,6 +992,17 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
                     <p className="mt-3 text-[10px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
                       {p.author}
                     </p>
+                  ) : null}
+                </div>
+
+                <div className="h-[72px] w-[96px] justify-self-end overflow-hidden bg-white/5 ring-1 ring-white/10">
+                  {p.heroImageUrl ? (
+                    <img
+                      src={p.heroImageUrl}
+                      alt={p.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                      loading="lazy"
+                    />
                   ) : null}
                 </div>
               </div>
@@ -955,6 +1031,8 @@ export default async function HomePage() {
   const desktopMiniFeatures = commentaryPosts.slice(1, 5);
   const commentaryStream = commentaryPosts.slice(5);
   const mobileCommentaryStream = commentaryPosts.slice(3);
+  const mobileReentryFeature = mobileCommentaryStream[0];
+  const mobileReentryList = mobileCommentaryStream.slice(1);
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -1003,7 +1081,7 @@ export default async function HomePage() {
             </article>
           </Link>
 
-          <div className="mt-11">
+          <div className="mt-10">
             <CommentatorClubPanel />
           </div>
         </section>
@@ -1046,16 +1124,27 @@ export default async function HomePage() {
                 />
               </section>
 
-              <section className="mt-12 space-y-5 border-t border-white/10 pt-8">
+              <section className="mt-14 space-y-6 border-t border-white/10 pt-10">
                 <SmallSectionHeader title="More Commentary" />
-                <CommentaryList items={mobileCommentaryStream} maxItems={20} />
+
+                {mobileReentryFeature ? (
+                  <div className="pt-1">
+                    <MobileCommentaryReentryFeature post={mobileReentryFeature} />
+                  </div>
+                ) : null}
+
+                {mobileReentryList.length > 0 ? (
+                  <div className="border-t border-white/10 pt-8">
+                    <CommentaryList items={mobileReentryList} maxItems={20} />
+                  </div>
+                ) : null}
 
                 <div className="pt-2">
                   <Link
                     href="/commentary"
                     className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
                   >
-                    <span>More</span>
+                    <span>Archive</span>
                     <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
                   </Link>
                 </div>
@@ -1197,7 +1286,7 @@ export default async function HomePage() {
                       href="/commentary"
                       className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
                     >
-                      <span>More</span>
+                      <span>Archive</span>
                       <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
                     </Link>
                   </div>
