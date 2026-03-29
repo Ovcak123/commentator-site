@@ -422,7 +422,7 @@ function inlineMeta(item: ExternalReadItem): string {
   return bits.join(", ");
 }
 
-/* ---------- mobile membership panel ---------- */
+/* ---------- membership panels ---------- */
 
 function CommentatorClubPanel() {
   return (
@@ -431,7 +431,7 @@ function CommentatorClubPanel() {
       className="group block no-underline hover:no-underline focus:outline-none"
       aria-label="Join The Commentator Club"
     >
-      <section className="relative overflow-hidden rounded-[5px] px-6 py-6 sm:px-7 sm:py-7 bg-[linear-gradient(135deg,rgba(59,8,16,0.88)_0%,rgba(85,12,23,0.88)_38%,rgba(102,16,29,0.80)_72%,rgba(77,11,21,0.86)_100%)] transition-all duration-200 group-hover:shadow-[0_10px_24px_rgba(0,0,0,0.18)]">
+      <section className="relative overflow-hidden rounded-[5px] bg-[linear-gradient(135deg,rgba(59,8,16,0.88)_0%,rgba(85,12,23,0.88)_38%,rgba(102,16,29,0.80)_72%,rgba(77,11,21,0.86)_100%)] px-6 py-6 transition-all duration-200 group-hover:shadow-[0_10px_24px_rgba(0,0,0,0.18)] sm:px-7 sm:py-7">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_34%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.03),transparent_32%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(0,0,0,0.06))]" />
@@ -453,6 +453,47 @@ function CommentatorClubPanel() {
           <div className="mt-5 inline-flex items-center gap-2 text-[13.35px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
             <span>Join for $5 a month</span>
             <span aria-hidden="true">→</span>
+          </div>
+        </div>
+      </section>
+    </Link>
+  );
+}
+
+function DesktopCommentatorClubPanel() {
+  return (
+    <Link
+      href="/club"
+      className="group block no-underline hover:no-underline focus:outline-none"
+      aria-label="Join The Commentator Club"
+    >
+      <section className="relative overflow-hidden rounded-[4px] bg-[linear-gradient(145deg,rgba(42,7,13,0.80)_0%,rgba(58,10,18,0.82)_36%,rgba(70,14,24,0.78)_68%,rgba(50,9,17,0.82)_100%)] px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] transition-all duration-200 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_12px_30px_rgba(0,0,0,0.16)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(214,167,132,0.08),transparent_34%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.025),transparent_30%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(0,0,0,0.10))]" />
+
+        <div className="relative">
+          <h3
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[16px] font-semibold leading-[1.14] text-[#F5EBDD] transition-colors duration-150 group-hover:text-[#FCF4EA]`}
+          >
+            Join The Commentator Club
+          </h3>
+
+          <p className="mt-3.5 text-[12.4px] leading-[1.72] text-[#E4D3C6] transition-colors duration-150 group-hover:text-[#EEDFD4]">
+            A private community of CEOs, founders, and political, military, and
+            intelligence leaders — alongside thinkers and innovators from around the
+            world. Members can comment, engage directly, submit ideas, and shape the
+            conversation.
+          </p>
+
+          <div className="mt-4 inline-flex items-center gap-1.5 text-[12.2px] font-semibold text-[#F0E2D6] transition-colors duration-150 group-hover:text-[#FAF0E6]">
+            <span>Join for $5 a month</span>
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+            >
+              →
+            </span>
           </div>
         </div>
       </section>
@@ -1313,12 +1354,16 @@ export default async function HomePage() {
               <DesktopNewsPointPanel items={newsItems} />
             </section>
 
-            <section className="mt-6 space-y-5">
+            <section className="mt-12 mb-14 space-y-4">
+  <DesktopCommentatorClubPanel />
+</section>
+
+            <section className="space-y-5">
               <SectionHeader title="Feed Read" headlineTone />
               <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
             </section>
 
-            <section className="mt-6 space-y-5">
+            <section className="space-y-5">
               <SectionHeader title="Strategic Insights" headlineTone />
               <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
             </section>
