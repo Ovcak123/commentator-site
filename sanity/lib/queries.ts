@@ -55,7 +55,8 @@ export const newsItemsQuery = `
     source,
     publishedAt,
     readTimeMinutes,
-    "slug": slug.current
+    "slug": slug.current,
+    "heroImageUrl": heroImage.asset->url
   }
 `;
 
