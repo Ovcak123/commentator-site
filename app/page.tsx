@@ -676,17 +676,38 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {compact.length > 0 ? (
-        <div className="space-y-4 border-t border-white/10 pt-6">
+        <div className="space-y-6 border-t border-white/10 pt-6">
           {compact.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
               <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="block no-underline hover:no-underline"
+                className="grid grid-cols-[1fr_96px] items-start gap-4.5 no-underline hover:no-underline"
               >
-                <h4 className="text-[14px] font-semibold leading-[1.34] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
-                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                </h4>
+                <div className="min-w-0">
+                  <h4 className="text-[15px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                    <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+                  </h4>
+
+                  {n.excerpt ? (
+                    <p
+                      className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                    >
+                      {n.excerpt}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="h-[72px] w-[96px] justify-self-end overflow-hidden bg-white/5 ring-1 ring-white/10">
+                  {n.heroImageUrl ? (
+                    <img
+                      src={n.heroImageUrl}
+                      alt={n.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                      loading="lazy"
+                    />
+                  ) : null}
+                </div>
               </Link>
             </article>
           ))}
@@ -698,12 +719,12 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
 
 function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
   return (
-    <div className="border-t border-white/10 pt-7">
+    <div className="border-t border-white/10 pt-8">
       <div className="space-y-0">
         {items.map((p, index) => (
           <article
             key={p.id}
-            className={index > 0 ? "mt-6 border-t border-white/10 pt-6" : ""}
+            className={index > 0 ? "mt-8 border-t border-white/10 pt-8" : ""}
           >
             <Link
               href={p.slug ? `/posts/${p.slug}` : "#"}
@@ -1238,12 +1259,12 @@ export default async function HomePage() {
               <DesktopNewsPointPanel items={newsItems} />
             </section>
 
-            <section className="space-y-5">
+            <section className="mt-6 space-y-5">
               <SectionHeader title="Feed Read" headlineTone />
               <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
             </section>
 
-            <section className="space-y-5">
+            <section className="mt-6 space-y-5">
               <SectionHeader title="Strategic Insights" headlineTone />
               <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
             </section>
