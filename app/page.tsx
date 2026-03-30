@@ -530,7 +530,9 @@ function MobileMissionBlock() {
       </div>
     </section>
   );
-}/* ---------- lists ---------- */
+}
+
+/* ---------- lists ---------- */
 
 function AggregatorList({
   items,
@@ -1096,7 +1098,8 @@ export default async function HomePage() {
   const secondaryLead = commentaryPosts[0];
 
   const mobileFeaturedCommentary = commentaryPosts[0];
-  const mobilePreNewsMicroCards = commentaryPosts.slice(1, 3);
+  const mobilePreClubMicroCards = commentaryPosts.slice(1, 2);
+  const mobilePostClubMicroCards = commentaryPosts.slice(2, 3);
 
   const desktopMiniFeatures = commentaryPosts.slice(1, 5);
   const commentaryStream = commentaryPosts.slice(5);
@@ -1150,10 +1153,6 @@ export default async function HomePage() {
               </div>
             </article>
           </Link>
-
-          <div className="mt-10">
-            <CommentatorClubPanel />
-          </div>
         </section>
       )}
 
@@ -1171,9 +1170,19 @@ export default async function HomePage() {
                 </section>
               ) : null}
 
-              {mobilePreNewsMicroCards.length > 0 ? (
+              {mobilePreClubMicroCards.length > 0 ? (
                 <section className="border-t border-white/10 pt-8">
-                  <MobileMicroCommentaryList items={mobilePreNewsMicroCards} />
+                  <MobileMicroCommentaryList items={mobilePreClubMicroCards} />
+                </section>
+              ) : null}
+
+              <section className="mt-10">
+                <CommentatorClubPanel />
+              </section>
+
+              {mobilePostClubMicroCards.length > 0 ? (
+                <section className="border-t border-white/10 pt-8">
+                  <MobileMicroCommentaryList items={mobilePostClubMicroCards} />
                 </section>
               ) : null}
 
