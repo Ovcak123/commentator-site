@@ -1,3 +1,5 @@
+
+
 // app/page.tsx
 
 export const dynamic = "force-dynamic";
@@ -649,31 +651,31 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
   const usable = items.filter((p) => !!p.slug);
 
   return (
-    <ul className="space-y-10">
+    <ul className="space-y-12">
       {usable.slice(0, maxItems).map((p) => (
         <li key={p.id} className="group relative overflow-visible">
           <HoverAccent />
           <Link
             href={`/posts/${p.slug}`}
-            className="block py-2 no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
+            className="block py-3 no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
             title={p.title}
           >
             <span
-              className={`block text-[14.5px] leading-[1.22] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words ${MAJOR_HEADLINE_SERIF_CLASS} font-medium`}
+              className={`block text-[17px] leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words ${MAJOR_HEADLINE_SERIF_CLASS} font-semibold`}
             >
               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
             </span>
 
             {p.excerpt ? (
               <p
-                className={`mt-2.5 text-[12.5px] leading-[1.82] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                className={`mt-3.5 text-[13.5px] leading-[1.86] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
               >
                 {p.excerpt}
               </p>
             ) : null}
 
             {p.author ? (
-              <span className="mt-3 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+              <span className="mt-4 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
                 {p.author}
               </span>
             ) : null}
@@ -688,7 +690,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
   if (!post.slug) return null;
 
   return (
-    <article className="space-y-6">
+    <article className="space-y-7">
       <div className="h-36 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-40">
         {post.heroImageUrl ? (
           <img
@@ -707,20 +709,20 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
         <FeaturedAccent />
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.14] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[21px] font-semibold leading-[1.1] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
           <p
-            className={`mt-3.5 text-[14px] leading-[1.8] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+            className={`mt-4 text-[14.5px] leading-[1.84] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
           >
             {post.excerpt}
           </p>
         ) : null}
         {post.author ? (
-          <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          <p className="mt-5.5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
             {post.author}
           </p>
         ) : null}
@@ -740,7 +742,7 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         className="block no-underline hover:no-underline focus:outline-none"
       >
         {post.heroImageUrl ? (
-          <div className="mb-6 h-32 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-36">
+          <div className="mb-7 h-32 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-36">
             <img
               src={post.heroImageUrl}
               alt={post.title}
@@ -751,21 +753,21 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         ) : null}
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[21px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
           <p
-            className={`mt-3.5 text-[13.75px] leading-[1.82] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+            className={`mt-4 text-[14.25px] leading-[1.86] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
           >
             {post.excerpt}
           </p>
         ) : null}
 
         {post.author ? (
-          <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          <p className="mt-5.5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
             {post.author}
           </p>
         ) : null}
@@ -778,11 +780,11 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   const usable = items.filter((p) => !!p.slug);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {usable.map((p, index) => (
         <article
           key={p.id}
-          className={index > 0 ? "border-t border-white/10 pt-8" : ""}
+          className={index > 0 ? "border-t border-white/10 pt-10" : ""}
         >
           <Link
             href={`/posts/${p.slug}`}
@@ -792,16 +794,22 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
             <div className="min-w-0">
               <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[17px] font-semibold leading-[1.18] text-[#CFC6B8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.14] text-[#D4CABD] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
               >
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
               </h4>
 
               {p.excerpt ? (
                 <p
-                  className={`mt-2.5 text-[13px] leading-[1.78] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                  className={`mt-3.5 text-[14px] leading-[1.84] line-clamp-4 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                 >
                   {p.excerpt}
+                </p>
+              ) : null}
+
+              {p.author ? (
+                <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                  {p.author}
                 </p>
               ) : null}
             </div>
@@ -811,14 +819,13 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
     </div>
   );
 }
-
 function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
   const secondaryWithThumbs = items.slice(1, 3);
   const secondaryTextOnly = items.slice(3, 6);
 
   return (
-    <section id="news-point-mobile" className="space-y-8">
+    <section id="news-point-mobile" className="space-y-9">
       <SectionHeader title="News Point" headlineTone />
 
       {featured ? (
@@ -829,7 +836,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
             className="block no-underline hover:no-underline"
           >
             {featured.heroImageUrl ? (
-              <div className="mb-5 h-40 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-44">
+              <div className="mb-6 h-40 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-44">
                 <img
                   src={featured.heroImageUrl}
                   alt={featured.title}
@@ -839,13 +846,13 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               </div>
             ) : null}
 
-            <h3 className="text-[21px] font-semibold leading-[1.18] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+            <h3 className="text-[22px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
               <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
             </h3>
 
             {featured.excerpt ? (
               <p
-                className={`mt-3.5 text-[13.5px] leading-[1.78] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                className={`mt-4 text-[14.5px] leading-[1.82] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
               >
                 {featured.excerpt}
               </p>
@@ -855,29 +862,29 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {secondaryWithThumbs.length > 0 ? (
-        <div className="space-y-7 border-t border-white/10 pt-7">
+        <div className="space-y-8 border-t border-white/10 pt-8">
           {secondaryWithThumbs.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
               <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[1fr_84px] items-start gap-4 no-underline hover:no-underline"
+                className="grid grid-cols-[1fr_88px] items-start gap-4.5 no-underline hover:no-underline"
               >
                 <div className="min-w-0">
-                  <h4 className="text-[15.5px] font-semibold leading-[1.3] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                  <h4 className="text-[17px] font-semibold leading-[1.24] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
                   {n.excerpt ? (
                     <p
-                      className={`mt-2.5 text-[12.75px] leading-[1.74] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-3 text-[13.5px] leading-[1.8] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                     >
                       {n.excerpt}
                     </p>
                   ) : null}
                 </div>
 
-                <div className="h-[64px] w-[84px] justify-self-end overflow-hidden bg-white/5 ring-1 ring-white/10">
+                <div className="h-[68px] w-[88px] justify-self-end overflow-hidden bg-white/5 ring-1 ring-white/10">
                   {n.heroImageUrl ? (
                     <img
                       src={n.heroImageUrl}
@@ -894,7 +901,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {secondaryTextOnly.length > 0 ? (
-        <div className="space-y-6 border-t border-white/10 pt-7">
+        <div className="space-y-7 border-t border-white/10 pt-8">
           {secondaryTextOnly.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
@@ -902,13 +909,13 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 href={n.slug ? `/news/${n.slug}` : "#"}
                 className="block no-underline hover:no-underline"
               >
-                <h4 className="text-[15.5px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                <h4 className="text-[17px] font-semibold leading-[1.24] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
                   <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                 </h4>
 
                 {n.excerpt ? (
                   <p
-                    className={`mt-2.5 text-[12.75px] leading-[1.76] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                    className={`mt-3 text-[13.5px] leading-[1.82] line-clamp-4 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                   >
                     {n.excerpt}
                   </p>
@@ -1447,4 +1454,3 @@ export default async function HomePage() {
     </main>
   );
 }
-        
