@@ -503,25 +503,25 @@ function DesktopCommentatorClubPanel() {
 
 function MobileMissionBlock() {
   return (
-    <section className="mt-14 overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-6 py-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
+    <section className="mt-16 overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
       <div className="relative">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.02),transparent_46%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.045),transparent_56%)]" />
 
-        <div className="relative mx-auto max-w-[18.5rem] text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.30em] text-[#A7B5C3]">
+        <div className="relative mx-auto max-w-[19.5rem] text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#A7B5C3]">
             The Commentator’s Mission
           </p>
 
-          <div className="mt-5">
+          <div className="mt-6">
             <p
-              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[26px] font-semibold leading-[1.06] text-[#E8DFD3] sm:text-[28px]`}
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[28px] font-semibold leading-[1.04] text-[#E8DFD3] sm:text-[29px]`}
             >
               Understanding Power in the Digital Revolution
             </p>
 
             <p
-              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-4 text-[17px] leading-[1.14] text-[#B7C4D1] sm:text-[18px]`}
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-5 text-[18px] leading-[1.12] text-[#B7C4D1] sm:text-[19px]`}
             >
               Where bridges are built in a polarized world
             </p>
@@ -531,6 +531,7 @@ function MobileMissionBlock() {
     </section>
   );
 }
+
 function DesktopMissionBlock() {
   return (
     <section className="mx-auto mt-20 mb-4 w-full max-w-[44rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(24,33,42,0.72)_0%,rgba(32,42,52,0.68)_100%)] px-8 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.018),inset_0_-1px_0_rgba(0,0,0,0.14)]">
@@ -561,6 +562,7 @@ function DesktopMissionBlock() {
     </section>
   );
 }
+
 /* ---------- lists ---------- */
 
 function AggregatorList({
@@ -686,7 +688,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
   if (!post.slug) return null;
 
   return (
-    <article className="space-y-5">
+    <article className="space-y-6">
       <div className="h-36 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-40">
         {post.heroImageUrl ? (
           <img
@@ -705,21 +707,20 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
         <FeaturedAccent />
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.14] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
           <p
-            className={`mt-3 text-[13.5px] leading-[1.72] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+            className={`mt-3.5 text-[14px] leading-[1.8] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
           >
             {post.excerpt}
           </p>
         ) : null}
-
         {post.author ? (
-          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
             {post.author}
           </p>
         ) : null}
@@ -739,7 +740,7 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         className="block no-underline hover:no-underline focus:outline-none"
       >
         {post.heroImageUrl ? (
-          <div className="mb-5 h-32 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-36">
+          <div className="mb-6 h-32 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-36">
             <img
               src={post.heroImageUrl}
               alt={post.title}
@@ -750,21 +751,21 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         ) : null}
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[20px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[21px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
           <p
-            className={`mt-3 text-[13px] leading-[1.76] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+            className={`mt-3.5 text-[13.75px] leading-[1.82] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
           >
             {post.excerpt}
           </p>
         ) : null}
 
         {post.author ? (
-          <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
             {post.author}
           </p>
         ) : null}
@@ -777,11 +778,11 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   const usable = items.filter((p) => !!p.slug);
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-8">
       {usable.map((p, index) => (
         <article
           key={p.id}
-          className={index > 0 ? "border-t border-white/10 pt-7" : ""}
+          className={index > 0 ? "border-t border-white/10 pt-8" : ""}
         >
           <Link
             href={`/posts/${p.slug}`}
@@ -791,14 +792,14 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
             <div className="min-w-0">
               <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[16px] font-semibold leading-[1.16] text-[#CFC6B8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[17px] font-semibold leading-[1.18] text-[#CFC6B8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
               >
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
               </h4>
 
               {p.excerpt ? (
                 <p
-                  className={`mt-2 text-[12.5px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                  className={`mt-2.5 text-[13px] leading-[1.78] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                 >
                   {p.excerpt}
                 </p>
@@ -817,7 +818,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const secondaryTextOnly = items.slice(3, 6);
 
   return (
-    <section id="news-point-mobile" className="space-y-7">
+    <section id="news-point-mobile" className="space-y-8">
       <SectionHeader title="News Point" headlineTone />
 
       {featured ? (
@@ -838,13 +839,13 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               </div>
             ) : null}
 
-            <h3 className="text-[20px] font-semibold leading-[1.18] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+            <h3 className="text-[21px] font-semibold leading-[1.18] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
               <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
             </h3>
 
             {featured.excerpt ? (
               <p
-                className={`mt-3 text-[13px] leading-[1.72] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                className={`mt-3.5 text-[13.5px] leading-[1.78] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
               >
                 {featured.excerpt}
               </p>
@@ -854,7 +855,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {secondaryWithThumbs.length > 0 ? (
-        <div className="space-y-6 border-t border-white/10 pt-6">
+        <div className="space-y-7 border-t border-white/10 pt-7">
           {secondaryWithThumbs.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
@@ -863,13 +864,13 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 className="grid grid-cols-[1fr_84px] items-start gap-4 no-underline hover:no-underline"
               >
                 <div className="min-w-0">
-                  <h4 className="text-[15px] font-semibold leading-[1.28] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                  <h4 className="text-[15.5px] font-semibold leading-[1.3] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
                   {n.excerpt ? (
                     <p
-                      className={`mt-2 text-[12px] leading-[1.68] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-2.5 text-[12.75px] leading-[1.74] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                     >
                       {n.excerpt}
                     </p>
@@ -893,7 +894,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {secondaryTextOnly.length > 0 ? (
-        <div className="space-y-5 border-t border-white/10 pt-6">
+        <div className="space-y-6 border-t border-white/10 pt-7">
           {secondaryTextOnly.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
@@ -901,13 +902,13 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 href={n.slug ? `/news/${n.slug}` : "#"}
                 className="block no-underline hover:no-underline"
               >
-                <h4 className="text-[15px] font-semibold leading-[1.3] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
+                <h4 className="text-[15.5px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words">
                   <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                 </h4>
 
                 {n.excerpt ? (
                   <p
-                    className={`mt-2 text-[12px] leading-[1.7] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                    className={`mt-2.5 text-[12.75px] leading-[1.76] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                   >
                     {n.excerpt}
                   </p>
@@ -1141,12 +1142,12 @@ export default async function HomePage() {
       <Header />
 
       {lead && lead.slug && (
-        <section className="mx-auto max-w-6xl px-6 pt-10 pb-8 lg:hidden">
+        <section className="mx-auto max-w-6xl px-6 pt-12 pb-10 lg:hidden">
           <Link
             href={leadHref}
             className="group block no-underline hover:no-underline focus:outline-none"
           >
-            <article className="space-y-4">
+            <article className="space-y-5">
               <div className="h-64 overflow-hidden bg-white/5 ring-1 ring-white/10 sm:h-72">
                 {lead.heroImageUrl && (
                   <img
@@ -1161,21 +1162,21 @@ export default async function HomePage() {
               <div className="relative overflow-visible">
                 <FeaturedAccent />
                 <h1
-                  className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[42px] font-semibold leading-[1.12] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px]`}
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-7 text-[42px] font-semibold leading-[1.08] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E1D6C6] break-words sm:text-[44px]`}
                 >
                   <InlineTitleWithReadTime title={lead.title} minutes={lead.readTimeMinutes} />
                 </h1>
 
                 {lead.excerpt && (
                   <p
-                    className={`mt-3 max-w-[36ch] text-[17px] leading-relaxed ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                    className={`mt-4 max-w-[34ch] text-[17.5px] leading-[1.78] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                   >
                     {lead.excerpt}
                   </p>
                 )}
 
                 {leadMeta ? (
-                  <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                  <p className="mt-6 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
                     {leadMeta}
                   </p>
                 ) : null}
@@ -1189,37 +1190,37 @@ export default async function HomePage() {
         {/* ---------- mobile ---------- */}
         <div className="lg:hidden">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
-            <section className="space-y-10">
+            <section className="space-y-14">
               {mobileFeaturedCommentary ? (
-                <section className="mt-5">
+                <section className="mt-6">
                   <SectionHeader title="Commentary" headlineTone />
-                  <div className="mt-7">
+                  <div className="mt-8">
                     <MobileCommentaryFeature post={mobileFeaturedCommentary} />
                   </div>
                 </section>
               ) : null}
 
               {mobilePreClubMicroCards.length > 0 ? (
-                <section className="border-t border-white/10 pt-8">
+                <section className="border-t border-white/10 pt-10">
                   <MobileMicroCommentaryList items={mobilePreClubMicroCards} />
                 </section>
               ) : null}
 
-              <section className="mt-10">
+              <section className="mt-12">
                 <CommentatorClubPanel />
               </section>
 
               {mobilePostClubMicroCards.length > 0 ? (
-                <section className="border-t border-white/10 pt-8">
+                <section className="border-t border-white/10 pt-10">
                   <MobileMicroCommentaryList items={mobilePostClubMicroCards} />
                 </section>
               ) : null}
 
-              <section className="mt-12 border-t border-white/10 pt-8">
+              <section className="mt-14 border-t border-white/10 pt-10">
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className="mt-12 space-y-4 border-t border-white/10 pt-8">
+              <section className="mt-14 space-y-5 border-t border-white/10 pt-10">
                 <SectionHeader title="Most Read" headlineTone />
                 <AggregatorList
                   items={mostRead.map((m) => ({
@@ -1234,7 +1235,7 @@ export default async function HomePage() {
 
               <MobileMissionBlock />
 
-              <section className="mt-14 space-y-6">
+              <section className="mt-16 space-y-8">
                 <SmallSectionHeader title="More Commentary" />
 
                 {mobileReentryFeature ? (
@@ -1244,12 +1245,12 @@ export default async function HomePage() {
                 ) : null}
 
                 {mobileReentryList.length > 0 ? (
-                  <div className="border-t border-white/10 pt-8">
+                  <div className="border-t border-white/10 pt-10">
                     <CommentaryList items={mobileReentryList} maxItems={20} />
                   </div>
                 ) : null}
 
-                <div className="pt-2">
+                <div className="pt-4">
                   <Link
                     href="/commentary"
                     className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
@@ -1260,13 +1261,13 @@ export default async function HomePage() {
                 </div>
               </section>
 
-              <aside className="flex flex-col gap-14 border-t border-white/10 pt-10">
-                <section className="space-y-4">
+              <aside className="flex flex-col gap-16 border-t border-white/10 pt-12">
+                <section className="space-y-5">
                   <SectionHeader title="Feed Read" headlineTone />
                   <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
                 </section>
 
-                <section className="space-y-4">
+                <section className="space-y-5">
                   <SectionHeader title="Strategic Insights" headlineTone />
                   <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
                 </section>
@@ -1388,19 +1389,19 @@ export default async function HomePage() {
                   ) : null}
                 </div>
 
-                                <div className="space-y-4 pt-12">
-  <CommentaryList items={commentaryStream} maxItems={20} />
+                <div className="space-y-4 pt-12">
+                  <CommentaryList items={commentaryStream} maxItems={20} />
 
-  <div className="pt-1">
-    <Link
-      href="/commentary"
-      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
-    >
-      <span>Archive</span>
-      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-    </Link>
-  </div>
-</div>
+                  <div className="pt-1">
+                    <Link
+                      href="/commentary"
+                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
+                    >
+                      <span>Archive</span>
+                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+                    </Link>
+                  </div>
+                </div>
               </section>
 
               <section className="space-y-4 border-t border-white/10 pt-6">
@@ -1433,17 +1434,17 @@ export default async function HomePage() {
             </section>
 
             <section className="mt-8 space-y-5">
-  <SectionHeader title="Strategic Insights" headlineTone />
-  <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
-</section>
-</aside>
-</div>
+              <SectionHeader title="Strategic Insights" headlineTone />
+              <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
+            </section>
+          </aside>
+        </div>
 
-<div className="hidden lg:block">
-  <DesktopMissionBlock />
-</div>
-
-</div>
-</main>
+        <div className="hidden lg:block">
+          <DesktopMissionBlock />
+        </div>
+      </div>
+    </main>
   );
 }
+        
