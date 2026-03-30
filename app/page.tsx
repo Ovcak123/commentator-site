@@ -1432,11 +1432,11 @@ export default async function HomePage() {
               <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
             </section>
 
-            <section className="space-y-5">
-              <SectionHeader title="Strategic Insights" headlineTone />
-              <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
-            </section>
-          </aside>
+            <section className="mt-8 space-y-5">
+  <SectionHeader title="Strategic Insights" headlineTone />
+  <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
+</section>
+</aside>
 </div>
 
 <div className="hidden lg:block">
