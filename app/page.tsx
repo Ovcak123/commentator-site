@@ -133,12 +133,13 @@ const EXCERPT_HOVER_TEXT_CLASS = "group-hover:text-[#D8D0C5]";
 
 /* ---------- surface / divider system ---------- */
 
-const THICK_DIVIDER_CLASS = "border-t border-white/18";
+const THICK_DIVIDER_CLASS = "border-t-2 border-white/38";
+const MID_DIVIDER_CLASS = "border-t border-white/18";
 const THIN_DIVIDER_CLASS = "border-t border-white/10";
 const EDITORIAL_PANEL_CLASS =
-  "rounded-[18px] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(15,19,27,0.94)_0%,rgba(10,14,22,0.96)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_18px_45px_rgba(0,0,0,0.24)]";
+  "rounded-[18px] border border-white/[0.06] bg-[linear-gradient(180deg,rgba(13,17,24,0.86)_0%,rgba(9,13,20,0.90)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.025),0_14px_36px_rgba(0,0,0,0.18)]";
 const INTELLIGENCE_PANEL_CLASS =
-  "rounded-[18px] border border-white/[0.06] bg-[linear-gradient(180deg,rgba(12,15,20,0.98)_0%,rgba(8,11,16,0.98)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]";
+  "rounded-[18px] border border-white/[0.05] bg-[linear-gradient(180deg,rgba(10,13,18,0.95)_0%,rgba(7,10,15,0.97)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.018)]";
 
 /* ---------- Read time UI ---------- */
 /**
@@ -861,7 +862,9 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
       ))}
     </div>
   );
-}function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
+}
+
+function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
   const secondaryWithThumbs = items.slice(1, 3);
   const secondaryTextOnly = items.slice(3, 6);
@@ -906,8 +909,8 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
         </article>
       ) : null}
 
-      {secondaryWithThumbs.length > 0 ? (
-        <div className={`space-y-8 ${THICK_DIVIDER_CLASS} pt-8`}>
+            {secondaryWithThumbs.length > 0 ? (
+        <div className={`space-y-8 ${MID_DIVIDER_CLASS} pt-8`}>
           {secondaryWithThumbs.map((n, index) => (
             <article
               key={n.id}
@@ -951,7 +954,7 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
       ) : null}
 
       {secondaryTextOnly.length > 0 ? (
-        <div className={`space-y-0 ${THICK_DIVIDER_CLASS} pt-8`}>
+        <div className="space-y-0 pt-8">
           {secondaryTextOnly.map((n, index) => (
             <article
               key={n.id}
@@ -1028,7 +1031,7 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {secondaryWithThumbs.length > 0 ? (
-        <div className={`space-y-6 ${THICK_DIVIDER_CLASS} pt-6`}>
+        <div className={`space-y-6 ${MID_DIVIDER_CLASS} pt-6`}>
           {secondaryWithThumbs.map((n, index) => (
             <article
               key={n.id}
@@ -1072,7 +1075,7 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {secondaryTextOnly.length > 0 ? (
-        <div className={`space-y-0 ${THICK_DIVIDER_CLASS} pt-6`}>
+        <div className={`space-y-0 ${MID_DIVIDER_CLASS} pt-6`}>
           {secondaryTextOnly.map((n, index) => (
             <article
               key={n.id}
@@ -1103,7 +1106,7 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
       ) : null}
 
       {compact.length > 0 ? (
-        <div className={`space-y-0 ${THICK_DIVIDER_CLASS} pt-6`}>
+        <div className={`space-y-0 ${MID_DIVIDER_CLASS} pt-6`}>
           {compact.map((n) => (
             <article key={n.id} className="group relative overflow-visible">
               <NewsAccent />
@@ -1133,7 +1136,7 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
 
 function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
   return (
-    <div className={`${THICK_DIVIDER_CLASS} pt-8`}>
+    <div className={`${MID_DIVIDER_CLASS} pt-8`}>
       <div className="space-y-0">
         {items.map((p, index) => (
           <article
@@ -1275,7 +1278,7 @@ export default async function HomePage() {
               ) : null}
 
               {mobilePreClubMicroCards.length > 0 ? (
-                <section className={`${THICK_DIVIDER_CLASS} pt-10`}>
+                <section className={`${MID_DIVIDER_CLASS} pt-10`}>
                   <MobileMicroCommentaryList items={mobilePreClubMicroCards} />
                 </section>
               ) : null}
@@ -1285,7 +1288,7 @@ export default async function HomePage() {
               </section>
 
               {mobilePostClubMicroCards.length > 0 ? (
-                <section className={`${THICK_DIVIDER_CLASS} pt-10`}>
+                <section className="pt-10">
                   <MobileMicroCommentaryList items={mobilePostClubMicroCards} />
                 </section>
               ) : null}
@@ -1321,7 +1324,7 @@ export default async function HomePage() {
                 ) : null}
 
                 {mobileReentryList.length > 0 ? (
-                  <div className={`${THICK_DIVIDER_CLASS} pt-10`}>
+                  <div className={`${MID_DIVIDER_CLASS} pt-10`}>
                     <CommentaryList items={mobileReentryList} maxItems={20} />
                   </div>
                 ) : null}
@@ -1337,7 +1340,7 @@ export default async function HomePage() {
                 </div>
               </section>
 
-              <aside className={`flex flex-col gap-16 ${THICK_DIVIDER_CLASS} pt-12`}>
+              <aside className={`flex flex-col gap-16 ${MID_DIVIDER_CLASS} pt-12`}>
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <SectionHeader title="Feed Read" headlineTone />
                   <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
@@ -1413,7 +1416,7 @@ export default async function HomePage() {
 
                 <div className="space-y-0">
                   {secondaryLead && secondaryLead.slug ? (
-                    <article className={`mt-0 mb-10 ${THICK_DIVIDER_CLASS} pt-7`}>
+                    <article className={`mt-0 mb-10 ${MID_DIVIDER_CLASS} pt-7`}>
                       <Link
                         href={`/posts/${secondaryLead.slug}`}
                         className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
@@ -1480,7 +1483,7 @@ export default async function HomePage() {
                 </div>
               </section>
 
-              <section className={`space-y-4 ${THICK_DIVIDER_CLASS} pt-6`}>
+              <section className={`space-y-4 ${MID_DIVIDER_CLASS} pt-6`}>
                 <SectionHeader title="Most Read" headlineTone />
                 <div className="rounded-[14px] bg-white/[0.015] px-3 py-3 -mx-3">
                   <AggregatorList
