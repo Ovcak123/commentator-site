@@ -501,7 +501,36 @@ function DesktopCommentatorClubPanel() {
   );
 }
 
-/* ---------- lists ---------- */
+function MobileMissionBlock() {
+  return (
+    <section className="mt-14 overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-6 py-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.02),transparent_46%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.045),transparent_56%)]" />
+
+        <div className="relative mx-auto max-w-[18.5rem] text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.30em] text-[#A7B5C3]">
+            The Commentator’s Mission
+          </p>
+
+          <div className="mt-5">
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[26px] font-semibold leading-[1.06] text-[#E8DFD3] sm:text-[28px]`}
+            >
+              Understanding Power in the Digital Revolution
+            </p>
+
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-4 text-[17px] leading-[1.14] text-[#B7C4D1] sm:text-[18px]`}
+            >
+              Where bridges are built in a polarized world
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}/* ---------- lists ---------- */
 
 function AggregatorList({
   items,
@@ -1165,7 +1194,9 @@ export default async function HomePage() {
                 />
               </section>
 
-              <section className="mt-14 space-y-6 border-t border-white/10 pt-10">
+              <MobileMissionBlock />
+
+              <section className="mt-14 space-y-6">
                 <SmallSectionHeader title="More Commentary" />
 
                 {mobileReentryFeature ? (
@@ -1355,8 +1386,8 @@ export default async function HomePage() {
             </section>
 
             <section className="mt-12 mb-14 space-y-4">
-  <DesktopCommentatorClubPanel />
-</section>
+              <DesktopCommentatorClubPanel />
+            </section>
 
             <section className="space-y-5">
               <SectionHeader title="Feed Read" headlineTone />
