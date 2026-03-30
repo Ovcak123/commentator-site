@@ -531,7 +531,36 @@ function MobileMissionBlock() {
     </section>
   );
 }
+function DesktopMissionBlock() {
+  return (
+    <section className="mx-auto mt-20 mb-4 w-full max-w-[44rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(24,33,42,0.72)_0%,rgba(32,42,52,0.68)_100%)] px-8 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.018),inset_0_-1px_0_rgba(0,0,0,0.14)]">
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.014),transparent_48%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.028),transparent_60%)]" />
 
+        <div className="relative mx-auto max-w-[36rem] text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#A7B5C3]/92">
+            The Commentator’s Mission
+          </p>
+
+          <div className="mt-4">
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[28px] font-semibold leading-[1.04] text-[#E6DDD0]`}
+            >
+              Understanding Power in the Digital Revolution
+            </p>
+
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-2.5 text-[18px] leading-[1.12] text-[#B3C0CC]`}
+            >
+              Where bridges are built in a polarized world
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 /* ---------- lists ---------- */
 
 function AggregatorList({
@@ -1359,19 +1388,19 @@ export default async function HomePage() {
                   ) : null}
                 </div>
 
-                <div className="space-y-4 pt-12">
-                  <CommentaryList items={commentaryStream} maxItems={20} />
+                                <div className="space-y-4 pt-12">
+  <CommentaryList items={commentaryStream} maxItems={20} />
 
-                  <div className="pt-1">
-                    <Link
-                      href="/commentary"
-                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
-                    >
-                      <span>Archive</span>
-                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-                    </Link>
-                  </div>
-                </div>
+  <div className="pt-1">
+    <Link
+      href="/commentary"
+      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
+    >
+      <span>Archive</span>
+      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+    </Link>
+  </div>
+</div>
               </section>
 
               <section className="space-y-4 border-t border-white/10 pt-6">
@@ -1408,8 +1437,13 @@ export default async function HomePage() {
               <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
             </section>
           </aside>
-        </div>
-      </div>
-    </main>
+</div>
+
+<div className="hidden lg:block">
+  <DesktopMissionBlock />
+</div>
+
+</div>
+</main>
   );
 }
