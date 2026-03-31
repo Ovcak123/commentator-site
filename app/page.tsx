@@ -133,13 +133,15 @@ const EXCERPT_HOVER_TEXT_CLASS = "group-hover:text-[#D8D0C5]";
 
 /* ---------- surface / divider system ---------- */
 
-const THICK_DIVIDER_CLASS = "border-t-2 border-white/38";
-const MID_DIVIDER_CLASS = "border-t border-white/18";
-const THIN_DIVIDER_CLASS = "border-t border-white/10";
-const MOBILE_SECTION_RULE_CLASS = "mx-3 h-[14px] rounded-[1px] bg-white/96";
-const MOBILE_SECTION_RULE_SOFT_CLASS = "h-[2px] w-full bg-white/78";
-const MOBILE_SECTION_RULE_SPACER_TOP_CLASS = "pt-6";
-const MOBILE_SECTION_RULE_SPACER_BOTTOM_CLASS = "pb-6";
+const THICK_DIVIDER_CLASS = "border-t border-white/[0.10]";
+const MID_DIVIDER_CLASS = "border-t border-white/[0.12]";
+const THIN_DIVIDER_CLASS = "border-t border-white/[0.08]";
+const MOBILE_SECTION_RULE_CLASS =
+  "h-px w-full bg-gradient-to-r from-transparent via-white/14 to-transparent";
+const MOBILE_SECTION_RULE_SOFT_CLASS =
+  "h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent";
+const MOBILE_SECTION_RULE_SPACER_TOP_CLASS = "pt-0";
+const MOBILE_SECTION_RULE_SPACER_BOTTOM_CLASS = "pb-0";
 const EDITORIAL_PANEL_CLASS =
   "rounded-[18px] border border-white/[0.06] bg-[linear-gradient(180deg,rgba(13,17,24,0.86)_0%,rgba(9,13,20,0.90)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.025),0_14px_36px_rgba(0,0,0,0.18)]";
 const INTELLIGENCE_PANEL_CLASS =
@@ -380,18 +382,18 @@ function SectionHeader({
 }) {
   return (
     <div className="space-y-3">
-      <div className="inline-flex items-center gap-3">
-        <div className="inline-block">
+      <div className="flex items-end justify-between gap-4">
+        <div className="min-w-0 flex-1">
           <h2
-            className={`text-[12px] font-semibold uppercase tracking-[0.32em] ${
+            className={`whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.30em] ${
               headlineTone ? "text-[#A89F93]" : "text-[#9C9488]"
             }`}
           >
             {title}
           </h2>
-          <div className="mt-2.5 flex items-center gap-2">
-            <span className="block h-[3px] w-[136px] bg-[#C67C4E]/38" />
-            <span className="block h-px w-16 bg-white/10" />
+          <div className="mt-2.5 flex items-center gap-2.5">
+            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-[#C67C4E]/80" />
+            <span className="block h-px min-w-0 flex-1 bg-white/12" />
           </div>
         </div>
       </div>
@@ -402,13 +404,13 @@ function SectionHeader({
 function SmallSectionHeader({ title }: { title: string }) {
   return (
     <div className="space-y-2.5">
-      <div className="inline-block">
-        <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#9C9488]/92">
+      <div className="inline-block min-w-0">
+        <h3 className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.26em] text-[#9C9488]/92">
           {title}
         </h3>
         <div className="mt-2 flex items-center gap-2">
-          <span className="block h-[2px] w-[76px] bg-[#C67C4E]/30" />
-          <span className="block h-px w-8 bg-white/10" />
+          <span className="block h-[2px] w-[64px] rounded-full bg-[#C67C4E]/42" />
+          <span className="block h-px w-10 bg-white/10" />
         </div>
       </div>
     </div>
@@ -537,7 +539,7 @@ function DesktopCommentatorClubPanel() {
 
 function MobileMissionBlock() {
   return (
-    <section className="mt-16 overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
+    <section className="mt-14 overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
       <div className="relative">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.02),transparent_46%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.045),transparent_56%)]" />
@@ -626,10 +628,14 @@ function AggregatorList({
     tone === "quiet" ? "text-white/42" : tone === "subtle" ? "text-white/34" : "text-white/45";
 
   const itemBorderClass =
-    tone === "quiet" ? "border-white/[0.08]" : tone === "subtle" ? "border-white/[0.06]" : "border-white/[0.09]";
+    tone === "quiet"
+      ? "border-white/[0.08]"
+      : tone === "subtle"
+        ? "border-white/[0.06]"
+        : "border-white/[0.09]";
 
   return (
-    <ul className={tone === "subtle" ? "space-y-0" : "space-y-0"}>
+    <ul className="space-y-0">
       {items.slice(0, maxItems).map((it, index) => {
         const meta = inlineMeta(it);
         const isInternal = it.href?.startsWith("/");
@@ -697,8 +703,12 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
         <li
           key={p.id}
           className={`group relative overflow-visible ${
-            index > 0 ? `${THIN_DIVIDER_CLASS} pt-10` : ""
-          } ${index % 4 === 2 ? "rounded-[14px] bg-white/[0.015] px-3 py-2 -mx-3" : ""}`}
+            index > 0 ? `${THIN_DIVIDER_CLASS} pt-9` : ""
+          } ${
+            index % 4 === 2
+              ? "lg:rounded-[16px] lg:border lg:border-white/[0.06] lg:bg-white/[0.02] lg:px-3.5 lg:py-3 lg:-mx-3.5 lg:shadow-[inset_0_1px_0_rgba(255,255,255,0.015)]"
+              : ""
+          }`}
         >
           <HoverAccent />
           <Link
@@ -707,21 +717,19 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
             title={p.title}
           >
             <span
-              className={`block text-[17px] leading-[1.12] md:text-[17px] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] break-words ${MAJOR_HEADLINE_SERIF_CLASS} font-semibold`}
+              className={`block break-words text-[17.25px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] md:text-[17px] ${MAJOR_HEADLINE_SERIF_CLASS}`}
             >
               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
             </span>
 
             {p.excerpt ? (
-              <p
-                className="mt-4 text-[15px] leading-[1.8] md:mt-3.5 md:text-[13.5px] md:leading-[1.86] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]"
-              >
+              <p className="mt-4 text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB] md:mt-3.5 md:text-[13.5px] md:leading-[1.86]">
                 {p.excerpt}
               </p>
             ) : null}
 
             {p.author ? (
-              <span className="mt-6 block text-[12px] font-medium uppercase tracking-[0.24em] md:mt-4 md:text-[11px] md:tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
+              <span className="mt-5 block text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:mt-4 md:text-[11px] md:tracking-[0.20em] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
                 {p.author}
               </span>
             ) : null}
@@ -736,7 +744,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
   if (!post.slug) return null;
 
   return (
-    <article className="space-y-7">
+    <article className="space-y-8">
       <div className="h-36 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-40">
         {post.heroImageUrl ? (
           <img
@@ -755,18 +763,18 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
         <FeaturedAccent />
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[22px] font-semibold leading-[1.08] md:text-[21px] md:leading-[1.1] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E6DBCC] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E6DBCC] md:text-[21px] md:leading-[1.1]`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
-          <p className="mt-4.5 text-[15.25px] leading-[1.78] md:mt-4 md:text-[14.5px] md:leading-[1.84] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+          <p className="mt-4 text-[15.25px] leading-[1.76] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB] md:mt-4 md:text-[14.5px] md:leading-[1.84]">
             {post.excerpt}
           </p>
         ) : null}
         {post.author ? (
-          <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] md:text-[11px] md:tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
+          <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:text-[11px] md:tracking-[0.20em] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
             {post.author}
           </p>
         ) : null}
@@ -786,7 +794,7 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         className="block no-underline hover:no-underline focus:outline-none"
       >
         {post.heroImageUrl ? (
-          <div className="mb-7 h-32 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-36">
+          <div className="mb-12 h-32 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-36">
             <img
               src={post.heroImageUrl}
               alt={post.title}
@@ -797,19 +805,19 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         ) : null}
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
-          <p className="mt-4.5 text-[15.25px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+          <p className="mt-4 text-[15.25px] leading-[1.76] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
             {post.excerpt}
           </p>
         ) : null}
 
         {post.author ? (
-          <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+          <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
             {post.author}
           </p>
         ) : null}
@@ -824,33 +832,22 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   return (
     <div className="space-y-0">
       {usable.map((p, index) => (
-        <article
-          key={p.id}
-          className={`relative ${
-            index > 0 ? "border-t border-white/10 pt-10" : ""
-          } ${
-            index % 4 === 1
-              ? "rounded-[14px] bg-white/[0.015] px-3 py-4 -mx-3"
-              : index % 4 === 3
-                ? "rounded-[16px] border border-white/[0.05] bg-[linear-gradient(180deg,rgba(14,18,25,0.72)_0%,rgba(11,15,22,0.82)_100%)] px-4 py-5 -mx-1"
-                : ""
-          }`}
-        >
+        <article key={p.id} className={index > 0 ? "mt-12" : ""}>
           <Link
             href={`/posts/${p.slug}`}
-            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
           >
             <FeaturedAccent />
 
             <div className="min-w-0">
               <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.12] text-[#D4CABD] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
               >
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
               </h4>
 
               {p.excerpt ? (
-                <p className="mt-4 text-[14.75px] leading-[1.78] line-clamp-4 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                <p className="mt-4 text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
                   {p.excerpt}
                 </p>
               ) : null}
@@ -875,24 +872,27 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
 
   return (
     <section id="news-point-mobile" className="space-y-0">
-      <div className="pt-8 pb-7">
-        <div className="mx-3 h-[14px] bg-white" />
-      </div>
+      <div className="mb-7 flex items-end justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <h2 className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.30em] text-[#F3EEE6]">
+            News Point
+          </h2>
+          <div className="mt-2.5 flex items-center gap-2.5">
+            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-[#C67C4E]/80" />
+            <span className="block h-px min-w-0 flex-1 bg-white/12" />
+          </div>
+        </div>
 
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#F3EEE6]">
-          News Point
-        </h2>
         <Link
           href="/news"
-          className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline hover:no-underline transition-colors duration-150 hover:text-white"
+          className="mb-[3px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
         >
           <span>View all</span>
           <span className="h-px w-6 bg-white/30" />
         </Link>
       </div>
 
-      <div className={`pt-8 space-y-9 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
+      <div className={`space-y-9 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
         {featured ? (
           <article className="group relative overflow-visible">
             <NewsAccent />
@@ -901,7 +901,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               className="block no-underline hover:no-underline"
             >
               {featured.heroImageUrl ? (
-                <div className="mb-6 h-40 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-44">
+                <div className="mb-8 h-40 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-44">
                   <img
                     src={featured.heroImageUrl}
                     alt={featured.title}
@@ -911,7 +911,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 </div>
               ) : null}
 
-              <h3 className="text-[22px] font-semibold leading-[1.14] text-[#EDE7DE] transition-colors duration-150 group-hover:text-[#F6F0E7] break-words">
+              <h3 className="break-words text-[22px] font-semibold leading-[1.14] text-[#EDE7DE] transition-colors duration-150 group-hover:text-[#F6F0E7]">
                 <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
               </h3>
 
@@ -925,12 +925,12 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         ) : null}
 
         {secondaryWithThumbs.length > 0 ? (
-          <div className="space-y-8 border-t border-white/18 pt-8">
+          <div className="space-y-0 pt-8">
             {secondaryWithThumbs.map((n, index) => (
               <article
                 key={n.id}
                 className={`group relative overflow-visible ${
-                  index === 1 ? "rounded-[14px] bg-white/[0.018] px-3 py-3 -mx-3" : ""
+                  index > 0 ? "mt-6 border-t border-white/[0.08] pt-6" : ""
                 }`}
               >
                 <NewsAccent />
@@ -939,12 +939,12 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                   className="grid grid-cols-[1fr_88px] items-start gap-4.5 no-underline hover:no-underline"
                 >
                   <div className="min-w-0">
-                    <h4 className="text-[17.5px] font-semibold leading-[1.22] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4] break-words">
+                    <h4 className="break-words text-[17.5px] font-semibold leading-[1.22] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4]">
                       <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                     </h4>
 
                     {n.excerpt ? (
-                      <p className="mt-3.5 text-[14px] leading-[1.76] line-clamp-3 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                      <p className="mt-3.5 line-clamp-3 text-[14px] leading-[1.76] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
                         {n.excerpt}
                       </p>
                     ) : null}
@@ -967,25 +967,25 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         ) : null}
 
         {secondaryTextOnly.length > 0 ? (
-          <div className="space-y-0 border-t border-white/[0.10] pt-8">
+          <div className="space-y-0">
             {secondaryTextOnly.map((n, index) => (
               <article
                 key={n.id}
                 className={`group relative overflow-visible ${
-                  index > 0 ? "border-t border-white/[0.08] pt-7 mt-7" : ""
-                } ${index === 1 ? "rounded-[14px] bg-white/[0.018] px-3 py-3 -mx-3" : ""}`}
+                  index > 0 ? "mt-7 border-t border-white/[0.08] pt-7" : ""
+                }`}
               >
                 <NewsAccent />
                 <Link
                   href={n.slug ? `/news/${n.slug}` : "#"}
                   className="block no-underline hover:no-underline"
                 >
-                  <h4 className="text-[17.5px] font-semibold leading-[1.22] text-[#E2D8CB] transition-colors duration-150 group-hover:text-[#F4EEE4] break-words">
+                  <h4 className="break-words text-[17.5px] font-semibold leading-[1.22] text-[#E2D8CB] transition-colors duration-150 group-hover:text-[#F4EEE4]">
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
                   {n.excerpt ? (
-                    <p className="mt-3.5 text-[14px] leading-[1.78] line-clamp-4 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                    <p className="mt-3.5 line-clamp-4 text-[14px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
                       {n.excerpt}
                     </p>
                   ) : null}
@@ -994,10 +994,28 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
             ))}
           </div>
         ) : null}
-      </div>
 
-      <div className="pt-8 pb-7">
-        <div className="mx-3 h-[14px] bg-white" />
+        <div className="pt-1">
+          <Link
+            href="/contact"
+            className="group block no-underline hover:no-underline focus:outline-none"
+            aria-label="To submit news tips, please click here"
+          >
+            <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
+                  To submit news tips, please click here
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
+                >
+                  →
+                </span>
+              </div>
+            </div>
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -1209,6 +1227,46 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
   );
 }
 
+function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
+  const usable = items.filter((p) => !!p.slug);
+
+  return (
+    <div className="space-y-0">
+      {usable.map((p, index) => (
+        <article key={p.id} className={index > 0 ? "mt-12" : ""}>
+          <Link
+            href={`/posts/${p.slug}`}
+            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
+            title={p.title}
+          >
+            <FeaturedAccent />
+
+            <div className="min-w-0">
+              <h4
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+              >
+                <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+              </h4>
+
+              {p.excerpt ? (
+                <p className="mt-4 text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                  {p.excerpt}
+                </p>
+              ) : null}
+
+              {p.author ? (
+                <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                  {p.author}
+                </p>
+              ) : null}
+            </div>
+          </Link>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- page ---------- */
 
 export default async function HomePage() {
@@ -1271,7 +1329,7 @@ export default async function HomePage() {
                 )}
 
                 {leadMeta ? (
-                  <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                  <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-white/72 transition-colors duration-150 group-hover:text-[#C67C4E]">
                     {leadMeta}
                   </p>
                 ) : null}
@@ -1292,7 +1350,7 @@ export default async function HomePage() {
                     <SectionHeader title="Commentary" headlineTone />
                     <a
                       href="#news-point-mobile"
-                      className="mb-[3px] inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline hover:no-underline transition-colors duration-150 hover:text-white"
+                      className="mb-[3px] inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
                     >
                       <span>News Point</span>
                       <span className="h-px w-6 bg-white/30" />
@@ -1320,11 +1378,11 @@ export default async function HomePage() {
                 </section>
               ) : null}
 
-              <section className="mt-14 pt-2">
+              <section className="mt-13">
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className="mt-14 space-y-5">
+              <section className="mt-12 space-y-5 border-t border-white/[0.08] pt-10">
                 <SectionHeader title="Most Read" headlineTone />
                 <div className={`rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <AggregatorList
@@ -1342,43 +1400,33 @@ export default async function HomePage() {
 
               <MobileMissionBlock />
 
-              <section className="mt-16 space-y-8">
-                <SmallSectionHeader title="More Commentary" />
+              <section className="mt-15 rounded-[18px] border border-white/[0.06] bg-[linear-gradient(180deg,rgba(14,18,24,0.56)_0%,rgba(10,14,20,0.80)_100%)] px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.015)]">
+                <div className="space-y-12">
+                  <SmallSectionHeader title="More Commentary" />
 
-                {mobileReentryFeature ? (
-                  <div className="pt-1">
-                    <MobileCommentaryReentryFeature post={mobileReentryFeature} />
-                  </div>
-                ) : null}
+                  {mobileReentryFeature ? <MobileCommentaryReentryFeature post={mobileReentryFeature} /> : null}
 
-                {mobileMoreCommentaryHighlights.length > 0 ? (
-                  <div className={`${MID_DIVIDER_CLASS} pt-10`}>
+                  {mobileMoreCommentaryHighlights.length > 0 ? (
                     <MobileMicroCommentaryList items={mobileMoreCommentaryHighlights} />
-                  </div>
-                ) : null}
+                  ) : null}
 
-                {mobileMoreCommentaryTail.length > 0 ? (
-                  <div className={`${MID_DIVIDER_CLASS} pt-10`}>
-                    <CommentaryList items={mobileMoreCommentaryTail} maxItems={20} />
-                  </div>
-                ) : null}
+                  {mobileMoreCommentaryTail.length > 0 ? (
+                    <MobileMoreCommentaryList items={mobileMoreCommentaryTail} />
+                  ) : null}
 
-                <div className="pt-4">
-                  <Link
-                    href="/commentary"
-                    className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
-                  >
-                    <span>Archive</span>
-                    <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-                  </Link>
+                  <div className="pt-2">
+                    <Link
+                      href="/commentary"
+                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
+                    >
+                      <span>Archive</span>
+                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+                    </Link>
+                  </div>
                 </div>
               </section>
 
-              <div className="pt-8 pb-7">
-                <div className="mx-3 h-[14px] bg-white" />
-              </div>
-
-              <aside className="flex flex-col gap-16 pt-2">
+              <aside className="flex flex-col gap-14 pt-0">
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <SectionHeader title="Feed Read" headlineTone />
                   <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
@@ -1566,6 +1614,14 @@ export default async function HomePage() {
     </main>
   );
 }
+
+
+
+
+
+        
+
+
 
 
 
