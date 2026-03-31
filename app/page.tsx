@@ -136,6 +136,10 @@ const EXCERPT_HOVER_TEXT_CLASS = "group-hover:text-[#D8D0C5]";
 const THICK_DIVIDER_CLASS = "border-t-2 border-white/38";
 const MID_DIVIDER_CLASS = "border-t border-white/18";
 const THIN_DIVIDER_CLASS = "border-t border-white/10";
+const MOBILE_SECTION_RULE_CLASS = "mx-3 h-[14px] rounded-[1px] bg-white/96";
+const MOBILE_SECTION_RULE_SOFT_CLASS = "h-[2px] w-full bg-white/78";
+const MOBILE_SECTION_RULE_SPACER_TOP_CLASS = "pt-6";
+const MOBILE_SECTION_RULE_SPACER_BOTTOM_CLASS = "pb-6";
 const EDITORIAL_PANEL_CLASS =
   "rounded-[18px] border border-white/[0.06] bg-[linear-gradient(180deg,rgba(13,17,24,0.86)_0%,rgba(9,13,20,0.90)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.025),0_14px_36px_rgba(0,0,0,0.18)]";
 const INTELLIGENCE_PANEL_CLASS =
@@ -703,21 +707,21 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
             title={p.title}
           >
             <span
-              className={`block text-[17px] leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] break-words ${MAJOR_HEADLINE_SERIF_CLASS} font-semibold`}
+              className={`block text-[17px] leading-[1.12] md:text-[17px] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] break-words ${MAJOR_HEADLINE_SERIF_CLASS} font-semibold`}
             >
               <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
             </span>
 
             {p.excerpt ? (
               <p
-                className={`mt-3.5 text-[13.5px] leading-[1.86] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                className="mt-4 text-[15px] leading-[1.8] md:mt-3.5 md:text-[13.5px] md:leading-[1.86] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]"
               >
                 {p.excerpt}
               </p>
             ) : null}
 
             {p.author ? (
-              <span className="mt-4 block text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/60 transition-colors duration-150 group-hover:text-[#C67C4E]">
+              <span className="mt-6 block text-[12px] font-medium uppercase tracking-[0.24em] md:mt-4 md:text-[11px] md:tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
                 {p.author}
               </span>
             ) : null}
@@ -751,20 +755,18 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
         <FeaturedAccent />
 
         <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[21px] font-semibold leading-[1.1] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E6DBCC] break-words`}
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[22px] font-semibold leading-[1.08] md:text-[21px] md:leading-[1.1] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E6DBCC] break-words`}
         >
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
         </h3>
 
         {post.excerpt ? (
-          <p
-            className={`mt-4 text-[14.5px] leading-[1.84] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-          >
+          <p className="mt-4.5 text-[15.25px] leading-[1.78] md:mt-4 md:text-[14.5px] md:leading-[1.84] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
             {post.excerpt}
           </p>
         ) : null}
         {post.author ? (
-          <p className="mt-5.5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/60 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] md:text-[11px] md:tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
             {post.author}
           </p>
         ) : null}
@@ -801,15 +803,13 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         </h3>
 
         {post.excerpt ? (
-          <p
-            className={`mt-4 text-[14.25px] leading-[1.86] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-          >
+          <p className="mt-4.5 text-[15.25px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
             {post.excerpt}
           </p>
         ) : null}
 
         {post.author ? (
-          <p className="mt-5.5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/60 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
             {post.author}
           </p>
         ) : null}
@@ -828,7 +828,13 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
           key={p.id}
           className={`relative ${
             index > 0 ? "border-t border-white/10 pt-10" : ""
-          } ${index % 3 === 1 ? "rounded-[14px] bg-white/[0.015] px-3 py-4 -mx-3" : ""}`}
+          } ${
+            index % 4 === 1
+              ? "rounded-[14px] bg-white/[0.015] px-3 py-4 -mx-3"
+              : index % 4 === 3
+                ? "rounded-[16px] border border-white/[0.05] bg-[linear-gradient(180deg,rgba(14,18,25,0.72)_0%,rgba(11,15,22,0.82)_100%)] px-4 py-5 -mx-1"
+                : ""
+          }`}
         >
           <Link
             href={`/posts/${p.slug}`}
@@ -838,21 +844,19 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
             <div className="min-w-0">
               <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.14] text-[#D4CABD] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.12] text-[#D4CABD] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
               >
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
               </h4>
 
               {p.excerpt ? (
-                <p
-                  className={`mt-3.5 text-[14px] leading-[1.84] line-clamp-4 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                >
+                <p className="mt-4 text-[14.75px] leading-[1.78] line-clamp-4 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
                   {p.excerpt}
                 </p>
               ) : null}
 
               {p.author ? (
-                <p className="mt-4 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/60 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                   {p.author}
                 </p>
               ) : null}
@@ -870,119 +874,131 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const secondaryTextOnly = items.slice(3, 6);
 
   return (
-    <section
-      id="news-point-mobile"
-      className={`space-y-9 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}
-    >
-      <SectionHeader title="News Point" headlineTone />
+    <section id="news-point-mobile" className="space-y-0">
+      <div className="pt-8 pb-7">
+        <div className="mx-3 h-[14px] bg-white" />
+      </div>
 
-      {featured ? (
-        <article className="group relative overflow-visible">
-          <NewsAccent />
-          <Link
-            href={featured.slug ? `/news/${featured.slug}` : "#"}
-            className="block no-underline hover:no-underline"
-          >
-            {featured.heroImageUrl ? (
-              <div className="mb-6 h-40 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-44">
-                <img
-                  src={featured.heroImageUrl}
-                  alt={featured.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-                  loading="lazy"
-                />
-              </div>
-            ) : null}
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#F3EEE6]">
+          News Point
+        </h2>
+        <Link
+          href="/news"
+          className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline hover:no-underline transition-colors duration-150 hover:text-white"
+        >
+          <span>View all</span>
+          <span className="h-px w-6 bg-white/30" />
+        </Link>
+      </div>
 
-            <h3 className="text-[22px] font-semibold leading-[1.14] text-[#E6E1D8] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
-              <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
-            </h3>
-
-            {featured.excerpt ? (
-              <p
-                className={`mt-4 text-[14.5px] leading-[1.82] ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-              >
-                {featured.excerpt}
-              </p>
-            ) : null}
-          </Link>
-        </article>
-      ) : null}
-
-            {secondaryWithThumbs.length > 0 ? (
-        <div className={`space-y-8 ${MID_DIVIDER_CLASS} pt-8`}>
-          {secondaryWithThumbs.map((n, index) => (
-            <article
-              key={n.id}
-              className={`group relative overflow-visible ${
-                index === 1 ? "rounded-[14px] bg-white/[0.018] px-3 py-3 -mx-3" : ""
-              }`}
+      <div className={`pt-8 space-y-9 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
+        {featured ? (
+          <article className="group relative overflow-visible">
+            <NewsAccent />
+            <Link
+              href={featured.slug ? `/news/${featured.slug}` : "#"}
+              className="block no-underline hover:no-underline"
             >
-              <NewsAccent />
-              <Link
-                href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[1fr_88px] items-start gap-4.5 no-underline hover:no-underline"
+              {featured.heroImageUrl ? (
+                <div className="mb-6 h-40 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-44">
+                  <img
+                    src={featured.heroImageUrl}
+                    alt={featured.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                    loading="lazy"
+                  />
+                </div>
+              ) : null}
+
+              <h3 className="text-[22px] font-semibold leading-[1.14] text-[#EDE7DE] transition-colors duration-150 group-hover:text-[#F6F0E7] break-words">
+                <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
+              </h3>
+
+              {featured.excerpt ? (
+                <p className="mt-4 text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                  {featured.excerpt}
+                </p>
+              ) : null}
+            </Link>
+          </article>
+        ) : null}
+
+        {secondaryWithThumbs.length > 0 ? (
+          <div className="space-y-8 border-t border-white/18 pt-8">
+            {secondaryWithThumbs.map((n, index) => (
+              <article
+                key={n.id}
+                className={`group relative overflow-visible ${
+                  index === 1 ? "rounded-[14px] bg-white/[0.018] px-3 py-3 -mx-3" : ""
+                }`}
               >
-                <div className="min-w-0">
-                  <h4 className="text-[17px] font-semibold leading-[1.24] text-[#E0D7CA] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
+                <NewsAccent />
+                <Link
+                  href={n.slug ? `/news/${n.slug}` : "#"}
+                  className="grid grid-cols-[1fr_88px] items-start gap-4.5 no-underline hover:no-underline"
+                >
+                  <div className="min-w-0">
+                    <h4 className="text-[17.5px] font-semibold leading-[1.22] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4] break-words">
+                      <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+                    </h4>
+
+                    {n.excerpt ? (
+                      <p className="mt-3.5 text-[14px] leading-[1.76] line-clamp-3 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                        {n.excerpt}
+                      </p>
+                    ) : null}
+                  </div>
+
+                  <div className="h-[68px] w-[88px] justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                    {n.heroImageUrl ? (
+                      <img
+                        src={n.heroImageUrl}
+                        alt={n.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                        loading="lazy"
+                      />
+                    ) : null}
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : null}
+
+        {secondaryTextOnly.length > 0 ? (
+          <div className="space-y-0 border-t border-white/[0.10] pt-8">
+            {secondaryTextOnly.map((n, index) => (
+              <article
+                key={n.id}
+                className={`group relative overflow-visible ${
+                  index > 0 ? "border-t border-white/[0.08] pt-7 mt-7" : ""
+                } ${index === 1 ? "rounded-[14px] bg-white/[0.018] px-3 py-3 -mx-3" : ""}`}
+              >
+                <NewsAccent />
+                <Link
+                  href={n.slug ? `/news/${n.slug}` : "#"}
+                  className="block no-underline hover:no-underline"
+                >
+                  <h4 className="text-[17.5px] font-semibold leading-[1.22] text-[#E2D8CB] transition-colors duration-150 group-hover:text-[#F4EEE4] break-words">
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
                   {n.excerpt ? (
-                    <p
-                      className={`mt-3 text-[13.5px] leading-[1.8] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                    >
+                    <p className="mt-3.5 text-[14px] leading-[1.78] line-clamp-4 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
                       {n.excerpt}
                     </p>
                   ) : null}
-                </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : null}
+      </div>
 
-                <div className="h-[68px] w-[88px] justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
-                  {n.heroImageUrl ? (
-                    <img
-                      src={n.heroImageUrl}
-                      alt={n.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                      loading="lazy"
-                    />
-                  ) : null}
-                </div>
-              </Link>
-            </article>
-          ))}
-        </div>
-      ) : null}
-
-      {secondaryTextOnly.length > 0 ? (
-        <div className="space-y-0 pt-8">
-          {secondaryTextOnly.map((n, index) => (
-            <article
-              key={n.id}
-              className={`group relative overflow-visible ${
-                index > 0 ? "border-t border-white/[0.08] pt-7 mt-7" : ""
-              } ${index === 1 ? "rounded-[14px] bg-white/[0.018] px-3 py-3 -mx-3" : ""}`}
-            >
-              <NewsAccent />
-              <Link
-                href={n.slug ? `/news/${n.slug}` : "#"}
-                className="block no-underline hover:no-underline"
-              >
-                <h4 className="text-[17px] font-semibold leading-[1.24] text-[#DDD3C6] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
-                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                </h4>
-
-                {n.excerpt ? (
-                  <p
-                    className={`mt-3 text-[13.5px] leading-[1.82] line-clamp-4 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                  >
-                    {n.excerpt}
-                  </p>
-                ) : null}
-              </Link>
-            </article>
-          ))}
-        </div>
-      ) : null}
+      <div className="pt-8 pb-7">
+        <div className="mx-3 h-[14px] bg-white" />
+      </div>
     </section>
   );
 }
@@ -1213,6 +1229,8 @@ export default async function HomePage() {
   const mobileCommentaryStream = commentaryPosts.slice(3);
   const mobileReentryFeature = mobileCommentaryStream[0];
   const mobileReentryList = mobileCommentaryStream.slice(1);
+  const mobileMoreCommentaryHighlights = mobileReentryList.slice(0, 2);
+  const mobileMoreCommentaryTail = mobileReentryList.slice(2);
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -1253,7 +1271,7 @@ export default async function HomePage() {
                 )}
 
                 {leadMeta ? (
-                  <p className="mt-6 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                  <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                     {leadMeta}
                   </p>
                 ) : null}
@@ -1270,7 +1288,16 @@ export default async function HomePage() {
             <section className="space-y-14">
               {mobileFeaturedCommentary ? (
                 <section className="mt-6">
-                  <SectionHeader title="Commentary" headlineTone />
+                  <div className="flex items-end justify-between gap-4">
+                    <SectionHeader title="Commentary" headlineTone />
+                    <a
+                      href="#news-point-mobile"
+                      className="mb-[3px] inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline hover:no-underline transition-colors duration-150 hover:text-white"
+                    >
+                      <span>News Point</span>
+                      <span className="h-px w-6 bg-white/30" />
+                    </a>
+                  </div>
                   <div className="mt-8">
                     <MobileCommentaryFeature post={mobileFeaturedCommentary} />
                   </div>
@@ -1293,13 +1320,13 @@ export default async function HomePage() {
                 </section>
               ) : null}
 
-              <section className={`mt-14 ${THICK_DIVIDER_CLASS} pt-10`}>
+              <section className="mt-14 pt-2">
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className={`mt-14 space-y-5 ${THICK_DIVIDER_CLASS} pt-10`}>
+              <section className="mt-14 space-y-5">
                 <SectionHeader title="Most Read" headlineTone />
-                <div className="rounded-[14px] bg-white/[0.015] px-3 py-3 -mx-3">
+                <div className={`rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <AggregatorList
                     items={mostRead.map((m) => ({
                       id: m.id,
@@ -1308,6 +1335,7 @@ export default async function HomePage() {
                       readTimeMinutes: m.readTimeMinutes,
                     }))}
                     maxItems={5}
+                    tone="quiet"
                   />
                 </div>
               </section>
@@ -1323,9 +1351,15 @@ export default async function HomePage() {
                   </div>
                 ) : null}
 
-                {mobileReentryList.length > 0 ? (
+                {mobileMoreCommentaryHighlights.length > 0 ? (
                   <div className={`${MID_DIVIDER_CLASS} pt-10`}>
-                    <CommentaryList items={mobileReentryList} maxItems={20} />
+                    <MobileMicroCommentaryList items={mobileMoreCommentaryHighlights} />
+                  </div>
+                ) : null}
+
+                {mobileMoreCommentaryTail.length > 0 ? (
+                  <div className={`${MID_DIVIDER_CLASS} pt-10`}>
+                    <CommentaryList items={mobileMoreCommentaryTail} maxItems={20} />
                   </div>
                 ) : null}
 
@@ -1340,7 +1374,11 @@ export default async function HomePage() {
                 </div>
               </section>
 
-              <aside className={`flex flex-col gap-16 ${MID_DIVIDER_CLASS} pt-12`}>
+              <div className="pt-8 pb-7">
+                <div className="mx-3 h-[14px] bg-white" />
+              </div>
+
+              <aside className="flex flex-col gap-16 pt-2">
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <SectionHeader title="Feed Read" headlineTone />
                   <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
@@ -1528,3 +1566,6 @@ export default async function HomePage() {
     </main>
   );
 }
+
+
+
