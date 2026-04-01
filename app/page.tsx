@@ -799,7 +799,7 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
   if (!post.slug) return null;
 
   return (
-    <article className="group relative overflow-visible">
+    <article className="group relative overflow-visible pb-14">
       <Link
         href={`/posts/${post.slug}`}
         className="block no-underline hover:no-underline focus:outline-none"
@@ -844,13 +844,16 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   return (
     <div className="space-y-0">
       {usable.map((p, index) => (
-                        <article
+        <article
           key={p.id}
-          className={index > 0 ? "mt-14 border-t border-white/[0.24] pt-14" : ""}
+          className={`group relative overflow-visible ${
+            index < usable.length - 1 ? "pb-14" : ""
+          }`}
         >
           <Link
             href={`/posts/${p.slug}`}
-            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
+            className="block no-underline hover:no-underline focus:outline-none"
+            title={p.title}
           >
             <div className="min-w-0">
               <h4
@@ -867,7 +870,7 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
               ) : null}
 
               {p.author ? (
-                <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                   {p.author}
                 </p>
               ) : null}
@@ -1255,13 +1258,15 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
   return (
     <div className="space-y-0">
       {usable.map((p, index) => (
-                <article
+        <article
           key={p.id}
-          className={index > 0 ? "mt-14" : ""}
+          className={`group relative overflow-visible ${
+            index < usable.length - 1 ? "pb-14" : ""
+          }`}
         >
           <Link
             href={`/posts/${p.slug}`}
-            className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
+            className="block no-underline hover:no-underline focus:outline-none"
             title={p.title}
           >
             <div className="min-w-0">
@@ -1279,7 +1284,7 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
               ) : null}
 
               {p.author ? (
-                <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                   {p.author}
                 </p>
               ) : null}
@@ -1422,8 +1427,8 @@ export default async function HomePage() {
 
               <MobileMissionBlock />
 
-              <section className="mt-14">
-  <div className="space-y-8">
+                                          <section className="mt-14">
+  <div className="space-y-0">
     <div className="mt-10 mb-3">
       <div className="text-[12px] tracking-[0.18em] text-white/60 uppercase">
         More Commentary
@@ -1431,33 +1436,25 @@ export default async function HomePage() {
       <div className="mt-2 h-px w-14 bg-[#8B8F96]" />
     </div>
 
-                  {mobileReentryFeature ? (
-                    <MobileCommentaryReentryFeature post={mobileReentryFeature} />
-                  ) : null}
+    {mobileReentryFeature ? (
+      <MobileCommentaryReentryFeature post={mobileReentryFeature} />
+    ) : null}
 
-                  {mobileMoreCommentaryHighlights.length > 0 ? (
-                    <div className="border-t border-white/[0.08] pt-8">
-                      <MobileMicroCommentaryList items={mobileMoreCommentaryHighlights} />
-                    </div>
-                  ) : null}
+    {mobileReentryList.length > 0 ? (
+      <MobileMicroCommentaryList items={mobileReentryList} />
+    ) : null}
 
-                  {mobileMoreCommentaryTail.length > 0 ? (
-                    <div className="border-t border-white/[0.08] pt-8">
-                      <MobileMoreCommentaryList items={mobileMoreCommentaryTail} />
-                    </div>
-                  ) : null}
-
-                  <div className="pt-2">
-                    <Link
-                      href="/commentary"
-                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
-                    >
-                      <span>Archive</span>
-                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-                    </Link>
-                  </div>
-                </div>
-              </section>
+    <div className="mt-14">
+      <Link
+        href="/commentary"
+        className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
+      >
+        <span>Archive</span>
+        <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+      </Link>
+    </div>
+  </div>
+</section>
 
               <aside className="flex flex-col gap-14 pt-0">
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
