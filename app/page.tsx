@@ -457,7 +457,7 @@ function MobileCommentaryQuoteMark() {
   return (
     <span
       aria-hidden="true"
-      className="mr-[3px] inline-block align-top text-[34px] font-bold leading-[0.84] text-[#F6EEE3]"
+      className="relative left-[-6px] mr-[6px] inline-block align-top text-[34px] font-bold leading-[0.84] text-[#F6EEE3]"
     >
       “
     </span>
