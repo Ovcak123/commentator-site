@@ -907,9 +907,9 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         </Link>
       </div>
 
-      <div className={`space-y-9 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
+      <div className={`space-y-0 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
         {featured ? (
-          <article className="group relative overflow-visible">
+          <article className={`group relative overflow-visible ${hasMoreAfterFeatured ? "pb-14" : ""}`}>
             <Link
               href={featured.slug ? `/news/${featured.slug}` : "#"}
               className="block no-underline hover:no-underline"
@@ -938,21 +938,10 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
           </article>
         ) : null}
 
-        {featured && hasMoreAfterFeatured ? (
-          <div className="flex justify-center py-1">
-            <span className="block h-px w-20 bg-white/[0.10]" />
-          </div>
-        ) : null}
-
-        {secondaryWithThumbs.length > 0 ? (
-          <div className="space-y-0">
-            {secondaryWithThumbs.map((n, index) => (
-              <article
-                key={n.id}
-                className={`group relative overflow-visible ${
-                  index > 0 ? "mt-6 border-t border-white/[0.08] pt-6" : ""
-                }`}
-              >
+        {hasMoreAfterFeatured ? (
+          <div className="space-y-14">
+            {secondaryWithThumbs.map((n) => (
+              <article key={n.id} className="group relative overflow-visible">
                 <Link
                   href={n.slug ? `/news/${n.slug}` : "#"}
                   className="grid grid-cols-[1fr_88px] items-start gap-4.5 no-underline hover:no-underline"
@@ -982,18 +971,9 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 </Link>
               </article>
             ))}
-          </div>
-        ) : null}
 
-        {secondaryTextOnly.length > 0 ? (
-          <div className="space-y-0">
-            {secondaryTextOnly.map((n, index) => (
-              <article
-                key={n.id}
-                className={`group relative overflow-visible ${
-                  index > 0 ? "mt-7 border-t border-white/[0.08] pt-7" : ""
-                }`}
-              >
+            {secondaryTextOnly.map((n) => (
+              <article key={n.id} className="group relative overflow-visible">
                 <Link
                   href={n.slug ? `/news/${n.slug}` : "#"}
                   className="block no-underline hover:no-underline"
@@ -1010,34 +990,58 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 </Link>
               </article>
             ))}
-          </div>
-        ) : null}
 
-        <div className="pt-1">
-          <Link
-            href="/contact"
-            className="group block no-underline hover:no-underline focus:outline-none"
-            aria-label="To submit news tips, please click here"
-          >
-            <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
-                  To submit news tips, please click here
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
-                >
-                  →
-                </span>
-              </div>
+            <div>
+              <Link
+                href="/contact"
+                className="group block no-underline hover:no-underline focus:outline-none"
+                aria-label="To submit news tips, please click here"
+              >
+                <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
+                      To submit news tips, please click here
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
+                    >
+                      →
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
+          </div>
+        ) : (
+          <div className="mt-14">
+            <Link
+              href="/contact"
+              className="group block no-underline hover:no-underline focus:outline-none"
+              aria-label="To submit news tips, please click here"
+            >
+              <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
+                    To submit news tips, please click here
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
+
 
 function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
@@ -1057,7 +1061,7 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
             className="block no-underline hover:no-underline"
           >
             {featured.heroImageUrl ? (
-              <div className="mb-6 h-30 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+              <div className="mb-14 h-30 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                 <img
                   src={featured.heroImageUrl}
                   alt={featured.title}
@@ -1596,7 +1600,7 @@ export default async function HomePage() {
                 <div className="space-y-4 pt-12">
                   <CommentaryList items={commentaryStream} maxItems={20} />
 
-                  <div className="pt-1">
+                  <div className="mt-14">
                     <Link
                       href="/commentary"
                       className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
