@@ -1418,9 +1418,14 @@ export default async function HomePage() {
 
               <MobileMissionBlock />
 
-              <section className="mt-15">
-                <div className="space-y-12">
-                  <SmallSectionHeader title="More Commentary" />
+              <section className="mt-14">
+  <div className="space-y-8">
+    <div className="mt-10 mb-3">
+      <div className="text-[12px] tracking-[0.18em] text-white/60 uppercase">
+        More Commentary
+      </div>
+      <div className="mt-2 h-px w-14 bg-[#8B8F96]" />
+    </div>
 
                   {mobileReentryFeature ? (
                     <MobileCommentaryReentryFeature post={mobileReentryFeature} />
