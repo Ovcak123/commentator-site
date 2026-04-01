@@ -825,14 +825,13 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
     </article>
   );
 }
-
 function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   const usable = items.filter((p) => !!p.slug);
 
   return (
-    <div className="space-y-0">
+    <div>
       {usable.map((p, index) => (
-        <article key={p.id} className={index > 0 ? "mt-12" : ""}>
+        <article key={p.id} className={index > 0 ? "mt-10" : ""}>
           <Link
             href={`/posts/${p.slug}`}
             className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
@@ -841,7 +840,7 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
             <div className="min-w-0">
               <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
               >
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
               </h4>
@@ -853,7 +852,7 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
               ) : null}
 
               {p.author ? (
-                <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                   {p.author}
                 </p>
               ) : null}
@@ -1231,9 +1230,9 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
   const usable = items.filter((p) => !!p.slug);
 
   return (
-    <div className="space-y-0">
+    <div>
       {usable.map((p, index) => (
-        <article key={p.id} className={index > 0 ? "mt-12" : ""}>
+        <article key={p.id} className={index > 0 ? "mt-10" : ""}>
           <Link
             href={`/posts/${p.slug}`}
             className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
@@ -1243,7 +1242,7 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
 
             <div className="min-w-0">
               <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
               >
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
               </h4>
@@ -1255,7 +1254,7 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
               ) : null}
 
               {p.author ? (
-                <p className="mt-6 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                   {p.author}
                 </p>
               ) : null}
@@ -1400,31 +1399,35 @@ export default async function HomePage() {
 
               <MobileMissionBlock />
 
-              <section className="mt-15 rounded-[18px] border border-white/[0.06] bg-[linear-gradient(180deg,rgba(14,18,24,0.56)_0%,rgba(10,14,20,0.80)_100%)] px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.015)]">
-                <div className="space-y-12">
-                  <SmallSectionHeader title="More Commentary" />
+              <section className="mt-15">
+  <div className="space-y-12">
+    <SmallSectionHeader title="More Commentary" />
 
-                  {mobileReentryFeature ? <MobileCommentaryReentryFeature post={mobileReentryFeature} /> : null}
+    {mobileReentryFeature ? (
+      <MobileCommentaryReentryFeature post={mobileReentryFeature} />
+    ) : null}
 
-                  {mobileMoreCommentaryHighlights.length > 0 ? (
-                    <MobileMicroCommentaryList items={mobileMoreCommentaryHighlights} />
-                  ) : null}
+    {mobileMoreCommentaryHighlights.length > 0 ? (
+      <MobileMicroCommentaryList items={mobileMoreCommentaryHighlights} />
+    ) : null}
 
-                  {mobileMoreCommentaryTail.length > 0 ? (
-                    <MobileMoreCommentaryList items={mobileMoreCommentaryTail} />
-                  ) : null}
+    {mobileMoreCommentaryTail.length > 0 ? (
+      <div className="mt-12">
+        <MobileMoreCommentaryList items={mobileMoreCommentaryTail} />
+      </div>
+    ) : null}
 
-                  <div className="pt-2">
-                    <Link
-                      href="/commentary"
-                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
-                    >
-                      <span>Archive</span>
-                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-                    </Link>
-                  </div>
-                </div>
-              </section>
+    <div className="pt-2">
+      <Link
+        href="/commentary"
+        className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
+      >
+        <span>Archive</span>
+        <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+      </Link>
+    </div>
+  </div>
+</section>
 
               <aside className="flex flex-col gap-14 pt-0">
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
