@@ -844,9 +844,9 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
   return (
     <div className="space-y-0">
       {usable.map((p, index) => (
-        <article
+                        <article
           key={p.id}
-          className={index > 0 ? "mt-8 border-t border-white/[0.08] pt-8" : ""}
+          className={index > 0 ? "mt-14 border-t border-white/[0.24] pt-14" : ""}
         >
           <Link
             href={`/posts/${p.slug}`}
@@ -1251,9 +1251,9 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
   return (
     <div className="space-y-0">
       {usable.map((p, index) => (
-        <article
+                <article
           key={p.id}
-          className={index > 0 ? "mt-8 border-t border-white/[0.08] pt-8" : ""}
+          className={index > 0 ? "mt-14" : ""}
         >
           <Link
             href={`/posts/${p.slug}`}
@@ -1379,18 +1379,18 @@ export default async function HomePage() {
                 </section>
               ) : null}
 
-              {mobilePreClubMicroCards.length > 0 ? (
-                <section className={`${MID_DIVIDER_CLASS} pt-10`}>
+                            {mobilePreClubMicroCards.length > 0 ? (
+                <section className="mt-12">
                   <MobileMicroCommentaryList items={mobilePreClubMicroCards} />
                 </section>
               ) : null}
 
-              <section className="mt-12">
+              <section className="mt-10">
                 <CommentatorClubPanel />
               </section>
 
-              {mobilePostClubMicroCards.length > 0 ? (
-                <section className="pt-12">
+                            {mobilePostClubMicroCards.length > 0 ? (
+                <section className="mt-14">
                   <MobileMicroCommentaryList items={mobilePostClubMicroCards} />
                 </section>
               ) : null}
