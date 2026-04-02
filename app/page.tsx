@@ -1295,11 +1295,22 @@ export default async function HomePage() {
 
   const desktopMiniFeatures = commentaryPosts.slice(1, 5);
   const commentaryStream = commentaryPosts.slice(5);
-  const mobileCommentaryStream = commentaryPosts.slice(3);
+    const mobileCommentaryStream = commentaryPosts.slice(3);
   const mobileReentryFeature = mobileCommentaryStream[0];
   const mobileReentryList = mobileCommentaryStream.slice(1);
-  const mobileMoreCommentaryHighlights = mobileReentryList.slice(0, 2);
-  const mobileMoreCommentaryTail = mobileReentryList.slice(2);
+
+  const mobileMoreCommentaryBeforePenultimate =
+    mobileReentryList.length > 1 ? mobileReentryList.slice(0, -2) : [];
+
+  const mobileMoreCommentaryPenultimate =
+    mobileReentryList.length > 1
+      ? mobileReentryList[mobileReentryList.length - 2]
+      : undefined;
+
+  const mobileMoreCommentaryLast =
+    mobileReentryList.length > 0
+      ? mobileReentryList[mobileReentryList.length - 1]
+      : undefined;
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -1381,7 +1392,7 @@ export default async function HomePage() {
               </section>
 
                             {mobilePostClubMicroCards.length > 0 ? (
-                <section className="mt-14">
+                <section className="mt-16">
                   <MobileMicroCommentaryList items={mobilePostClubMicroCards} />
                 </section>
               ) : null}
@@ -1390,7 +1401,7 @@ export default async function HomePage() {
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className="mt-12 space-y-5 border-t border-white/[0.08] pt-10">
+              <section className="mt-12 space-y-5 pt-10">
                 <SectionHeader title="Most Read" headlineTone />
                 <div className={`rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <AggregatorList
@@ -1409,7 +1420,7 @@ export default async function HomePage() {
 
               <MobileMissionBlock />
 
-                                          <section className="mt-14">
+                                                        <section className="mt-14">
   <div className="space-y-0">
     <div className="mt-10 mb-3">
       <div className="text-[12px] tracking-[0.18em] text-white/60 uppercase">
@@ -1418,12 +1429,24 @@ export default async function HomePage() {
       <div className="mt-2 h-px w-14 bg-[#8B8F96]" />
     </div>
 
-    {mobileReentryFeature ? (
-      <MobileCommentaryReentryFeature post={mobileReentryFeature} />
+        {mobileReentryFeature ? (
+      <div className="pt-6">
+        <MobileCommentaryReentryFeature post={mobileReentryFeature} />
+      </div>
     ) : null}
 
-    {mobileReentryList.length > 0 ? (
-      <MobileMicroCommentaryList items={mobileReentryList} />
+    {mobileMoreCommentaryBeforePenultimate.length > 0 ? (
+      <MobileMicroCommentaryList items={mobileMoreCommentaryBeforePenultimate} />
+    ) : null}
+
+            {mobileMoreCommentaryPenultimate ? (
+      <div className="pt-8">
+        <MobileCommentaryReentryFeature post={mobileMoreCommentaryPenultimate} />
+      </div>
+    ) : null}
+
+    {mobileMoreCommentaryLast ? (
+      <MobileMicroCommentaryList items={[mobileMoreCommentaryLast]} />
     ) : null}
 
     <div className="mt-14">
