@@ -884,9 +884,8 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
 function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
-  const secondaryWithThumbs = items.slice(1, 3);
-  const secondaryTextOnly = items.slice(3, 6);
-  const hasMoreAfterFeatured = secondaryWithThumbs.length > 0 || secondaryTextOnly.length > 0;
+  const secondaryItems = items.slice(1, 6);
+  const hasMoreAfterFeatured = secondaryItems.length > 0;
 
   return (
     <section id="news-point-mobile" className="space-y-0">
@@ -943,11 +942,11 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
 
         {hasMoreAfterFeatured ? (
           <div className="space-y-14">
-            {secondaryWithThumbs.map((n) => (
+            {secondaryItems.map((n) => (
               <article key={n.id} className="group relative overflow-visible">
                 <Link
                   href={n.slug ? `/news/${n.slug}` : "#"}
-                  className="grid grid-cols-[1fr_88px] items-start gap-4.5 no-underline hover:no-underline"
+                  className="grid grid-cols-[1fr_104px] items-end gap-4.5 no-underline hover:no-underline"
                 >
                   <div className="min-w-0">
                     <h4 className="break-words text-[17.5px] font-semibold leading-[1.22] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4]">
@@ -961,7 +960,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                     ) : null}
                   </div>
 
-                  <div className="h-[68px] w-[88px] justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                  <div className="h-[68px] w-[88px] shrink-0 self-end justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                     {n.heroImageUrl ? (
                       <img
                         src={n.heroImageUrl}
@@ -969,27 +968,10 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
                         loading="lazy"
                       />
-                    ) : null}
+                    ) : (
+                      <div aria-hidden="true" className="h-full w-full bg-white/[0.03]" />
+                    )}
                   </div>
-                </Link>
-              </article>
-            ))}
-
-            {secondaryTextOnly.map((n) => (
-              <article key={n.id} className="group relative overflow-visible">
-                <Link
-                  href={n.slug ? `/news/${n.slug}` : "#"}
-                  className="block no-underline hover:no-underline"
-                >
-                  <h4 className="break-words text-[17.5px] font-semibold leading-[1.22] text-[#E2D8CB] transition-colors duration-150 group-hover:text-[#F4EEE4]">
-                    <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                  </h4>
-
-                  {n.excerpt ? (
-                    <p className="mt-3.5 line-clamp-4 text-[14.75px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
-                      {n.excerpt}
-                    </p>
-                  ) : null}
                 </Link>
               </article>
             ))}
