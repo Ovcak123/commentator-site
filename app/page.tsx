@@ -1401,9 +1401,9 @@ export default async function HomePage() {
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className="mt-12 space-y-5 pt-10">
+                            <section className="mt-12 pt-10">
                 <SectionHeader title="Most Read" headlineTone />
-                <div className={`rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
+                                <div className={`mt-10 rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <AggregatorList
                     items={mostRead.map((m) => ({
                       id: m.id,
@@ -1418,48 +1418,50 @@ export default async function HomePage() {
                 </div>
               </section>
 
-              <MobileMissionBlock />
+                            <MobileMissionBlock />
 
-                                                        <section className="mt-14">
-  <div className="space-y-0">
-    <div className="mt-10 mb-3">
-      <div className="text-[12px] tracking-[0.18em] text-white/60 uppercase">
-        More Commentary
-      </div>
-      <div className="mt-2 h-px w-14 bg-[#8B8F96]" />
-    </div>
+              <section className="mt-14">
+                <div className="space-y-0">
+                  <div className="mt-10 mb-3">
+                    <div className="text-[12px] tracking-[0.18em] text-white/60 uppercase">
+                      More Commentary
+                    </div>
+                    <div className="mt-2 h-px w-14 bg-[#8B8F96]" />
+                  </div>
 
-        {mobileReentryFeature ? (
-      <div className="pt-6">
-        <MobileCommentaryReentryFeature post={mobileReentryFeature} />
-      </div>
-    ) : null}
+                  {mobileReentryFeature ? (
+                    <div className="pt-6">
+                      <MobileCommentaryReentryFeature post={mobileReentryFeature} />
+                    </div>
+                  ) : null}
 
-    {mobileMoreCommentaryBeforePenultimate.length > 0 ? (
-      <MobileMicroCommentaryList items={mobileMoreCommentaryBeforePenultimate} />
-    ) : null}
+                  {mobileMoreCommentaryBeforePenultimate.length > 0 ? (
+                    <MobileMicroCommentaryList items={mobileMoreCommentaryBeforePenultimate} />
+                  ) : null}
 
-            {mobileMoreCommentaryPenultimate ? (
-      <div className="pt-8">
-        <MobileCommentaryReentryFeature post={mobileMoreCommentaryPenultimate} />
-      </div>
-    ) : null}
+                  {mobileMoreCommentaryPenultimate ? (
+                    <div className="pt-8">
+                      <MobileCommentaryReentryFeature post={mobileMoreCommentaryPenultimate} />
+                    </div>
+                  ) : null}
 
-    {mobileMoreCommentaryLast ? (
-      <MobileMicroCommentaryList items={[mobileMoreCommentaryLast]} />
-    ) : null}
+                                    {mobileMoreCommentaryLast ? (
+                    <div className="pb-14">
+                      <MobileMicroCommentaryList items={[mobileMoreCommentaryLast]} />
+                    </div>
+                  ) : null}
 
-    <div className="mt-14">
-      <Link
-        href="/commentary"
-        className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
-      >
-        <span>Archive</span>
-        <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-      </Link>
-    </div>
-  </div>
-</section>
+                  <div className="mt-0">
+                    <Link
+                      href="/commentary"
+                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
+                    >
+                      <span>Archive</span>
+                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+                    </Link>
+                  </div>
+                </div>
+              </section>
 
               <aside className="flex flex-col gap-14 pt-0">
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
