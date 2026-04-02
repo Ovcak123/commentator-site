@@ -1401,7 +1401,7 @@ export default async function HomePage() {
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-                            <section className="mt-12 pt-10">
+                            <section className="mt-8 pt-6">
                 <SectionHeader title="Most Read" headlineTone />
                                 <div className={`mt-10 rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <AggregatorList
@@ -1418,7 +1418,7 @@ export default async function HomePage() {
                 </div>
               </section>
 
-                            <div className="pt-20 pb-20">
+                            <div className="pt-6 pb-6">
   <MobileMissionBlock />
 </div>
 
@@ -1431,8 +1431,9 @@ export default async function HomePage() {
                     <div className="mt-2 h-px w-14 bg-[#8B8F96]" />
                   </div>
 
-                  {mobileReentryFeature ? (
-                    <div className="pt-6">
+                                    
+                                        {mobileReentryFeature ? (
+                    <div className="pt-[36px]">
                       <MobileCommentaryReentryFeature post={mobileReentryFeature} />
                     </div>
                   ) : null}
