@@ -32,7 +32,7 @@ export default function Header() {
         <div
           className={[
             "mx-auto flex max-w-6xl items-center justify-between gap-4",
-            "px-5 pr-5 pt-[1.9rem] pb-[1.6rem]",
+            "px-5 pr-5 pt-[2.7rem] pb-[2.1rem]",
             "sm:px-6 sm:pr-6 sm:py-12",
           ].join(" ")}
         >
@@ -67,7 +67,7 @@ export default function Header() {
             </span>
 
             {/* Subtitle — mobile */}
-            <span className="mt-1 ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-[#BFB7AC] transition-colors duration-200 group-hover:text-[#CFC7BC] sm:hidden">
+            <span className="mt-[0.45rem] ml-[52px] block whitespace-nowrap text-[12px] tracking-[0.02em] text-[#BFB7AC] transition-colors duration-200 group-hover:text-[#CFC7BC] sm:hidden">
               Freedom in the Age of AI
             </span>
 
@@ -93,7 +93,7 @@ export default function Header() {
       {/* Nav band */}
       <nav
         className={[
-          "mx-auto max-w-6xl px-6 pt-2 pb-[17px] text-[10px] font-semibold uppercase",
+          "mx-auto max-w-6xl px-6 pt-4 pb-[21px] text-[10px] font-semibold uppercase",
           "flex flex-nowrap items-center gap-4 overflow-x-auto whitespace-nowrap",
           "tracking-[0.14em]",
           "sm:py-4 sm:gap-8 sm:tracking-[0.24em]",
@@ -101,7 +101,7 @@ export default function Header() {
         aria-label="Primary navigation"
       >
         <Link href="/about" className={navLinkClass("/about")}>
-          About
+          Mission
         </Link>
 
         <Link
