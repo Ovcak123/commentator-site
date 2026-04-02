@@ -550,7 +550,7 @@ function DesktopCommentatorClubPanel() {
 
 function MobileMissionBlock() {
   return (
-    <section className="mt-14 overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
+        <section className="overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-11 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
       <div className="relative">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.02),transparent_46%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.045),transparent_56%)]" />
@@ -560,7 +560,7 @@ function MobileMissionBlock() {
             The Commentator’s Mission
           </p>
 
-          <div className="mt-6">
+          <div className="mt-7">
             <p
               className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[28px] font-semibold leading-[1.04] text-[#E8DFD3] sm:text-[29px]`}
             >
@@ -568,7 +568,7 @@ function MobileMissionBlock() {
             </p>
 
             <p
-              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-5 text-[18px] leading-[1.12] text-[#B7C4D1] sm:text-[19px]`}
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[18px] leading-[1.12] text-[#B7C4D1] sm:text-[19px]`}
             >
               Where bridges are built in a polarized world
             </p>
@@ -1418,9 +1418,11 @@ export default async function HomePage() {
                 </div>
               </section>
 
-                            <MobileMissionBlock />
+                            <div className="pt-20 pb-20">
+  <MobileMissionBlock />
+</div>
 
-              <section className="mt-14">
+              <section className="mt-0">
                 <div className="space-y-0">
                   <div className="mt-10 mb-3">
                     <div className="text-[12px] tracking-[0.18em] text-white/60 uppercase">
