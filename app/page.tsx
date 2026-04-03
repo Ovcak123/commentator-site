@@ -884,7 +884,7 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
 
 function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
-  const secondaryItems = items.slice(1, 6);
+  const secondaryItems = items.slice(1, 10);
   const hasMoreAfterFeatured = secondaryItems.length > 0;
 
   return (
