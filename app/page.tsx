@@ -758,7 +758,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
 
   return (
     <article className="space-y-8">
-      <div className="h-36 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-40">
+      <div className="h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
         {post.heroImageUrl ? (
           <img
             src={post.heroImageUrl}
@@ -785,6 +785,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
             {post.excerpt}
           </p>
         ) : null}
+
         {post.author ? (
           <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69] md:text-[11px] md:tracking-[0.20em] md:text-[#C67C4E]/60 md:group-hover:text-[#C67C4E]">
             {post.author}
@@ -805,7 +806,7 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         className="block no-underline hover:no-underline focus:outline-none"
       >
         {post.heroImageUrl ? (
-          <div className="mb-12 h-32 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-36">
+          <div className="mb-12 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
             <img
               src={post.heroImageUrl}
               alt={post.title}
@@ -917,7 +918,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               className="block no-underline hover:no-underline"
             >
               {featured.heroImageUrl ? (
-                <div className="mb-8 h-40 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-44">
+                <div className="mb-8 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
                   <img
                     src={featured.heroImageUrl}
                     alt={featured.title}
