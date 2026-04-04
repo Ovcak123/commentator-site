@@ -1404,94 +1404,87 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-                                          <section className="mt-8 pt-6">
-  <SectionHeader title="Most Popular" headlineTone />
+              <section className="mt-8 pt-6">
+                <SectionHeader title="Most Popular" headlineTone />
 
-  <div className="mt-10 space-y-10">
-    <div>
-      <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#9C9488]/92">
-        Commentary
-      </div>
+                <div className="mt-10 space-y-10">
+                  <div>
+                    <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C2B9AD]">
+                      Commentary
+                    </div>
 
-      <div>
-        {mobileMostPopularCommentary.map((item, index) => (
-          <article
-            key={item.id}
-            className={index === 0 ? "border-t border-white/[0.10]" : "border-t border-white/[0.08]"}
-          >
-            <Link
-              href={item.slug ? `/posts/${item.slug}` : "#"}
-              className="group grid grid-cols-[34px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
-              title={item.title}
-            >
-              <div
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[44px] font-semibold leading-[0.84] text-[#F1E7DA]`}
-              >
-                {index + 1}
-              </div>
+                    <div>
+                      {mobileMostPopularCommentary.map((item, index) => (
+                        <article key={item.id} className="">
+                          <Link
+                            href={item.slug ? `/posts/${item.slug}` : "#"}
+                            className="group grid grid-cols-[28px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
+                            title={item.title}
+                          >
+                            <div
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[32px] font-semibold leading-[0.84] text-[#F1E7DA]`}
+                            >
+                              {index + 1}
+                            </div>
 
-              <div className="min-w-0 pt-[3px]">
-                <h3
-                  className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
-                >
-                  {item.title}
-                </h3>
+                            <div className="min-w-0 pt-[3px]">
+                              <h3
+                                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
+                              >
+                                {item.title}
+                              </h3>
 
-                {item.readTimeMinutes ? (
-                  <div className="mt-1.5">
-                    <ReadTimeBadge minutes={item.readTimeMinutes} />
+                              {item.readTimeMinutes ? (
+                                <div className="mt-1.5">
+                                  <ReadTimeBadge minutes={item.readTimeMinutes} />
+                                </div>
+                              ) : null}
+                            </div>
+                          </Link>
+                        </article>
+                      ))}
+                    </div>
                   </div>
-                ) : null}
-              </div>
-            </Link>
-          </article>
-        ))}
-      </div>
-    </div>
 
-    <div>
-      <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#9C9488]/92">
-        News
-      </div>
+                  <div>
+                    <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C2B9AD]">
+                      News
+                    </div>
 
-      <div>
-        {mobileMostPopularNews.map((item, index) => (
-          <article
-            key={item.id}
-            className={index === 0 ? "border-t border-white/[0.10]" : "border-t border-white/[0.08]"}
-          >
-            <Link
-              href={item.slug ? `/news/${item.slug}` : "#"}
-              className="group grid grid-cols-[34px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
-              title={item.title}
-            >
-              <div
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[44px] font-semibold leading-[0.84] text-[#F1E7DA]`}
-              >
-                {index + 1}
-              </div>
+                    <div>
+                      {mobileMostPopularNews.map((item, index) => (
+                        <article key={item.id} className="">
+                          <Link
+                            href={item.slug ? `/news/${item.slug}` : "#"}
+                            className="group grid grid-cols-[28px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
+                            title={item.title}
+                          >
+                            <div
+                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[32px] font-semibold leading-[0.84] text-[#F1E7DA]`}
+                            >
+                              {index + 1}
+                            </div>
 
-              <div className="min-w-0 pt-[3px]">
-                <h3
-                  className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
-                >
-                  {item.title}
-                </h3>
+                            <div className="min-w-0 pt-[3px]">
+                              <h3
+                                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
+                              >
+                                {item.title}
+                              </h3>
 
-                {item.readTimeMinutes ? (
-                  <div className="mt-1.5">
-                    <ReadTimeBadge minutes={item.readTimeMinutes} />
+                              {item.readTimeMinutes ? (
+                                <div className="mt-1.5">
+                                  <ReadTimeBadge minutes={item.readTimeMinutes} />
+                                </div>
+                              ) : null}
+                            </div>
+                          </Link>
+                        </article>
+                      ))}
+                    </div>
                   </div>
-                ) : null}
-              </div>
-            </Link>
-          </article>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
+                </div>
+              </section>
                             <div className="pt-6 pb-6">
   <MobileMissionBlock />
 </div>
