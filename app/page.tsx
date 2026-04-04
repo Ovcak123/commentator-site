@@ -672,7 +672,7 @@ function AggregatorList({
             {isInternal ? (
               <Link
                 href={it.href}
-                className={`block px-0 py-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 no-underline hover:no-underline ${linkToneClass}`}
+                className={`block px-0 pt-7 pb-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 no-underline hover:no-underline ${linkToneClass}`}
               >
                 {TitleRow}
 
@@ -688,7 +688,7 @@ function AggregatorList({
                 href={it.href}
                 target="_blank"
                 rel="noreferrer"
-                className={`block px-0 py-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 ${linkToneClass}`}
+                className={`block px-0 pt-10 pb-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 ${linkToneClass}`}
               >
                 {TitleRow}
 
@@ -1543,25 +1543,29 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </div>
               </section>
 
-                                                                      <aside className="flex flex-col gap-14 pt-0">
-                <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <aside className="flex flex-col gap-14 pt-0">
+                <section className="space-y-0">
                   <SectionHeader title="Feed Read" headlineTone />
-                  <AggregatorList
-                    items={feedRead}
-                    maxItems={8}
-                    tone="subtle"
-                    showAccent={false}
-                  />
+                  <div className="mt-16">
+                    <AggregatorList
+                      items={feedRead}
+                      maxItems={8}
+                      tone="subtle"
+                      showAccent={false}
+                    />
+                  </div>
                 </section>
 
-                <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
+                <section className="space-y-0">
                   <SectionHeader title="Strategic Insights" headlineTone />
-                  <AggregatorList
-                    items={strategicInsights}
-                    maxItems={5}
-                    tone="quiet"
-                    showAccent={false}
-                  />
+                  <div className="mt-16">
+                    <AggregatorList
+                      items={strategicInsights}
+                      maxItems={5}
+                      tone="quiet"
+                      showAccent={false}
+                    />
+                  </div>
                 </section>
               </aside>
 
