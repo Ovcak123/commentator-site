@@ -1290,9 +1290,11 @@ export default async function HomePage() {
 
   const secondaryLead = commentaryPosts[0];
 
-  const mobileFeaturedCommentary = commentaryPosts[0];
+    const mobileFeaturedCommentary = commentaryPosts[0];
   const mobilePreClubMicroCards = commentaryPosts.slice(1, 2);
   const mobilePostClubMicroCards = commentaryPosts.slice(2, 3);
+  const mobileMostPopularCommentary = commentaryPosts.slice(0, 5);
+const mobileMostPopularNews = newsItems.slice(0, 5);
 
   const desktopMiniFeatures = commentaryPosts.slice(1, 5);
   const commentaryStream = commentaryPosts.slice(5);
@@ -1402,22 +1404,93 @@ export default async function HomePage() {
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-                            <section className="mt-8 pt-6">
-                <SectionHeader title="Most Read" headlineTone />
-                                <div className={`mt-10 rounded-[18px] px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
-                  <AggregatorList
-                    items={mostRead.map((m) => ({
-                      id: m.id,
-                      title: m.title,
-                      href: m.href,
-                      readTimeMinutes: m.readTimeMinutes,
-                    }))}
-                    maxItems={5}
-                    tone="quiet"
-                    showAccent={false}
-                  />
-                </div>
-              </section>
+                                          <section className="mt-8 pt-6">
+  <SectionHeader title="Most Popular" headlineTone />
+
+  <div className="mt-10 space-y-10">
+    <div>
+      <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#9C9488]/92">
+        Commentary
+      </div>
+
+      <div>
+        {mobileMostPopularCommentary.map((item, index) => (
+          <article
+            key={item.id}
+            className={index === 0 ? "border-t border-white/[0.10]" : "border-t border-white/[0.08]"}
+          >
+            <Link
+              href={item.slug ? `/posts/${item.slug}` : "#"}
+              className="group grid grid-cols-[34px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
+              title={item.title}
+            >
+              <div
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[44px] font-semibold leading-[0.84] text-[#F1E7DA]`}
+              >
+                {index + 1}
+              </div>
+
+              <div className="min-w-0 pt-[3px]">
+                <h3
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
+                >
+                  {item.title}
+                </h3>
+
+                {item.readTimeMinutes ? (
+                  <div className="mt-1.5">
+                    <ReadTimeBadge minutes={item.readTimeMinutes} />
+                  </div>
+                ) : null}
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#9C9488]/92">
+        News
+      </div>
+
+      <div>
+        {mobileMostPopularNews.map((item, index) => (
+          <article
+            key={item.id}
+            className={index === 0 ? "border-t border-white/[0.10]" : "border-t border-white/[0.08]"}
+          >
+            <Link
+              href={item.slug ? `/news/${item.slug}` : "#"}
+              className="group grid grid-cols-[34px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
+              title={item.title}
+            >
+              <div
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[44px] font-semibold leading-[0.84] text-[#F1E7DA]`}
+              >
+                {index + 1}
+              </div>
+
+              <div className="min-w-0 pt-[3px]">
+                <h3
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
+                >
+                  {item.title}
+                </h3>
+
+                {item.readTimeMinutes ? (
+                  <div className="mt-1.5">
+                    <ReadTimeBadge minutes={item.readTimeMinutes} />
+                  </div>
+                ) : null}
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 
                             <div className="pt-6 pb-6">
   <MobileMissionBlock />
