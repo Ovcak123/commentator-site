@@ -381,7 +381,7 @@ function SectionHeader({
   headlineTone?: boolean;
 }) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-7">
       <div className="flex items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <h2
@@ -890,7 +890,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
 
   return (
     <section id="news-point-mobile" className="space-y-0">
-      <div className="mb-7 flex items-end justify-between gap-4">
+            <div className="mb-7 flex items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <h2 className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.30em] text-[#F3EEE6]">
             News Point
@@ -902,10 +902,10 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         </div>
 
         <Link
-          href="/news"
+          href="/commentary"
           className="mb-[3px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
         >
-          <span>View all</span>
+          <span>Commentary</span>
           <span className="h-px w-6 bg-white/30" />
         </Link>
       </div>
@@ -977,7 +977,17 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               </article>
             ))}
 
-            <div>
+                                                <div className="space-y-10">
+              <div className="flex justify-end">
+                <Link
+                  href="/news"
+                  className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
+                >
+                  <span>View all</span>
+                  <span className="h-px w-6 bg-white/30" />
+                </Link>
+              </div>
+
               <Link
                 href="/contact"
                 className="group block no-underline hover:no-underline focus:outline-none"
