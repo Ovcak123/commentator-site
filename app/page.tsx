@@ -1533,7 +1533,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </div>
               </section>
 
-              <aside className="flex flex-col gap-14 pt-0">
+                                                                      <aside className="flex flex-col gap-14 pt-0">
                 <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
                   <SectionHeader title="Feed Read" headlineTone />
                   <AggregatorList
@@ -1554,6 +1554,38 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                   />
                 </section>
               </aside>
+
+              <div className="mt-16 mb-6 text-center">
+                <div className="mx-auto w-full max-w-[20rem] space-y-8">
+                  <Link
+                    href="/mission"
+                    className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                  >
+                    MISSION
+                  </Link>
+
+                  <Link
+                    href="/club"
+                    className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                  >
+                    COMMENTATOR CLUB
+                  </Link>
+
+                  <Link
+                    href="/search"
+                    className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                  >
+                    SEARCH
+                  </Link>
+
+                  <Link
+                    href="/contact"
+                    className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                  >
+                    CONTACT
+                  </Link>
+                </div>
+              </div>
             </section>
           </div>
         </div>
