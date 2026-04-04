@@ -664,7 +664,7 @@ function AggregatorList({
           <li
             key={it.id}
             className={`group relative overflow-visible ${
-              index > 0 ? `border-t ${itemBorderClass}` : ""
+              ""
             } ${highlight ? "rounded-[12px] bg-white/[0.015]" : ""}`}
           >
             {showAccent ? <HoverAccent /> : null}
@@ -1404,7 +1404,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className="mt-8 pt-6">
+              <section className="mt-10 pt-8">
                 <SectionHeader title="Most Popular" headlineTone />
 
                 <div className="mt-10 space-y-10">
