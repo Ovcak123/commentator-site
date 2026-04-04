@@ -386,13 +386,13 @@ function SectionHeader({
         <div className="min-w-0 flex-1">
           <h2
             className={`whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.30em] ${
-              headlineTone ? "text-[#A89F93]" : "text-[#9C9488]"
+              headlineTone ? "text-[#E6DDD0]" : "text-[#9C9488]"
             }`}
           >
             {title}
           </h2>
           <div className="mt-2.5 flex items-center gap-2.5">
-            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-[#C67C4E]/80" />
+            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-white/40" />
             <span className="block h-px min-w-0 flex-1 bg-white/12" />
           </div>
         </div>
@@ -896,7 +896,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
             News Point
           </h2>
           <div className="mt-2.5 flex items-center gap-2.5">
-            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-[#C67C4E]/80" />
+            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-white/40" />
             <span className="block h-px min-w-0 flex-1 bg-white/12" />
           </div>
         </div>
