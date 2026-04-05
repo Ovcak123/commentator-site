@@ -431,8 +431,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </div>
 
                         {/* Spacing: more breathing room on mobile after share, desktop unchanged */}
-            <section
-              className="mt-8 max-w-none prose prose-invert text-[17px] leading-relaxed md:text-[18px] lg:mt-10
+                        <section
+              className="mt-8 max-w-none prose prose-invert text-[17px] leading-[1.54] md:text-[18px] lg:mt-10 lg:leading-relaxed
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
