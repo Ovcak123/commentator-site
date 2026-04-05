@@ -942,7 +942,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         ) : null}
 
                 {hasMoreAfterFeatured ? (
-          <div className="space-y-12">
+          <div className="space-y-10">
             {secondaryItems.map((n) => (
               <article key={n.id} className="group relative overflow-visible">
                 <Link
