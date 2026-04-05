@@ -425,14 +425,14 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </div>
             ) : null}
 
-            {/* MOBILE SHARE (TOP) — below hero, above body */}
-            <div className="mt-3 flex justify-end lg:hidden">
+                        {/* MOBILE SHARE (TOP) — below hero, above body */}
+            <div className="mt-5 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
             </div>
 
-            {/* Spacing: tighter on mobile after share, looser on desktop after hero */}
+                        {/* Spacing: more breathing room on mobile after share, desktop unchanged */}
             <section
-              className="mt-4 max-w-none prose prose-invert text-[17px] leading-relaxed md:text-[18px] lg:mt-10
+              className="mt-8 max-w-none prose prose-invert text-[17px] leading-relaxed md:text-[18px] lg:mt-10
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]

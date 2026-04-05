@@ -174,8 +174,8 @@ p {
    ========================================================= */
 
 .prose {
-  font-size: 17px;
-  line-height: 1.85;
+  font-size: 18.5px;
+  line-height: 1.9;
   letter-spacing: 0.0035em;
 }
 
@@ -197,15 +197,20 @@ p {
    DROP CAP — DEFAULT
    ========================================================= */
 
+.prose p:first-of-type {
+  text-indent: 0;
+  padding-left: 0;
+}
+
 .prose p:first-of-type::first-letter {
   float: none;
   font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-  font-weight: 600;
-  font-size: 1.65em;
-  line-height: 0.95;
-  margin-right: 0.02em;
-  color: rgba(198, 124, 78, 0.85);
-  text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+  font-weight: 500;
+  font-size: 2.1em;
+  line-height: 1;
+  margin-right: -0.015em;
+  color: rgba(230, 233, 238, 0.92);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.45);
 }
 
 /* =========================================================
