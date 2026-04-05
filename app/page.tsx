@@ -1428,7 +1428,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                         <article key={item.id} className="">
                           <Link
                             href={item.slug ? `/posts/${item.slug}` : "#"}
-                            className="group grid grid-cols-[28px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
+                            className="group grid grid-cols-[28px_1fr] gap-3 py-3 no-underline hover:no-underline focus:outline-none"
                             title={item.title}
                           >
                             <div
@@ -1466,7 +1466,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                         <article key={item.id} className="">
                           <Link
                             href={item.slug ? `/news/${item.slug}` : "#"}
-                            className="group grid grid-cols-[28px_1fr] gap-3 py-4 no-underline hover:no-underline focus:outline-none"
+                            className="group grid grid-cols-[28px_1fr] gap-3 py-3 no-underline hover:no-underline focus:outline-none"
                             title={item.title}
                           >
                             <div
