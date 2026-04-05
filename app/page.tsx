@@ -457,7 +457,7 @@ function MobileCommentaryQuoteMark() {
   return (
     <span
       aria-hidden="true"
-      className="relative top-[2px] mr-[6px] inline-block text-[30px] leading-none text-[#F6EEE3]"
+      className="relative left-[-5px] top-[2px] mr-[5px] inline-block text-[30px] leading-[0.9] text-[#F6EEE3]"
     >
       “
     </span>
@@ -757,7 +757,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
   if (!post.slug) return null;
 
   return (
-    <article className="space-y-8">
+    <article className="space-y-10">
       <div className="h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
         {post.heroImageUrl ? (
           <img
@@ -805,8 +805,8 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
         href={`/posts/${post.slug}`}
         className="block no-underline hover:no-underline focus:outline-none"
       >
-        {post.heroImageUrl ? (
-          <div className="mb-12 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
+                {post.heroImageUrl ? (
+          <div className="mb-10 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
             <img
               src={post.heroImageUrl}
               alt={post.title}
@@ -941,8 +941,8 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
           </article>
         ) : null}
 
-        {hasMoreAfterFeatured ? (
-          <div className="space-y-14">
+                {hasMoreAfterFeatured ? (
+          <div className="space-y-12">
             {secondaryItems.map((n) => (
               <article key={n.id} className="group relative overflow-visible">
                 <Link
