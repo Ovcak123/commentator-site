@@ -773,8 +773,8 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
         href={`/posts/${post.slug}`}
         className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
       >
-        <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E6DBCC] md:text-[21px] md:leading-[1.1]`}
+                <h3
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.1] text-[#D8CBB8] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#E6DBCC] md:text-[21px] md:leading-[1.1]`}
         >
           <MobileCommentaryQuoteMark />
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
@@ -816,8 +816,8 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
           </div>
         ) : null}
 
-        <h3
-          className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+                <h3
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
         >
           <MobileCommentaryQuoteMark />
           <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
@@ -857,8 +857,8 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
             title={p.title}
           >
             <div className="min-w-0">
-              <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                            <h4
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
               >
                 <MobileCommentaryQuoteMark />
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
@@ -1263,8 +1263,8 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
             title={p.title}
           >
             <div className="min-w-0">
-              <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                            <h4
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
               >
                 <MobileCommentaryQuoteMark />
                 <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
