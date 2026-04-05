@@ -198,15 +198,13 @@ p {
    ========================================================= */
 
 .prose p:first-of-type::first-letter {
-  float: left;
+  float: none;
   font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-  font-weight: 500;
-  font-size: 3.0em;
+  font-weight: 600;
+  font-size: 1.65em;
   line-height: 0.95;
-  padding-right: 0.04em;
-  margin-right: -0.01em;
-  padding-top: 0.035em;
-  color: rgba(230, 233, 238, 0.80);
+  margin-right: 0.02em;
+  color: rgba(198, 124, 78, 0.85);
   text-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
