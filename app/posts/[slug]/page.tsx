@@ -431,7 +431,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </div>
 
             {/* Spacing: tighter on mobile after share, looser on desktop after hero */}
-            <section className="mt-4 max-w-none prose prose-invert text-[17px] leading-relaxed md:text-[18px] lg:mt-10
+            <section
+              className="mt-4 max-w-none prose prose-invert text-[17px] leading-relaxed md:text-[18px] lg:mt-10
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
@@ -443,7 +444,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
   prose-pre:text-[#CBC3B8]
   prose-hr:border-white/10
 "
->
+            >
               {typedPost.body?.length ? (
                 <PortableText value={typedPost.body} components={portableTextComponents} />
               ) : (
