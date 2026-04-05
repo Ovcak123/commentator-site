@@ -383,7 +383,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </p>
 
               {/* Mobile headline +10% (text-2xl -> text-[1.75rem]) */}
-              <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight text-[#D2C5B3] md:text-3xl">
+              <h1 className="text-[1.9rem] font-semibold leading-tight tracking-tight text-[#D2C5B3] md:text-3xl">
                 {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
@@ -399,9 +399,9 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </div>
 
               {typedPost.subtitle ? (
-                <p className="text-[15px] leading-relaxed text-[#CBC3B8]">{typedPost.subtitle}</p>
+                <p className="text-[15px] leading-[1.7] text-[#CBC3B8]">{typedPost.excerpt}</p>
               ) : typedPost.excerpt ? (
-                <p className="text-[15px] leading-relaxed text-[#CBC3B8]">{typedPost.excerpt}</p>
+                <p className="text-[15px] leading-[1.7] text-[#CBC3B8]">{typedPost.excerpt}</p>
               ) : null}
 
               {authorName ? (
