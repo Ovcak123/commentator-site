@@ -18,7 +18,7 @@ export default function RootLayout({
         <div className="main-shell">{children}</div>
 
         <footer className="site-footer" role="contentinfo">
-          <div className="site-footer-inner">
+          <div className="site-footer-inner text-center">
             The Commentator. © Robin Shepherd, 2026. All rights reserved.
           </div>
         </footer>

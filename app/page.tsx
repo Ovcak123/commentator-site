@@ -1569,6 +1569,8 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </section>
               </aside>
 
+                            <div className="mt-14 mb-10 h-[2px] w-full bg-white/30" />
+
               <div className="mt-16 mb-6 text-center">
                 <div className="mx-auto w-full max-w-[20rem] space-y-8">
                   <Link
@@ -1592,12 +1594,16 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                     SEARCH
                   </Link>
 
-                  <Link
+                                                      <Link
                     href="/contact"
                     className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
                   >
                     CONTACT
                   </Link>
+                </div>
+
+                                <div className="mt-12 mb-12 flex justify-center">
+                  <div className="h-[2px] w-40 bg-white/30" />
                 </div>
               </div>
             </section>
