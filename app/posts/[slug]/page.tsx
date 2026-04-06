@@ -70,7 +70,7 @@ function normalizeMinutes(value: any): number | undefined {
   if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
   if (typeof value === "string") {
     const n = Number(value);
-    if (Number.isFinite(n) && n > 0) return n;
+    return Number.isFinite(n) && n > 0 ? n : undefined;
   }
   return undefined;
 }
@@ -377,13 +377,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            <header className="space-y-3">
+            <header className="pt-1">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
                 Commentary
               </p>
 
-              {/* Mobile headline +10% (text-2xl -> text-[1.75rem]) */}
-              <h1 className="text-[1.9rem] font-semibold leading-tight tracking-tight text-[#D2C5B3] md:text-3xl">
+              <h1 className="mt-4 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
                 {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
@@ -393,29 +392,29 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </h1>
 
               {/* DESKTOP SHARE (TOP) — next to read-time, desktop only */}
-              <div className="hidden items-center justify-between lg:flex">
+              <div className="hidden items-center justify-between lg:mt-4 lg:flex">
                 <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
                 <DesktopShare title={typedPost.title} />
               </div>
 
-              {typedPost.subtitle ? (
-                <p className="text-[15px] leading-[1.7] text-[#CBC3B8]">{typedPost.excerpt}</p>
-              ) : typedPost.excerpt ? (
-                <p className="text-[15px] leading-[1.7] text-[#CBC3B8]">{typedPost.excerpt}</p>
+              {typedPost.excerpt ? (
+                <p className="mt-5 max-w-[36ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7]">
+                  {typedPost.excerpt}
+                </p>
               ) : null}
 
               {authorName ? (
-                <p className="text-xs">
+                <p className="mt-6 text-xs">
                   <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
                   {date ? <span className="text-[#A79F95]">{` · ${date}`}</span> : null}
                 </p>
               ) : date ? (
-                <p className="text-xs uppercase tracking-[0.16em] text-[#A79F95]">{date}</p>
+                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#A79F95]">{date}</p>
               ) : null}
             </header>
 
             {heroUrl ? (
-              <div className="mt-8 h-52 w-full overflow-hidden bg-white/5 ring-1 ring-white/10 md:h-64">
+              <div className="mt-10 h-52 w-full overflow-hidden bg-white/5 ring-1 ring-white/10 md:h-64">
                 <img
                   src={heroUrl}
                   alt={typedPost.title}
@@ -425,14 +424,13 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </div>
             ) : null}
 
-                        {/* MOBILE SHARE (TOP) — below hero, above body */}
-            <div className="mt-5 flex justify-end lg:hidden">
+            {/* MOBILE SHARE (TOP) — below hero, above body */}
+            <div className="mt-6 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
             </div>
 
-                        {/* Spacing: more breathing room on mobile after share, desktop unchanged */}
-                        <section
-                className="mt-8 max-w-none prose prose-invert text-[16.15px] leading-[1.47] md:text-[18px] lg:mt-10 lg:leading-relaxed
+            <section
+              className="mt-10 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
