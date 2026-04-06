@@ -122,6 +122,11 @@ function getLeadMetaLabel(lead?: HomeLead) {
   return lead.author;
 }
 
+function getNewsByline(item?: Pick<NewsItem, "author" | "source">) {
+  if (!item) return undefined;
+  return item.author || item.source;
+}
+
 /* ---------- typography ---------- */
 
 const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
@@ -890,7 +895,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
 
   return (
     <section id="news-point-mobile" className="space-y-0">
-            <div className="mb-7 flex items-end justify-between gap-4">
+      <div className="mb-7 flex items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <h2 className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.30em] text-[#F3EEE6]">
             News Point
@@ -910,107 +915,105 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         </Link>
       </div>
 
-      <div className={`space-y-0 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
-        {featured ? (
-          <article className={`group relative overflow-visible ${hasMoreAfterFeatured ? "pb-14" : ""}`}>
-            <Link
-              href={featured.slug ? `/news/${featured.slug}` : "#"}
-              className="block no-underline hover:no-underline"
-            >
-              {featured.heroImageUrl ? (
-                <div className="mb-8 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
-                  <img
-                    src={featured.heroImageUrl}
-                    alt={featured.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-                    loading="lazy"
-                  />
-                </div>
-              ) : null}
-
-              <h3 className="break-words text-[22px] font-semibold leading-[1.14] text-[#EDE7DE] transition-colors duration-150 group-hover:text-[#F6F0E7]">
-                <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
-              </h3>
-
-              {featured.excerpt ? (
-                <p className="mt-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
-                  {featured.excerpt}
-                </p>
-              ) : null}
-            </Link>
-          </article>
-        ) : null}
-
-                {hasMoreAfterFeatured ? (
-          <div className="space-y-10">
-            {secondaryItems.map((n) => (
-              <article key={n.id} className="group relative overflow-visible">
-                <Link
-                  href={n.slug ? `/news/${n.slug}` : "#"}
-                  className="grid grid-cols-[1fr_104px] items-end gap-4.5 no-underline hover:no-underline"
-                >
-                  <div className="min-w-0">
-                    <h4 className="break-words text-[17.5px] font-semibold leading-[1.22] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4]">
-                      <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                    </h4>
-
-                    {n.excerpt ? (
-                      <p className="mt-3.5 line-clamp-3 text-[14.75px] leading-[1.78] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
-                        {n.excerpt}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <div className="h-[68px] w-[88px] shrink-0 self-end justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
-                    {n.heroImageUrl ? (
-                      <img
-                        src={n.heroImageUrl}
-                        alt={n.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div aria-hidden="true" className="h-full w-full bg-white/[0.03]" />
-                    )}
-                  </div>
-                </Link>
-              </article>
-            ))}
-
-                                                <div className="space-y-10">
-              <div className="flex justify-end">
-                <Link
-                  href="/news"
-                  className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
-                >
-                  <span>View all</span>
-                  <span className="h-px w-6 bg-white/30" />
-                </Link>
+      {featured ? (
+        <article className={`group relative overflow-visible ${hasMoreAfterFeatured ? "pb-14" : ""}`}>
+          <Link
+            href={featured.slug ? `/news/${featured.slug}` : "#"}
+            className="block no-underline hover:no-underline"
+          >
+            {featured.heroImageUrl ? (
+              <div className="mb-8 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
+                <img
+                  src={featured.heroImageUrl}
+                  alt={featured.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                  loading="lazy"
+                />
               </div>
+            ) : null}
 
+            <h3 className="break-words text-[22px] font-semibold leading-[1.14] text-[#EDE7DE] transition-colors duration-150 group-hover:text-[#F6F0E7]">
+              {featured.title}
+            </h3>
+
+            {featured.readTimeMinutes ? (
+              <div className="mt-4">
+                <ReadTimeBadge minutes={featured.readTimeMinutes} />
+              </div>
+            ) : null}
+
+            {featured.excerpt ? (
+              <p className="mt-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                {featured.excerpt}
+              </p>
+            ) : null}
+
+            {getNewsByline(featured) ? (
+              <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                {getNewsByline(featured)}
+              </p>
+            ) : null}
+          </Link>
+        </article>
+      ) : null}
+
+      {hasMoreAfterFeatured ? (
+        <div className="space-y-0">
+          {secondaryItems.map((n, index) => (
+            <article
+              key={n.id}
+              className={`group relative overflow-visible ${
+                index < secondaryItems.length - 1 ? "pb-8" : ""
+              }`}
+            >
               <Link
-                href="/contact"
-                className="group block no-underline hover:no-underline focus:outline-none"
-                aria-label="To submit news tips, please click here"
+                href={n.slug ? `/news/${n.slug}` : "#"}
+                className="grid grid-cols-[88px_minmax(0,1fr)] items-start gap-4 no-underline hover:no-underline focus:outline-none"
               >
-                <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
-                      To submit news tips, please click here
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
-                    >
-                      →
-                    </span>
-                  </div>
+                <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                  {n.heroImageUrl ? (
+                    <img
+                      src={n.heroImageUrl}
+                      alt={n.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div aria-hidden="true" className="h-full w-full bg-white/[0.03]" />
+                  )}
                 </div>
+
+                <div className="relative h-[88px] min-w-0 pt-[1px]">
+  <div className="min-w-0 pr-1">
+    <h4 className="break-words text-[17.5px] font-semibold leading-[1.16] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4]">
+      {n.title}
+    </h4>
+
+    <div className="mt-3">
+      <ReadTimeBadge minutes={n.readTimeMinutes ?? 2} />
+    </div>
+  </div>
+
+  {getNewsByline(n) ? (
+    <p className="absolute bottom-[-1px] left-0 pr-1 text-[12px] leading-[1] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+      {getNewsByline(n)}
+    </p>
+  ) : null}
+</div>
+              </Link>
+            </article>
+          ))}
+          <div className="pt-10 space-y-10">
+            <div className="flex justify-end">
+              <Link
+                href="/news"
+                className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
+              >
+                <span>View all</span>
+                <span className="h-px w-6 bg-white/30" />
               </Link>
             </div>
-          </div>
-        ) : (
-          <div className="mt-14">
+
             <Link
               href="/contact"
               className="group block no-underline hover:no-underline focus:outline-none"
@@ -1031,13 +1034,33 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               </div>
             </Link>
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="mt-14">
+          <Link
+            href="/contact"
+            className="group block no-underline hover:no-underline focus:outline-none"
+            aria-label="To submit news tips, please click here"
+          >
+            <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
+                  To submit news tips, please click here
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
+                >
+                  →
+                </span>
+              </div>
+            </div>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
-
-
 
 function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
@@ -1783,6 +1806,10 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     </main>
   );
 }
+
+
+
+
 
 
 

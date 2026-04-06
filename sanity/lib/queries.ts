@@ -52,6 +52,7 @@ export const newsItemsQuery = `
     _id,
     title,
     excerpt,
+    "author": coalesce(author, author->name, author.name, author->title, author.title),
     source,
     publishedAt,
     readTimeMinutes,
