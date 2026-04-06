@@ -966,24 +966,24 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 index < secondaryItems.length - 1 ? "pb-8" : ""
               }`}
             >
-                            <Link
+                                          <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[96px_1fr] gap-4 no-underline hover:no-underline focus:outline-none"
+                className="grid grid-cols-[96px_1fr] items-start gap-4 no-underline hover:no-underline focus:outline-none"
               >
-                <div className="overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="h-24 w-[96px] shrink-0 self-start overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                   {n.heroImageUrl ? (
                     <img
                       src={n.heroImageUrl}
                       alt={n.title}
-                      className="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       loading="lazy"
                     />
                   ) : (
-                    <div aria-hidden="true" className="h-24 w-full bg-white/[0.04]" />
+                    <div aria-hidden="true" className="h-full w-full bg-white/[0.04]" />
                   )}
                 </div>
 
-                <div className="min-w-0">
+                <div className="min-w-0 self-start">
                   <h4 className="break-words text-[17px] font-semibold leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
                     {n.title}
                   </h4>
