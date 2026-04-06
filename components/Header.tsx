@@ -1,4 +1,3 @@
-// components/Header.tsx
 "use client";
 
 import Link from "next/link";
@@ -28,7 +27,7 @@ export default function Header() {
   return (
     <header className="bg-[#0B0D10] text-[#E6E9EE]">
       {/* Top band: masthead */}
-      <div className="border-b border-white/5">
+      <div className="border-b-0 sm:border-b sm:border-white/5">
         <div
           className={[
             "mx-auto flex max-w-6xl items-center justify-between gap-4",
