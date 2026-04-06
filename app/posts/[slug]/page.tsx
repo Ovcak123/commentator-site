@@ -377,12 +377,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-            <header className="pt-1">
+                        <header className="pt-1">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
                 Commentary
               </p>
 
-              <h1 className="mt-4 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
+              <h1 className="mt-10 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
                 {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
