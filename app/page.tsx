@@ -966,40 +966,40 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                 index < secondaryItems.length - 1 ? "pb-8" : ""
               }`}
             >
-              <Link
+                            <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[88px_minmax(0,1fr)] items-start gap-4 no-underline hover:no-underline focus:outline-none"
+                className="grid grid-cols-[96px_1fr] gap-4 no-underline hover:no-underline focus:outline-none"
               >
-                <div className="h-[88px] w-[88px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                   {n.heroImageUrl ? (
                     <img
                       src={n.heroImageUrl}
                       alt={n.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                      className="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       loading="lazy"
                     />
                   ) : (
-                    <div aria-hidden="true" className="h-full w-full bg-white/[0.03]" />
+                    <div aria-hidden="true" className="h-24 w-full bg-white/[0.04]" />
                   )}
                 </div>
 
-                <div className="relative h-[88px] min-w-0 pt-[1px]">
-  <div className="min-w-0 pr-1">
-    <h4 className="break-words text-[17.5px] font-semibold leading-[1.16] text-[#E6DDD0] transition-colors duration-150 group-hover:text-[#F4EEE4]">
-      {n.title}
-    </h4>
+                <div className="min-w-0">
+                  <h4 className="break-words text-[17px] font-semibold leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
+                    {n.title}
+                  </h4>
 
-    <div className="mt-3">
-      <ReadTimeBadge minutes={n.readTimeMinutes ?? 2} />
-    </div>
-  </div>
+                  {n.readTimeMinutes ? (
+                    <div className="mt-2">
+                      <ReadTimeBadge minutes={n.readTimeMinutes} />
+                    </div>
+                  ) : null}
 
-  {getNewsByline(n) ? (
-    <p className="absolute bottom-[-1px] left-0 pr-1 text-[12px] leading-[1] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
-      {getNewsByline(n)}
-    </p>
-  ) : null}
-</div>
+                  {getNewsByline(n) ? (
+                    <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.22em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                      {getNewsByline(n)}
+                    </p>
+                  ) : null}
+                </div>
               </Link>
             </article>
           ))}
