@@ -382,7 +382,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 Commentary
               </p>
 
-              <h1 className="mt-4 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
+              <h1 className="mt-4 text-[2.12rem] font-semibold leading-[1.08] tracking-tight text-[#D2C5B3] md:text-3xl">
                 {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
