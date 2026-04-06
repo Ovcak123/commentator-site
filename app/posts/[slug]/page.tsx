@@ -66,6 +66,8 @@ const latestNewsQuery = `
 
 /* ---------- helpers ---------- */
 
+const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
+
 function normalizeMinutes(value: any): number | undefined {
   if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
   if (typeof value === "string") {
@@ -197,6 +199,42 @@ function SectionHeader({ title }: { title: string }) {
 function HoverAccent() {
   return (
     <span className="pointer-events-none absolute -left-3 top-2 bottom-2 w-px bg-transparent transition-colors group-hover:bg-[#C67C4E]/90" />
+  );
+}
+
+function CommentatorClubPanel() {
+  return (
+    <Link
+      href="/club"
+      className="group block no-underline hover:no-underline focus:outline-none"
+      aria-label="Join The Commentator Club"
+    >
+      <section className="relative overflow-hidden rounded-[5px] bg-[linear-gradient(135deg,rgba(59,8,16,0.88)_0%,rgba(85,12,23,0.88)_38%,rgba(102,16,29,0.80)_72%,rgba(77,11,21,0.86)_100%)] px-6 py-6 transition-all duration-200 group-hover:shadow-[0_10px_24px_rgba(0,0,0,0.18)] sm:px-7 sm:py-7">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_34%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.03),transparent_32%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(0,0,0,0.06))]" />
+
+        <div className="relative">
+          <h3
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[17.5px] font-semibold leading-[1.12] text-[#F1E4D8] transition-colors duration-150 group-hover:text-[#FAF3EC]`}
+          >
+            Join The Commentator Club
+          </h3>
+
+          <p className="mt-4 max-w-[42ch] text-[13.35px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
+            A private community of CEOs, founders, and political, military, and
+            intelligence leaders — alongside thinkers and innovators from around the
+            world. Members can comment, engage directly, submit ideas, and shape the
+            conversation.
+          </p>
+
+          <div className="mt-5 inline-flex items-center gap-2 text-[13.35px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
+            <span>Join for $5 a month</span>
+            <span aria-hidden="true">→</span>
+          </div>
+        </div>
+      </section>
+    </Link>
   );
 }
 
@@ -377,7 +415,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
           {/* MAIN */}
           <div className="max-w-3xl">
-                        <header className="pt-1">
+            <header className="pt-1">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
                 Commentary
               </p>
@@ -462,6 +500,11 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             <div className="mt-10 hidden justify-end lg:flex">
               <DesktopShare title={typedPost.title} />
             </div>
+
+            {/* MOBILE ONLY: earned membership ask immediately after article */}
+            <section className="mt-12 lg:hidden">
+              <CommentatorClubPanel />
+            </section>
 
             {/* MOBILE ONLY: subtle divider between article and below-article sections */}
             <div className="mx-4 my-6 border-t border-neutral-200/15 lg:hidden" />
