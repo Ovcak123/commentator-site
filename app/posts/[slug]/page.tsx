@@ -33,6 +33,9 @@ type SidebarItem = {
   title: string;
   href: string;
   readTimeMinutes?: number;
+  excerpt?: string;
+  author?: string;
+  heroImageUrl?: string;
 };
 
 /* ---------- queries ---------- */
@@ -47,11 +50,14 @@ const mostReadQuery = `
 `;
 
 const moreCommentaryQuery = `
-  *[_type == "post" && slug.current != $slug] | order(publishedAt desc, _createdAt desc)[0...5]{
+  *[_type == "post" && slug.current != $slug] | order(publishedAt desc, _createdAt desc)[0...6]{
     _id,
     title,
+    excerpt,
     readTimeMinutes,
-    "slug": slug.current
+    "slug": slug.current,
+    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    "heroImageUrl": heroImage.asset->url
   }
 `;
 
@@ -238,6 +244,277 @@ function CommentatorClubPanel() {
   );
 }
 
+function MobileMissionBlock() {
+  return (
+    <section className="overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-11 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.02),transparent_46%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.045),transparent_56%)]" />
+
+        <div className="relative mx-auto max-w-[19.5rem] text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#A7B5C3]">
+            The Commentator’s Mission
+          </p>
+
+          <div className="mt-7">
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[28px] font-semibold leading-[1.04] text-[#E8DFD3] sm:text-[29px]`}
+            >
+              Understanding Power in the Digital Revolution
+            </p>
+
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[18px] leading-[1.12] text-[#B7C4D1] sm:text-[19px]`}
+            >
+              Where bridges are built in a polarized world
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MobileArticleCloser() {
+  return (
+    <>
+      <div className="mt-14 mb-10 h-[2px] w-full bg-white/30" />
+
+      <div className="mt-16 mb-6 text-center">
+        <div className="mx-auto w-full max-w-[20rem] space-y-8">
+          <Link
+            href="/mission"
+            className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+          >
+            ABOUT
+          </Link>
+
+          <Link
+            href="/club"
+            className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+          >
+            COMMENTATOR CLUB
+          </Link>
+
+          <Link
+            href="/search"
+            className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+          >
+            SEARCH
+          </Link>
+
+          <Link
+            href="/contact"
+            className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+          >
+            CONTACT
+          </Link>
+        </div>
+
+        <div className="mt-12 mb-12 flex justify-center">
+          <div className="h-[2px] w-40 bg-white/30" />
+        </div>
+
+        
+      </div>
+    </>
+  );
+}
+
+function MobileMostPopularSection({
+  commentaryItems,
+  newsItems,
+}: {
+  commentaryItems: SidebarItem[];
+  newsItems: SidebarItem[];
+}) {
+  return (
+    <section className="space-y-8">
+      <SectionHeader title="Most Popular" />
+
+      <div className="space-y-8">
+        <div>
+          <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C2B9AD]">
+            Commentary
+          </div>
+
+          <div>
+            {commentaryItems.slice(0, 5).map((item, index) => (
+              <article key={item.id}>
+                <Link
+                  href={item.href}
+                  className="group grid grid-cols-[28px_1fr] gap-3 py-3 no-underline hover:no-underline focus:outline-none"
+                  title={item.title}
+                >
+                  <div
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[32px] font-semibold leading-[0.84] text-[#F1E7DA]`}
+                  >
+                    {index + 1}
+                  </div>
+
+                  <div className="min-w-0 pt-[3px]">
+                    <h3
+                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {item.readTimeMinutes ? (
+                      <div className="mt-1.5">
+                        <ReadTimeBadge minutes={item.readTimeMinutes} />
+                      </div>
+                    ) : null}
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C2B9AD]">
+            News
+          </div>
+
+          <div>
+            {newsItems.slice(0, 5).map((item, index) => (
+              <article key={item.id}>
+                <Link
+                  href={item.href}
+                  className="group grid grid-cols-[28px_1fr] gap-3 py-3 no-underline hover:no-underline focus:outline-none"
+                  title={item.title}
+                >
+                  <div
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[32px] font-semibold leading-[0.84] text-[#F1E7DA]`}
+                  >
+                    {index + 1}
+                  </div>
+
+                  <div className="min-w-0 pt-[3px]">
+                    <h3
+                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {item.readTimeMinutes ? (
+                      <div className="mt-1.5">
+                        <ReadTimeBadge minutes={item.readTimeMinutes} />
+                      </div>
+                    ) : null}
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MobileCommentaryThumbnailSection({ items }: { items: SidebarItem[] }) {
+  const leadItem = items[0];
+  const thumbnailItems = items.slice(1, 6);
+
+  return (
+    <section className="space-y-6">
+      <SectionHeader title="More Commentary" />
+
+      <div className="space-y-10">
+        {leadItem ? (
+          <article className="group relative overflow-visible">
+            <Link
+              href={leadItem.href}
+              className="block no-underline hover:no-underline focus:outline-none"
+              title={leadItem.title}
+            >
+              {leadItem.heroImageUrl ? (
+                <div className="mb-8 h-56 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-64">
+                  <img
+                    src={leadItem.heroImageUrl}
+                    alt={leadItem.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                    loading="lazy"
+                  />
+                </div>
+              ) : null}
+
+              <h3
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[22px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+              >
+                <InlineTitleWithReadTime
+                  title={leadItem.title}
+                  minutes={leadItem.readTimeMinutes}
+                />
+              </h3>
+
+              {leadItem.excerpt ? (
+                <p className="mt-4 text-[15.75px] leading-[1.78] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                  {leadItem.excerpt}
+                </p>
+              ) : null}
+
+              {leadItem.author ? (
+                <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                  {leadItem.author}
+                </p>
+              ) : null}
+            </Link>
+          </article>
+        ) : null}
+
+        {thumbnailItems.length > 0 ? (
+          <div className="space-y-7">
+            {thumbnailItems.map((item) => (
+              <article key={item.id} className="group relative overflow-visible">
+                <Link
+                  href={item.href}
+                  className="grid grid-cols-[96px_1fr] gap-4 no-underline hover:no-underline focus:outline-none"
+                  title={item.title}
+                >
+                  <div className="overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                    {item.heroImageUrl ? (
+                      <img
+                        src={item.heroImageUrl}
+                        alt={item.title}
+                        className="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="h-24 w-full bg-white/[0.04]" />
+                    )}
+                  </div>
+
+                  <div className="min-w-0">
+                    <h3
+                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {item.readTimeMinutes ? (
+                      <div className="mt-2">
+                        <ReadTimeBadge minutes={item.readTimeMinutes} />
+                      </div>
+                    ) : null}
+
+                    {item.author ? (
+                      <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.22em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                        {item.author}
+                      </p>
+                    ) : null}
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
 /**
  * Shared list renderer (UNCHANGED).
  * Used by the desktop right rail AND (legacy) any other place.
@@ -294,9 +571,7 @@ function SidebarList({
 }
 
 /**
- * Mobile-only list renderer (NEW).
- * Used ONLY under the bottom Share icon on mobile.
- * Option A polish: slightly higher weight + a touch more line-height.
+ * Mobile-only list renderer (kept for future use if needed).
  */
 function MobileSidebarList({
   items,
@@ -396,6 +671,9 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       title: p.title,
       href: `/posts/${p.slug}`,
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
+      excerpt: typeof p.excerpt === "string" ? p.excerpt : undefined,
+      author: normalizeAuthor(p.author),
+      heroImageUrl: typeof p.heroImageUrl === "string" ? p.heroImageUrl : undefined,
     }));
 
   const latestNews: SidebarItem[] = (latestNewsDocs || [])
@@ -421,15 +699,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               </p>
 
               <h1 className="mt-10 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
-                {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
                 </span>
-                {/* Desktop: title only (read-time moved to the meta row with Share) */}
                 <span className="hidden lg:inline">{typedPost.title}</span>
               </h1>
 
-              {/* DESKTOP SHARE (TOP) — next to read-time, desktop only */}
               <div className="hidden items-center justify-between lg:mt-4 lg:flex">
                 <ReadTimeBadge minutes={typedPost.readTimeMinutes} />
                 <DesktopShare title={typedPost.title} />
@@ -506,41 +781,25 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               <CommentatorClubPanel />
             </section>
 
-            {/* MOBILE ONLY: subtle divider between article and below-article sections */}
-            <div className="mx-4 my-6 border-t border-neutral-200/15 lg:hidden" />
-
-            {/* MOBILE ONLY: SECTION STACK AFTER BOTTOM SHARE */}
-            <div className="mt-10 space-y-8 lg:hidden">
-              <div className="space-y-4">
-                <SectionHeader title="Most Read" />
-                <MobileSidebarList items={mostRead} limit={5} lineClamp={2} showReadTime />
-              </div>
+            {/* MOBILE ONLY: post-article stack */}
+            <div className="mt-14 space-y-14 lg:hidden">
+              <MobileMostPopularSection commentaryItems={mostRead} newsItems={latestNews} />
 
               {moreCommentary.length > 0 ? (
-                <div className="space-y-4">
-                  <SectionHeader title="More Commentary" />
-                  <MobileSidebarList
-                    items={moreCommentary}
-                    limit={5}
-                    lineClamp={1}
-                    showReadTime
-                  />
-                </div>
+                <MobileCommentaryThumbnailSection items={moreCommentary} />
               ) : null}
 
-              {latestNews.length > 0 ? (
-                <div className="space-y-4">
-                  <SectionHeader title="Latest News" />
-                  <MobileSidebarList items={latestNews} limit={5} lineClamp={1} showReadTime />
-                </div>
-              ) : null}
+              <div className="pt-2 pb-2">
+                <MobileMissionBlock />
+              </div>
+
+              <MobileArticleCloser />
             </div>
           </div>
 
           {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
           <aside className="hidden lg:block">
             <div className="sticky top-16 w-[320px] self-start">
-              {/* This wrapper is the ONLY change: it compresses the rail so all 3 sections fit */}
               <div className="origin-top scale-[0.92]">
                 <div className="space-y-6">
                   <div className="space-y-4">
