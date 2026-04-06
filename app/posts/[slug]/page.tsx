@@ -314,8 +314,6 @@ function MobileArticleCloser() {
         <div className="mt-12 mb-12 flex justify-center">
           <div className="h-[2px] w-40 bg-white/30" />
         </div>
-
-        
       </div>
     </>
   );
@@ -776,13 +774,18 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               <DesktopShare title={typedPost.title} />
             </div>
 
+            {/* DIVIDER ABOVE CLUB — aligned to news page spacing and width */}
+            <div className="mt-14 mb-14 flex justify-center lg:hidden">
+              <div className="h-[2px] w-32 bg-white/30" />
+            </div>
+
             {/* MOBILE ONLY: earned membership ask immediately after article */}
-            <section className="mt-12 lg:hidden">
+            <section className="lg:hidden">
               <CommentatorClubPanel />
             </section>
 
             {/* MOBILE ONLY: post-article stack */}
-            <div className="mt-14 space-y-14 lg:hidden">
+            <div className="mt-20 space-y-14 lg:hidden">
               <MobileMostPopularSection commentaryItems={mostRead} newsItems={latestNews} />
 
               {moreCommentary.length > 0 ? (
