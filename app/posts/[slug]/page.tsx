@@ -150,7 +150,7 @@ function InlineTitleWithReadTime({ title, minutes }: { title: string; minutes?: 
 
 function TitleWithReadTime({ title, minutes }: { title: string; minutes?: number }) {
   return (
-    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-2">
       <span className="min-w-0 break-words">{title}</span>
       <ReadTimeBadge minutes={minutes} />
     </span>
@@ -382,7 +382,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 Commentary
               </p>
 
-              <h1 className="mt-4 text-[2.12rem] font-semibold leading-[1.08] tracking-tight text-[#D2C5B3] md:text-3xl">
+              <h1 className="mt-4 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
                 {/* Mobile: title + read-time inline */}
                 <span className="lg:hidden">
                   <TitleWithReadTime title={typedPost.title} minutes={typedPost.readTimeMinutes} />
