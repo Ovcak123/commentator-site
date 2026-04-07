@@ -714,7 +714,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section
-              className="mt-0 max-w-none prose prose-invert text-[18.6px] leading-[1.82] md:text-[19.2px] lg:mt-10 lg:text-[19px] lg:leading-[1.85]
+              className="mt-0 max-w-none prose prose-invert text-[19.6px] leading-[1.92] md:text-[20.2px] lg:mt-10 lg:text-[19.8px] lg:leading-[1.95]
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
