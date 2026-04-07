@@ -475,19 +475,19 @@ function MobileNewsThumbnailSection({ items }: { items: SidebarItem[] }) {
               <article key={item.id} className="group relative overflow-visible">
                 <Link
                   href={item.href}
-                  className="grid grid-cols-[96px_1fr] gap-4 no-underline hover:no-underline focus:outline-none"
+                  className="grid grid-cols-[104px_1fr] items-start gap-4 no-underline hover:no-underline focus:outline-none"
                   title={item.title}
                 >
-                  <div className="overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                  <div className="h-[104px] w-[104px] shrink-0 self-start overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                     {item.heroImageUrl ? (
                       <img
                         src={item.heroImageUrl}
                         alt={item.title}
-                        className="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
                     ) : (
-                      <div className="h-24 w-full bg-white/[0.04]" />
+                      <div className="h-full w-full bg-white/[0.04]" />
                     )}
                   </div>
 
@@ -704,7 +704,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               </div>
             ) : null}
 
-                        <div className="mt-6 flex justify-end lg:hidden">
+            <div className="mt-6 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
 
@@ -725,7 +725,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
 
-                        <div className="mt-10 flex justify-end lg:hidden">
+            <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
 
@@ -734,24 +734,24 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <div className="mt-6 mb-2 flex justify-center lg:hidden">
-  <div className="h-[2px] w-20 bg-white/25" />
-</div>
+              <div className="h-[2px] w-20 bg-white/25" />
+            </div>
 
-<section className="mt-16 mb-10 lg:hidden">
-  <CommentatorClubPanel />
-</section>
+            <section className="mt-16 mb-10 lg:hidden">
+              <CommentatorClubPanel />
+            </section>
 
             <div className="mt-20 space-y-14 lg:hidden">
-  <MobileMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
+              <MobileMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
 
-  {moreNews.length > 0 ? <MobileNewsThumbnailSection items={moreNews} /> : null}
+              {moreNews.length > 0 ? <MobileNewsThumbnailSection items={moreNews} /> : null}
 
-  <div className="pt-2 pb-2">
-    <MobileMissionBlock />
-  </div>
+              <div className="pt-2 pb-2">
+                <MobileMissionBlock />
+              </div>
 
-  <MobileArticleCloser />
-</div>
+              <MobileArticleCloser />
+            </div>
           </div>
 
           <aside className="hidden lg:block">
