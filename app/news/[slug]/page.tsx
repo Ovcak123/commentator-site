@@ -658,7 +658,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     .filter((x: SidebarItem) => x.href !== "#");
 
   const heroUrl =
-    item?.heroImage?.asset ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url() : "";
+    item?.heroImage?.asset ? urlFor(item.heroImage).url() : "";
 
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -714,7 +714,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section
-              className="mt-0 max-w-none prose prose-invert text-[17.6px] leading-[1.72] md:text-[18.4px] lg:mt-10 lg:text-[18.2px] lg:leading-[1.76]
+              className="mt-0 max-w-none prose prose-invert text-[18.6px] leading-[1.82] md:text-[19.2px] lg:mt-10 lg:text-[19px] lg:leading-[1.85]
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
