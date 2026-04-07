@@ -743,7 +743,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </div>
 
             <section
-              className="mt-4 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
+              className="mt-0 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
