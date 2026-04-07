@@ -714,18 +714,26 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section
-                            className="mt-0 max-w-none prose prose-invert text-[21px] leading-[2.05] md:text-[21.6px] lg:mt-10 lg:text-[21.2px] lg:leading-[2.08]
-  prose-headings:text-[#D8CBB8]
-  prose-p:text-[#CBC3B8] prose-p:text-[21px] prose-p:leading-[2.05]
-  prose-strong:text-[#D8CBB8]
-  prose-em:text-[#CBC3B8]
-  prose-li:text-[#CBC3B8] prose-li:text-[20.6px] prose-li:leading-[1.98]
-  prose-blockquote:text-[#CBC3B8] prose-blockquote:text-[20.6px] prose-blockquote:leading-[1.98]
-  prose-a:text-[#D8CBB8]
-  prose-code:text-[#D8CBB8]
-  prose-pre:text-[#CBC3B8]
-  prose-hr:border-white/10
-"
+              className="mt-0 max-w-none prose prose-invert lg:mt-10
+              prose-headings:text-[#D8CBB8]
+              prose-p:text-[#CBC3B8]
+              prose-strong:text-[#D8CBB8]
+              prose-em:text-[#CBC3B8]
+              prose-li:text-[#CBC3B8]
+              prose-blockquote:text-[#CBC3B8]
+              prose-a:text-[#D8CBB8]
+              prose-code:text-[#D8CBB8]
+              prose-pre:text-[#CBC3B8]
+              prose-hr:border-white/10
+              [&_p]:text-[21.4px] [&_p]:leading-[2.08]
+              md:[&_p]:text-[21.8px] md:[&_p]:leading-[2.1]
+              lg:[&_p]:text-[21.2px] lg:[&_p]:leading-[2.04]
+              [&_li]:text-[20.6px] [&_li]:leading-[1.98]
+              md:[&_li]:text-[21px] md:[&_li]:leading-[2.02]
+              lg:[&_li]:text-[20.6px] lg:[&_li]:leading-[1.96]
+              [&_blockquote]:text-[20.6px] [&_blockquote]:leading-[1.98]
+              md:[&_blockquote]:text-[21px] md:[&_blockquote]:leading-[2.02]
+              lg:[&_blockquote]:text-[20.6px] lg:[&_blockquote]:leading-[1.96]"
             >
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
