@@ -451,7 +451,10 @@ function MobileNewsThumbnailSection({ items }: { items: SidebarItem[] }) {
               ) : null}
 
               <h3 className="break-words text-[22px] font-semibold leading-[1.14] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
-                <InlineTitleWithReadTime title={leadItem.title} minutes={leadItem.readTimeMinutes} />
+                <InlineTitleWithReadTime
+                  title={leadItem.title}
+                  minutes={leadItem.readTimeMinutes}
+                />
               </h3>
 
               {leadItem.excerpt ? (
@@ -470,15 +473,15 @@ function MobileNewsThumbnailSection({ items }: { items: SidebarItem[] }) {
         ) : null}
 
         {thumbnailItems.length > 0 ? (
-          <div className="space-y-7">
+          <div className="space-y-8">
             {thumbnailItems.map((item) => (
               <article key={item.id} className="group relative overflow-visible">
                 <Link
                   href={item.href}
-                  className="grid grid-cols-[104px_1fr] items-start gap-4 no-underline hover:no-underline focus:outline-none"
+                  className="grid grid-cols-[104px_1fr] items-stretch gap-4 no-underline hover:no-underline focus:outline-none"
                   title={item.title}
                 >
-                  <div className="h-[104px] w-[104px] shrink-0 self-start overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                  <div className="h-[112px] w-[104px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                     {item.heroImageUrl ? (
                       <img
                         src={item.heroImageUrl}
@@ -491,19 +494,21 @@ function MobileNewsThumbnailSection({ items }: { items: SidebarItem[] }) {
                     )}
                   </div>
 
-                  <div className="min-w-0">
-                    <h3 className="break-words text-[17px] font-semibold leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
-                      {item.title}
-                    </h3>
+                  <div className="flex h-[112px] min-w-0 flex-col justify-between pr-1">
+                    <div className="min-w-0">
+                      <h3 className="line-clamp-3 break-words text-[16px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
+                        {item.title}
+                      </h3>
 
-                    {item.readTimeMinutes ? (
-                      <div className="mt-2">
-                        <ReadTimeBadge minutes={item.readTimeMinutes} />
-                      </div>
-                    ) : null}
+                      {item.readTimeMinutes ? (
+                        <div className="mt-2">
+                          <ReadTimeBadge minutes={item.readTimeMinutes} />
+                        </div>
+                      ) : null}
+                    </div>
 
                     {item.author ? (
-                      <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.22em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                      <p className="pt-3 text-[10px] font-medium uppercase tracking-[0.17em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
                         {item.author}
                       </p>
                     ) : null}
