@@ -963,14 +963,14 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
             <article
   key={n.id}
   className={`group relative overflow-visible ${
-    index < secondaryItems.length - 1 ? "pb-14" : ""
+    index < secondaryItems.length - 1 ? "pb-16" : ""
   }`}
 >
   <Link
     href={n.slug ? `/news/${n.slug}` : "#"}
     className="grid grid-cols-[104px_1fr] items-stretch gap-3 no-underline hover:no-underline focus:outline-none"
   >
-    <div className="h-[104px] w-[104px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+    <div className="h-[112px] w-[104px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
       {n.heroImageUrl ? (
         <img
           src={n.heroImageUrl}
@@ -983,21 +983,21 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
       )}
     </div>
 
-    <div className="flex h-[104px] min-w-0 flex-col justify-between pr-1">
+    <div className="flex h-[112px] min-w-0 flex-col justify-between pr-1">
       <div className="min-w-0">
-        <h4 className="break-words text-[16px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
+        <h4 className="line-clamp-3 break-words text-[16px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
           {n.title}
         </h4>
 
         {n.readTimeMinutes ? (
-          <div className="mt-2.5">
+          <div className="mt-2">
             <ReadTimeBadge minutes={n.readTimeMinutes} />
           </div>
         ) : null}
       </div>
 
       {getNewsByline(n) ? (
-        <p className="pt-3 text-[10px] font-medium uppercase tracking-[0.18em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+        <p className="pt-3 text-[10px] font-medium uppercase tracking-[0.17em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
           {getNewsByline(n)}
         </p>
       ) : null}
