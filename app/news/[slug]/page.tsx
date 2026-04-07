@@ -709,12 +709,12 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               </div>
             ) : null}
 
-            <div className="mt-6 flex justify-end lg:hidden">
+            <div className="mt-4 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
 
             <section
-              className="mt-6 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
+              className="mt-0 max-w-none prose prose-invert text-[17.6px] leading-[1.72] md:text-[18.4px] lg:mt-10 lg:text-[18.2px] lg:leading-[1.76]
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
