@@ -738,12 +738,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             ) : null}
 
             {/* MOBILE SHARE (TOP) — below hero, above body */}
-            <div className="mt-6 flex justify-end lg:hidden">
+            <div className="mt-3 flex justify-end lg:hidden">
               <MobileShare title={typedPost.title} />
             </div>
 
             <section
-              className="mt-6 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
+              className="mt-4 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]
