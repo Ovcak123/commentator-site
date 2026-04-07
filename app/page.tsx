@@ -968,9 +968,9 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
             >
                                           <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[96px_1fr] items-start gap-4 no-underline hover:no-underline focus:outline-none"
+                className="grid grid-cols-[104px_1fr] items-start gap-4 no-underline hover:no-underline focus:outline-none"
               >
-                <div className="h-24 w-[96px] shrink-0 self-start overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="h-[104px] w-[104px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                   {n.heroImageUrl ? (
                     <img
                       src={n.heroImageUrl}
@@ -983,7 +983,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                   )}
                 </div>
 
-                <div className="min-w-0 self-start">
+                <div className="flex h-[104px] min-w-0 flex-col">
                   <h4 className="break-words text-[17px] font-semibold leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
                     {n.title}
                   </h4>
@@ -995,7 +995,7 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
                   ) : null}
 
                   {getNewsByline(n) ? (
-                    <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.22em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                    <p className="mt-auto text-[11px] font-medium uppercase tracking-[0.22em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
                       {getNewsByline(n)}
                     </p>
                   ) : null}
