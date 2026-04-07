@@ -961,47 +961,49 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
         <div className="space-y-0">
           {secondaryItems.map((n, index) => (
             <article
-              key={n.id}
-              className={`group relative overflow-visible ${
-                index < secondaryItems.length - 1 ? "pb-12" : ""
-              }`}
-            >
-                                          <Link
-                href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[120px_1fr] items-start gap-3 no-underline hover:no-underline focus:outline-none"
-              >
-                <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
-                  {n.heroImageUrl ? (
-                    <img
-                      src={n.heroImageUrl}
-                      alt={n.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div aria-hidden="true" className="h-full w-full bg-white/[0.04]" />
-                  )}
-                </div>
+  key={n.id}
+  className={`group relative overflow-visible ${
+    index < secondaryItems.length - 1 ? "pb-14" : ""
+  }`}
+>
+  <Link
+    href={n.slug ? `/news/${n.slug}` : "#"}
+    className="grid grid-cols-[104px_1fr] items-stretch gap-3 no-underline hover:no-underline focus:outline-none"
+  >
+    <div className="h-[104px] w-[104px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+      {n.heroImageUrl ? (
+        <img
+          src={n.heroImageUrl}
+          alt={n.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          loading="lazy"
+        />
+      ) : (
+        <div aria-hidden="true" className="h-full w-full bg-white/[0.04]" />
+      )}
+    </div>
 
-                <div className="flex h-[120px] min-w-0 flex-col">
-                  <h4 className="break-words text-[17px] font-semibold leading-[1.16] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
-                    {n.title}
-                  </h4>
+    <div className="flex h-[104px] min-w-0 flex-col justify-between pr-1">
+      <div className="min-w-0">
+        <h4 className="break-words text-[16px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]">
+          {n.title}
+        </h4>
 
-                  {n.readTimeMinutes ? (
-                    <div className="mt-2">
-                      <ReadTimeBadge minutes={n.readTimeMinutes} />
-                    </div>
-                  ) : null}
+        {n.readTimeMinutes ? (
+          <div className="mt-2.5">
+            <ReadTimeBadge minutes={n.readTimeMinutes} />
+          </div>
+        ) : null}
+      </div>
 
-                  {getNewsByline(n) ? (
-                    <p className="mt-auto text-[11px] font-medium uppercase tracking-[0.22em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
-                      {getNewsByline(n)}
-                    </p>
-                  ) : null}
-                </div>
-              </Link>
-            </article>
+      {getNewsByline(n) ? (
+        <p className="pt-3 text-[10px] font-medium uppercase tracking-[0.18em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+          {getNewsByline(n)}
+        </p>
+      ) : null}
+    </div>
+  </Link>
+</article>
           ))}
           <div className="pt-10 space-y-10">
             <div className="flex justify-end">
