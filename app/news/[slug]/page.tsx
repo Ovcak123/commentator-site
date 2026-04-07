@@ -714,13 +714,13 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section
-              className="mt-0 max-w-none prose prose-invert text-[19.6px] leading-[1.92] md:text-[20.2px] lg:mt-10 lg:text-[19.8px] lg:leading-[1.95]
+                            className="mt-0 max-w-none prose prose-invert text-[21px] leading-[2.05] md:text-[21.6px] lg:mt-10 lg:text-[21.2px] lg:leading-[2.08]
   prose-headings:text-[#D8CBB8]
-  prose-p:text-[#CBC3B8]
+  prose-p:text-[#CBC3B8] prose-p:text-[21px] prose-p:leading-[2.05]
   prose-strong:text-[#D8CBB8]
   prose-em:text-[#CBC3B8]
-  prose-li:text-[#CBC3B8]
-  prose-blockquote:text-[#CBC3B8]
+  prose-li:text-[#CBC3B8] prose-li:text-[20.6px] prose-li:leading-[1.98]
+  prose-blockquote:text-[#CBC3B8] prose-blockquote:text-[20.6px] prose-blockquote:leading-[1.98]
   prose-a:text-[#D8CBB8]
   prose-code:text-[#D8CBB8]
   prose-pre:text-[#CBC3B8]
