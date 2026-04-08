@@ -710,7 +710,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 <DesktopShare title={typedPost.title} />
               </div>
 
-              {typedPost.excerpt ? (
+                            {typedPost.excerpt ? (
                 <p className="mt-5 max-w-[36ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7]">
                   {typedPost.excerpt}
                 </p>
@@ -719,10 +719,10 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               {authorName ? (
                 <p className="mt-6 text-xs">
                   <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
-                  {date ? <span className="text-[#A79F95]">{` · ${date}`}</span> : null}
+                  {date ? <span className="text-[#CBC3B8]">{` • ${date}`}</span> : null}
                 </p>
               ) : date ? (
-                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#A79F95]">{date}</p>
+                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#CBC3B8]">{date}</p>
               ) : null}
             </header>
 

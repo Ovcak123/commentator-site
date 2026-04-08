@@ -36,6 +36,7 @@ export default defineType({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
+      initialValue: () => new Date().toISOString(),
     }),
 
     // ✅ NEW: Lead checkbox

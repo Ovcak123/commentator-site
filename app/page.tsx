@@ -70,6 +70,7 @@ type MostReadItem = {
   title: string;
   href: string;
   readTimeMinutes?: number;
+  section: "commentary" | "news";
 };
 
 /* ---------- helpers ---------- */
@@ -356,15 +357,28 @@ async function getHomeData(): Promise<{
       href: d.url || "#",
     }));
 
-  const mostRead = commentaryPosts
-    .filter((p) => !!p.slug)
-    .slice(0, 5)
-    .map((p) => ({
-      id: p.id,
-      title: p.title,
-      href: `/posts/${p.slug}`,
-      readTimeMinutes: p.readTimeMinutes,
-    }));
+  const mostRead = [
+    ...commentaryPosts
+      .filter((p) => !!p.slug)
+      .slice(0, 5)
+      .map((p) => ({
+        id: p.id,
+        title: p.title,
+        href: `/posts/${p.slug}`,
+        readTimeMinutes: p.readTimeMinutes,
+        section: "commentary" as const,
+      })),
+    ...newsItems
+      .filter((n) => !!n.slug)
+      .slice(0, 5)
+      .map((n) => ({
+        id: n.id,
+        title: n.title,
+        href: `/news/${n.slug}`,
+        readTimeMinutes: n.readTimeMinutes,
+        section: "news" as const,
+      })),
+  ];
 
   return {
     lead,
@@ -612,6 +626,99 @@ function DesktopMissionBlock() {
         </div>
       </div>
     </section>
+  );
+}
+
+function SubmitNewsTipsBand({
+  className = "",
+  compact = false,
+}: {
+  className?: string;
+  compact?: boolean;
+}) {
+  return (
+    <Link
+      href="/contact"
+      className={`group block no-underline hover:no-underline focus:outline-none ${className}`}
+      aria-label="To submit news tips, please click here"
+    >
+      <div
+        className={`rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)] ${
+          compact ? "px-4 py-3" : "px-5 py-3.5"
+        }`}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <span
+            className={`font-semibold uppercase text-white/92 ${
+              compact ? "text-[12px] tracking-[0.18em]" : "text-[11px] tracking-[0.28em] lg:text-[10.5px]"
+            }`}
+          >
+            To submit news tips, please click here
+          </span>
+          <span
+            aria-hidden="true"
+            className={`shrink-0 font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5 ${
+              compact ? "text-[14px]" : "text-[16px]"
+            }`}
+          >
+            →
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function MostPopularRankedList({
+  items,
+  sectionTitle,
+  startIndex = 1,
+}: {
+  items: MostReadItem[];
+  sectionTitle: string;
+  startIndex?: number;
+}) {
+  return (
+    <div className="space-y-6">
+      <h3 className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#E6DDD0]/88">
+        {sectionTitle}
+      </h3>
+
+      <ol className="space-y-7">
+        {items.map((item, index) => {
+          const rank = startIndex + index;
+
+          return (
+            <li key={item.id} className="group">
+              <Link
+                href={item.href}
+                className="grid grid-cols-[40px_1fr] items-start gap-4 no-underline transition-all duration-150 hover:no-underline group-hover:translate-x-0.5"
+              >
+                <span
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[40px] font-semibold leading-[0.88] text-[#F0E7DB]`}
+                >
+                  {rank}
+                </span>
+
+                <div className="min-w-0 pt-[3px]">
+                  <span
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} block text-[17px] font-semibold leading-[1.08] text-[#E7DDD0] transition-colors duration-150 group-hover:text-[#F3EBE0]`}
+                  >
+                    {item.title}
+                  </span>
+
+                  {item.readTimeMinutes ? (
+                    <div className="mt-3">
+                      <ReadTimeBadge minutes={item.readTimeMinutes} />
+                    </div>
+                  ) : null}
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
 
@@ -1016,48 +1123,12 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
               </Link>
             </div>
 
-            <Link
-              href="/contact"
-              className="group block no-underline hover:no-underline focus:outline-none"
-              aria-label="To submit news tips, please click here"
-            >
-              <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
-                    To submit news tips, please click here
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
-                </div>
-              </div>
-            </Link>
+            <SubmitNewsTipsBand compact />
           </div>
         </div>
       ) : (
         <div className="mt-14">
-          <Link
-            href="/contact"
-            className="group block no-underline hover:no-underline focus:outline-none"
-            aria-label="To submit news tips, please click here"
-          >
-            <div className="rounded-[14px] bg-[linear-gradient(180deg,#0C5F48_0%,#084C3A_100%)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045),0_8px_22px_rgba(0,0,0,0.18)] transition-all duration-150 group-hover:translate-y-[-1px] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_24px_rgba(0,0,0,0.22)]">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/92">
-                  To submit news tips, please click here
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="shrink-0 text-[14px] font-semibold text-white/88 transition-transform duration-150 group-hover:translate-x-0.5"
-                >
-                  →
-                </span>
-              </div>
-            </div>
-          </Link>
+          <SubmitNewsTipsBand compact />
         </div>
       )}
     </section>
@@ -1066,23 +1137,22 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
 
 function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
   const featured = items[0];
-  const secondaryWithThumbs = items.slice(1, 3);
-  const secondaryTextOnly = items.slice(3, 6);
-  const compact = items.slice(6, 7);
+  const secondaryItems = items.slice(1, 10);
+  const upperRows = secondaryItems.slice(0, 4);
+  const lowerRows = secondaryItems.slice(4);
 
   return (
-    <section className={`space-y-7 px-4 py-5 ${EDITORIAL_PANEL_CLASS}`}>
+    <section className="space-y-8">
       <SectionHeader title="News Point" />
 
       {featured ? (
-        <article className="group relative overflow-visible">
-          <NewsAccent />
+        <article className="group">
           <Link
             href={featured.slug ? `/news/${featured.slug}` : "#"}
             className="block no-underline hover:no-underline"
           >
             {featured.heroImageUrl ? (
-              <div className="mb-14 h-30 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+              <div className="mb-10 h-[220px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                 <img
                   src={featured.heroImageUrl}
                   alt={featured.title}
@@ -1092,7 +1162,7 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
               </div>
             ) : null}
 
-            <h3 className="text-[21px] font-semibold leading-[1.16] text-[#E6E1D8] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
+            <h3 className="break-words text-[21px] font-semibold leading-[1.16] text-[#E6E1D8] transition-colors duration-150 group-hover:text-[#F0EADF]">
               <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
             </h3>
 
@@ -1103,26 +1173,26 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
                 {featured.excerpt}
               </p>
             ) : null}
+
+            {getNewsByline(featured) ? (
+              <p className="mt-4 text-[10px] uppercase tracking-[0.18em] text-[#C67C4E]/58 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                {getNewsByline(featured)}
+              </p>
+            ) : null}
           </Link>
         </article>
       ) : null}
 
-      {secondaryWithThumbs.length > 0 ? (
-        <div className={`space-y-6 ${MID_DIVIDER_CLASS} pt-6`}>
-          {secondaryWithThumbs.map((n, index) => (
-            <article
-              key={n.id}
-              className={`group relative overflow-visible ${
-                index === 1 ? "rounded-[12px] bg-white/[0.018] px-3 py-3 -mx-3" : ""
-              }`}
-            >
-              <NewsAccent />
+      {upperRows.length > 0 ? (
+        <div className="space-y-8">
+          {upperRows.map((n) => (
+            <article key={n.id} className="group">
               <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="grid grid-cols-[1fr_96px] items-start gap-4.5 no-underline hover:no-underline"
+                className="grid grid-cols-[1fr_112px] items-end gap-5 no-underline hover:no-underline"
               >
-                <div className="min-w-0">
-                  <h4 className="text-[15px] font-semibold leading-[1.32] text-[#E0D7CA] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
+                <div className="min-w-0 self-end">
+                  <h4 className="break-words text-[15px] font-semibold leading-[1.28] text-[#E0D7CA] transition-colors duration-150 group-hover:text-[#F0EADF]">
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
@@ -1133,9 +1203,15 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
                       {n.excerpt}
                     </p>
                   ) : null}
+
+                  {getNewsByline(n) ? (
+                    <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-[#C67C4E]/58 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                      {getNewsByline(n)}
+                    </p>
+                  ) : null}
                 </div>
 
-                <div className="h-[72px] w-[96px] justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="h-[84px] w-[112px] self-end justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                   {n.heroImageUrl ? (
                     <img
                       src={n.heroImageUrl}
@@ -1143,7 +1219,9 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
                       loading="lazy"
                     />
-                  ) : null}
+                  ) : (
+                    <div aria-hidden="true" className="h-full w-full bg-white/[0.04]" />
+                  )}
                 </div>
               </Link>
             </article>
@@ -1151,60 +1229,59 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
         </div>
       ) : null}
 
-      {secondaryTextOnly.length > 0 ? (
-        <div className={`space-y-0 ${MID_DIVIDER_CLASS} pt-6`}>
-          {secondaryTextOnly.map((n, index) => (
-            <article
-              key={n.id}
-              className={`group relative overflow-visible ${
-                index > 0 ? "mt-5 border-t border-white/[0.08] pt-5" : ""
-              }`}
-            >
-              <NewsAccent />
+      {secondaryItems.length > 4 ? (
+        <div className="py-3">
+          <SubmitNewsTipsBand />
+        </div>
+      ) : null}
+
+      {lowerRows.length > 0 ? (
+        <div className="space-y-8">
+          {lowerRows.map((n) => (
+            <article key={n.id} className="group">
               <Link
                 href={n.slug ? `/news/${n.slug}` : "#"}
-                className="block no-underline hover:no-underline"
+                className="grid grid-cols-[1fr_112px] items-end gap-5 no-underline hover:no-underline"
               >
-                <h4 className="text-[15px] font-semibold leading-[1.32] text-[#DDD3C6] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
-                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                </h4>
+                <div className="min-w-0 self-end">
+                  <h4 className="break-words text-[15px] font-semibold leading-[1.28] text-[#E0D7CA] transition-colors duration-150 group-hover:text-[#F0EADF]">
+                    <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
+                  </h4>
 
-                {n.excerpt ? (
-                  <p
-                    className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                  >
-                    {n.excerpt}
-                  </p>
-                ) : null}
+                  {n.excerpt ? (
+                    <p
+                      className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                    >
+                      {n.excerpt}
+                    </p>
+                  ) : null}
+
+                  {getNewsByline(n) ? (
+                    <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-[#C67C4E]/58 transition-colors duration-150 group-hover:text-[#C67C4E]">
+                      {getNewsByline(n)}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="h-[84px] w-[112px] self-end justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                  {n.heroImageUrl ? (
+                    <img
+                      src={n.heroImageUrl}
+                      alt={n.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div aria-hidden="true" className="h-full w-full bg-white/[0.04]" />
+                  )}
+                </div>
               </Link>
             </article>
           ))}
         </div>
-      ) : null}
-
-      {compact.length > 0 ? (
-        <div className={`space-y-0 ${MID_DIVIDER_CLASS} pt-6`}>
-          {compact.map((n) => (
-            <article key={n.id} className="group relative overflow-visible">
-              <NewsAccent />
-              <Link
-                href={n.slug ? `/news/${n.slug}` : "#"}
-                className="block no-underline hover:no-underline"
-              >
-                <h4 className="text-[15px] font-semibold leading-[1.32] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#F0EADF] break-words">
-                  <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
-                </h4>
-
-                {n.excerpt ? (
-                  <p
-                    className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                  >
-                    {n.excerpt}
-                  </p>
-                ) : null}
-              </Link>
-            </article>
-          ))}
+      ) : secondaryItems.length <= 4 ? (
+        <div className="pt-3">
+          <SubmitNewsTipsBand />
         </div>
       ) : null}
     </section>
@@ -1218,20 +1295,16 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
         {items.map((p, index) => (
           <article
             key={p.id}
-            className={`relative ${
-              index > 0 ? "mt-8 border-t border-white/10 pt-8" : ""
-            } ${index === 1 ? "rounded-[14px] bg-white/[0.015] px-3 py-3 -mx-3" : ""}`}
+            className={`${index > 0 ? "mt-8 border-t border-white/10 pt-8" : ""}`}
           >
             <Link
               href={p.slug ? `/posts/${p.slug}` : "#"}
-              className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
+              className="group block no-underline hover:no-underline focus:outline-none"
             >
-              <FeaturedAccent />
-
-              <div className="grid grid-cols-[1fr_96px] items-start gap-5.5">
-                <div className="min-w-0">
+              <div className="grid grid-cols-[1fr_112px] items-end gap-5">
+                <div className="min-w-0 self-end">
                   <h4
-                    className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[17px] font-semibold leading-[1.18] text-[#DDD1BF] transition-colors duration-150 group-hover:text-[#E6DAC9] break-words`}
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.16] text-[#DDD1BF] transition-colors duration-150 group-hover:text-[#E6DAC9]`}
                   >
                     <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                   </h4>
@@ -1251,7 +1324,7 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
                   ) : null}
                 </div>
 
-                <div className="h-[72px] w-[96px] justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="h-[84px] w-[112px] self-end justify-self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                   {p.heroImageUrl ? (
                     <img
                       src={p.heroImageUrl}
@@ -1259,7 +1332,9 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
                       loading="lazy"
                     />
-                  ) : null}
+                  ) : (
+                    <div aria-hidden="true" className="h-full w-full bg-white/[0.04]" />
+                  )}
                 </div>
               </div>
             </Link>
@@ -1349,6 +1424,9 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     mobileReentryList.length > 0
       ? mobileReentryList[mobileReentryList.length - 1]
       : undefined;
+
+  const desktopMostPopularCommentary = mostRead.filter((item) => item.section === "commentary");
+  const desktopMostPopularNews = mostRead.filter((item) => item.section === "news");
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
@@ -1696,52 +1774,51 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
 
                 <div className="space-y-0">
                   {secondaryLead && secondaryLead.slug ? (
-                    <article className={`mt-0 mb-10 ${MID_DIVIDER_CLASS} pt-7`}>
-                      <Link
-                        href={`/posts/${secondaryLead.slug}`}
-                        className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
-                      >
-                        <FeaturedAccent />
-                        <div className="grid gap-7 lg:grid-cols-[1.18fr_0.82fr] lg:items-start">
-                          <div className="space-y-4.5">
-                            <h3
-                              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[30px] font-semibold leading-[1.09] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
-                            >
-                              <InlineTitleWithReadTime
-                                title={secondaryLead.title}
-                                minutes={secondaryLead.readTimeMinutes}
-                              />
-                            </h3>
+  <article className={`mt-0 mb-8 ${MID_DIVIDER_CLASS} pt-7`}>
+    <Link
+      href={`/posts/${secondaryLead.slug}`}
+      className="group block no-underline hover:no-underline focus:outline-none"
+    >
+      <div className="grid gap-7 lg:grid-cols-[1.18fr_0.82fr] lg:items-start">
+        <div>
+          <h3
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[30px] font-semibold leading-[1.09] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+          >
+            <InlineTitleWithReadTime
+              title={secondaryLead.title}
+              minutes={secondaryLead.readTimeMinutes}
+            />
+          </h3>
+        </div>
 
-                            {secondaryLead.excerpt ? (
-                              <p
-                                className={`max-w-2xl text-[15px] leading-7 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-                              >
-                                {secondaryLead.excerpt}
-                              </p>
-                            ) : null}
+        <div className="h-40 self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+          {secondaryLead.heroImageUrl ? (
+            <img
+              src={secondaryLead.heroImageUrl}
+              alt={secondaryLead.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
+              loading="lazy"
+            />
+          ) : null}
+        </div>
+      </div>
 
-                            {secondaryLead.author ? (
-                              <p className="text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
-                                {secondaryLead.author}
-                              </p>
-                            ) : null}
-                          </div>
+      {secondaryLead.excerpt ? (
+        <p
+          className={`mt-5 max-w-[52rem] text-[15px] leading-7 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+        >
+          {secondaryLead.excerpt}
+        </p>
+      ) : null}
 
-                          <div className="h-40 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
-                            {secondaryLead.heroImageUrl ? (
-                              <img
-                                src={secondaryLead.heroImageUrl}
-                                alt={secondaryLead.title}
-                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
-                                loading="lazy"
-                              />
-                            ) : null}
-                          </div>
-                        </div>
-                      </Link>
-                    </article>
-                  ) : null}
+      {secondaryLead.author ? (
+        <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#C67C4E]/55 transition-colors duration-150 group-hover:text-[#C67C4E]">
+          {secondaryLead.author}
+        </p>
+      ) : null}
+    </Link>
+  </article>
+) : null}
 
                   {desktopMiniFeatures.length > 0 ? (
                     <DesktopCommentaryMiniStack items={desktopMiniFeatures} />
@@ -1763,18 +1840,23 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </div>
               </section>
 
-              <section className={`space-y-4 ${MID_DIVIDER_CLASS} pt-6`}>
-                <SectionHeader title="Most Read" headlineTone />
-                <div className="rounded-[14px] bg-white/[0.015] px-3 py-3 -mx-3">
-                  <AggregatorList
-                    items={mostRead.map((m) => ({
-                      id: m.id,
-                      title: m.title,
-                      href: m.href,
-                      readTimeMinutes: m.readTimeMinutes,
-                    }))}
-                    maxItems={5}
-                  />
+              <section className={`space-y-8 ${MID_DIVIDER_CLASS} pt-6`}>
+                <SectionHeader title="Most Popular" headlineTone />
+
+                <div className="space-y-10">
+                  {desktopMostPopularCommentary.length > 0 ? (
+                    <MostPopularRankedList
+                      items={desktopMostPopularCommentary}
+                      sectionTitle="Commentary"
+                    />
+                  ) : null}
+
+                  {desktopMostPopularNews.length > 0 ? (
+                    <MostPopularRankedList
+                      items={desktopMostPopularNews}
+                      sectionTitle="News"
+                    />
+                  ) : null}
                 </div>
               </section>
             </div>
@@ -1808,6 +1890,9 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     </main>
   );
 }
+
+
+
 
 
 
