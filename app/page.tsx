@@ -1804,7 +1804,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
   <DesktopCommentaryMiniStack items={desktopMiniFeatures} />
 ) : null}
 </div>
-<section className="max-w-[30rem] pt-8 pb-2">
+<section className="w-full max-w-none pt-10 pb-6">
   <DesktopCommentatorClubPanel />
 </section>
 
