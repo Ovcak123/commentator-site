@@ -1854,14 +1854,24 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     <SubmitNewsTipsBand />
   </div>
 
-  <section className="mt-8 space-y-5">
+    <section className="mt-8 space-y-5">
     <SectionHeader title="Feed Read" headlineTone />
-    <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
+    <AggregatorList
+      items={feedRead}
+      maxItems={8}
+      tone="subtle"
+      showAccent={false}
+    />
   </section>
 
   <section className="mt-4 space-y-5">
     <SectionHeader title="Strategic Insights" headlineTone />
-    <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
+    <AggregatorList
+      items={strategicInsights}
+      maxItems={5}
+      tone="quiet"
+      showAccent={false}
+    />
   </section>
 </aside>
         </div>
