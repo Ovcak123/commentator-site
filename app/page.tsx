@@ -752,15 +752,8 @@ function AggregatorList({
   const separatorToneClass =
     tone === "quiet" ? "text-white/42" : tone === "subtle" ? "text-white/34" : "text-white/45";
 
-  const itemBorderClass =
-    tone === "quiet"
-      ? "border-white/[0.08]"
-      : tone === "subtle"
-        ? "border-white/[0.06]"
-        : "border-white/[0.09]";
-
   return (
-    <ul className="space-y-10">
+    <ul className="space-y-0">
       {items.slice(0, maxItems).map((it, index) => {
         const meta = inlineMeta(it);
         const isInternal = it.href?.startsWith("/");
@@ -775,16 +768,14 @@ function AggregatorList({
         return (
           <li
             key={it.id}
-            className={`group relative overflow-visible ${
-              ""
-            } ${highlight ? "rounded-[12px] bg-white/[0.015]" : ""}`}
+            className={`group relative overflow-visible ${highlight ? "rounded-[12px] bg-white/[0.015]" : ""}`}
           >
             {showAccent ? <HoverAccent /> : null}
 
             {isInternal ? (
               <Link
                 href={it.href}
-                className={`block px-0 pt-4 pb-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 no-underline hover:no-underline ${linkToneClass}`}
+                className={`block px-0 py-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 no-underline hover:no-underline ${linkToneClass}`}
               >
                 {TitleRow}
 
@@ -800,7 +791,7 @@ function AggregatorList({
                 href={it.href}
                 target="_blank"
                 rel="noreferrer"
-                className={`block px-0 pt-6 pb-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 ${linkToneClass}`}
+                className={`block px-0 py-3 text-[13.5px] leading-snug transition-all duration-150 group-hover:translate-x-0.5 ${linkToneClass}`}
               >
                 {TitleRow}
 
@@ -1863,12 +1854,12 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     <SubmitNewsTipsBand />
   </div>
 
-  <section className={`mt-8 space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
+  <section className="mt-8 space-y-5">
     <SectionHeader title="Feed Read" headlineTone />
     <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
   </section>
 
-  <section className={`mt-4 space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
+  <section className="mt-4 space-y-5">
     <SectionHeader title="Strategic Insights" headlineTone />
     <AggregatorList items={strategicInsights} maxItems={5} tone="quiet" />
   </section>
