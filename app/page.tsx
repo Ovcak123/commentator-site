@@ -1222,12 +1222,6 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
         </div>
       ) : null}
 
-      {secondaryItems.length > 4 ? (
-        <div className="py-3">
-          <SubmitNewsTipsBand />
-        </div>
-      ) : null}
-
       {lowerRows.length > 0 ? (
         <div className="space-y-8">
           {lowerRows.map((n) => (
@@ -1271,10 +1265,6 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
               </Link>
             </article>
           ))}
-        </div>
-      ) : secondaryItems.length <= 4 ? (
-        <div className="pt-3">
-          <SubmitNewsTipsBand />
         </div>
       ) : null}
     </section>
@@ -1860,7 +1850,12 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     <DesktopNewsPointPanel items={newsItems} />
   </section>
 
-  <section className={`space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
+  {/* --- Submit News Tips (NEW POSITION) --- */}
+  <div className="pt-6 pb-6">
+    <SubmitNewsTipsBand />
+  </div>
+
+  <section className={`mt-8 space-y-5 px-4 py-5 ${INTELLIGENCE_PANEL_CLASS}`}>
     <SectionHeader title="Feed Read" headlineTone />
     <AggregatorList items={feedRead} maxItems={8} tone="subtle" />
   </section>
