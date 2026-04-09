@@ -831,7 +831,9 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
         >
           <Link
             href={`/posts/${p.slug}`}
-            className="block py-3 no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5"
+            className={`block no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5 ${
+              index === 0 ? "pt-1 pb-3" : "py-3"
+            }`}
             title={p.title}
           >
             <span
@@ -1804,11 +1806,18 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
   <DesktopCommentaryMiniStack items={desktopMiniFeatures} />
 ) : null}
 </div>
-<section className="w-full max-w-none pt-10 pb-6">
+
+<section className="w-full max-w-none pt-10 pb-4">
   <DesktopCommentatorClubPanel />
 </section>
 
-<div className="space-y-4 pt-8">
+<div className="pt-8 pb-0">
+  <div className="text-[10px] uppercase tracking-[0.24em] text-white/60">
+    More Commentary
+  </div>
+</div>
+
+<div className="space-y-4 mt-0">
   <CommentaryList items={commentaryStream} maxItems={20} />
 
   <div className="mt-14">
