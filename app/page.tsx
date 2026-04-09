@@ -827,14 +827,22 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
 }`}
             title={p.title}
           >
-            <span
-              className={`block break-words text-[17.25px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] md:text-[17px] ${MAJOR_HEADLINE_SERIF_CLASS}`}
-            >
-              <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-            </span>
+                        <div>
+              <span
+                className={`block break-words text-[17.25px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] md:text-[17px] ${MAJOR_HEADLINE_SERIF_CLASS}`}
+              >
+                {p.title}
+              </span>
 
-            {p.excerpt ? (
-              <p className="mt-4 text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB] md:mt-3.5 md:text-[13.5px] md:leading-[1.86]">
+              {p.readTimeMinutes ? (
+                <div className="mt-2">
+                  <ReadTimeBadge minutes={p.readTimeMinutes} />
+                </div>
+              ) : null}
+            </div>
+
+                        {p.excerpt ? (
+              <p className="mt-4 max-w-[56ch] text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB] md:mt-3.5 md:text-[14px] md:leading-[1.78]">
                 {p.excerpt}
               </p>
             ) : null}
@@ -1152,9 +1160,9 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
               <InlineTitleWithReadTime title={featured.title} minutes={featured.readTimeMinutes} />
             </h3>
 
-            {featured.excerpt ? (
+                        {featured.excerpt ? (
               <p
-                className={`mt-3.5 text-[13px] leading-[1.74] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                className={`mt-3.5 text-[14px] leading-[1.78] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
               >
                 {featured.excerpt}
               </p>
@@ -1182,9 +1190,9 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
-                  {n.excerpt ? (
+                                    {n.excerpt ? (
                     <p
-                      className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-2.5 text-[14px] leading-[1.78] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                     >
                       {n.excerpt}
                     </p>
@@ -1228,9 +1236,9 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
                     <InlineTitleWithReadTime title={n.title} minutes={n.readTimeMinutes} />
                   </h4>
 
-                  {n.excerpt ? (
+                                    {n.excerpt ? (
                     <p
-                      className={`mt-2.5 text-[12px] leading-[1.72] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-2.5 text-[14px] leading-[1.78] line-clamp-3 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                     >
                       {n.excerpt}
                     </p>
@@ -1282,9 +1290,9 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
                     <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                   </h4>
 
-                  {p.excerpt ? (
+                                    {p.excerpt ? (
                     <p
-                      className={`mt-3 max-w-[62ch] text-[12.5px] leading-[1.7] line-clamp-2 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-3 max-w-[62ch] text-[14px] leading-[1.78] line-clamp-2 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                     >
                       {p.excerpt}
                     </p>
@@ -1687,7 +1695,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
         </div>
 
         {/* ---------- desktop ---------- */}
-        <div className="hidden lg:grid lg:grid-cols-[1.5fr_0.68fr] lg:gap-10 lg:pt-14">
+        <div className="hidden lg:grid lg:grid-cols-[1.5fr_0.68fr] lg:gap-14 lg:pt-14">
           <div className="space-y-16">
             {lead && lead.slug ? (
               <Link
