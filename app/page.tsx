@@ -760,7 +760,7 @@ function AggregatorList({
         : "border-white/[0.09]";
 
   return (
-    <ul className="space-y-0">
+    <ul className="space-y-10">
       {items.slice(0, maxItems).map((it, index) => {
         const meta = inlineMeta(it);
         const isInternal = it.href?.startsWith("/");
@@ -827,13 +827,13 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
       {usable.slice(0, maxItems).map((p, index) => (
         <li
           key={p.id}
-          className={`group relative overflow-visible ${index > 0 ? "mt-10" : ""}`}
+          className="group relative overflow-visible"
         >
           <Link
             href={`/posts/${p.slug}`}
             className={`block no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5 ${
-              index === 0 ? "pt-1 pb-3" : "py-3"
-            }`}
+  index === 0 ? "pt-1 pb-6" : "py-6"
+}`}
             title={p.title}
           >
             <span
@@ -1276,9 +1276,9 @@ function DesktopNewsPointPanel({ items }: { items: NewsItem[] }) {
 function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
   return (
     <div className="pt-6">
-      <div className="space-y-0">
-        {items.map((p, index) => (
-          <article key={p.id} className={`${index > 0 ? "mt-10" : ""}`}>
+      <div className="space-y-10">
+        {items.map((p) => (
+          <article key={p.id}>
             <Link
               href={p.slug ? `/posts/${p.slug}` : "#"}
               className="group block no-underline hover:no-underline focus:outline-none"
@@ -1293,14 +1293,14 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
 
                   {p.excerpt ? (
                     <p
-                      className={`mt-2.5 max-w-[62ch] text-[12.5px] leading-[1.7] line-clamp-2 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-3 max-w-[62ch] text-[12.5px] leading-[1.7] line-clamp-2 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
                     >
                       {p.excerpt}
                     </p>
                   ) : null}
 
                   {p.author ? (
-                    <p className="mt-3 text-[10px] uppercase tracking-[0.20em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                    <p className="mt-4 text-[10px] uppercase tracking-[0.20em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
                       {p.author}
                     </p>
                   ) : null}
@@ -1688,8 +1688,8 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </div>
 
                                 <div className="mt-12 mb-12 flex justify-center">
-                  <div className="h-[2px] w-40 bg-white/30" />
-                </div>
+  <div className="h-[2px] w-40 bg-white/30" />
+</div>
               </div>
             </section>
           </div>
@@ -1719,12 +1719,9 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                   <div className="absolute left-0 top-0 h-full w-[78%] bg-[radial-gradient(circle_at_left_center,rgba(11,13,16,0.58),rgba(11,13,16,0.34)_34%,rgba(11,13,16,0.12)_60%,transparent_84%)]" />
                   <div className="absolute -left-[6%] top-0 h-full w-[26%] bg-[radial-gradient(circle_at_left_center,rgba(11,13,16,0.92),rgba(11,13,16,0.42)_50%,rgba(11,13,16,0.08)_78%,transparent_100%)]" />
                   <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.14),rgba(11,13,16,0.30))]" />
-              
 
                   <div className="relative z-10 flex h-full items-center px-10">
                     <div className="relative max-w-[34rem] translate-y-[6px] overflow-visible">
-                    
-
                       <h1
                         className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[42px] font-semibold leading-[1.08] text-[#E6DDD0] [text-shadow:0_1px_2px_rgba(0,0,0,0.42)] transition-all duration-150 ease-out group-hover:translate-x-0.5 group-hover:text-[#F0E7D9] break-words`}
                       >
@@ -1749,87 +1746,89 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
             ) : null}
 
             <div>
-  <section className="space-y-12">
-    <div className="hidden lg:block pt-1">
-      <SectionHeader title="Commentary" />
-    </div>
+              <section className="space-y-12">
+                <div className="hidden lg:block pt-1">
+                  <SectionHeader title="Commentary" />
+                </div>
 
-    <div className="space-y-0">
-      {secondaryLead && secondaryLead.slug ? (
+                <div className="space-y-0">
+                        {secondaryLead && secondaryLead.slug ? (
         <article className="mt-0 mb-8 pt-3">
           <Link
             href={`/posts/${secondaryLead.slug}`}
             className="group block no-underline hover:no-underline focus:outline-none"
           >
-            <div className="grid gap-7 lg:grid-cols-[1.18fr_0.82fr] lg:items-start">
-              <div>
-                <h3
-                  className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[30px] font-semibold leading-[1.09] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
-                >
-                  <InlineTitleWithReadTime
-                    title={secondaryLead.title}
-                    minutes={secondaryLead.readTimeMinutes}
-                  />
-                </h3>
-              </div>
+            <div className="grid gap-7 lg:grid-cols-[1.18fr_0.82fr] lg:items-stretch">
+              <div className="flex h-[260px] flex-col justify-between">
+                <div className="-mt-[8px]">
+                  <h3
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} max-w-[20ch] text-[30px] font-semibold leading-[1.09] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
+                  >
+                    <InlineTitleWithReadTime
+                      title={secondaryLead.title}
+                      minutes={secondaryLead.readTimeMinutes}
+                    />
+                  </h3>
 
-              <div className="h-40 self-end overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
-                {secondaryLead.heroImageUrl ? (
-                  <img
-                    src={secondaryLead.heroImageUrl}
-                    alt={secondaryLead.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
-                    loading="lazy"
-                  />
-                ) : null}
-              </div>
-            </div>
+                  {secondaryLead.excerpt ? (
+                    <p
+                      className={`mt-6 max-w-[34rem] text-[15px] leading-7 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                    >
+                      {secondaryLead.excerpt}
+                    </p>
+                  ) : null}
+                            </div>
 
-            {secondaryLead.excerpt ? (
-              <p
-                className={`mt-5 max-w-[52rem] text-[15px] leading-7 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
-              >
-                {secondaryLead.excerpt}
-              </p>
-            ) : null}
+                            {secondaryLead.author ? (
+                              <p className="text-[11px] uppercase tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                                {secondaryLead.author}
+                              </p>
+                            ) : null}
+                          </div>
 
-            {secondaryLead.author ? (
-              <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
-                {secondaryLead.author}
-              </p>
-            ) : null}
-          </Link>
-        </article>
-      ) : null}
+                          <div className="h-[260px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                            {secondaryLead.heroImageUrl ? (
+                              <img
+                                src={secondaryLead.heroImageUrl}
+                                alt={secondaryLead.title}
+                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.012]"
+                                loading="lazy"
+                              />
+                            ) : null}
+                          </div>
+                        </div>
+                      </Link>
+                    </article>
+                  ) : null}
 
-      {desktopMiniFeatures.length > 0 ? (
-  <DesktopCommentaryMiniStack items={desktopMiniFeatures} />
-) : null}
-</div>
+                  {desktopMiniFeatures.length > 0 ? (
+                    <DesktopCommentaryMiniStack items={desktopMiniFeatures} />
+                  ) : null}
+                </div>
 
-<section className="w-full max-w-none pt-10 pb-4">
-  <DesktopCommentatorClubPanel />
-</section>
+                <section className="w-full max-w-none pt-10 pb-4">
+                  <DesktopCommentatorClubPanel />
+                </section>
 
-<div className="pt-8 pb-0">
-  <div className="text-[10px] uppercase tracking-[0.24em] text-white/60">
-    More Commentary
-  </div>
-</div>
+                <div className="pt-8 pb-0">
+                  <div className="text-[10px] uppercase tracking-[0.24em] text-white/60">
+                    More Commentary
+                  </div>
+                </div>
 
-<div className="space-y-4 mt-0">
-  <CommentaryList items={commentaryStream} maxItems={20} />
+                <div className="space-y-4 mt-0">
+                  <CommentaryList items={commentaryStream} maxItems={20} />
 
-  <div className="mt-14">
-    <Link
-      href="/commentary"
-      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
-    >
-      <span>Archive</span>
-      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-    </Link>
-  </div>
-</div>
+                  <div className="mt-14">
+                    <Link
+                      href="/commentary"
+                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
+                    >
+                      <span>Archive</span>
+                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
+                    </Link>
+                  </div>
+                </div>
 
     <section className="max-w-[34rem] space-y-8 pt-16">
       <SectionHeader title="Most Popular" headlineTone />
