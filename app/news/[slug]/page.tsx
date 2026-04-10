@@ -946,147 +946,124 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
-      <div className="mx-auto max-w-[1100px] px-4 py-10">
-        <div className="mx-auto max-w-[860px]">
-          <header className="pt-1 lg:pt-14">
-            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_max-content] lg:items-start lg:gap-2">
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
-                  News
-                </p>
+      <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6 lg:pt-16">
+        <div className="grid grid-cols-1">
+          <div className="mx-auto w-full max-w-[52rem]">
+            <header className="pt-1 lg:pt-14">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
+                News
+              </p>
 
-                <h1 className="mt-10 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl lg:mt-8 lg:max-w-[42rem] lg:text-[1.94rem] lg:leading-[1.08]">
-                  <span className="lg:hidden">
-                    <TitleWithReadTime title={item.title} minutes={itemReadMinutes} />
-                  </span>
-                  <span className="hidden lg:inline">{item.title}</span>
-                </h1>
+              <h1 className="mt-10 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl">
+                <span className="lg:hidden">
+                  <TitleWithReadTime title={item.title} minutes={itemReadMinutes} />
+                </span>
+                <span className="hidden lg:inline">{item.title}</span>
+              </h1>
 
-                <div className="hidden lg:mt-4 lg:block">
-                  <ReadTimeBadge minutes={itemReadMinutes} />
-                </div>
-
-                {item.excerpt ? (
-                  <p className="mt-5 max-w-[36ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7] lg:mt-5 lg:max-w-[46rem] lg:text-[16px] lg:leading-[1.76]">
-                    {item.excerpt}
-                  </p>
-                ) : null}
-
-                {authorName ? (
-                  <p className="mt-5 text-xs lg:mt-5">
-                    <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
-                    {date ? <span className="text-[#A79F95]">{` · ${date}`}</span> : null}
-                  </p>
-                ) : date ? (
-                  <p className="mt-5 text-xs uppercase tracking-[0.16em] text-[#A79F95] lg:mt-5">
-                    {date}
-                  </p>
-                ) : null}
-              </div>
-
-              <div className="hidden lg:flex lg:justify-end lg:pr-2 lg:pt-[1.05rem]">
+              <div className="hidden items-center justify-between lg:mt-4 lg:flex">
+                <ReadTimeBadge minutes={itemReadMinutes} />
                 <DesktopShare title={item.title} />
               </div>
-            </div>
-          </header>
 
-          {heroUrl ? (
-            <div className="mt-9 max-w-[760px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 lg:mt-8 lg:aspect-[2.08/1]">
-              <img
-                src={heroUrl}
-                alt={item.title}
-                className="block h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          ) : null}
+              {item.excerpt ? (
+                <p className="mt-5 max-w-[42ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7]">
+                  {item.excerpt}
+                </p>
+              ) : null}
 
-          <div className="mt-4 flex justify-end lg:hidden">
-            <MobileShare title={item.title} />
-          </div>
+              {authorName ? (
+                <p className="mt-6 text-xs">
+                  <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
+                  {date ? <span className="text-[#CBC3B8]">{` • ${date}`}</span> : null}
+                </p>
+              ) : date ? (
+                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#CBC3B8]">{date}</p>
+              ) : null}
+            </header>
 
-          <section
-            className="mt-0 max-w-none prose prose-invert lg:mt-10 lg:max-w-[760px]
-            prose-headings:text-[#D8CBB8]
-            prose-p:text-[#CBC3B8]
-            prose-strong:text-[#D8CBB8]
-            prose-em:text-[#CBC3B8]
-            prose-li:text-[#CBC3B8]
-            prose-blockquote:text-[#CBC3B8]
-            prose-a:text-[#D8CBB8]
-            prose-code:text-[#D8CBB8]
-            prose-pre:text-[#CBC3B8]
-            prose-hr:border-white/10
+            {heroUrl ? (
+              <div className="mt-10 overflow-hidden bg-white/5 ring-1 ring-white/10">
+                <img
+                  src={heroUrl}
+                  alt={item.title}
+                  className="h-auto w-full"
+                  loading="lazy"
+                />
+              </div>
+            ) : null}
 
-            [&_p]:text-[19px] [&_p]:leading-[1.82]
-            md:[&_p]:text-[19.4px] md:[&_p]:leading-[1.84]
-            lg:[&_p]:text-[17.7px] lg:[&_p]:leading-[1.78]
-
-            [&_li]:text-[18.4px] [&_li]:leading-[1.75]
-            md:[&_li]:text-[18.8px] md:[&_li]:leading-[1.78]
-            lg:[&_li]:text-[17.2px] lg:[&_li]:leading-[1.72]
-
-            [&_blockquote]:text-[18.4px] [&_blockquote]:leading-[1.75]
-            md:[&_blockquote]:text-[18.8px] md:[&_blockquote]:leading-[1.78]
-            lg:[&_blockquote]:text-[17.2px] lg:[&_blockquote]:leading-[1.72]"
-          >
-            <PortableText value={item.body ?? []} components={portableTextComponents} />
-          </section>
-
-          <div className="mt-10 flex justify-end lg:hidden">
-            <MobileShare title={item.title} />
-          </div>
-
-          <div className="mt-12 hidden justify-end lg:flex">
-            <DesktopShare title={item.title} />
-          </div>
-
-          <div className="mt-6 mb-2 flex justify-center lg:hidden">
-            <div className="h-[2px] w-20 bg-white/25" />
-          </div>
-
-          <section className="mt-16 mb-10 lg:hidden">
-            <CommentatorClubPanel />
-          </section>
-
-          <div className="mt-20 space-y-14 lg:hidden">
-            <MobileMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
-
-            {moreNews.length > 0 ? <MobileNewsThumbnailSection items={moreNews} /> : null}
-
-            <div className="pt-2 pb-2">
-              <MobileMissionBlock />
+            <div className="mt-3 flex justify-end lg:hidden">
+              <MobileShare title={item.title} />
             </div>
 
-            <MobileArticleCloser />
-          </div>
+            <section
+              className="mt-0 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
+  prose-headings:text-[#D8CBB8]
+  prose-p:text-[#CBC3B8]
+  prose-strong:text-[#D8CBB8]
+  prose-em:text-[#CBC3B8]
+  prose-li:text-[#CBC3B8]
+  prose-blockquote:text-[#CBC3B8]
+  prose-a:text-[#D8CBB8]
+  prose-code:text-[#D8CBB8]
+  prose-pre:text-[#CBC3B8]
+  prose-hr:border-white/10"
+            >
+              <PortableText value={item.body ?? []} components={portableTextComponents} />
+            </section>
 
-          <div className="hidden lg:block">
-            <div className="mt-10 flex justify-center">
-              <div className="h-[2px] w-[220px] bg-white/28" />
+            <div className="mt-10 flex justify-end lg:hidden">
+              <MobileShare title={item.title} />
             </div>
 
-            <section className="mt-16 max-w-[760px]">
+            <div className="mt-10 hidden justify-end lg:flex">
+              <DesktopShare title={item.title} />
+            </div>
+
+            <div className="mt-14 mb-14 flex justify-center">
+              <div className="h-[2px] w-32 bg-white/30 lg:w-44" />
+            </div>
+
+            <section className="lg:hidden">
+              <CommentatorClubPanel />
+            </section>
+
+            <section className="hidden lg:block">
               <DesktopCommentatorClubPanel />
             </section>
 
-            <section className="mt-24 max-w-[760px]">
-              <DesktopMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
-            </section>
+            <div className="mt-20 space-y-14 lg:hidden">
+              <MobileMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
 
-            {moreNews.length > 0 ? (
-              <section className="mt-24 max-w-[760px]">
-                <DesktopNewsSection items={moreNews} />
+              {moreNews.length > 0 ? <MobileNewsThumbnailSection items={moreNews} /> : null}
+
+              <div className="pt-2 pb-2">
+                <MobileMissionBlock />
+              </div>
+
+              <MobileArticleCloser />
+            </div>
+
+            <div className="mt-20 hidden space-y-16 lg:block">
+              <div className="mx-auto w-full max-w-[44rem]">
+                <DesktopMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
+              </div>
+
+              {moreNews.length > 0 ? (
+                <div className="mx-auto w-full max-w-[44rem]">
+                  <DesktopNewsSection items={moreNews} />
+                </div>
+              ) : null}
+
+              <section className="mt-24">
+                <DesktopMissionBlock />
               </section>
-            ) : null}
 
-            <section className="mt-24">
-              <DesktopMissionBlock />
-            </section>
-
-            <section className="mt-24 pb-20">
-              <DesktopArticleCloser />
-            </section>
+              <section className="mt-24 pb-20">
+                <DesktopArticleCloser />
+              </section>
+            </div>
           </div>
         </div>
       </div>
