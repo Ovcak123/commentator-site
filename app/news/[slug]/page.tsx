@@ -253,26 +253,26 @@ function DesktopCommentatorClubPanel() {
       className="group block no-underline hover:no-underline focus:outline-none"
       aria-label="Join The Commentator Club"
     >
-      <section className="relative overflow-hidden rounded-[5px] bg-[linear-gradient(135deg,rgba(59,8,16,0.90)_0%,rgba(85,12,23,0.90)_38%,rgba(102,16,29,0.82)_72%,rgba(77,11,21,0.88)_100%)] px-7 py-6 transition-all duration-200 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.24)] sm:px-8 sm:py-7 lg:px-9 lg:py-8">
+      <section className="relative overflow-hidden rounded-[5px] bg-[linear-gradient(135deg,rgba(59,8,16,0.90)_0%,rgba(85,12,23,0.90)_38%,rgba(102,16,29,0.82)_72%,rgba(77,11,21,0.88)_100%)] px-6 py-5 transition-all duration-200 group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.24)] lg:px-7 lg:py-6">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_34%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.03),transparent_32%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.015),rgba(0,0,0,0.06))]" />
 
         <div className="relative">
           <h3
-            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-[1.1] text-[#F1E4D8] transition-colors duration-150 group-hover:text-[#FAF3EC] lg:text-[20px]`}
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-[1.08] text-[#F1E4D8] transition-colors duration-150 group-hover:text-[#FAF3EC] lg:text-[18.5px]`}
           >
             Join The Commentator Club
           </h3>
 
-          <p className="mt-5 max-w-[46ch] text-[15px] leading-[1.72] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[15.8px] lg:leading-[1.75]">
+          <p className="mt-4 max-w-[50ch] text-[14.3px] leading-[1.68] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[14.9px] lg:leading-[1.72]">
             A private community of CEOs, founders, and political, military, and
             intelligence leaders — alongside thinkers and innovators from around the
             world. Members can comment, engage directly, submit ideas, and shape the
             conversation.
           </p>
 
-          <div className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
+          <div className="mt-5 inline-flex items-center gap-2 text-[14.4px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
             <span>Join for $5 a month</span>
             <span aria-hidden="true">→</span>
           </div>
@@ -729,18 +729,18 @@ function DesktopNewsSection({ items }: { items: SidebarItem[] }) {
               title={leadItem.title}
             >
               {leadItem.heroImageUrl ? (
-                <div className="mb-7 max-w-[544px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="mb-7 max-w-[580px] aspect-[1.18/1] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                   <img
                     src={leadItem.heroImageUrl}
                     alt={leadItem.title}
-                    className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.01]"
+                    className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
                     loading="lazy"
                   />
                 </div>
               ) : null}
 
               <h3
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} max-w-[11.5ch] break-words text-[28px] font-semibold leading-[1.01] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} max-w-[18.5ch] break-words text-[22px] font-semibold leading-[1.03] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
               >
                 <InlineTitleWithReadTime
                   title={leadItem.title}
@@ -749,7 +749,7 @@ function DesktopNewsSection({ items }: { items: SidebarItem[] }) {
               </h3>
 
               {leadItem.excerpt ? (
-                <p className="mt-4 max-w-[36rem] text-[15px] leading-[1.72] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                <p className="mt-4 max-w-[42rem] text-[15.6px] leading-[1.76] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
                   {leadItem.excerpt}
                 </p>
               ) : null}
@@ -949,13 +949,13 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       <div className="mx-auto max-w-[1100px] px-4 py-10">
         <div className="mx-auto max-w-[860px]">
           <header className="pt-1 lg:pt-14">
-            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_88px] lg:items-start lg:gap-8">
+            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_max-content] lg:items-start lg:gap-2">
               <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
                   News
                 </p>
 
-                                                                <h1 className="mt-10 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl lg:mt-8 lg:max-w-none lg:text-[2.08rem] lg:leading-[1.04]">
+                <h1 className="mt-10 text-[2.12rem] font-semibold leading-[1.03] tracking-tight text-[#D2C5B3] md:text-3xl lg:mt-8 lg:max-w-[42rem] lg:text-[1.94rem] lg:leading-[1.08]">
                   <span className="lg:hidden">
                     <TitleWithReadTime title={item.title} minutes={itemReadMinutes} />
                   </span>
@@ -967,7 +967,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 </div>
 
                 {item.excerpt ? (
-                  <p className="mt-5 max-w-[36ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7] lg:mt-5 lg:max-w-[38ch] lg:text-[15px] lg:leading-[1.7]">
+                  <p className="mt-5 max-w-[36ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7] lg:mt-5 lg:max-w-[46rem] lg:text-[16px] lg:leading-[1.76]">
                     {item.excerpt}
                   </p>
                 ) : null}
@@ -984,13 +984,13 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                 ) : null}
               </div>
 
-              <div className="hidden lg:flex lg:justify-end lg:pt-[5.8rem]">
+              <div className="hidden lg:flex lg:justify-end lg:pr-2 lg:pt-[1.05rem]">
                 <DesktopShare title={item.title} />
               </div>
             </div>
           </header>
 
-                    {heroUrl ? (
+          {heroUrl ? (
             <div className="mt-9 max-w-[760px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 lg:mt-8 lg:aspect-[2.08/1]">
               <img
                 src={heroUrl}
@@ -1066,7 +1066,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <div className="h-[2px] w-[220px] bg-white/28" />
             </div>
 
-            <section className="mt-16">
+            <section className="mt-16 max-w-[760px]">
               <DesktopCommentatorClubPanel />
             </section>
 
