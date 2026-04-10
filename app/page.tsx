@@ -841,8 +841,8 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
               ) : null}
             </div>
 
-                        {p.excerpt ? (
-              <p className="mt-4 max-w-[56ch] text-[15px] leading-[1.78] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB] md:mt-3.5 md:text-[14px] md:leading-[1.78]">
+                                    {p.excerpt ? (
+              <p className="mt-4 max-w-[56ch] text-[15px] leading-[1.8] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
                 {p.excerpt}
               </p>
             ) : null}
@@ -1290,9 +1290,9 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
                     <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                   </h4>
 
-                                    {p.excerpt ? (
+                                                      {p.excerpt ? (
                     <p
-                      className={`mt-3 max-w-[62ch] text-[14px] leading-[1.78] line-clamp-2 ${EXCERPT_TEXT_CLASS} transition-colors duration-150 ${EXCERPT_HOVER_TEXT_CLASS}`}
+                      className={`mt-3.5 max-w-[62ch] text-[15px] leading-[1.8] line-clamp-2 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]`}
                     >
                       {p.excerpt}
                     </p>
