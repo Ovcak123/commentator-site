@@ -38,6 +38,17 @@ type SidebarItem = {
   heroImageUrl?: string;
 };
 
+type ExplicitLead = {
+  id: string;
+  type: "post" | "newsItem";
+  title: string;
+  excerpt?: string;
+  slug?: string;
+  heroImageUrl?: string;
+  readTimeMinutes?: number;
+  author?: string;
+};
+
 /* ---------- queries ---------- */
 
 const mostReadQuery = `
@@ -67,6 +78,22 @@ const latestNewsQuery = `
     title,
     readTimeMinutes,
     "slug": slug.current
+  }
+`;
+
+const explicitLeadQuery = `
+  *[
+    _type in ["post", "newsItem"] &&
+    isLead == true
+  ] | order(_updatedAt desc)[0]{
+    _id,
+    _type,
+    title,
+    excerpt,
+    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    readTimeMinutes,
+    "slug": slug.current,
+    "heroImageUrl": heroImage.asset->url
   }
 `;
 
@@ -244,6 +271,47 @@ function CommentatorClubPanel() {
   );
 }
 
+function DesktopCommentatorClubPanel() {
+  return (
+    <Link
+      href="/club"
+      className="group block no-underline hover:no-underline focus:outline-none"
+      aria-label="Join The Commentator Club"
+    >
+      <section className="relative overflow-hidden rounded-[4px] bg-[linear-gradient(145deg,rgba(42,7,13,0.80)_0%,rgba(58,10,18,0.82)_36%,rgba(70,14,24,0.78)_68%,rgba(50,9,17,0.82)_100%)] px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] transition-all duration-200 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_12px_30px_rgba(0,0,0,0.16)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(214,167,132,0.08),transparent_34%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.025),transparent_30%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(0,0,0,0.10))]" />
+
+        <div className="relative">
+          <h3
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[16px] font-semibold leading-[1.14] text-[#F5EBDD] transition-colors duration-150 group-hover:text-[#FCF4EA]`}
+          >
+            Join The Commentator Club
+          </h3>
+
+          <p className="mt-3.5 text-[12.4px] leading-[1.72] text-[#E4D3C6] transition-colors duration-150 group-hover:text-[#EEDFD4]">
+            A private community of CEOs, founders, and political, military, and
+            intelligence leaders — alongside thinkers and innovators from around the
+            world. Members can comment, engage directly, submit ideas, and shape the
+            conversation.
+          </p>
+
+          <div className="mt-4 inline-flex items-center gap-1.5 text-[12.2px] font-semibold text-[#F0E2D6] transition-colors duration-150 group-hover:text-[#FAF0E6]">
+            <span>Join for $5 a month</span>
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+            >
+              →
+            </span>
+          </div>
+        </div>
+      </section>
+    </Link>
+  );
+}
+
 function MobileMissionBlock() {
   return (
     <section className="overflow-hidden rounded-xl bg-[linear-gradient(180deg,#18212A_0%,#202A34_100%)] px-7 py-11 shadow-[inset_0_1px_0_rgba(255,255,255,0.025),inset_0_-1px_0_rgba(0,0,0,0.18)]">
@@ -265,6 +333,37 @@ function MobileMissionBlock() {
 
             <p
               className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-6 text-[18px] leading-[1.12] text-[#B7C4D1] sm:text-[19px]`}
+            >
+              Where bridges are built in a polarized world
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DesktopMissionBlock() {
+  return (
+    <section className="mx-auto mt-20 mb-4 w-full max-w-[44rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(24,33,42,0.72)_0%,rgba(32,42,52,0.68)_100%)] px-8 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.018),inset_0_-1px_0_rgba(0,0,0,0.14)]">
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.014),transparent_48%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.028),transparent_60%)]" />
+
+        <div className="relative mx-auto max-w-[36rem] text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#A7B5C3]/92">
+            The Commentator’s Mission
+          </p>
+
+          <div className="mt-4">
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[28px] font-semibold leading-[1.04] text-[#E6DDD0]`}
+            >
+              Understanding Power in the Digital Revolution
+            </p>
+
+            <p
+              className={`${MAJOR_HEADLINE_SERIF_CLASS} mt-2.5 text-[18px] leading-[1.12] text-[#B3C0CC]`}
             >
               Where bridges are built in a polarized world
             </p>
@@ -515,6 +614,108 @@ function MobileCommentaryThumbnailSection({ items }: { items: SidebarItem[] }) {
   );
 }
 
+function DesktopCommentarySection({ items }: { items: SidebarItem[] }) {
+  const leadItem = items[0];
+  const thumbnailItems = items.slice(1, 6);
+
+  return (
+    <section className="space-y-6">
+      <SectionHeader title="More Commentary" />
+
+      <div className="space-y-10">
+        {leadItem ? (
+          <article className="group relative overflow-visible">
+            <Link
+              href={leadItem.href}
+              className="block no-underline hover:no-underline focus:outline-none"
+              title={leadItem.title}
+            >
+              {leadItem.heroImageUrl ? (
+                <div className="mb-8 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                  <img
+                    src={leadItem.heroImageUrl}
+                    alt={leadItem.title}
+                    className="h-auto w-full"
+                    loading="lazy"
+                  />
+                </div>
+              ) : null}
+
+              <h3
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} max-w-[22ch] break-words text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+              >
+                <InlineTitleWithReadTime
+                  title={leadItem.title}
+                  minutes={leadItem.readTimeMinutes}
+                />
+              </h3>
+
+              {leadItem.excerpt ? (
+                <p className="mt-4 max-w-[46ch] text-[15.5px] leading-[1.74] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                  {leadItem.excerpt}
+                </p>
+              ) : null}
+
+              {leadItem.author ? (
+                <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                  {leadItem.author}
+                </p>
+              ) : null}
+            </Link>
+          </article>
+        ) : null}
+
+        {thumbnailItems.length > 0 ? (
+          <div className="space-y-8">
+            {thumbnailItems.map((item) => (
+              <article key={item.id} className="group relative overflow-visible">
+                <Link
+                  href={item.href}
+                  className="grid grid-cols-[112px_1fr] items-start gap-5 no-underline hover:no-underline focus:outline-none"
+                  title={item.title}
+                >
+                  <div className="h-[124px] w-[112px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                    {item.heroImageUrl ? (
+                      <img
+                        src={item.heroImageUrl}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-white/[0.04]" />
+                    )}
+                  </div>
+
+                  <div className="min-w-0 pt-[2px]">
+                    <h3
+                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {item.readTimeMinutes ? (
+                      <div className="mt-2">
+                        <ReadTimeBadge minutes={item.readTimeMinutes} />
+                      </div>
+                    ) : null}
+
+                    {item.author ? (
+                      <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.17em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                        {item.author}
+                      </p>
+                    ) : null}
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
 /**
  * Shared list renderer (UNCHANGED).
  * Used by the desktop right rail AND (legacy) any other place.
@@ -635,11 +836,12 @@ function MobileSidebarList({
 /* ---------- page ---------- */
 
 export default async function CommentaryArticlePage({ params }: PageProps) {
-  const [post, mostReadDocs, moreDocs, latestNewsDocs] = await Promise.all([
+  const [post, mostReadDocs, moreDocs, latestNewsDocs, explicitLeadDoc] = await Promise.all([
     client.fetch(singlePostQuery, { slug: params.slug }, { cache: "no-store" as any }),
     client.fetch(mostReadQuery, {}, { cache: "no-store" as any }),
     client.fetch(moreCommentaryQuery, { slug: params.slug }, { cache: "no-store" as any }),
     client.fetch(latestNewsQuery, {}, { cache: "no-store" as any }),
+    client.fetch(explicitLeadQuery, {}, { cache: "no-store" as any }),
   ]);
 
   const typedPost: Post | null = post;
@@ -655,6 +857,19 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
         ? urlFor(typedPost.heroImage).width(1600).height(900).fit("crop").url()
         : "";
 
+  const explicitLead: ExplicitLead | undefined = explicitLeadDoc
+    ? {
+        id: explicitLeadDoc._id,
+        type: explicitLeadDoc._type,
+        title: explicitLeadDoc.title,
+        excerpt: explicitLeadDoc.excerpt,
+        slug: explicitLeadDoc.slug,
+        heroImageUrl: explicitLeadDoc.heroImageUrl,
+        readTimeMinutes: normalizeMinutes(explicitLeadDoc.readTimeMinutes),
+        author: normalizeAuthor(explicitLeadDoc.author),
+      }
+    : undefined;
+
   const mostRead: SidebarItem[] = (mostReadDocs || [])
     .filter((p: any) => !!p?.slug)
     .map((p: any) => ({
@@ -664,7 +879,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
-  const moreCommentary: SidebarItem[] = (moreDocs || [])
+  const rawMoreCommentary: SidebarItem[] = (moreDocs || [])
     .filter((p: any) => !!p?.slug)
     .map((p: any) => ({
       id: p._id,
@@ -675,6 +890,34 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       author: normalizeAuthor(p.author),
       heroImageUrl: typeof p.heroImageUrl === "string" ? p.heroImageUrl : undefined,
     }));
+
+  const heroCommentaryLead: SidebarItem | undefined =
+    explicitLead &&
+    explicitLead.type === "post" &&
+    explicitLead.slug &&
+    explicitLead.id !== typedPost._id &&
+    explicitLead.slug !== typedPost.slug
+      ? {
+          id: explicitLead.id,
+          title: explicitLead.title,
+          href: `/posts/${explicitLead.slug}`,
+          readTimeMinutes: explicitLead.readTimeMinutes,
+          excerpt: explicitLead.excerpt,
+          author: explicitLead.author,
+          heroImageUrl: explicitLead.heroImageUrl,
+        }
+      : undefined;
+
+  const moreCommentary = [
+    ...(heroCommentaryLead ? [heroCommentaryLead] : []),
+    ...rawMoreCommentary,
+  ]
+    .filter(
+      (item, index, arr) =>
+        item.id !== typedPost._id &&
+        arr.findIndex((candidate) => candidate.id === item.id) === index
+    )
+    .slice(0, 6);
 
   const latestNews: SidebarItem[] = (latestNewsDocs || [])
     .filter((n: any) => !!n?.slug)
@@ -689,11 +932,10 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     <main className="commentary min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
       <Header />
 
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_320px]">
-          {/* MAIN */}
-          <div className="max-w-3xl">
-            <header className="pt-1">
+            <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6 lg:pt-16">
+        <div className="grid grid-cols-1">
+          <div className="mx-auto w-full max-w-[52rem]">
+                        <header className="pt-1 lg:pt-14">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#9C9488]">
                 Commentary
               </p>
@@ -710,8 +952,8 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 <DesktopShare title={typedPost.title} />
               </div>
 
-                            {typedPost.excerpt ? (
-                <p className="mt-5 max-w-[36ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7]">
+              {typedPost.excerpt ? (
+                <p className="mt-5 max-w-[42ch] text-[16.5px] leading-[1.62] text-[#CBC3B8] md:max-w-none md:text-[15px] md:leading-[1.7]">
                   {typedPost.excerpt}
                 </p>
               ) : null}
@@ -726,12 +968,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               ) : null}
             </header>
 
-            {heroUrl ? (
-              <div className="mt-10 h-52 w-full overflow-hidden bg-white/5 ring-1 ring-white/10 md:h-64">
+                        {heroUrl ? (
+              <div className="mt-10 overflow-hidden bg-white/5 ring-1 ring-white/10">
                 <img
                   src={heroUrl}
                   alt={typedPost.title}
-                  className="h-full w-full object-cover"
+                  className="h-auto w-full"
                   loading="lazy"
                 />
               </div>
@@ -776,14 +1018,19 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               <DesktopShare title={typedPost.title} />
             </div>
 
-            {/* DIVIDER ABOVE CLUB — aligned to news page spacing and width */}
-            <div className="mt-14 mb-14 flex justify-center lg:hidden">
-              <div className="h-[2px] w-32 bg-white/30" />
+            {/* DIVIDER ABOVE CLUB */}
+            <div className="mt-14 mb-14 flex justify-center">
+              <div className="h-[2px] w-32 bg-white/30 lg:w-44" />
             </div>
 
             {/* MOBILE ONLY: earned membership ask immediately after article */}
             <section className="lg:hidden">
               <CommentatorClubPanel />
+            </section>
+
+            {/* DESKTOP ONLY: earned membership ask immediately after article */}
+            <section className="hidden lg:block">
+              <DesktopCommentatorClubPanel />
             </section>
 
             {/* MOBILE ONLY: post-article stack */}
@@ -800,41 +1047,28 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
               <MobileArticleCloser />
             </div>
-          </div>
 
-          {/* RIGHT RAIL — LOCKED VIEW (no inner scroll); compress to fit viewport */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-16 w-[320px] self-start">
-              <div className="origin-top scale-[0.92]">
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <SectionHeader title="Most Read" />
-                    <SidebarList items={mostRead} limit={5} lineClamp={2} tight showReadTime />
-                  </div>
+            {/* DESKTOP ONLY: centered post-article flow */}
+            <div className="mt-20 hidden space-y-16 lg:block">
+              <div className="mx-auto w-full max-w-[44rem]">
+                <MobileMostPopularSection commentaryItems={mostRead} newsItems={latestNews} />
+              </div>
 
-                  {moreCommentary.length > 0 ? (
-                    <div className="space-y-4">
-                      <SectionHeader title="More Commentary" />
-                      <SidebarList
-                        items={moreCommentary}
-                        limit={5}
-                        lineClamp={1}
-                        tight
-                        showReadTime
-                      />
-                    </div>
-                  ) : null}
-
-                  {latestNews.length > 0 ? (
-                    <div className="space-y-4">
-                      <SectionHeader title="Latest News" />
-                      <SidebarList items={latestNews} limit={5} lineClamp={1} tight showReadTime />
-                    </div>
-                  ) : null}
+              {moreCommentary.length > 0 ? (
+                <div className="mx-auto w-full max-w-[44rem]">
+                  <DesktopCommentarySection items={moreCommentary} />
                 </div>
+              ) : null}
+
+              <div className="pt-2 pb-2">
+                <DesktopMissionBlock />
+              </div>
+
+              <div className="mx-auto w-full max-w-[44rem]">
+                <MobileArticleCloser />
               </div>
             </div>
-          </aside>
+          </div>
         </div>
       </div>
     </main>
