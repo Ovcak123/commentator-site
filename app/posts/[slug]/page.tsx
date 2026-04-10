@@ -290,7 +290,7 @@ function DesktopCommentatorClubPanel() {
             Join The Commentator Club
           </h3>
 
-          <p className="mt-3.5 text-[12.4px] leading-[1.72] text-[#E4D3C6] transition-colors duration-150 group-hover:text-[#EEDFD4]">
+          <p className="mt-4 max-w-[72ch] text-[16px] leading-[1.82] text-[#E7D7CB] transition-colors duration-150 group-hover:text-[#F0E2D7]">
             A private community of CEOs, founders, and political, military, and
             intelligence leaders — alongside thinkers and innovators from around the
             world. Members can comment, engage directly, submit ideas, and shape the
@@ -623,26 +623,26 @@ function DesktopCommentarySection({ items }: { items: SidebarItem[] }) {
       <SectionHeader title="More Commentary" />
 
       <div className="space-y-10">
-        {leadItem ? (
+        {leadItem && (
           <article className="group relative overflow-visible">
             <Link
               href={leadItem.href}
               className="block no-underline hover:no-underline focus:outline-none"
               title={leadItem.title}
             >
-              {leadItem.heroImageUrl ? (
-                <div className="mb-8 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
-                  <img
-                    src={leadItem.heroImageUrl}
-                    alt={leadItem.title}
-                    className="h-auto w-full"
-                    loading="lazy"
-                  />
-                </div>
-              ) : null}
+              {leadItem.heroImageUrl && (
+  <div className="mt-10 mb-14 w-[480px] max-w-full overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+    <img
+      src={leadItem.heroImageUrl}
+      alt={leadItem.title}
+      className="block h-auto w-full"
+      loading="lazy"
+    />
+  </div>
+)}
 
               <h3
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} max-w-[22ch] break-words text-[22px] font-semibold leading-[1.08] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+                className={`${MAJOR_HEADLINE_SERIF_CLASS} max-w-[20ch] text-[30px] font-semibold leading-[1.09] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6] break-words`}
               >
                 <InlineTitleWithReadTime
                   title={leadItem.title}
@@ -650,28 +650,28 @@ function DesktopCommentarySection({ items }: { items: SidebarItem[] }) {
                 />
               </h3>
 
-              {leadItem.excerpt ? (
-                <p className="mt-4 max-w-[46ch] text-[15.5px] leading-[1.74] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+              {leadItem.excerpt && (
+                <p className="mt-6 max-w-[34rem] text-[15px] leading-7 text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
                   {leadItem.excerpt}
                 </p>
-              ) : null}
+              )}
 
-              {leadItem.author ? (
-                <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+              {leadItem.author && (
+                <p className="mt-5 text-[11px] uppercase tracking-[0.20em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                   {leadItem.author}
                 </p>
-              ) : null}
+              )}
             </Link>
           </article>
-        ) : null}
+        )}
 
-        {thumbnailItems.length > 0 ? (
+        {thumbnailItems.length > 0 && (
           <div className="space-y-8">
             {thumbnailItems.map((item) => (
               <article key={item.id} className="group relative overflow-visible">
                 <Link
                   href={item.href}
-                  className="grid grid-cols-[112px_1fr] items-start gap-5 no-underline hover:no-underline focus:outline-none"
+                  className="grid grid-cols-[112px_1fr] items-stretch gap-5 no-underline hover:no-underline focus:outline-none"
                   title={item.title}
                 >
                   <div className="h-[124px] w-[112px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
@@ -687,30 +687,32 @@ function DesktopCommentarySection({ items }: { items: SidebarItem[] }) {
                     )}
                   </div>
 
-                  <div className="min-w-0 pt-[2px]">
-                    <h3
-                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
-                    >
-                      {item.title}
-                    </h3>
+                  <div className="flex h-[124px] min-w-0 flex-col justify-between">
+                    <div className="min-w-0">
+                      <h3
+                        className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC]`}
+                      >
+                        {item.title}
+                      </h3>
 
-                    {item.readTimeMinutes ? (
-                      <div className="mt-2">
-                        <ReadTimeBadge minutes={item.readTimeMinutes} />
-                      </div>
-                    ) : null}
+                      {item.readTimeMinutes && (
+                        <div className="mt-2">
+                          <ReadTimeBadge minutes={item.readTimeMinutes} />
+                        </div>
+                      )}
+                    </div>
 
-                    {item.author ? (
-                      <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.17em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                    {item.author && (
+                      <p className="text-[10px] font-medium uppercase tracking-[0.17em] leading-[1.2] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
                         {item.author}
                       </p>
-                    ) : null}
+                    )}
                   </div>
                 </Link>
               </article>
             ))}
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   );
@@ -1064,8 +1066,38 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
                 <DesktopMissionBlock />
               </div>
 
-              <div className="mx-auto w-full max-w-[44rem]">
-                <MobileArticleCloser />
+                            <div className="mx-auto w-full max-w-[44rem]">
+                <div className="mt-16 mb-6 text-center">
+                  <div className="mx-auto w-full max-w-[20rem] space-y-8">
+                    <Link
+                      href="/mission"
+                      className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                    >
+                      ABOUT
+                    </Link>
+
+                    <Link
+                      href="/club"
+                      className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                    >
+                      COMMENTATOR CLUB
+                    </Link>
+
+                    <Link
+                      href="/search"
+                      className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                    >
+                      SEARCH
+                    </Link>
+
+                    <Link
+                      href="/contact"
+                      className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+                    >
+                      CONTACT
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
