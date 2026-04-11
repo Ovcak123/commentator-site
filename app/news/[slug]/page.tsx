@@ -940,7 +940,12 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
-  const heroUrl = item?.heroImage?.asset ? urlFor(item.heroImage).url() : "";
+  const heroUrl =
+  item?.heroImage && item.heroImage.asset
+    ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
+    : item?.heroImage
+      ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
+      : "";
 
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
