@@ -1554,8 +1554,18 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-              <section className="mt-10 pt-8">
-                <SectionHeader title="Most Popular" headlineTone />
+                            <section className="mt-10 pt-8">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-3">
+                    <div className="inline-block">
+                      <h2 className="text-[12px] font-semibold uppercase tracking-[0.32em] text-[#E6DDD0]">
+                        Most Popular
+                      </h2>
+                      <span className="mt-2 block h-[2px] w-full bg-[#C67C4E]/35" />
+                    </div>
+                    <span className="h-1.5 w-1.5 bg-[#7DA2FF]" />
+                  </div>
+                </div>
 
                 <div className="mt-8 space-y-8">
                   <div>
