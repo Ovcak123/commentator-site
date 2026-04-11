@@ -1290,7 +1290,7 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
                     <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
                   </h4>
 
-                                                      {p.excerpt ? (
+                  {p.excerpt ? (
                     <p
                       className={`mt-3.5 max-w-[62ch] text-[15px] leading-[1.8] line-clamp-2 text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]`}
                     >
@@ -1323,6 +1323,48 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
         ))}
       </div>
     </div>
+  );
+}
+
+function DesktopCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
+  if (!post.slug) return null;
+
+  return (
+    <article className="group relative overflow-visible py-6">
+      <Link
+        href={`/posts/${post.slug}`}
+        className="block no-underline hover:no-underline focus:outline-none"
+      >
+        {post.heroImageUrl ? (
+          <div className="mb-7 h-[178px] w-full overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+            <img
+              src={post.heroImageUrl}
+              alt={post.title}
+              className="h-full w-full object-cover object-[50%_32%] transition-transform duration-500 group-hover:scale-[1.01]"
+              loading="lazy"
+            />
+          </div>
+        ) : null}
+
+                <h3
+          className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[17.25px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] md:text-[17px]`}
+        >
+          <InlineTitleWithReadTime title={post.title} minutes={post.readTimeMinutes} />
+        </h3>
+
+        {post.excerpt ? (
+          <p className="mt-4 max-w-[56ch] text-[15px] leading-[1.8] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+            {post.excerpt}
+          </p>
+        ) : null}
+
+        {post.author ? (
+          <p className="mt-5 text-[10px] uppercase tracking-[0.20em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+            {post.author}
+          </p>
+        ) : null}
+      </Link>
+    </article>
   );
 }
 
@@ -1387,9 +1429,23 @@ export default async function HomePage() {
   const mobileMostPopularCommentary = commentaryPosts.slice(0, 5);
 const mobileMostPopularNews = newsItems.slice(0, 5);
 
-  const desktopMiniFeatures = commentaryPosts.slice(1, 5);
+    const desktopMiniFeatures = commentaryPosts.slice(1, 5);
   const commentaryStream = commentaryPosts.slice(5);
-    const mobileCommentaryStream = commentaryPosts.slice(3);
+
+  const desktopMoreCommentaryBeforePenultimate =
+    commentaryStream.length > 1 ? commentaryStream.slice(0, -2) : [];
+
+  const desktopMoreCommentaryPenultimate =
+    commentaryStream.length > 1
+      ? commentaryStream[commentaryStream.length - 2]
+      : undefined;
+
+  const desktopMoreCommentaryLast =
+    commentaryStream.length > 0
+      ? commentaryStream[commentaryStream.length - 1]
+      : undefined;
+
+  const mobileCommentaryStream = commentaryPosts.slice(3);
   const mobileReentryFeature = mobileCommentaryStream[0];
   const mobileReentryList = mobileCommentaryStream.slice(1);
 
@@ -1815,8 +1871,18 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                   </div>
                 </div>
 
-                <div className="space-y-4 mt-0">
-                  <CommentaryList items={commentaryStream} maxItems={20} />
+                                <div className="space-y-4 mt-0">
+                  {desktopMoreCommentaryBeforePenultimate.length > 0 ? (
+                    <CommentaryList items={desktopMoreCommentaryBeforePenultimate} maxItems={20} />
+                  ) : null}
+
+                  {desktopMoreCommentaryPenultimate ? (
+                    <DesktopCommentaryReentryFeature post={desktopMoreCommentaryPenultimate} />
+                  ) : null}
+
+                  {desktopMoreCommentaryLast ? (
+                    <CommentaryList items={[desktopMoreCommentaryLast]} maxItems={1} />
+                  ) : null}
 
                   <div className="mt-14">
                     <Link
