@@ -421,9 +421,7 @@ function DesktopArticleCloser() {
         </Link>
       </div>
 
-      <p className="mt-20 text-[14px] text-white/38">
-        The Commentator. © Robin Shepherd, 2026. All rights reserved.
-      </p>
+      
     </div>
   );
 }
