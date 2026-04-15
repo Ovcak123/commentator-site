@@ -4,15 +4,15 @@ export const revalidate = 0;
 export default function ClubPage() {
   return (
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
-      <section className="bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.16),transparent_26%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.12),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09131d_52%,#071019_100%)]">
+      <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.16),transparent_26%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.12),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09131d_52%,#071019_100%)]">
         <div className="mx-auto max-w-7xl px-6 pb-14 pt-14 md:px-8 md:pb-18 md:pt-18">
           <div className="grid items-start gap-10 lg:grid-cols-[0.96fr_1.04fr] lg:gap-14">
             <div className="order-2 lg:order-1">
-              <h1 className="max-w-[11ch] text-[3.7rem] font-semibold uppercase leading-[0.96] tracking-[0.025em] text-[#f7f1e8] sm:text-[4.4rem] lg:text-[4.9rem]">
+              <h1 className="max-w-[11ch] text-[3.35rem] font-semibold uppercase leading-[0.96] tracking-[0.025em] text-[#f7f1e8] sm:text-[4.4rem] lg:text-[4.9rem]">
                 The Commentator Club
               </h1>
 
-              <div className="mt-8 max-w-2xl space-y-5 text-lg leading-8 text-[#ddd8d1]">
+              <div className="mt-8 max-w-2xl space-y-5 text-[1.18rem] leading-9 text-[#ddd8d1] sm:text-lg sm:leading-8">
                 <p>
                   The Commentator Club is a high-agency network operating at the
                   intersection of technology, intelligence, and politics.
@@ -40,16 +40,16 @@ export default function ClubPage() {
               </div>
             </div>
 
-            <div className="order-1 lg:order-2 lg:translate-x-6 lg:pt-40">
-  <div className="overflow-hidden rounded-[34px] border border-[#314659] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.08),rgba(9,17,26,0.38))] p-4 shadow-[0_32px_90px_rgba(0,0,0,0.42)]">
-    <img
-      src="/images/commentator-club-hero.jpeg"
-      alt="The Commentator Club"
-      className="h-full w-full rounded-[26px] object-cover opacity-95"
-    />
-  </div>
-</div>
-</div>
+            <div className="order-1 mx-auto w-full max-w-[520px] lg:order-2 lg:max-w-none lg:translate-x-6 lg:pt-40">
+              <div className="overflow-hidden rounded-[26px] border border-[#314659] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.08),rgba(9,17,26,0.38))] p-3 shadow-[0_24px_60px_rgba(0,0,0,0.34)] sm:rounded-[30px] sm:p-4 lg:rounded-[34px] lg:shadow-[0_32px_90px_rgba(0,0,0,0.42)]">
+                <img
+                  src="/images/commentator-club-hero.jpeg"
+                  alt="The Commentator Club"
+                  className="block h-auto w-full rounded-[20px] object-cover opacity-95 sm:rounded-[24px] lg:rounded-[26px]"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
