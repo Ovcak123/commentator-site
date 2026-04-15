@@ -230,7 +230,7 @@ function CommentatorClubPanel() {
           </h3>
 
                     <p className="mt-4 max-w-none text-[14.7px] leading-[1.84] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
-            A high-level community of founders, CEOs, policymakers, and thinkers,
+            A community of founders, CEOs, policymakers, and thinkers,
             alongside readers who want to be part of the conversation, not outside it.
             Members get early insight into our ideas, contribute directly, and take
             part in discussions with the people shaping what comes next.
@@ -266,7 +266,7 @@ function DesktopCommentatorClubPanel() {
           </h3>
 
                     <p className="mt-4 max-w-[64ch] text-[15.4px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[16px] lg:leading-[1.82]">
-            A high-level community of founders, CEOs, policymakers, and thinkers,
+            A community of founders, CEOs, policymakers, and thinkers,
             alongside readers who want to be part of the conversation, not outside it.
             Members get early insight into our ideas, contribute directly, and take
             part in discussions with the people shaping what comes next.
