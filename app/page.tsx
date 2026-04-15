@@ -1719,10 +1719,10 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
               <div className="mt-16 mb-6 text-center">
                 <div className="mx-auto w-full max-w-[20rem] space-y-8">
                   <Link
-                    href="/About"
+                    href="/about"
                     className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
                   >
-                    MISSION
+                    ABOUT
                   </Link>
 
                   <Link
