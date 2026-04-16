@@ -4,25 +4,25 @@ export const revalidate = 0;
 export default function ClubPage() {
   return (
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
-      <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.16),transparent_26%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.12),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09131d_52%,#071019_100%)]">
+      <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.22),transparent_30%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.14),transparent_24%),linear-gradient(to_bottom,#0f1a27_0%,#0a1520_52%,#071019_100%)] md:bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.16),transparent_26%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.12),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09131d_52%,#071019_100%)]">
         <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-18 md:pt-18">
-          <div className="lg:grid lg:items-start lg:gap-14 lg:grid-cols-[0.96fr_1.04fr]">
+          <div className="lg:grid lg:grid-cols-[0.96fr_1.04fr] lg:items-start lg:gap-14">
             <div className="block lg:hidden">
-              <div className="mx-auto mb-8 w-full max-w-[420px] overflow-hidden rounded-[22px] border border-[#314659] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.08),rgba(9,17,26,0.38))] p-2.5 shadow-[0_18px_44px_rgba(0,0,0,0.28)]">
+              <div className="mx-auto mb-8 w-full max-w-[420px] overflow-hidden rounded-[22px] border border-[#3b5368] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.12),rgba(16,28,40,0.26))] p-2.5 shadow-[0_18px_44px_rgba(0,0,0,0.22)]">
                 <img
                   src="/images/commentator-club-hero.jpeg"
                   alt="The Commentator Club"
-                  className="block h-auto w-full rounded-[16px] object-cover opacity-95"
+                  className="block h-auto w-full rounded-[16px] object-cover opacity-100 brightness-[1.1] contrast-[1.08] saturate-[1.04]"
                 />
               </div>
             </div>
 
             <div className="lg:order-1">
-              <h1 className="max-w-[10.5ch] text-[2.65rem] font-semibold uppercase leading-[0.94] tracking-[0.025em] text-[#f7f1e8] sm:text-[3.35rem] lg:text-[4.9rem]">
+              <h1 className="max-w-[10.5ch] text-[2.65rem] font-semibold uppercase leading-[0.94] tracking-[0.025em] text-[#fbf6ee] sm:text-[3.35rem] lg:text-[4.9rem]">
                 The Commentator Club
               </h1>
 
-              <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#ddd8d1] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:text-[1.18rem] lg:leading-9">
+              <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#e4ddd4] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:text-[1.18rem] lg:leading-9 lg:text-[#ddd8d1]">
                 <p>
                   The Commentator Club is a high-agency network operating at the
                   intersection of technology, intelligence, and politics.
@@ -34,7 +34,7 @@ export default function ClubPage() {
                   elected representatives, leading writers, and entrepreneurs.
                 </p>
 
-                <p className="text-[#f0e8dc]">
+                <p className="text-[#f6eee2] lg:text-[#f0e8dc]">
                   This is where serious readers become participants in shaping
                   what comes next.
                 </p>
@@ -43,7 +43,7 @@ export default function ClubPage() {
               <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row">
                 <a
                   href="#benefits"
-                  className="inline-flex items-center justify-center rounded-2xl border border-[#3e5368] bg-[rgba(11,25,38,0.88)] px-7 py-4 text-base font-medium text-[#efe4d6] transition hover:border-[#5f7b98] hover:bg-[#12202d] sm:text-lg"
+                  className="inline-flex items-center justify-center rounded-2xl border border-[#4a6075] bg-[rgba(13,27,40,0.82)] px-7 py-4 text-base font-medium text-[#f3e9dc] transition hover:border-[#5f7b98] hover:bg-[#12202d] sm:text-lg lg:border-[#3e5368] lg:bg-[rgba(11,25,38,0.88)] lg:text-[#efe4d6]"
                 >
                   Explore Benefits
                 </a>
