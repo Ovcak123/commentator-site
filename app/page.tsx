@@ -1676,15 +1676,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                     </div>
                   ) : null}
 
-                  <div className="mt-0">
-                    <Link
-                      href="/commentary"
-                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline transition-colors duration-150 hover:text-white/80 hover:no-underline"
-                    >
-                      <span>Archive</span>
-                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-                    </Link>
-                  </div>
+                  
                 </div>
               </section>
 
@@ -1889,15 +1881,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                     <CommentaryList items={[desktopMoreCommentaryLast]} maxItems={1} />
                   ) : null}
 
-                  <div className="mt-14">
-                    <Link
-                      href="/commentary"
-                      className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/75 no-underline hover:no-underline transition-colors duration-150 hover:text-white/80"
-                    >
-                      <span>Archive</span>
-                      <span className="h-px w-10 bg-transparent transition-colors duration-150 group-hover:bg-[#C67C4E]/80" />
-                    </Link>
-                  </div>
+                  
                 </div>
 
     <section className="max-w-[34rem] space-y-8 pt-16">
