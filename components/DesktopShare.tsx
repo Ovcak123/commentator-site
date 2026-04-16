@@ -7,7 +7,10 @@ type DesktopShareProps = {
   className?: string;
 };
 
-export default function DesktopShare({ title, className }: DesktopShareProps) {
+export default function DesktopShare({
+  title,
+  className,
+}: DesktopShareProps) {
   const [copied, setCopied] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
@@ -20,85 +23,135 @@ export default function DesktopShare({ title, className }: DesktopShareProps) {
     return title || document.title || "The Commentator";
   }
 
+  function getShareText() {
+    return getShareTitle();
+  }
+
   async function copyLink(url: string) {
-    // Fallback: copy link
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1200);
+      window.setTimeout(() => setCopied(false), 1400);
       return;
     }
 
-    // Last-resort fallback
     window.prompt("Copy this link:", url);
   }
 
-  function emailLink(url: string) {
-    const subject = encodeURIComponent(getShareTitle());
-    const body = encodeURIComponent(url);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  function openPopup(url: string) {
+    const width = 640;
+    const height = 720;
+    const left = Math.max(window.screenX + (window.outerWidth - width) / 2, 0);
+    const top = Math.max(window.screenY + (window.outerHeight - height) / 2, 0);
+
+    window.open(
+      url,
+      "commentator-share",
+      [
+        "toolbar=no",
+        "location=no",
+        "status=no",
+        "menubar=no",
+        "scrollbars=yes",
+        "resizable=yes",
+        `width=${width}`,
+        `height=${height}`,
+        `left=${left}`,
+        `top=${top}`,
+      ].join(","),
+    );
   }
 
-  async function handlePrimaryClick() {
-    try {
-      const url = getShareUrl();
+  function buildXUrl() {
+    const shareUrl = encodeURIComponent(getShareUrl());
+    const text = encodeURIComponent(getShareText());
+    return `https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`;
+  }
 
-      // Preferred: native share dialog (supported on many modern desktop browsers)
-      if (navigator.share) {
-        await navigator.share({
-          title: getShareTitle(),
-          url,
-        });
-        return;
-      }
+  function buildFacebookUrl() {
+    const shareUrl = encodeURIComponent(getShareUrl());
+    return `https://www.facebook.com/dialog/share?app_id=966242223397117&display=popup&href=${shareUrl}`;
+  }
 
-      // Otherwise, open minimal fallback popover
-      setOpen((v) => !v);
-    } catch {
-      // If user cancels share sheet, do nothing.
-      // If something fails, fail silently to avoid disrupting reading.
-    }
+  function buildThreadsUrl() {
+    const composed = encodeURIComponent(`${getShareText()} ${getShareUrl()}`);
+    return `https://www.threads.com/intent/post?text=${composed}`;
+  }
+
+  function buildLinkedInUrl() {
+    const shareUrl = encodeURIComponent(getShareUrl());
+    return `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+  }
+
+  function handlePrimaryClick() {
+    setOpen((v) => !v);
   }
 
   async function handleCopy() {
     try {
-      const url = getShareUrl();
-      await copyLink(url);
+      await copyLink(getShareUrl());
       setOpen(false);
     } catch {
       // Fail silently
     }
   }
 
-  function handleEmail() {
+  function handleX() {
     try {
-      const url = getShareUrl();
-      emailLink(url);
+      openPopup(buildXUrl());
       setOpen(false);
     } catch {
       // Fail silently
     }
   }
 
-  // Close on Escape
+  function handleFacebook() {
+    try {
+      openPopup(buildFacebookUrl());
+      setOpen(false);
+    } catch {
+      // Fail silently
+    }
+  }
+
+  function handleThreads() {
+    try {
+      openPopup(buildThreadsUrl());
+      setOpen(false);
+    } catch {
+      // Fail silently
+    }
+  }
+
+  function handleLinkedIn() {
+    try {
+      openPopup(buildLinkedInUrl());
+      setOpen(false);
+    } catch {
+      // Fail silently
+    }
+  }
+
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
+
     if (open) window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  // Close on click outside
   React.useEffect(() => {
     function onMouseDown(e: MouseEvent) {
       if (!open) return;
       const el = wrapperRef.current;
       if (!el) return;
+
       if (e.target instanceof Node && !el.contains(e.target)) {
         setOpen(false);
       }
     }
+
     if (open) window.addEventListener("mousedown", onMouseDown);
     return () => window.removeEventListener("mousedown", onMouseDown);
   }, [open]);
@@ -114,7 +167,6 @@ export default function DesktopShare({ title, className }: DesktopShareProps) {
           aria-expanded={open}
           className="inline-flex items-center gap-2 px-1 py-1 text-[12px] font-medium text-[#7DA2FF]/85 transition hover:text-[#7DA2FF] active:scale-[0.98]"
         >
-          {/* 3-node share icon (no box), muted blue */}
           <svg
             width="16"
             height="16"
@@ -147,13 +199,13 @@ export default function DesktopShare({ title, className }: DesktopShareProps) {
           <div
             role="menu"
             aria-label="Share options"
-            className="absolute right-0 top-full z-50 mt-2 w-44 rounded-md border border-white/10 bg-black/90 p-1 shadow-lg backdrop-blur"
+            className="absolute right-0 top-full z-50 mt-2 w-48 rounded-md border border-white/10 bg-black/95 p-1 shadow-lg backdrop-blur"
           >
             <button
               type="button"
               role="menuitem"
               onClick={handleCopy}
-              className="w-full rounded px-2 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
+              className="block w-full rounded px-3 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
             >
               Copy link
             </button>
@@ -161,10 +213,37 @@ export default function DesktopShare({ title, className }: DesktopShareProps) {
             <button
               type="button"
               role="menuitem"
-              onClick={handleEmail}
-              className="w-full rounded px-2 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
+              onClick={handleX}
+              className="block w-full rounded px-3 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
             >
-              Email
+              X
+            </button>
+
+            <button
+              type="button"
+              role="menuitem"
+              onClick={handleFacebook}
+              className="block w-full rounded px-3 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
+            >
+              Facebook
+            </button>
+
+            <button
+              type="button"
+              role="menuitem"
+              onClick={handleThreads}
+              className="block w-full rounded px-3 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
+            >
+              Threads
+            </button>
+
+            <button
+              type="button"
+              role="menuitem"
+              onClick={handleLinkedIn}
+              className="block w-full rounded px-3 py-2 text-left text-[12px] text-white/80 transition hover:bg-white/5 hover:text-white"
+            >
+              LinkedIn
             </button>
           </div>
         )}
