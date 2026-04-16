@@ -255,14 +255,14 @@ function CommentatorClubPanel() {
           </h3>
 
           <p className="mt-4 max-w-none text-[14.7px] leading-[1.84] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
-            A community of founders, CEOs, policymakers, and thinkers,
-            alongside readers who want to be part of the conversation, not outside it.
+            A community of founders, CEOs, policymakers, and thinkers
+            who want to be part of the conversation, not outside it.
             Members get early insight into our ideas, contribute directly, and take
             part in discussions with the people shaping what comes next.
           </p>
 
           <div className="mt-5 inline-flex items-center gap-2 text-[13.35px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
-            <span>Learn more about the Club and join for $5 a month</span>
+            <span>Learn more and join for $5 a month</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>
@@ -290,14 +290,14 @@ function DesktopCommentatorClubPanel() {
           </h3>
 
           <p className="mt-4 max-w-[64ch] text-[15.4px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[16px] lg:leading-[1.82]">
-            A community of founders, CEOs, policymakers, and thinkers,
-            alongside readers who want to be part of the conversation, not outside it.
+            A community of founders, CEOs, policymakers, and thinkers
+            who want to be part of the conversation, not outside it.
             Members get early insight into our ideas, contribute directly, and take
             part in discussions with the people shaping what comes next.
           </p>
 
           <div className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
-            <span>Learn more about the Club and join for $5 a month</span>
+            <span>Learn more and join for $5 a month</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>
