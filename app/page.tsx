@@ -1466,7 +1466,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
 
       {lead && lead.slug && (
         <section
-  id={lead.type === "post" ? "mobile-commentary-start" : undefined}
+  id={lead?.type === "post" ? "mobile-commentary-start" : undefined}
   className="mx-auto max-w-6xl px-6 pt-12 pb-10 lg:hidden"
 >
           <Link
@@ -1516,7 +1516,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
             <section className="space-y-14">
               {mobileFeaturedCommentary ? (
                 <section
-  id={lead.type !== "post" ? "mobile-commentary-start" : undefined}
+  id={lead?.type !== "post" ? "mobile-commentary-start" : undefined}
   className="mt-6"
 >
                   <div className="flex items-end justify-between gap-4">
