@@ -1002,13 +1002,13 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
           </div>
         </div>
 
-        <Link
-          href="/commentary"
-          className="mb-[3px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
-        >
-          <span>Commentary</span>
-          <span className="h-px w-6 bg-white/30" />
-        </Link>
+                         <a
+                    href="#mobile-commentary-start"
+                    className="mb-[3px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
+                  >
+                    <span>Commentary</span>
+                    <span className="h-px w-6 bg-white/30" />
+                  </a>
       </div>
 
       {featured ? (
@@ -1512,7 +1512,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
             <section className="space-y-14">
               {mobileFeaturedCommentary ? (
-                <section className="mt-6">
+                <section id="mobile-commentary-start" className="mt-6">
                   <div className="flex items-end justify-between gap-4">
                     <SectionHeader title="Commentary" headlineTone />
                     <a
