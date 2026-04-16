@@ -1465,7 +1465,10 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
       <Header />
 
       {lead && lead.slug && (
-        <section className="mx-auto max-w-6xl px-6 pt-12 pb-10 lg:hidden">
+        <section
+  id={lead.type === "post" ? "mobile-commentary-start" : undefined}
+  className="mx-auto max-w-6xl px-6 pt-12 pb-10 lg:hidden"
+>
           <Link
             href={leadHref}
             className="group block no-underline hover:no-underline focus:outline-none"
@@ -1512,7 +1515,10 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
             <section className="space-y-14">
               {mobileFeaturedCommentary ? (
-                <section id="mobile-commentary-start" className="mt-6">
+                <section
+  id={lead.type !== "post" ? "mobile-commentary-start" : undefined}
+  className="mt-6"
+>
                   <div className="flex items-end justify-between gap-4">
                     <SectionHeader title="Commentary" headlineTone />
                     <a
