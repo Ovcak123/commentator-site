@@ -1,11 +1,120 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+function CardIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-[18px] w-[18px] shrink-0"
+      fill="none"
+    >
+      <rect
+        x="2.5"
+        y="4.5"
+        width="19"
+        height="15"
+        rx="2.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M3.5 9.5H20.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function AppleIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-[20px] w-[16px] shrink-0"
+      fill="currentColor"
+    >
+      <path d="M16.83 12.18c.03 3.02 2.65 4.03 2.68 4.04-.02.07-.42 1.45-1.39 2.87-.84 1.23-1.72 2.45-3.1 2.48-1.35.03-1.79-.8-3.35-.8-1.56 0-2.05.78-3.32.83-1.33.05-2.35-1.33-3.2-2.55-1.74-2.52-3.07-7.11-1.28-10.22.89-1.55 2.49-2.53 4.22-2.56 1.31-.03 2.55.88 3.35.88.8 0 2.31-1.09 3.89-.93.66.03 2.52.27 3.72 2.02-.1.06-2.22 1.29-2.22 3.94Z" />
+      <path d="M14.74 5.27c.7-.84 1.17-2.01 1.04-3.17-1.01.04-2.23.67-2.96 1.5-.65.75-1.22 1.94-1.06 3.08 1.12.09 2.27-.57 2.98-1.41Z" />
+    </svg>
+  );
+}
+
+function GooglePayIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-[20px] w-[20px] shrink-0"
+      fill="none"
+    >
+      <path
+        d="M20 12.23c0-.68-.06-1.19-.19-1.72H12v3.24h4.59c-.09.8-.58 2-1.67 2.81l-.02.11 2.43 1.88.17.02c1.56-1.44 2.5-3.56 2.5-6.34Z"
+        fill="currentColor"
+      />
+      <path
+        d="M12 20.35c2.24 0 4.12-.74 5.5-2.02l-2.62-2.01c-.7.49-1.64.84-2.88.84-2.2 0-4.06-1.44-4.73-3.44l-.1.01-2.53 1.95-.03.09c1.37 2.72 4.19 4.58 7.39 4.58Z"
+        fill="currentColor"
+      />
+      <path
+        d="M7.27 13.72A4.87 4.87 0 0 1 7 12c0-.6.1-1.18.26-1.72l-.01-.12-2.56-1.98-.08.04A8.3 8.3 0 0 0 3.65 12c0 1.35.32 2.63.88 3.78l2.74-2.06Z"
+        fill="currentColor"
+      />
+      <path
+        d="M12 6.84c1.56 0 2.61.67 3.21 1.23l2.34-2.28C16.11 4.44 14.24 3.65 12 3.65c-3.2 0-6.02 1.86-7.39 4.57l2.65 2.06c.68-2 2.54-3.44 4.74-3.44Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function PayPalIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-[20px] w-[16px] shrink-0"
+      fill="currentColor"
+    >
+      <path d="M8.02 4h6.02c2.55 0 4.52.54 5.3 2.53.35.9.3 1.9.1 2.82-.67 3.07-2.91 4.63-6.3 4.63h-2.4c-.4 0-.73.29-.8.69L9.1 20H5.7l1.88-11.84c.07-.45.22-.8.44-1.1C8.29 4.52 8.12 4.24 8.02 4Z" />
+      <path d="M6.1 4.27c.1-.17.3-.27.5-.27H13c1.97 0 3.54.32 4.48 1.2-.71-.2-1.54-.28-2.5-.28H9.3c-.52 0-.96.38-1.04.89L6.32 18H3l2-12.63c.06-.43.18-.8.39-1.1.2-.29.45-.5.71-.63Z" opacity="0.55" />
+    </svg>
+  );
+}
+
+function PaymentMethodsRow() {
+  return (
+    <div className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[#717c89] sm:gap-x-8">
+      <span className="inline-flex items-center gap-1.5 text-[15px] font-medium tracking-[-0.01em]">
+        <CardIcon />
+        <span>CARD</span>
+      </span>
+
+      <span className="inline-flex items-center gap-1.5 text-[15px] font-semibold tracking-[-0.02em]">
+        <AppleIcon />
+        <span className="text-[16px]">Pay</span>
+      </span>
+
+      <span className="inline-flex items-center gap-1.5 text-[15px] font-semibold tracking-[-0.02em]">
+        <GooglePayIcon />
+        <span className="text-[16px]">Pay</span>
+      </span>
+
+      <span className="inline-flex items-center gap-1.5 text-[15px] font-semibold italic tracking-[-0.02em]">
+        <PayPalIcon />
+        <span className="text-[16px] not-italic">PayPal</span>
+      </span>
+    </div>
+  );
+}
+
 export default function ClubPage() {
   return (
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
       <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.22),transparent_30%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.14),transparent_24%),linear-gradient(to_bottom,#0f1a27_0%,#0a1520_52%,#071019_100%)] md:bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.16),transparent_26%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.12),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09131d_52%,#071019_100%)]">
-        <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-18 md:pt-18 lg:pt-24 lg:pb-20">
+        <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-18 md:pt-18 lg:pb-20 lg:pt-24">
           <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
             <div className="block lg:hidden">
               <div className="mx-auto mb-8 w-full max-w-[420px] overflow-hidden rounded-[22px] border border-[#3b5368] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.12),rgba(16,28,40,0.26))] p-2.5 shadow-[0_18px_44px_rgba(0,0,0,0.22)]">
@@ -150,6 +259,14 @@ export default function ClubPage() {
                 </a>
               </div>
             </div>
+          </div>
+
+          <div className="mt-10 text-center sm:mt-12">
+            <p className="text-[13px] font-medium tracking-[0.01em] text-[#99A2AD]">
+              Payments secured by <span className="text-[#C8CDD4]">Stripe</span>
+            </p>
+
+            <PaymentMethodsRow />
           </div>
         </div>
       </section>
