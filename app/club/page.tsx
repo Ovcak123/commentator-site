@@ -79,7 +79,10 @@ function PayPalIcon() {
       fill="currentColor"
     >
       <path d="M8.02 4h6.02c2.55 0 4.52.54 5.3 2.53.35.9.3 1.9.1 2.82-.67 3.07-2.91 4.63-6.3 4.63h-2.4c-.4 0-.73.29-.8.69L9.1 20H5.7l1.88-11.84c.07-.45.22-.8.44-1.1C8.29 4.52 8.12 4.24 8.02 4Z" />
-      <path d="M6.1 4.27c.1-.17.3-.27.5-.27H13c1.97 0 3.54.32 4.48 1.2-.71-.2-1.54-.28-2.5-.28H9.3c-.52 0-.96.38-1.04.89L6.32 18H3l2-12.63c.06-.43.18-.8.39-1.1.2-.29.45-.5.71-.63Z" opacity="0.55" />
+      <path
+        d="M6.1 4.27c.1-.17.3-.27.5-.27H13c1.97 0 3.54.32 4.48 1.2-.71-.2-1.54-.28-2.5-.28H9.3c-.52 0-.96.38-1.04.89L6.32 18H3l2-12.63c.06-.43.18-.8.39-1.1.2-.29.45-.5.71-.63Z"
+        opacity="0.55"
+      />
     </svg>
   );
 }
@@ -113,7 +116,7 @@ function PaymentMethodsRow() {
 export default function ClubPage() {
   return (
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
-      <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.22),transparent_30%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.14),transparent_24%),linear-gradient(to_bottom,#0f1a27_0%,#0a1520_52%,#071019_100%)] md:bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.16),transparent_26%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.12),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09131d_52%,#071019_100%)]">
+      <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.18),transparent_30%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.1),transparent_24%),linear-gradient(to_bottom,#0d1824_0%,#0a1520_58%,#08131c_100%)] md:bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.14),transparent_28%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.08),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09141d_58%,#08131c_100%)]">
         <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-18 md:pt-18 lg:pb-20 lg:pt-24">
           <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
             <div className="block lg:hidden">
@@ -174,7 +177,7 @@ export default function ClubPage() {
 
       <section
         id="join"
-        className="bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.12),transparent_22%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.1),transparent_18%),linear-gradient(to_bottom,#09121c_0%,#08111a_100%)]"
+        className="bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.08),transparent_24%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.08),transparent_20%),linear-gradient(to_bottom,#08131c_0%,#08121b_46%,#08121a_100%)] md:bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.07),transparent_24%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.07),transparent_18%),linear-gradient(to_bottom,#08131c_0%,#08121b_48%,#08121a_100%)]"
       >
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-8 md:py-18">
           <div className="mb-10 max-w-3xl">
@@ -273,7 +276,7 @@ export default function ClubPage() {
 
       <section
         id="benefits"
-        className="bg-[radial-gradient(circle_at_18%_0%,rgba(184,148,115,0.08),transparent_14%),linear-gradient(to_bottom,#08111a_0%,#071019_100%)]"
+        className="bg-[radial-gradient(circle_at_18%_0%,rgba(184,148,115,0.05),transparent_16%),radial-gradient(circle_at_82%_18%,rgba(70,112,156,0.04),transparent_20%),linear-gradient(to_bottom,#08121a_0%,#071119_48%,#071019_100%)] md:bg-[radial-gradient(circle_at_18%_0%,rgba(184,148,115,0.045),transparent_15%),radial-gradient(circle_at_82%_18%,rgba(70,112,156,0.035),transparent_20%),linear-gradient(to_bottom,#08121a_0%,#071119_48%,#071019_100%)]"
       >
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-8 md:py-18">
           <div className="mb-10">
@@ -333,8 +336,9 @@ export default function ClubPage() {
                 Be part of the network
               </h3>
               <p className="mt-4 max-w-3xl text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Join a community aligned around understanding power in the
-                digital revolution, and influencing its direction.
+                Join and support a community dedicated to understanding power in
+                the digital revolution, and to harnessing its potential for the
+                greater good.
               </p>
             </div>
           </div>
