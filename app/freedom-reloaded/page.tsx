@@ -104,24 +104,61 @@ export default async function FreedomReloadedPage() {
 
       <section className="px-5 pb-16 pt-24 text-left md:px-0 md:pb-20 md:pt-32">
         <div className="md:ml-[11.625rem] md:max-w-3xl">
-          <h1 className="mb-12 text-2xl font-semibold tracking-tight">{headline}</h1>
+          <h1 className="mb-14 text-[2.35rem] font-semibold tracking-[-0.032em] text-[#EEF2F7] md:text-[3.1rem]">
+            {headline}
+          </h1>
 
           <div
             className="
-              prose prose-invert max-w-none text-left text-[15px] leading-relaxed text-[#9AA1AB]
+              prose prose-invert max-w-none text-left text-[16.2px] leading-[1.9] text-[#C0C8D3]
+              md:text-[17.2px] md:leading-[1.95]
+
               [&_h1]:text-left
               [&_h2]:text-left
               [&_h3]:text-left
+
               [&_h1]:font-semibold
               [&_h2]:font-semibold
               [&_h3]:font-semibold
-              [&_p:first-of-type:first-letter]:!float-none
-              [&_p:first-of-type:first-letter]:!m-0
-              [&_p:first-of-type:first-letter]:!p-0
-              [&_p:first-of-type:first-letter]:!text-[1em]
-              [&_p:first-of-type:first-letter]:!font-inherit
-              [&_p:first-of-type:first-letter]:!leading-[inherit]
-              [&_p:first-of-type:first-letter]:!tracking-[inherit]
+
+              [&_p]:my-0
+              [&_p+p]:mt-7
+
+              [&_strong]:font-semibold
+              [&_strong]:text-[#EDF2F8]
+
+              [&_em]:text-[#F2F5F9]
+
+              [&_ul]:my-8
+              [&_ol]:my-8
+              [&_li]:my-2
+
+              [&_blockquote]:my-10
+              [&_blockquote]:border-l
+              [&_blockquote]:border-[rgba(198,124,78,0.32)]
+              [&_blockquote]:pl-5
+              [&_blockquote]:text-[#D7DEE7]
+
+              /* LEAD PARAGRAPH — KEY FIX */
+              [&>p:first-of-type]:max-w-[42rem]
+              [&>p:first-of-type]:text-[1.28rem]
+              [&>p:first-of-type]:leading-[1.72]
+              [&>p:first-of-type]:text-[#F0F4F9]
+              [&>p:first-of-type]:md:text-[1.42rem]
+              [&>p:first-of-type]:md:leading-[1.76]
+              [&>p:first-of-type]:border-l
+              [&>p:first-of-type]:border-[rgba(198,124,78,0.30)]
+              [&>p:first-of-type]:pl-5
+              [&>p:first-of-type]:md:pl-6
+              [&>p:first-of-type]:mb-10
+
+              [&>p:first-of-type:first-letter]:!float-none
+              [&>p:first-of-type:first-letter]:!m-0
+              [&>p:first-of-type:first-letter]:!p-0
+              [&>p:first-of-type:first-letter]:!text-[1em]
+              [&>p:first-of-type:first-letter]:!font-inherit
+              [&>p:first-of-type:first-letter]:!leading-[inherit]
+              [&>p:first-of-type:first-letter]:!tracking-[inherit]
             "
           >
             {body ? (
