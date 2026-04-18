@@ -1370,41 +1370,98 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
 
   return (
     <div className="space-y-0">
-      {usable.map((p, index) => (
-        <article
-          key={p.id}
-          className={`group relative overflow-visible ${
-            index < usable.length - 1 ? "pb-14" : ""
-          }`}
-        >
-          <Link
-            href={`/posts/${p.slug}`}
-            className="block no-underline hover:no-underline focus:outline-none"
-            title={p.title}
-          >
-            <div className="min-w-0">
-                            <h4
-                className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+      {usable.map((p, index) => {
+        const useThumbnailLayout = !!p.heroImageUrl && index % 3 === 1;
+
+        if (useThumbnailLayout) {
+          return (
+            <article
+              key={p.id}
+              className={`group relative overflow-visible ${
+                index < usable.length - 1 ? "pb-14" : ""
+              }`}
+            >
+              <Link
+                href={`/posts/${p.slug}`}
+                className="block no-underline hover:no-underline focus:outline-none"
+                title={p.title}
               >
-                <MobileCommentaryQuoteMark />
-                <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-              </h4>
+                <div className="grid grid-cols-[104px_1fr] items-stretch gap-4">
+                  <div className="min-h-[172px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                    <img
+                      src={p.heroImageUrl}
+                      alt={p.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                  </div>
 
-              {p.excerpt ? (
-                <p className="mt-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
-                  {p.excerpt}
-                </p>
-              ) : null}
+                  <div className="flex min-h-[172px] min-w-0 flex-col justify-between">
+                    <div className="min-w-0">
+                      <h4
+                        className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                      >
+                        <MobileCommentaryQuoteMark />
+                        <span className="line-clamp-3">
+                          <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                        </span>
+                      </h4>
 
-              {p.author ? (
-                <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
-                  {p.author}
-                </p>
-              ) : null}
-            </div>
-          </Link>
-        </article>
-      ))}
+                      {p.excerpt ? (
+                        <p className="mt-4 line-clamp-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                          {p.excerpt}
+                        </p>
+                      ) : null}
+                    </div>
+
+                    {p.author ? (
+                      <p className="pt-4 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                        {p.author}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+              </Link>
+            </article>
+          );
+        }
+
+        return (
+          <article
+            key={p.id}
+            className={`group relative overflow-visible ${
+              index < usable.length - 1 ? "pb-14" : ""
+            }`}
+          >
+            <Link
+              href={`/posts/${p.slug}`}
+              className="block no-underline hover:no-underline focus:outline-none"
+              title={p.title}
+            >
+              <div className="min-w-0">
+                <h4
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                >
+                  <MobileCommentaryQuoteMark />
+                  <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                </h4>
+
+                {p.excerpt ? (
+                  <p className="mt-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                    {p.excerpt}
+                  </p>
+                ) : null}
+
+                {p.author ? (
+                  <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                    {p.author}
+                  </p>
+                ) : null}
+              </div>
+            </Link>
+          </article>
+        );
+      })}
     </div>
   );
 }
@@ -1679,8 +1736,8 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                   ) : null}
 
                   {mobileMoreCommentaryBeforePenultimate.length > 0 ? (
-                    <MobileMicroCommentaryList items={mobileMoreCommentaryBeforePenultimate} />
-                  ) : null}
+  <MobileMoreCommentaryList items={mobileMoreCommentaryBeforePenultimate} />
+) : null}
 
                   {mobileMoreCommentaryPenultimate ? (
                     <div className="pt-8">
@@ -1689,10 +1746,10 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                   ) : null}
 
                                     {mobileMoreCommentaryLast ? (
-                    <div className="pb-14">
-                      <MobileMicroCommentaryList items={[mobileMoreCommentaryLast]} />
-                    </div>
-                  ) : null}
+  <div className="pb-14">
+    <MobileMoreCommentaryList items={[mobileMoreCommentaryLast]} />
+  </div>
+) : null}
 
                   
                 </div>
