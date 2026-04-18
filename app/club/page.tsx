@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -118,6 +120,18 @@ export default function ClubPage() {
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
       <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.18),transparent_30%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.1),transparent_24%),linear-gradient(to_bottom,#0d1824_0%,#0a1520_58%,#08131c_100%)] md:bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.14),transparent_28%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.08),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09141d_58%,#08131c_100%)]">
         <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-18 md:pt-18 lg:pb-20 lg:pt-24">
+          <div className="mb-8 md:mb-10 lg:mb-12">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-[0.94rem] font-medium tracking-[-0.01em] text-[#c88a5a] transition hover:text-[#ddb08d]"
+            >
+              <span aria-hidden="true" className="text-[1.15rem] leading-none">
+                ←
+              </span>
+              <span>Back to The Commentator</span>
+            </Link>
+          </div>
+
           <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
             <div className="block lg:hidden">
               <div className="mx-auto mb-8 w-full max-w-[420px] overflow-hidden rounded-[22px] border border-[#3b5368] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.12),rgba(16,28,40,0.26))] p-2.5 shadow-[0_18px_44px_rgba(0,0,0,0.22)]">
@@ -341,6 +355,18 @@ export default function ClubPage() {
                 greater good.
               </p>
             </div>
+          </div>
+
+          <div className="mt-12 flex justify-end sm:mt-14 md:mt-16">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-[0.84rem] font-medium tracking-[0.02em] text-[#b9794d]/85 transition hover:text-[#d8a67f]"
+            >
+              <span>Return to The Commentator</span>
+              <span aria-hidden="true" className="text-[1rem] leading-none">
+                →
+              </span>
+            </Link>
           </div>
         </div>
       </section>
