@@ -1373,7 +1373,7 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
       {usable.map((p, index) => {
         const useThumbnailLayout = !!p.heroImageUrl && index % 3 === 1;
 
-        if (useThumbnailLayout) {
+                if (useThumbnailLayout) {
           return (
             <article
               key={p.id}
@@ -1386,8 +1386,8 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
                 className="block no-underline hover:no-underline focus:outline-none"
                 title={p.title}
               >
-                <div className="grid grid-cols-[104px_1fr] items-stretch gap-4">
-                  <div className="min-h-[172px] overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                <div className="grid grid-cols-[104px_minmax(0,1fr)] items-start gap-4">
+                  <div className="h-[140px] w-[104px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
                     <img
                       src={p.heroImageUrl}
                       alt={p.title}
@@ -1396,26 +1396,24 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
                     />
                   </div>
 
-                  <div className="flex min-h-[172px] min-w-0 flex-col justify-between">
-                    <div className="min-w-0">
-                      <h4
-                        className={`${MAJOR_HEADLINE_SERIF_CLASS} block break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
-                      >
-                        <MobileCommentaryQuoteMark />
-                        <span className="line-clamp-3">
-                          <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
-                        </span>
-                      </h4>
+                  <div className="min-w-0">
+                    <h4
+                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[18px] font-semibold leading-[1.1] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E1D6C6]`}
+                    >
+                      <MobileCommentaryQuoteMark />
+                      <span className="inline">
+                        <InlineTitleWithReadTime title={p.title} minutes={p.readTimeMinutes} />
+                      </span>
+                    </h4>
 
-                      {p.excerpt ? (
-                        <p className="mt-4 line-clamp-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
-                          {p.excerpt}
-                        </p>
-                      ) : null}
-                    </div>
+                    {p.excerpt ? (
+                      <p className="mt-4 line-clamp-4 text-[15.5px] leading-[1.8] text-[#DDD4C8] transition-colors duration-150 group-hover:text-[#E7DED2]">
+                        {p.excerpt}
+                      </p>
+                    ) : null}
 
                     {p.author ? (
-                      <p className="pt-4 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
+                      <p className="mt-5 text-[12px] font-medium uppercase tracking-[0.24em] text-[#D08B5E]/88 transition-colors duration-150 group-hover:text-[#E29A69]">
                         {p.author}
                       </p>
                     ) : null}
