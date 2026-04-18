@@ -991,31 +991,33 @@ function MobileNewsPointPanel({ items }: { items: NewsItem[] }) {
 
   return (
     <section id="news-point-mobile" className="space-y-0">
-      <div className="mb-7 flex items-end justify-between gap-4">
+      <div className="mb-12 flex items-end justify-between gap-5">
         <div className="min-w-0 flex-1">
-          <h2 className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.30em] text-[#F3EEE6]">
+          <h2
+            className={`${MAJOR_HEADLINE_SERIF_CLASS} whitespace-nowrap text-[18px] font-semibold uppercase tracking-[0.12em] text-[#E1C29F]`}
+          >
             News Point
           </h2>
-          <div className="mt-2.5 flex items-center gap-2.5">
-            <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-white/40" />
-            <span className="block h-px min-w-0 flex-1 bg-white/12" />
+          <div className="mt-3.5 flex items-center gap-2.5">
+            <span className="block h-[2px] w-[78px] shrink-0 rounded-full bg-[#E1C29F]/95" />
+            
           </div>
         </div>
 
-                         <a
-                    href="#mobile-commentary-start"
-                    className="mb-[3px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
-                  >
-                    <span>Commentary</span>
-                    <span className="h-px w-6 bg-white/30" />
-                  </a>
+        <a
+          href="#mobile-commentary-start"
+          className="mb-[6px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
+        >
+          <span>Commentary</span>
+          <span className="h-px w-6 bg-white/30" />
+        </a>
       </div>
 
       {featured ? (
         <article className={`group relative overflow-visible ${hasMoreAfterFeatured ? "pb-14" : ""}`}>
           <Link
             href={featured.slug ? `/news/${featured.slug}` : "#"}
-            className="block no-underline hover:no-underline"
+            className="block pt-3 no-underline hover:no-underline"
           >
             {featured.heroImageUrl ? (
               <div className="mb-8 h-64 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10 sm:h-72">
