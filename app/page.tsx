@@ -1940,8 +1940,88 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </div>
 
                                 <div className="space-y-4 mt-0">
-                  {desktopMoreCommentaryBeforePenultimate.length > 0 ? (
-                    <CommentaryList items={desktopMoreCommentaryBeforePenultimate} maxItems={20} />
+                                    {desktopMoreCommentaryBeforePenultimate.length > 0 ? (
+                    <div className="space-y-10">
+                      {desktopMoreCommentaryBeforePenultimate.map((p, index) => {
+                        const useThumbnailLayout =
+                          !!p.heroImageUrl && (index === 0 || index === 2 || index === 5);
+
+                        if (useThumbnailLayout) {
+                          return (
+                            <article key={p.id}>
+                              <Link
+                                href={p.slug ? `/posts/${p.slug}` : "#"}
+                                className="group block no-underline hover:no-underline focus:outline-none"
+                              >
+                                <h4
+                                  className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17.25px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] md:text-[17px]`}
+                                >
+                                  <InlineTitleWithReadTime
+                                    title={p.title}
+                                    minutes={p.readTimeMinutes}
+                                  />
+                                </h4>
+
+                                <div className="mt-4 grid grid-cols-[112px_minmax(0,1fr)] items-start gap-5">
+                                  <div className="h-[96px] w-[112px] shrink-0 overflow-hidden rounded-[2px] bg-white/5 ring-1 ring-white/10">
+                                    <img
+                                      src={p.heroImageUrl}
+                                      alt={p.title}
+                                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                                      loading="lazy"
+                                    />
+                                  </div>
+
+                                  <div className="min-w-0">
+                                    {p.excerpt ? (
+                                      <p className="text-[15px] leading-[1.8] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                                        {p.excerpt}
+                                      </p>
+                                    ) : null}
+
+                                    {p.author ? (
+                                      <p className="mt-5 text-[10px] uppercase tracking-[0.20em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                                        {p.author}
+                                      </p>
+                                    ) : null}
+                                  </div>
+                                </div>
+                              </Link>
+                            </article>
+                          );
+                        }
+
+                        return (
+                          <article key={p.id}>
+                            <Link
+                              href={p.slug ? `/posts/${p.slug}` : "#"}
+                              className="group block no-underline hover:no-underline focus:outline-none"
+                            >
+                              <h4
+                                className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[17.25px] font-semibold leading-[1.12] text-[#D8CBB8] transition-colors duration-150 group-hover:text-[#E6DBCC] md:text-[17px]`}
+                              >
+                                <InlineTitleWithReadTime
+                                  title={p.title}
+                                  minutes={p.readTimeMinutes}
+                                />
+                              </h4>
+
+                              {p.excerpt ? (
+                                <p className="mt-4 max-w-[56ch] text-[15px] leading-[1.8] text-[#D4CCC1] transition-colors duration-150 group-hover:text-[#E0D7CB]">
+                                  {p.excerpt}
+                                </p>
+                              ) : null}
+
+                              {p.author ? (
+                                <p className="mt-5 text-[10px] uppercase tracking-[0.20em] text-[#D08B5E]/84 transition-colors duration-150 group-hover:text-[#E29A69]">
+                                  {p.author}
+                                </p>
+                              ) : null}
+                            </Link>
+                          </article>
+                        );
+                      })}
+                    </div>
                   ) : null}
 
                   {desktopMoreCommentaryPenultimate ? (
@@ -1958,6 +2038,33 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     <section className="max-w-[34rem] space-y-8 pt-16">
       <SectionHeader title="Most Popular" headlineTone />
 
+<div className="relative overflow-hidden rounded-[6px] border border-white/10 bg-[#0b1622]">
+  
+  {/* Background image */}
+  <img
+    src="/most-popular-banner.jpg"
+    alt="Most popular"
+    className="absolute inset-0 h-full w-full object-cover opacity-25"
+  />
+
+  {/* Dark overlay (keeps it premium, not loud) */}
+  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(7,16,25,0.9),rgba(7,16,25,0.6))]" />
+
+  {/* Content */}
+  <div className="relative z-10 px-8 py-10">
+    
+    <div className="text-[10px] uppercase tracking-[0.28em] text-white/50">
+      What readers are engaging with
+    </div>
+
+    <div className="mt-3 text-[28px] font-serif tracking-[-0.02em] text-white/90">
+      Right now
+    </div>
+
+    <div className="mt-4 h-px w-10 bg-[#C67C4E]/70" />
+    
+  </div>
+</div>
       <div className="space-y-10">
         {desktopMostPopularCommentary.length > 0 ? (
           <MostPopularRankedList
