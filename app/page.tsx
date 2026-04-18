@@ -1521,17 +1521,27 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
   id={lead?.type !== "post" ? "mobile-commentary-start" : undefined}
   className="mt-6"
 >
-                  <div className="flex items-end justify-between gap-4">
-                    <SectionHeader title="Commentary" headlineTone />
+                                    <div className="mb-12 flex items-end justify-between gap-5">
+                    <div className="min-w-0 flex-1">
+                      <h2
+                        className={`${MAJOR_HEADLINE_SERIF_CLASS} whitespace-nowrap text-[14px] font-semibold uppercase tracking-[0.12em] text-[#E1C29F]`}
+                      >
+                        Commentary
+                      </h2>
+                      <div className="mt-3.5 flex items-center gap-2.5">
+                        <span className="block h-[2px] w-[78px] shrink-0 rounded-full bg-[#E1C29F]/95" />
+                      </div>
+                    </div>
+
                     <a
                       href="#news-point-mobile"
-                      className="mb-[3px] inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
+                      className="pt-[18px] inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
                     >
                       <span>News Point</span>
                       <span className="h-px w-6 bg-white/30" />
                     </a>
                   </div>
-                  <div className="mt-8">
+                  <div>
                     <MobileCommentaryFeature post={mobileFeaturedCommentary} />
                   </div>
                 </section>
@@ -1544,8 +1554,8 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
               ) : null}
 
               <section className="mt-10">
-                <CommentatorClubPanel />
-              </section>
+  <CommentatorClubPanel />
+</section>
 
                             {mobilePostClubMicroCards.length > 0 ? (
                 <section className="mt-16">
