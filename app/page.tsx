@@ -595,7 +595,7 @@ function MobileMissionBlock() {
 
 function DesktopMissionBlock() {
   return (
-    <section className="mx-auto mt-20 mb-4 w-full max-w-[44rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(24,33,42,0.72)_0%,rgba(32,42,52,0.68)_100%)] px-8 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.018),inset_0_-1px_0_rgba(0,0,0,0.14)]">
+        <section className="mx-auto mt-8 mb-4 w-full max-w-[44rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(24,33,42,0.72)_0%,rgba(32,42,52,0.68)_100%)] px-8 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.018),inset_0_-1px_0_rgba(0,0,0,0.14)]">
       <div className="relative">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_center,rgba(255,255,255,0.014),transparent_48%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(109,139,170,0.028),transparent_60%)]" />
@@ -2038,45 +2038,45 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     <section className="relative max-w-[34rem] pt-16">
   <div className="relative overflow-visible">
 
-    {/* TOP IMAGE (FIXED: brighter + more legible text) */}
-    <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] overflow-hidden">
+    {/* TOP IMAGE */}
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[392px] overflow-hidden">
       <img
         src="/most-popular-banner.jpg"
         alt="What readers are engaging with right now"
-        className="absolute inset-0 h-full w-full object-cover object-[28%_top]"
+        className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
       />
 
-      {/* MUCH LIGHTER OVERLAYS (this is the key change) */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.04),rgba(11,13,16,0.02)_28%,rgba(11,13,16,0.04)_58%,rgba(11,13,16,0.10)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.00)_0%,rgba(11,13,16,0.02)_30%,rgba(11,13,16,0.06)_60%,rgba(11,13,16,0.16)_100%)]" />
-
-      {/* SUBTLE LIGHT LIFT BEHIND TEXT AREA */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_26%,rgba(255,255,255,0.12),transparent_26%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.00)_0%,rgba(11,13,16,0.015)_16%,rgba(11,13,16,0.04)_38%,rgba(11,13,16,0.10)_68%,rgba(11,13,16,0.18)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_24%,rgba(255,255,255,0.18),rgba(255,255,255,0.08)_16%,transparent_34%)]" />
     </div>
 
-    {/* EXISTING FULL-HEIGHT BACKGROUND (UNCHANGED) */}
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* FULL-HEIGHT BACKGROUND */}
+    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
       <img
         src="/most-popular-banner.jpg"
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-[72%_top] opacity-[0.42]"
+        className="absolute inset-0 h-full w-full object-cover object-[74%_28%] opacity-[0.52]"
       />
 
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.18),rgba(11,13,16,0.08)_28%,rgba(11,13,16,0.12)_58%,rgba(11,13,16,0.20)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.12)_0%,rgba(11,13,16,0.10)_16%,rgba(11,13,16,0.10)_34%,rgba(11,13,16,0.14)_56%,rgba(11,13,16,0.18)_76%,rgba(11,13,16,0.24)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.15),rgba(11,13,16,0.07)_24%,rgba(11,13,16,0.08)_56%,rgba(11,13,16,0.16)_100%)]" />
+
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.07)_0%,rgba(11,13,16,0.07)_16%,rgba(11,13,16,0.10)_30%,rgba(11,13,16,0.20)_42%,rgba(11,13,16,0.24)_54%,rgba(11,13,16,0.17)_68%,rgba(11,13,16,0.12)_82%,rgba(11,13,16,0.10)_100%)]" />
+
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,transparent_28%,rgba(8,10,14,0.18)_36%,rgba(8,10,14,0.30)_46%,rgba(8,10,14,0.32)_56%,rgba(8,10,14,0.18)_66%,transparent_78%)]" />
+
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_54%_82%,rgba(201,122,74,0.075),transparent_22%),radial-gradient(circle_at_74%_88%,rgba(68,122,214,0.070),transparent_20%),radial-gradient(circle_at_38%_92%,rgba(255,255,255,0.035),transparent_18%)]" />
+
+      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(255,255,255,0.018)_0%,rgba(255,255,255,0.010)_10%,transparent_24%)]" />
     </div>
 
-    {/* READING VEIL (UNCHANGED) */}
-    <div className="pointer-events-none absolute inset-x-0 top-[294px] h-[1200px] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.00)_0%,rgba(11,13,16,0.08)_10%,rgba(11,13,16,0.14)_24%,rgba(11,13,16,0.20)_40%,rgba(11,13,16,0.24)_58%,rgba(11,13,16,0.30)_78%,rgba(11,13,16,0.36)_100%)]" />
-
-    {/* EDGE FADES (UNCHANGED) */}
-    <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-[linear-gradient(to_right,#0B0D10,rgba(11,13,16,0.72),rgba(11,13,16,0.30),transparent)]" />
-    <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-[linear-gradient(to_left,#0B0D10,rgba(11,13,16,0.72),rgba(11,13,16,0.30),transparent)]" />
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(to_bottom,rgba(11,13,16,0),rgba(11,13,16,0.46),#0B0D10)]" />
+    {/* SIDE DISSOLVES */}
+    <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-[linear-gradient(to_right,#0B0D10,rgba(11,13,16,0.62),rgba(11,13,16,0.22),transparent)]" />
+    <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-[linear-gradient(to_left,#0B0D10,rgba(11,13,16,0.62),rgba(11,13,16,0.22),transparent)]" />
 
     {/* CONTENT */}
-    <div className="relative z-20 px-6 pt-[340px] pb-24">
+        <div className="relative z-20 px-6 pt-[352px] pb-8">
       <div className="space-y-14">
         {desktopMostPopularCommentary.length > 0 ? (
           <MostPopularRankedList
@@ -2131,7 +2131,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
 </aside>
         </div>
 
-        <div className="hidden lg:block">
+                        <div className="hidden lg:block pt-28 pb-8">
           <DesktopMissionBlock />
         </div>
       </div>
