@@ -2035,37 +2035,49 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                   
                 </div>
 
-    <section className="max-w-[34rem] space-y-8 pt-16">
-      <SectionHeader title="Most Popular" headlineTone />
+    <section className="relative max-w-[34rem] pt-16">
+  <div className="relative overflow-visible">
 
-<div className="relative overflow-hidden rounded-[6px] border border-white/10 bg-[#0b1622]">
-  
-  {/* Background image */}
-  <img
-    src="/most-popular-banner.jpg"
-    alt="Most popular"
-    className="absolute inset-0 h-full w-full object-cover opacity-25"
-  />
+    {/* TOP IMAGE (FIXED: brighter + more legible text) */}
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] overflow-hidden">
+      <img
+        src="/most-popular-banner.jpg"
+        alt="What readers are engaging with right now"
+        className="absolute inset-0 h-full w-full object-cover object-[28%_top]"
+      />
 
-  {/* Dark overlay (keeps it premium, not loud) */}
-  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(7,16,25,0.9),rgba(7,16,25,0.6))]" />
+      {/* MUCH LIGHTER OVERLAYS (this is the key change) */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.04),rgba(11,13,16,0.02)_28%,rgba(11,13,16,0.04)_58%,rgba(11,13,16,0.10)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.00)_0%,rgba(11,13,16,0.02)_30%,rgba(11,13,16,0.06)_60%,rgba(11,13,16,0.16)_100%)]" />
 
-  {/* Content */}
-  <div className="relative z-10 px-8 py-10">
-    
-    <div className="text-[10px] uppercase tracking-[0.28em] text-white/50">
-      What readers are engaging with
+      {/* SUBTLE LIGHT LIFT BEHIND TEXT AREA */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_26%,rgba(255,255,255,0.12),transparent_26%)]" />
     </div>
 
-    <div className="mt-3 text-[28px] font-serif tracking-[-0.02em] text-white/90">
-      Right now
+    {/* EXISTING FULL-HEIGHT BACKGROUND (UNCHANGED) */}
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <img
+        src="/most-popular-banner.jpg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-[72%_top] opacity-[0.42]"
+      />
+
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.18),rgba(11,13,16,0.08)_28%,rgba(11,13,16,0.12)_58%,rgba(11,13,16,0.20)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.12)_0%,rgba(11,13,16,0.10)_16%,rgba(11,13,16,0.10)_34%,rgba(11,13,16,0.14)_56%,rgba(11,13,16,0.18)_76%,rgba(11,13,16,0.24)_100%)]" />
     </div>
 
-    <div className="mt-4 h-px w-10 bg-[#C67C4E]/70" />
-    
-  </div>
-</div>
-      <div className="space-y-10">
+    {/* READING VEIL (UNCHANGED) */}
+    <div className="pointer-events-none absolute inset-x-0 top-[294px] h-[1200px] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.00)_0%,rgba(11,13,16,0.08)_10%,rgba(11,13,16,0.14)_24%,rgba(11,13,16,0.20)_40%,rgba(11,13,16,0.24)_58%,rgba(11,13,16,0.30)_78%,rgba(11,13,16,0.36)_100%)]" />
+
+    {/* EDGE FADES (UNCHANGED) */}
+    <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-[linear-gradient(to_right,#0B0D10,rgba(11,13,16,0.72),rgba(11,13,16,0.30),transparent)]" />
+    <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-[linear-gradient(to_left,#0B0D10,rgba(11,13,16,0.72),rgba(11,13,16,0.30),transparent)]" />
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(to_bottom,rgba(11,13,16,0),rgba(11,13,16,0.46),#0B0D10)]" />
+
+    {/* CONTENT */}
+    <div className="relative z-20 px-6 pt-[340px] pb-24">
+      <div className="space-y-14">
         {desktopMostPopularCommentary.length > 0 ? (
           <MostPopularRankedList
             items={desktopMostPopularCommentary}
@@ -2080,8 +2092,10 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
           />
         ) : null}
       </div>
-    </section>
-  </section>
+    </div>
+  </div>
+</section>
+</section>
 </div>
 </div>
 
