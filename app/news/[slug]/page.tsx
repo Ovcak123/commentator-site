@@ -229,7 +229,7 @@ function CommentatorClubPanel() {
             Join The Commentator Club
           </h3>
 
-                    <p className="mt-4 max-w-none text-[14.7px] leading-[1.84] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
+          <p className="mt-4 max-w-none text-[14.7px] leading-[1.84] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
             A community of founders, CEOs, policymakers, and thinkers
             who want to be part of the conversation, not outside it.
             Members get early insight into our ideas, contribute directly, and take
@@ -265,7 +265,7 @@ function DesktopCommentatorClubPanel() {
             Join The Commentator Club
           </h3>
 
-                    <p className="mt-4 max-w-[64ch] text-[15.4px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[16px] lg:leading-[1.82]">
+          <p className="mt-4 max-w-[64ch] text-[15.4px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[16px] lg:leading-[1.82]">
             A community of founders, CEOs, policymakers, and thinkers
             who want to be part of the conversation, not outside it.
             Members get early insight into our ideas, contribute directly, and take
@@ -420,8 +420,6 @@ function DesktopArticleCloser() {
           CONTACT
         </Link>
       </div>
-
-      
     </div>
   );
 }
@@ -518,6 +516,59 @@ function MobileMostPopularSection({
   );
 }
 
+function MostPopularRankedList({
+  items,
+  sectionTitle,
+  startIndex = 1,
+}: {
+  items: SidebarItem[];
+  sectionTitle: string;
+  startIndex?: number;
+}) {
+  return (
+    <div className="space-y-6">
+      <h3 className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#E6DDD0]/88">
+        {sectionTitle}
+      </h3>
+
+      <ol className="space-y-7">
+        {items.slice(0, 5).map((item, index) => {
+          const rank = startIndex + index;
+
+          return (
+            <li key={item.id} className="group">
+              <Link
+                href={item.href}
+                className="grid grid-cols-[22px_1fr] items-start gap-3 no-underline transition-all duration-150 hover:no-underline group-hover:translate-x-0.5"
+              >
+                <span
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[22px] font-semibold leading-[1] text-[#EDE3D6]/90`}
+                >
+                  {rank}
+                </span>
+
+                <div className="min-w-0 pt-[1px]">
+                  <span
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} block text-[17px] font-semibold leading-[1.12] text-[#E7DDD0] transition-colors duration-150 group-hover:text-[#F3EBE0]`}
+                  >
+                    {item.title}
+                  </span>
+
+                  {item.readTimeMinutes ? (
+                    <div className="mt-2">
+                      <ReadTimeBadge minutes={item.readTimeMinutes} />
+                    </div>
+                  ) : null}
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
 function DesktopMostPopularSection({
   commentaryItems,
   newsItems,
@@ -526,83 +577,61 @@ function DesktopMostPopularSection({
   newsItems: SidebarItem[];
 }) {
   return (
-    <section className="space-y-10">
-      <SectionHeader title="Most Popular" />
+    <section className="relative mx-auto max-w-[34rem] pt-16">
+      <div className="relative overflow-visible">
+        {/* TOP IMAGE */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[392px] overflow-hidden">
+          <img
+            src="/most-popular-banner.jpg"
+            alt="What readers are engaging with right now"
+            className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
+          />
 
-      <div className="space-y-12">
-        <div>
-          <div className="mb-5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C2B9AD]">
-            Commentary
-          </div>
-
-          <div>
-            {commentaryItems.slice(0, 5).map((item, index) => (
-              <article key={item.id}>
-                <Link
-                  href={item.href}
-                  className="group grid grid-cols-[30px_1fr] gap-4 py-3 no-underline hover:no-underline focus:outline-none"
-                  title={item.title}
-                >
-                  <div
-                    className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[40px] font-semibold leading-[0.84] text-[#F1E7DA]`}
-                  >
-                    {index + 1}
-                  </div>
-
-                  <div className="min-w-0 pt-[2px]">
-                    <h3
-                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[19px] font-semibold leading-[1.08] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
-                    >
-                      {item.title}
-                    </h3>
-
-                    {item.readTimeMinutes ? (
-                      <div className="mt-2">
-                        <ReadTimeBadge minutes={item.readTimeMinutes} />
-                      </div>
-                    ) : null}
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.00)_0%,rgba(11,13,16,0.015)_16%,rgba(11,13,16,0.04)_38%,rgba(11,13,16,0.10)_68%,rgba(11,13,16,0.18)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_24%,rgba(255,255,255,0.18),rgba(255,255,255,0.08)_16%,transparent_34%)]" />
         </div>
 
-        <div>
-          <div className="mb-5 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C2B9AD]">
-            News
-          </div>
+        {/* FULL-HEIGHT BACKGROUND */}
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <img
+            src="/most-popular-banner.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover object-[74%_28%] opacity-[0.52]"
+          />
 
-          <div>
-            {newsItems.slice(0, 5).map((item, index) => (
-              <article key={item.id}>
-                <Link
-                  href={item.href}
-                  className="group grid grid-cols-[30px_1fr] gap-4 py-3 no-underline hover:no-underline focus:outline-none"
-                  title={item.title}
-                >
-                  <div
-                    className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[40px] font-semibold leading-[0.84] text-[#F1E7DA]`}
-                  >
-                    {index + 1}
-                  </div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.15),rgba(11,13,16,0.07)_24%,rgba(11,13,16,0.08)_56%,rgba(11,13,16,0.16)_100%)]" />
 
-                  <div className="min-w-0 pt-[2px]">
-                    <h3
-                      className={`${MAJOR_HEADLINE_SERIF_CLASS} break-words text-[19px] font-semibold leading-[1.08] text-[#E4D8C9] transition-colors duration-150 group-hover:text-[#F0E7DA]`}
-                    >
-                      {item.title}
-                    </h3>
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.07)_0%,rgba(11,13,16,0.07)_16%,rgba(11,13,16,0.10)_30%,rgba(11,13,16,0.20)_42%,rgba(11,13,16,0.24)_54%,rgba(11,13,16,0.17)_68%,rgba(11,13,16,0.12)_82%,rgba(11,13,16,0.10)_100%)]" />
 
-                    {item.readTimeMinutes ? (
-                      <div className="mt-2">
-                        <ReadTimeBadge minutes={item.readTimeMinutes} />
-                      </div>
-                    ) : null}
-                  </div>
-                </Link>
-              </article>
-            ))}
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,transparent_28%,rgba(8,10,14,0.18)_36%,rgba(8,10,14,0.30)_46%,rgba(8,10,14,0.32)_56%,rgba(8,10,14,0.18)_66%,transparent_78%)]" />
+
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_54%_82%,rgba(201,122,74,0.075),transparent_22%),radial-gradient(circle_at_74%_88%,rgba(68,122,214,0.070),transparent_20%),radial-gradient(circle_at_38%_92%,rgba(255,255,255,0.035),transparent_18%)]" />
+
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(255,255,255,0.018)_0%,rgba(255,255,255,0.010)_10%,transparent_24%)]" />
+        </div>
+
+        {/* SIDE DISSOLVES */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-[linear-gradient(to_right,#0B0D10,rgba(11,13,16,0.62),rgba(11,13,16,0.22),transparent)]" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-[linear-gradient(to_left,#0B0D10,rgba(11,13,16,0.62),rgba(11,13,16,0.22),transparent)]" />
+
+        {/* CONTENT */}
+        <div className="relative z-20 px-6 pt-[352px] pb-8">
+          <div className="space-y-14">
+            {commentaryItems.length > 0 ? (
+              <MostPopularRankedList
+                items={commentaryItems}
+                sectionTitle="Commentary"
+              />
+            ) : null}
+
+            {newsItems.length > 0 ? (
+              <MostPopularRankedList
+                items={newsItems}
+                sectionTitle="News"
+              />
+            ) : null}
           </div>
         </div>
       </div>
@@ -939,11 +968,11 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     .filter((x: SidebarItem) => x.href !== "#");
 
   const heroUrl =
-  item?.heroImage && item.heroImage.asset
-    ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
-    : item?.heroImage
+    item?.heroImage && item.heroImage.asset
       ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
-      : "";
+      : item?.heroImage
+        ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
+        : "";
 
   return (
     <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
