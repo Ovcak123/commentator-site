@@ -432,14 +432,14 @@ function MobileMostPopularSection({
   newsItems: SidebarItem[];
 }) {
   return (
-    <section className="relative mx-auto max-w-[34rem] pt-16">
+    <section className="relative mx-auto max-w-[34rem] pt-6">
       <div className="relative overflow-visible">
         {/* TOP IMAGE */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[392px] overflow-hidden">
           <img
             src="/most-popular-banner.jpg"
             alt="What readers are engaging with right now"
-            className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
+            className="absolute inset-0 h-full w-full object-cover object-[40%_top] opacity-[0.98]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
@@ -453,7 +453,7 @@ function MobileMostPopularSection({
             src="/most-popular-banner.jpg"
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover object-[74%_28%] opacity-[0.52]"
+                        className="absolute inset-0 h-full w-full object-cover object-[82%_38%] opacity-[0.52]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.15),rgba(11,13,16,0.07)_24%,rgba(11,13,16,0.08)_56%,rgba(11,13,16,0.16)_100%)]" />
@@ -1043,12 +1043,16 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               <DesktopCommentatorClubPanel />
             </section>
 
-            <div className="mt-20 space-y-14 lg:hidden">
+                        <div className="mt-20 space-y-0 lg:hidden">
               <MobileMostPopularSection commentaryItems={mostRead} newsItems={moreNews} />
 
-              {moreNews.length > 0 ? <MobileNewsThumbnailSection items={moreNews} /> : null}
+              {moreNews.length > 0 ? (
+                <div className="pt-6">
+                  <MobileNewsThumbnailSection items={moreNews} />
+                </div>
+              ) : null}
 
-              <div className="pt-2 pb-2">
+              <div className="pt-6 pb-2">
                 <MobileMissionBlock />
               </div>
 

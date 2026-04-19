@@ -786,14 +786,14 @@ function MobileMostPopularSection({
   newsItems: NewsItem[];
 }) {
   return (
-    <section className="relative mx-auto max-w-[34rem] pt-16">
+    <section className="relative mx-auto max-w-[34rem] pt-6">
       <div className="relative overflow-visible">
         {/* TOP IMAGE */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[392px] overflow-hidden">
           <img
             src="/most-popular-banner.jpg"
             alt="What readers are engaging with right now"
-            className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
+            className="absolute inset-0 h-full w-full object-cover object-[40%_top] opacity-[0.98]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
@@ -807,7 +807,7 @@ function MobileMostPopularSection({
             src="/most-popular-banner.jpg"
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover object-[74%_28%] opacity-[0.52]"
+                        className="absolute inset-0 h-full w-full object-cover object-[82%_38%] opacity-[0.52]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.15),rgba(11,13,16,0.07)_24%,rgba(11,13,16,0.08)_56%,rgba(11,13,16,0.16)_100%)]" />
@@ -1752,15 +1752,15 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 <MobileNewsPointPanel items={newsItems} />
               </section>
 
-                            <section className="mt-10 pt-8">
+                                          <section className="mt-0 pt-0">
                 <MobileMostPopularSection
                   commentaryItems={mobileMostPopularCommentary}
                   newsItems={mobileMostPopularNews}
                 />
-              </section>              
-                            <div className="pt-6 pb-6">
-  <MobileMissionBlock />
-</div>
+              </section>
+              <div className="pt-6 pb-6">
+                <MobileMissionBlock />
+              </div>
 
               <section className="mt-0">
                 <div className="space-y-0">
