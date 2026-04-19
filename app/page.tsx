@@ -793,7 +793,7 @@ function MobileMostPopularSection({
           <img
             src="/most-popular-banner.jpg"
             alt="What readers are engaging with right now"
-            className="absolute inset-0 h-full w-full object-cover object-[40%_top] opacity-[0.98]"
+            className="absolute inset-0 h-full w-full object-cover object-[18%_top] opacity-[0.98]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
