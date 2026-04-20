@@ -788,12 +788,12 @@ function MobileMostPopularSection({
   return (
     <section className="relative mx-auto max-w-[34rem] pt-6">
       <div className="relative overflow-visible">
-        {/* TOP IMAGE */}
+                {/* TOP IMAGE */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[392px] overflow-hidden">
           <img
             src="/most-popular-banner.jpg"
             alt="What readers are engaging with right now"
-            className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
+            className="absolute inset-0 h-full w-full object-cover object-[14%_top] opacity-[0.98]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
