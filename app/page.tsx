@@ -674,12 +674,12 @@ function MostPopularRankedList({
   startIndex?: number;
 }) {
   return (
-    <div className="space-y-6">
-      <h3 className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#E6DDD0]/88">
+    <div className="space-y-5">
+      <h3 className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#E6DDD0]/88">
         {sectionTitle}
       </h3>
 
-      <ol className="space-y-7">
+      <ol className="space-y-5.5">
         {items.map((item, index) => {
           const rank = startIndex + index;
 
@@ -687,23 +687,23 @@ function MostPopularRankedList({
             <li key={item.id} className="group">
               <Link
                 href={item.href}
-                className="grid grid-cols-[22px_1fr] items-start gap-3 no-underline transition-all duration-150 hover:no-underline group-hover:translate-x-0.5"
+                className="grid grid-cols-[18px_1fr] items-start gap-2.5 no-underline transition-all duration-150 hover:no-underline group-hover:translate-x-0.5"
               >
                 <span
-                  className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[22px] font-semibold leading-[1] text-[#EDE3D6]/90`}
+                  className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[18px] font-semibold leading-[1] text-[#EDE3D6]/90`}
                 >
                   {rank}
                 </span>
 
                 <div className="min-w-0 pt-[1px]">
                   <span
-                    className={`${MAJOR_HEADLINE_SERIF_CLASS} block text-[17px] font-semibold leading-[1.12] text-[#E7DDD0] transition-colors duration-150 group-hover:text-[#F3EBE0]`}
+                    className={`${MAJOR_HEADLINE_SERIF_CLASS} block text-[14px] font-semibold leading-[1.1] text-[#E7DDD0] transition-colors duration-150 group-hover:text-[#F3EBE0]`}
                   >
                     {item.title}
                   </span>
 
                   {item.readTimeMinutes ? (
-                    <div className="mt-2">
+                    <div className="mt-1.5">
                       <ReadTimeBadge minutes={item.readTimeMinutes} />
                     </div>
                   ) : null}
@@ -793,7 +793,7 @@ function MobileMostPopularSection({
           <img
             src="/most-popular-banner.jpg"
             alt="What readers are engaging with right now"
-            className="absolute inset-0 h-full w-full object-cover object-[14%_top] opacity-[0.98]"
+            className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
@@ -883,8 +883,7 @@ function AggregatorList({
     <ul className="space-y-0">
       {items.slice(0, maxItems).map((it, index) => {
         const meta = inlineMeta(it);
-        const isInternal = it.href?.startsWith("/");
-        const highlight = index === 0;
+                const isInternal = it.href?.startsWith("/");
 
         const TitleRow = (
           <span className="font-medium">
@@ -895,7 +894,7 @@ function AggregatorList({
         return (
           <li
             key={it.id}
-            className={`group relative overflow-visible ${highlight ? "rounded-[12px] bg-white/[0.015]" : ""}`}
+            className="group relative overflow-visible"
           >
             {showAccent ? <HoverAccent /> : null}
 
@@ -1644,7 +1643,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
       ? mobileReentryList[mobileReentryList.length - 1]
       : undefined;
 
-  const desktopMostPopularCommentary = mostRead.filter((item) => item.section === "commentary");
+      const desktopMostPopularCommentary = mostRead.filter((item) => item.section === "commentary");
   const desktopMostPopularNews = mostRead.filter((item) => item.section === "news");
 
   return (
@@ -1866,7 +1865,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
         </div>
 
         {/* ---------- desktop ---------- */}
-                <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_34rem] lg:gap-14 lg:pt-14">
+                                <div className="hidden lg:grid lg:grid-cols-[1.5fr_0.68fr] lg:gap-20 lg:pt-14">
           <div className="space-y-16">
             {lead && lead.slug ? (
               <Link
@@ -2075,17 +2074,25 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                     <DesktopCommentaryReentryFeature post={desktopMoreCommentaryPenultimate} />
                   ) : null}
 
-                  {desktopMoreCommentaryLast ? (
+                                    {desktopMoreCommentaryLast ? (
                     <CommentaryList items={[desktopMoreCommentaryLast]} maxItems={1} />
                   ) : null}
-
-                  
                 </div>
 
-    
-</section>
-</div>
-</div>
+                <div className="pt-20">
+                  <section className="space-y-5">
+                    <SectionHeader title="Feed Read" headlineTone />
+                    <AggregatorList
+                      items={feedRead}
+                      maxItems={8}
+                      tone="subtle"
+                      showAccent={false}
+                    />
+                  </section>
+                </div>
+              </section>
+            </div>
+          </div>
 
     <aside className="min-w-0 flex flex-col gap-12 pt-[2px]">
   <section className="space-y-4">
@@ -2105,7 +2112,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
           <img
             src="/most-popular-banner.jpg"
             alt="What readers are engaging with right now"
-            className="absolute inset-0 h-full w-full object-cover object-[28%_top] opacity-[0.98]"
+                        className="absolute inset-0 h-full w-full object-cover object-[14%_top] opacity-[0.98]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.10),rgba(11,13,16,0.04)_24%,rgba(11,13,16,0.05)_56%,rgba(11,13,16,0.14)_100%)]" />
@@ -2159,17 +2166,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
     </section>
   </div>
 
-  <section className="mt-8 space-y-5">
-    <SectionHeader title="Feed Read" headlineTone />
-    <AggregatorList
-      items={feedRead}
-      maxItems={8}
-      tone="subtle"
-      showAccent={false}
-    />
-  </section>
-
-  <section className="mt-4 space-y-5">
+    <section className="mt-8 space-y-5">
     <SectionHeader title="Strategic Insights" headlineTone />
     <AggregatorList
       items={strategicInsights}
