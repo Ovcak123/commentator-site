@@ -137,11 +137,11 @@ export default async function AboutPage() {
   const body = page?.body;
 
   return (
-    <main className="min-h-screen bg-[#0A0E14] text-[#E6E9EE]">
+    <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
       <Header />
 
       <section className="relative overflow-hidden px-5 pb-16 pt-24 text-left md:px-0 md:pb-24 md:pt-32">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.035),transparent_34%),radial-gradient(circle_at_top_right,rgba(198,124,78,0.045),transparent_28%),linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(255,255,255,0))]" />
+        
 
         <div className="relative md:ml-[11.625rem] md:max-w-[46rem]">
           <div className="mb-12 border-l border-[rgba(198,124,78,0.28)] pl-5 md:mb-14 md:pl-6">
