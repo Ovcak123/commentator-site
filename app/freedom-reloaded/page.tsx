@@ -40,10 +40,9 @@ function CommentatorClubPanel() {
           </h3>
 
           <p className="mt-4 max-w-none text-[14.7px] leading-[1.84] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4]">
-            A community of founders, CEOs, policymakers, and thinkers
-            who want to be part of the conversation, not outside it.
-            Members get early insight into our ideas, contribute directly, and take
-            part in discussions with the people shaping what comes next.
+            A community of founders, CEOs, policymakers, and thinkers who want to be part of the
+            conversation, not outside it. Members get early insight into our ideas, contribute
+            directly, and take part in discussions with the people shaping what comes next.
           </p>
 
           <div className="mt-5 inline-flex items-center gap-2 text-[13.35px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
@@ -76,10 +75,9 @@ function DesktopCommentatorClubPanel() {
           </h3>
 
           <p className="mt-4 max-w-[64ch] text-[15.4px] leading-[1.78] text-[#E8D5C7] transition-colors duration-150 group-hover:text-[#F7EDE4] lg:text-[16px] lg:leading-[1.82]">
-            A community of founders, CEOs, policymakers, and thinkers
-            who want to be part of the conversation, not outside it.
-            Members get early insight into our ideas, contribute directly, and take
-            part in discussions with the people shaping what comes next.
+            A community of founders, CEOs, policymakers, and thinkers who want to be part of the
+            conversation, not outside it. Members get early insight into our ideas, contribute
+            directly, and take part in discussions with the people shaping what comes next.
           </p>
 
           <div className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-[#F2E5D8] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-white">
@@ -99,87 +97,111 @@ export default async function FreedomReloadedPage() {
   const body = page?.body;
 
   return (
-    <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
-      <Header />
+    <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+      {/* FULL-PAGE BACKGROUND */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <img
+          src="/most-popular-banner.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute left-0 top-[-40%] h-[170%] w-full object-cover object-[76%_10%] opacity-[0.36] scale-[1.12] md:top-[-24%] md:h-[150%] md:object-[76%_34%] md:opacity-[0.24]"
+        />
 
-      <section className="px-5 pb-16 pt-24 text-left md:px-0 md:pb-20 md:pt-32">
-        <div className="md:ml-[11.625rem] md:max-w-3xl">
-          <h1 className="mb-14 text-[2.35rem] font-semibold tracking-[-0.032em] text-[#EEF2F7] md:text-[3.1rem]">
-            {headline}
-          </h1>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.14),rgba(11,13,16,0.06)_24%,rgba(11,13,16,0.06)_56%,rgba(11,13,16,0.14)_100%)]" />
 
-          <div
-            className="
-              prose prose-invert max-w-none text-left text-[16.2px] leading-[1.9] text-[#C0C8D3]
-              md:text-[17.2px] md:leading-[1.95]
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.012)_0%,rgba(11,13,16,0.018)_12%,rgba(11,13,16,0.040)_24%,rgba(11,13,16,0.12)_42%,rgba(11,13,16,0.20)_58%,rgba(11,13,16,0.16)_74%,rgba(11,13,16,0.12)_88%,rgba(11,13,16,0.10)_100%)]" />
 
-              [&_h1]:text-left
-              [&_h2]:text-left
-              [&_h3]:text-left
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,transparent_14%,rgba(8,10,14,0.05)_28%,rgba(8,10,14,0.12)_44%,rgba(8,10,14,0.16)_58%,rgba(8,10,14,0.10)_74%,transparent_88%)]" />
 
-              [&_h1]:font-semibold
-              [&_h2]:font-semibold
-              [&_h3]:font-semibold
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_54%_82%,rgba(201,122,74,0.045),transparent_22%),radial-gradient(circle_at_74%_88%,rgba(68,122,214,0.042),transparent_20%),radial-gradient(circle_at_38%_92%,rgba(255,255,255,0.018),transparent_18%)]" />
 
-              [&_p]:my-0
-              [&_p+p]:mt-7
+        <div className="absolute inset-x-0 top-0 h-[34%] bg-[linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(255,255,255,0.004)_26%,transparent_72%)]" />
 
-              [&_strong]:font-semibold
-              [&_strong]:text-[#EDF2F8]
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(11,13,16,0.06)_0%,rgba(11,13,16,0.04)_8%,rgba(11,13,16,0.02)_16%,transparent_28%)]" />
+      </div>
 
-              [&_em]:text-[#F2F5F9]
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] hidden h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)] md:block" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[18rem] bg-[radial-gradient(circle_at_22%_16%,rgba(68,122,214,0.10),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(201,122,74,0.08),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.022)_0%,rgba(255,255,255,0.008)_20%,transparent_60%)] md:hidden" />
+      <div className="pointer-events-none absolute right-0 top-0 z-[6] hidden h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)] md:block" />
 
-              [&_ul]:my-8
-              [&_ol]:my-8
-              [&_li]:my-2
+      {/* CONTENT */}
+      <div className="relative z-20">
+        <Header transparentOnDark />
 
-              [&_blockquote]:my-10
-              [&_blockquote]:border-l
-              [&_blockquote]:border-[rgba(198,124,78,0.32)]
-              [&_blockquote]:pl-5
-              [&_blockquote]:text-[#D7DEE7]
+        <section className="relative overflow-hidden px-5 pb-16 pt-24 text-left md:px-0 md:pb-20 md:pt-32">
+          <div className="relative md:ml-[11.625rem] md:max-w-[46rem]">
+            <h1 className="mb-14 text-[2.35rem] font-semibold tracking-[-0.032em] text-[#EEF2F7] md:text-[3.1rem]">
+              {headline}
+            </h1>
 
-              /* LEAD PARAGRAPH — KEY FIX */
-              [&>p:first-of-type]:max-w-[42rem]
-              [&>p:first-of-type]:text-[1.28rem]
-              [&>p:first-of-type]:leading-[1.72]
-              [&>p:first-of-type]:text-[#F0F4F9]
-              [&>p:first-of-type]:md:text-[1.42rem]
-              [&>p:first-of-type]:md:leading-[1.76]
-              [&>p:first-of-type]:border-l
-              [&>p:first-of-type]:border-[rgba(198,124,78,0.30)]
-              [&>p:first-of-type]:pl-5
-              [&>p:first-of-type]:md:pl-6
-              [&>p:first-of-type]:mb-10
+            <div
+              className="
+                prose prose-invert max-w-none text-left text-[16.2px] leading-[1.9] text-[#C0C8D3]
+                md:text-[17.2px] md:leading-[1.95]
 
-              [&>p:first-of-type:first-letter]:!float-none
-              [&>p:first-of-type:first-letter]:!m-0
-              [&>p:first-of-type:first-letter]:!p-0
-              [&>p:first-of-type:first-letter]:!text-[1em]
-              [&>p:first-of-type:first-letter]:!font-inherit
-              [&>p:first-of-type:first-letter]:!leading-[inherit]
-              [&>p:first-of-type:first-letter]:!tracking-[inherit]
-            "
-          >
-            {body ? (
-              <PortableText value={body} />
-            ) : (
-              <p>
-                No Freedom Reloaded content found in Sanity yet. Open Sanity → Freedom Reloaded →
-                add Body text → Publish.
-              </p>
-            )}
+                [&_h1]:text-left
+                [&_h2]:text-left
+                [&_h3]:text-left
+
+                [&_h1]:font-semibold
+                [&_h2]:font-semibold
+                [&_h3]:font-semibold
+
+                [&_p]:my-0
+                [&_p+p]:mt-7
+
+                [&_strong]:font-semibold
+                [&_strong]:text-[#EDF2F8]
+
+                [&_em]:text-[#F2F5F9]
+
+                [&_ul]:my-8
+                [&_ol]:my-8
+                [&_li]:my-2
+
+                [&_blockquote]:my-10
+                [&_blockquote]:border-l
+                [&_blockquote]:border-[rgba(198,124,78,0.32)]
+                [&_blockquote]:pl-5
+                [&_blockquote]:text-[#D7DEE7]
+
+                [&>p:first-of-type]:max-w-[42rem]
+                [&>p:first-of-type]:text-[1.28rem]
+                [&>p:first-of-type]:leading-[1.72]
+                [&>p:first-of-type]:text-[#F0F4F9]
+                [&>p:first-of-type]:md:text-[1.42rem]
+                [&>p:first-of-type]:md:leading-[1.76]
+                [&>p:first-of-type]:mb-10
+
+                [&>p:first-of-type:first-letter]:!float-none
+                [&>p:first-of-type:first-letter]:!m-0
+                [&>p:first-of-type:first-letter]:!p-0
+                [&>p:first-of-type:first-letter]:!text-[1em]
+                [&>p:first-of-type:first-letter]:!font-inherit
+                [&>p:first-of-type:first-letter]:!leading-[inherit]
+                [&>p:first-of-type:first-letter]:!tracking-[inherit]
+              "
+            >
+              {body ? (
+                <PortableText value={body} />
+              ) : (
+                <p>
+                  No Freedom Reloaded content found in Sanity yet. Open Sanity → Freedom Reloaded →
+                  add Body text → Publish.
+                </p>
+              )}
+            </div>
+
+            <div className="mt-16 md:hidden">
+              <CommentatorClubPanel />
+            </div>
+
+            <div className="mt-20 hidden md:block">
+              <DesktopCommentatorClubPanel />
+            </div>
           </div>
-
-          <div className="mt-16 md:hidden">
-            <CommentatorClubPanel />
-          </div>
-
-          <div className="mt-20 hidden md:block">
-            <DesktopCommentatorClubPanel />
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }
