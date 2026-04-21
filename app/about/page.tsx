@@ -137,14 +137,43 @@ export default async function AboutPage() {
   const body = page?.body;
 
   return (
-    <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
-      <Header />
+            <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+            {/* FULL-PAGE BACKGROUND */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <img
+          src="/most-popular-banner.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute left-0 top-[-24%] h-[150%] w-full object-cover object-[76%_34%] opacity-[0.24] scale-[1.08]"
+        />
 
-      <section className="relative overflow-hidden px-5 pb-16 pt-24 text-left md:px-0 md:pb-24 md:pt-32">
-        
+                                                        {/* no separate header-band veil */}
 
-        <div className="relative md:ml-[11.625rem] md:max-w-[46rem]">
-          <div className="mb-12 border-l border-[rgba(198,124,78,0.28)] pl-5 md:mb-14 md:pl-6">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.14),rgba(11,13,16,0.06)_24%,rgba(11,13,16,0.06)_56%,rgba(11,13,16,0.14)_100%)]" />
+
+                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,13,16,0.012)_0%,rgba(11,13,16,0.018)_12%,rgba(11,13,16,0.040)_24%,rgba(11,13,16,0.12)_42%,rgba(11,13,16,0.20)_58%,rgba(11,13,16,0.16)_74%,rgba(11,13,16,0.12)_88%,rgba(11,13,16,0.10)_100%)]" />
+
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,transparent_14%,rgba(8,10,14,0.05)_28%,rgba(8,10,14,0.12)_44%,rgba(8,10,14,0.16)_58%,rgba(8,10,14,0.10)_74%,transparent_88%)]" />
+
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_54%_82%,rgba(201,122,74,0.045),transparent_22%),radial-gradient(circle_at_74%_88%,rgba(68,122,214,0.042),transparent_20%),radial-gradient(circle_at_38%_92%,rgba(255,255,255,0.018),transparent_18%)]" />
+
+                                     <div className="absolute inset-x-0 top-0 h-[34%] bg-[linear-gradient(to_bottom,rgba(255,255,255,0.012),rgba(255,255,255,0.004)_26%,transparent_72%)]" />   
+
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(11,13,16,0.06)_0%,rgba(11,13,16,0.04)_8%,rgba(11,13,16,0.02)_16%,transparent_28%)]" />
+      </div>                  
+
+      {/* SIDE DISSOLVES */}
+            
+
+      {/* CONTENT */}
+      <div className="relative z-20">
+        <div className="pointer-events-none absolute right-0 top-0 z-[6] h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)]" />
+        <Header transparentOnDark />
+
+        <section className="relative overflow-hidden px-5 pb-16 pt-24 text-left md:px-0 md:pb-24 md:pt-32">
+          <div className="relative md:ml-[11.625rem] md:max-w-[46rem]">
+          <div className="mb-12 pl-0 md:mb-14">
             <h1 className="-mt-2 text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.03em] text-[#EAEFF5] md:text-[2.85rem]">
               The Mission
             </h1>
@@ -186,11 +215,7 @@ export default async function AboutPage() {
               [&>p:first-of-type]:text-[#E7EDF4]
               [&>p:first-of-type]:md:text-[1.4rem]
               [&>p:first-of-type]:md:leading-[1.76]
-              [&>p:first-of-type]:md:text-[#ECF1F7]
-              [&>p:first-of-type]:border-l
-              [&>p:first-of-type]:border-[rgba(198,124,78,0.30)]
-              [&>p:first-of-type]:pl-5
-              [&>p:first-of-type]:md:pl-6
+              
               [&>p:first-of-type]:mb-12
               [&>p:first-of-type:first-letter]:!float-none
               [&>p:first-of-type:first-letter]:!m-0
@@ -219,7 +244,8 @@ export default async function AboutPage() {
             <DesktopCommentatorClubPanel />
           </div>
         </div>
-      </section>
+              </section>
+      </div>
     </main>
   );
 }

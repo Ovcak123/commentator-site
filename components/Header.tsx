@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Header() {
+export default function Header({
+  transparentOnDark = false,
+}: {
+  transparentOnDark?: boolean;
+}) {
   const pathname = usePathname() ?? "";
 
   const navLinkClass = (href: string) => {
@@ -25,7 +29,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-[#0B0D10] text-[#E6E9EE]">
+    <header className={`${transparentOnDark ? "bg-transparent" : "bg-[#0B0D10]"} text-[#E6E9EE]`}>
       {/* Top band: masthead */}
             <div>
         <div
