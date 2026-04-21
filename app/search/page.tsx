@@ -129,7 +129,7 @@ function CommentatorClubPanel() {
           </p>
 
           <div className="mt-6 flex items-end justify-between gap-3">
-            <div className="text-[12px] font-semibold tracking-[0.08em] text-[#F4E7DB]">
+            <div className="text-[12.5px] font-semibold tracking-[0.04em] text-[#F4E7DB]">
               $5 per month
             </div>
 
@@ -179,7 +179,7 @@ function DesktopCommentatorClubPanel() {
           </p>
 
           <div className="mt-6 flex items-end justify-between gap-3">
-            <div className="text-[12px] font-semibold tracking-[0.08em] text-[#F4E7DB]">
+            <div className="text-[12.5px] font-semibold tracking-[0.04em] text-[#F4E7DB]">
               $5 per month
             </div>
 
