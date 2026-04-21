@@ -402,9 +402,9 @@ function DesktopMissionBlock() {
 function MobileArticleCloser() {
   return (
     <>
-      <div className="mt-14 mb-10 h-[2px] w-full bg-white/30" />
+      <div className="mt-40 h-[2px] w-full bg-white/30" />
 
-      <div className="mt-16 mb-6 text-center">
+      <div className="pt-24 pb-12 text-center">
         <div className="mx-auto w-full max-w-[20rem] space-y-8">
           <Link
             href="/about"
@@ -472,7 +472,7 @@ function MobileMostPopularSection({
             src="/most-popular-banner.jpg"
             alt=""
             aria-hidden="true"
-                        className="absolute inset-0 h-full w-full object-cover object-[82%_38%] opacity-[0.52]"
+            className="absolute inset-0 h-full w-full object-cover object-[82%_38%] opacity-[0.52]"
           />
 
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.15),rgba(11,13,16,0.07)_24%,rgba(11,13,16,0.08)_56%,rgba(11,13,16,0.16)_100%)]" />
@@ -491,7 +491,7 @@ function MobileMostPopularSection({
         <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-[linear-gradient(to_left,#0B0D10,rgba(11,13,16,0.62),rgba(11,13,16,0.22),transparent)]" />
 
         {/* CONTENT */}
-        <div className="relative z-20 px-6 pt-[352px] pb-8">
+        <div className="relative z-20 px-6 pt-[352px] pb-16">
           <div className="space-y-14">
             {commentaryItems.length > 0 ? (
               <MostPopularRankedList
@@ -641,7 +641,7 @@ function MobileCommentaryThumbnailSection({ items }: { items: SidebarItem[] }) {
   const thumbnailItems = items.slice(1, 6);
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-12">
       <SectionHeader title="More Commentary" />
 
       <div className="space-y-10">
@@ -1161,22 +1161,22 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
               <DesktopCommentatorClubPanel />
             </section>
 
-                        {/* MOBILE ONLY: post-article stack */}
+            {/* MOBILE ONLY: post-article stack */}
             <div className="mt-20 space-y-0 lg:hidden">
-              <MobileMostPopularSection commentaryItems={mostRead} newsItems={latestNews} />
+  <MobileMostPopularSection commentaryItems={mostRead} newsItems={latestNews} />
 
-              {moreCommentary.length > 0 ? (
-                <div className="pt-6">
-                  <MobileCommentaryThumbnailSection items={moreCommentary} />
-                </div>
-              ) : null}
+  {moreCommentary.length > 0 ? (
+    <div className="pt-12">
+      <MobileCommentaryThumbnailSection items={moreCommentary} />
+    </div>
+  ) : null}
 
-              <div className="pt-6 pb-2">
-                <MobileMissionBlock />
-              </div>
+  <div className="pt-16 pb-16">
+    <MobileMissionBlock />
+  </div>
 
-              <MobileArticleCloser />
-            </div>
+  <MobileArticleCloser />
+</div>
 
             {/* DESKTOP ONLY: centered post-article flow */}
             <div className="mt-20 hidden space-y-16 lg:block">
