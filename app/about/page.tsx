@@ -140,11 +140,11 @@ export default async function AboutPage() {
             <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
             {/* FULL-PAGE BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <img
+                                <img
           src="/most-popular-banner.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute left-0 top-[-24%] h-[150%] w-full object-cover object-[76%_34%] opacity-[0.24] scale-[1.08]"
+          className="absolute left-0 top-[-40%] h-[170%] w-full object-cover object-[76%_10%] opacity-[0.36] scale-[1.12] md:top-[-24%] md:h-[150%] md:object-[76%_34%] md:opacity-[0.24]"
         />
 
                                                         {/* no separate header-band veil */}
@@ -167,8 +167,9 @@ export default async function AboutPage() {
 
       {/* CONTENT */}
       <div className="relative z-20">
-        <div className="pointer-events-none absolute right-0 top-0 z-[6] h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)]" />
+        <div className="pointer-events-none absolute right-0 top-0 z-[6] hidden h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)] md:block" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] hidden h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)] md:block" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[18rem] bg-[radial-gradient(circle_at_22%_16%,rgba(68,122,214,0.10),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(201,122,74,0.08),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.022)_0%,rgba(255,255,255,0.008)_20%,transparent_60%)] md:hidden" />
         <Header transparentOnDark />
 
         <section className="relative overflow-hidden px-5 pb-16 pt-24 text-left md:px-0 md:pb-24 md:pt-32">
