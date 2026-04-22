@@ -206,13 +206,13 @@ export default async function SearchPage({
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
-      {/* FULL-PAGE BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+            {/* FULL-PAGE BACKGROUND */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden md:opacity-50">
         <img
           src="/most-popular-banner.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute left-0 top-[-56%] h-[198%] w-full object-cover object-[100%_24%] opacity-[0.18] scale-[1.22] md:top-[-34%] md:h-[168%] md:object-[100%_46%] md:opacity-[0.10]"
+          className="absolute left-0 top-[-56%] h-[198%] w-full object-cover object-[100%_24%] opacity-[0.18] scale-[1.22] md:top-[-34%] md:h-[168%] md:object-[100%_46%] md:opacity-[0.09]"
         />
 
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.20),rgba(11,13,16,0.10)_24%,rgba(11,13,16,0.10)_56%,rgba(11,13,16,0.18)_100%)]" />
@@ -227,14 +227,14 @@ export default async function SearchPage({
 
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(11,13,16,0.08)_0%,rgba(11,13,16,0.05)_8%,rgba(11,13,16,0.03)_16%,transparent_28%)]" />
 
-                        {/* LEFT-SIDE BODY VEIL TO KILL BAKED-IN LETTERING */}
+        {/* LEFT-SIDE BODY VEIL TO KILL BAKED-IN LETTERING */}
         <div className="absolute left-0 top-[21rem] h-[24rem] w-[24%] bg-[linear-gradient(to_right,rgba(11,13,16,0.58)_0%,rgba(11,13,16,0.34)_36%,rgba(11,13,16,0.12)_64%,transparent_100%)] md:top-[21rem] md:h-[28rem] md:w-[18%]" />
       </div>
 
       {/* CONTENT */}
       <div className="relative z-20">
-        <div className="pointer-events-none absolute right-0 top-0 z-[6] hidden h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)] md:block" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] hidden h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)] md:block" />
+        <div className="pointer-events-none absolute right-0 top-0 z-[6] hidden h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)] opacity-50 md:block" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] hidden h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)] opacity-50 md:block" />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[18rem] bg-[radial-gradient(circle_at_22%_16%,rgba(68,122,214,0.10),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(201,122,74,0.08),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.022)_0%,rgba(255,255,255,0.008)_20%,transparent_60%)] md:hidden" />
         <Header transparentOnDark />
 
