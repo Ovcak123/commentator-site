@@ -111,12 +111,12 @@ export default function ContactPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
             {/* FULL-PAGE BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden md:opacity-50">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
         <img
           src="/most-popular-banner.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute left-0 top-[-52%] h-[190%] w-full object-cover object-[100%_18%] opacity-[0.36] scale-[1.18] md:top-[-30%] md:h-[160%] md:object-[100%_42%] md:opacity-[0.09]"
+          className="absolute left-0 top-[-52%] h-[190%] w-full object-cover object-[100%_18%] opacity-[0.22] scale-[1.18] md:top-[-30%] md:h-[160%] md:object-[100%_42%] md:opacity-[0.09]"
         />
 
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.14),rgba(11,13,16,0.06)_24%,rgba(11,13,16,0.06)_56%,rgba(11,13,16,0.14)_100%)]" />

@@ -207,12 +207,12 @@ export default async function SearchPage({
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
             {/* FULL-PAGE BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden md:opacity-50">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
         <img
           src="/most-popular-banner.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute left-0 top-[-56%] h-[198%] w-full object-cover object-[100%_24%] opacity-[0.18] scale-[1.22] md:top-[-34%] md:h-[168%] md:object-[100%_46%] md:opacity-[0.09]"
+          className="absolute left-0 top-[-56%] h-[198%] w-full object-cover object-[100%_24%] opacity-[0.22] scale-[1.22] md:top-[-34%] md:h-[168%] md:object-[100%_46%] md:opacity-[0.09]"
         />
 
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.20),rgba(11,13,16,0.10)_24%,rgba(11,13,16,0.10)_56%,rgba(11,13,16,0.18)_100%)]" />
@@ -250,14 +250,14 @@ export default async function SearchPage({
               </label>
 
               <div className="flex items-center gap-3">
-                <input
+                              <input
                   id="q"
                   name="q"
                   defaultValue={q}
-                  placeholder="Search commentary, News Point, Feed Read…"
-                  className="w-full rounded-md bg-white/5 px-4 py-3 text-[14px] text-white/90 placeholder:text-white/35 ring-1 ring-white/10 outline-none focus:ring-2 focus:ring-[#C67C4E]/40"
+                  placeholder="Type to search"
+                  className="w-full rounded-md bg-white/10 px-4 py-3 text-[14px] text-white/90 placeholder:text-white/25 ring-1 ring-white/20 outline-none focus:ring-2 focus:ring-[#C67C4E]/40"
                   autoComplete="off"
-                />
+                />  
                 <button
                   type="submit"
                   className="shrink-0 rounded-md bg-white/5 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/75 ring-1 ring-white/10 transition-colors duration-150 hover:text-white hover:ring-white/20"
@@ -266,13 +266,13 @@ export default async function SearchPage({
                 </button>
               </div>
 
-              <p className="text-[12px] leading-relaxed text-white/45">
+              <p className="text-[12px] leading-relaxed text-white/55">
                 Tip: try names, countries, AI topics, or a phrase from a headline.
               </p>
             </form>
 
             <div className="space-y-4 pt-8">
-              {q ? (
+                            {q ? (
                 <p className="text-[12px] text-white/55">
                   Results for{" "}
                   <span className="text-white/85" style={{ fontStyle: "italic" }}>
@@ -280,11 +280,7 @@ export default async function SearchPage({
                   </span>
                   : <span className="text-white/75">{hits.length}</span>
                 </p>
-              ) : (
-                <p className="text-[12px] text-white/55">
-                  Enter a query to search across the site.
-                </p>
-              )}
+              ) : null}
 
               {hits.length > 0 && (
                 <ul className="space-y-3">

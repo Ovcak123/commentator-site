@@ -129,12 +129,12 @@ export default async function FreedomReloadedPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
             {/* FULL-PAGE BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden md:opacity-50">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
         <img
           src="/most-popular-banner.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute left-0 top-[-40%] h-[170%] w-full object-cover object-[76%_10%] opacity-[0.36] scale-[1.12] md:top-[-24%] md:h-[150%] md:object-[76%_34%] md:opacity-[0.09]"
+          className="absolute left-0 top-[-40%] h-[170%] w-full object-cover object-[76%_10%] opacity-[0.22] scale-[1.12] md:top-[-24%] md:h-[150%] md:object-[76%_34%] md:opacity-[0.09]"
         />
 
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,13,16,0.14),rgba(11,13,16,0.06)_24%,rgba(11,13,16,0.06)_56%,rgba(11,13,16,0.14)_100%)]" />
@@ -151,7 +151,7 @@ export default async function FreedomReloadedPage() {
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] hidden h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)] opacity-50 md:block" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[18rem] bg-[radial-gradient(circle_at_22%_16%,rgba(68,122,214,0.10),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(201,122,74,0.08),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.022)_0%,rgba(255,255,255,0.008)_20%,transparent_60%)] md:hidden" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[18rem] bg-[radial-gradient(circle_at_22%_16%,rgba(68,122,214,0.05),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(201,122,74,0.04),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.012)_0%,rgba(255,255,255,0.004)_20%,transparent_60%)] md:hidden" />
       <div className="pointer-events-none absolute right-0 top-0 z-[6] hidden h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)] opacity-50 md:block" />
 
       {/* CONTENT */}
