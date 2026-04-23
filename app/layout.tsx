@@ -19,7 +19,7 @@ export default function RootLayout({
 
         <footer className="site-footer" role="contentinfo">
           <div className="site-footer-inner text-center">
-            The Commentator. © Robin Shepherd, 2026. All rights reserved.
+            © Commentator Media LLC. Founded by Robin Shepherd
           </div>
         </footer>
       </body>
