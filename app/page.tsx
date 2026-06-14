@@ -410,7 +410,7 @@ function SectionHeader({
           >
             {title}
           </h2>
-          <div className="mt-2.5 flex items-center gap-2.5">
+          <div className="mt-4 mb-3 flex items-center gap-2.5">
             <span className="block h-[2px] w-[54px] shrink-0 rounded-full bg-white/40" />
             <span className="block h-px min-w-0 flex-1 bg-white/12" />
           </div>
