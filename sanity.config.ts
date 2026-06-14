@@ -90,8 +90,8 @@ export default defineConfig({
   name: 'default',
   title: 'Commentator Studio',
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: 'o6cs8ags',
+dataset: 'production',
 
   plugins: [
     deskTool({
