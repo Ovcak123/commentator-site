@@ -2208,8 +2208,44 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
 </aside>        
         </div>
 
-                        <div className="hidden lg:block pt-28 pb-8">
+                                <div className="hidden lg:block pt-28 pb-12">
           <DesktopMissionBlock />
+
+          <div className="mt-20 mb-8 text-center">
+            <div className="mx-auto w-full max-w-[20rem] space-y-8">
+              <Link
+                href="/about"
+                className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+              >
+                ABOUT
+              </Link>
+
+              <Link
+                href="/club"
+                className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+              >
+                COMMENTATOR CLUB
+              </Link>
+
+              <Link
+                href="/search"
+                className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+              >
+                SEARCH
+              </Link>
+
+              <Link
+                href="/contact"
+                className="block text-[15px] font-semibold uppercase tracking-[0.34em] text-[#D7A27B] no-underline transition-colors duration-150 hover:text-[#E6B089] hover:no-underline"
+              >
+                CONTACT
+              </Link>
+            </div>
+
+            <div className="mt-12 flex justify-center">
+              <div className="h-[2px] w-40 bg-white/30" />
+            </div>
+          </div>
         </div>
       </div>
     </main>
