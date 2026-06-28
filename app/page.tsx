@@ -1738,7 +1738,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                                     <div className="mb-12 flex items-end justify-between gap-5">
                     <div className="min-w-0 flex-1">
                       <h2
-                        className={`${MAJOR_HEADLINE_SERIF_CLASS} whitespace-nowrap text-[14px] font-semibold uppercase tracking-[0.12em] text-[#E1C29F]`}
+                        className={`${MAJOR_HEADLINE_SERIF_CLASS} whitespace-nowrap text-[18px] font-semibold uppercase tracking-[0.12em] text-[#E1C29F]`}
                       >
                         Commentary
                       </h2>
@@ -1749,7 +1749,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
 
                     <a
                       href="#news-point-mobile"
-                      className="pt-[18px] inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
+                      className="mb-[6px] inline-flex shrink-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/72 no-underline transition-colors duration-150 hover:text-white hover:no-underline"
                     >
                       <span>News Point</span>
                       <span className="h-px w-6 bg-white/30" />
