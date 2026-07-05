@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Header from "../../components/Header";
+import CommentatorClubCard from "../../components/CommentatorClubCard";
 import { client } from "../../sanity/lib/client";
 import { PortableText } from "next-sanity";
 
@@ -223,11 +224,11 @@ export default async function FreedomReloadedPage() {
             </div>
 
             <div className="mt-16 md:hidden">
-              <CommentatorClubPanel />
+              <CommentatorClubCard />
             </div>
 
             <div className="mt-20 hidden md:block">
-              <DesktopCommentatorClubPanel />
+              <CommentatorClubCard />
             </div>
           </div>
         </section>

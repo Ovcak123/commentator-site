@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import Header from "../components/Header";
+import CommentatorClubCard from "../components/CommentatorClubCard";
 import Link from "next/link";
 import { client } from "../sanity/lib/client";
 import { newsItemsQuery } from "../sanity/lib/queries";
@@ -1768,7 +1769,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
               ) : null}
 
               <section className="mt-10">
-  <CommentatorClubPanel />
+  <CommentatorClubCard />
 </section>
 
                             {mobilePostClubMicroCards.length > 0 ? (
@@ -2006,7 +2007,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                 </div>
 
                 <section className="w-full max-w-none pt-10 pb-4">
-                  <DesktopCommentatorClubPanel />
+                  <CommentatorClubCard />
                 </section>
 
                 <div className="pt-8 pb-0">

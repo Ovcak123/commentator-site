@@ -4,6 +4,7 @@ export const revalidate = 0;
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
+import CommentatorClubCard from "../../../components/CommentatorClubCard";
 import MobileShare from "../../../components/MobileShare";
 import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
@@ -1153,12 +1154,12 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
             {/* MOBILE ONLY: earned membership ask immediately after article */}
             <section className="lg:hidden">
-              <CommentatorClubPanel />
+              <CommentatorClubCard />
             </section>
 
             {/* DESKTOP ONLY: earned membership ask immediately after article */}
             <section className="hidden lg:block">
-              <DesktopCommentatorClubPanel />
+              <CommentatorClubCard />
             </section>
 
             {/* MOBILE ONLY: post-article stack */}

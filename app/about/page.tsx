@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Children, Fragment } from "react";
 import Header from "../../components/Header";
+import CommentatorClubCard from "../../components/CommentatorClubCard";
 import { client } from "../../sanity/lib/client";
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
@@ -268,11 +269,11 @@ export default async function AboutPage() {
           </div>
 
           <div className="mt-16 md:hidden">
-            <CommentatorClubPanel />
+            <CommentatorClubCard />
           </div>
 
           <div className="mt-24 hidden md:block">
-            <DesktopCommentatorClubPanel />
+            <CommentatorClubCard />
           </div>
         </div>
               </section>

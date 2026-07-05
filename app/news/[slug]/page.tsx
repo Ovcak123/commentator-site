@@ -4,6 +4,7 @@ export const revalidate = 0;
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
+import CommentatorClubCard from "../../../components/CommentatorClubCard";
 import MobileShare from "../../../components/MobileShare";
 import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
@@ -1066,11 +1067,11 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section className="lg:hidden">
-              <CommentatorClubPanel />
+              <CommentatorClubCard />
             </section>
 
             <section className="hidden lg:block">
-              <DesktopCommentatorClubPanel />
+              <CommentatorClubCard />
             </section>
 
             <div className="mt-20 space-y-0 lg:hidden">

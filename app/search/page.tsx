@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import Header from "../../components/Header";
+import CommentatorClubCard from "../../components/CommentatorClubCard";
 import Link from "next/link";
 import { client } from "../../sanity/lib/client";
 import type { ReactNode } from "react";
@@ -15,8 +16,6 @@ type Hit = {
   kind: "Commentary" | "News Point" | "Feed Read";
   meta?: string;
 };
-
-const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
 
 function safeQ(v: unknown) {
   return typeof v === "string" ? v.trim() : "";
@@ -96,106 +95,6 @@ function Chip({ children }: { children: ReactNode }) {
   );
 }
 
-function CommentatorClubPanel() {
-  return (
-    <Link
-      href="/club"
-      className="group block no-underline hover:no-underline focus:outline-none"
-      aria-label="Join The Commentator Club"
-    >
-      <section className="relative overflow-hidden rounded-[6px] border border-[#E7C9B4]/[0.08] bg-[linear-gradient(135deg,rgba(52,7,15,0.96)_0%,rgba(88,11,24,0.95)_34%,rgba(116,18,33,0.92)_66%,rgba(79,10,21,0.96)_100%)] px-7 py-7 transition-all duration-200 group-hover:border-[#E7C9B4]/[0.14] group-hover:shadow-[0_14px_34px_rgba(0,0,0,0.28)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.085),transparent_28%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(255,220,190,0.055),transparent_24%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.035),transparent_34%)]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.28),transparent)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.008)_24%,rgba(0,0,0,0.10)_100%)]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[38%] bg-[linear-gradient(to_left,rgba(255,255,255,0.03),transparent_72%)] opacity-80" />
-
-        <div className="relative">
-          <div className="mb-3 inline-flex items-center rounded-full border border-[#F3D9C7]/[0.08] bg-black/5 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.24em] text-[#F0D8C7]/65">
-            Membership
-          </div>
-
-          <h3
-            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.06] text-[#F4E7DB] transition-colors duration-150 group-hover:text-[#FFF5ED]`}
-          >
-            Join The Commentator Club
-          </h3>
-
-          <p className="mt-4 max-w-none text-[14.2px] leading-[1.9] text-[#E9D6C8] transition-colors duration-150 group-hover:text-[#FAEEE5]">
-            A community of founders, CEOs, policymakers, and thinkers who want to be part of the
-            conversation, not outside it. Members get early insight into our ideas, contribute
-            directly, and take part in discussions with the people shaping what comes next.
-          </p>
-
-          <div className="mt-6 flex items-end justify-between gap-3">
-            <div className="text-[12.5px] font-semibold tracking-[0.04em] text-[#F4E7DB]">
-              $5 per month
-            </div>
-
-            <div className="inline-flex items-center gap-2 text-[14px] font-semibold text-white transition-all duration-150 group-hover:translate-x-0.5">
-              <span>Learn more</span>
-              <span aria-hidden="true" className="text-[17px] leading-none">
-                →
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </Link>
-  );
-}
-
-function DesktopCommentatorClubPanel() {
-  return (
-    <Link
-      href="/club"
-      className="group block no-underline hover:no-underline focus:outline-none"
-      aria-label="Join The Commentator Club"
-    >
-      <section className="relative overflow-hidden rounded-[6px] border border-[#E7C9B4]/[0.08] bg-[linear-gradient(135deg,rgba(52,7,15,0.96)_0%,rgba(88,11,24,0.95)_34%,rgba(116,18,33,0.92)_66%,rgba(79,10,21,0.96)_100%)] px-7 py-6 transition-all duration-200 group-hover:border-[#E7C9B4]/[0.14] group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.24)] lg:px-8 lg:py-7">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.085),transparent_28%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(255,220,190,0.055),transparent_24%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.035),transparent_34%)]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.28),transparent)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.008)_24%,rgba(0,0,0,0.10)_100%)]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[38%] bg-[linear-gradient(to_left,rgba(255,255,255,0.03),transparent_72%)] opacity-80" />
-
-        <div className="relative">
-          <div className="mb-3 inline-flex items-center rounded-full border border-[#F3D9C7]/[0.08] bg-black/5 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.24em] text-[#F0D8C7]/65">
-            Membership
-          </div>
-
-          <h3
-            className={`${MAJOR_HEADLINE_SERIF_CLASS} text-[19px] font-semibold leading-[1.06] text-[#F4E7DB] transition-colors duration-150 group-hover:text-[#FFF5ED] lg:text-[20px]`}
-          >
-            Join The Commentator Club
-          </h3>
-
-          <p className="mt-4 max-w-[64ch] text-[15.4px] leading-[1.78] text-[#E9D6C8] transition-colors duration-150 group-hover:text-[#FAEEE5] lg:text-[16px] lg:leading-[1.82]">
-            A community of founders, CEOs, policymakers, and thinkers who want to be part of the
-            conversation, not outside it. Members get early insight into our ideas, contribute
-            directly, and take part in discussions with the people shaping what comes next.
-          </p>
-
-          <div className="mt-6 flex items-end justify-between gap-3">
-            <div className="text-[12.5px] font-semibold tracking-[0.04em] text-[#F4E7DB]">
-              $5 per month
-            </div>
-
-            <div className="inline-flex items-center gap-2 text-[14px] font-semibold text-white transition-all duration-150 group-hover:translate-x-0.5">
-              <span>Learn more</span>
-              <span aria-hidden="true" className="text-[17px] leading-none">
-                →
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </Link>
-  );
-}
-
 export default async function SearchPage({
   searchParams,
 }: {
@@ -206,7 +105,7 @@ export default async function SearchPage({
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
-            {/* FULL-PAGE BACKGROUND */}
+      {/* FULL-PAGE BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
         <img
           src="/most-popular-banner.jpg"
@@ -227,7 +126,6 @@ export default async function SearchPage({
 
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(11,13,16,0.08)_0%,rgba(11,13,16,0.05)_8%,rgba(11,13,16,0.03)_16%,transparent_28%)]" />
 
-        {/* LEFT-SIDE BODY VEIL TO KILL BAKED-IN LETTERING */}
         <div className="absolute left-0 top-[21rem] h-[24rem] w-[24%] bg-[linear-gradient(to_right,rgba(11,13,16,0.58)_0%,rgba(11,13,16,0.34)_36%,rgba(11,13,16,0.12)_64%,transparent_100%)] md:top-[21rem] md:h-[28rem] md:w-[18%]" />
       </div>
 
@@ -236,6 +134,7 @@ export default async function SearchPage({
         <div className="pointer-events-none absolute right-0 top-0 z-[6] hidden h-[22rem] w-[30rem] bg-[linear-gradient(to_left,rgba(11,13,16,0.16)_0%,rgba(11,13,16,0.09)_28%,rgba(11,13,16,0.035)_54%,transparent_80%)] opacity-50 md:block" />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] hidden h-[22rem] bg-[linear-gradient(to_bottom,rgba(11,13,16,0.22)_0%,rgba(11,13,16,0.16)_28%,rgba(11,13,16,0.10)_52%,transparent_78%)] opacity-50 md:block" />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[18rem] bg-[radial-gradient(circle_at_22%_16%,rgba(68,122,214,0.10),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(201,122,74,0.08),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.022)_0%,rgba(255,255,255,0.008)_20%,transparent_60%)] md:hidden" />
+
         <Header transparentOnDark />
 
         <section className="relative overflow-hidden px-5 pb-16 pt-24 text-left md:px-0 md:pb-20 md:pt-32">
@@ -250,14 +149,15 @@ export default async function SearchPage({
               </label>
 
               <div className="flex items-center gap-3">
-                              <input
+                <input
                   id="q"
                   name="q"
                   defaultValue={q}
                   placeholder="Type to search"
                   className="w-full rounded-md bg-white/10 px-4 py-3 text-[14px] text-white/90 placeholder:text-white/25 ring-1 ring-white/20 outline-none focus:ring-2 focus:ring-[#C67C4E]/40"
                   autoComplete="off"
-                />  
+                />
+
                 <button
                   type="submit"
                   className="shrink-0 rounded-md bg-white/5 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/75 ring-1 ring-white/10 transition-colors duration-150 hover:text-white hover:ring-white/20"
@@ -272,7 +172,7 @@ export default async function SearchPage({
             </form>
 
             <div className="space-y-4 pt-8">
-                            {q ? (
+              {q ? (
                 <p className="text-[12px] text-white/55">
                   Results for{" "}
                   <span className="text-white/85" style={{ fontStyle: "italic" }}>
@@ -349,11 +249,11 @@ export default async function SearchPage({
             </div>
 
             <div className="mt-16 md:hidden">
-              <CommentatorClubPanel />
+              <CommentatorClubCard />
             </div>
 
             <div className="mt-20 hidden md:block">
-              <DesktopCommentatorClubPanel />
+              <CommentatorClubCard />
             </div>
           </div>
         </section>

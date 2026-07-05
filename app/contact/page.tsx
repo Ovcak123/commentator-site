@@ -1,6 +1,7 @@
 // app/contact/page.tsx
 
 import Header from "../../components/Header";
+import CommentatorClubCard from "../../components/CommentatorClubCard";
 import Link from "next/link";
 
 export const revalidate = 0;
@@ -212,11 +213,11 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-16 md:hidden">
-              <CommentatorClubPanel />
+              <CommentatorClubCard />
             </div>
 
             <div className="mt-20 hidden md:block">
-              <DesktopCommentatorClubPanel />
+              <CommentatorClubCard />
             </div>
           </div>
         </section>
