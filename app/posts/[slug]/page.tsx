@@ -1059,6 +1059,83 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
   return (
     <main className="commentary min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
+      <div className="print-edition">
+        <div className="print-edition-masthead">
+          <div className="print-edition-mark">C</div>
+          <div className="print-edition-title">THE COMMENTATOR</div>
+          <div className="print-edition-tagline">Freedom in the Age of AI</div>
+        </div>
+
+        <article className="print-edition-article">
+          <hr className="print-edition-rule" />
+
+          <h1 className="print-edition-headline">{typedPost.title}</h1>
+
+          <div className="print-edition-meta">
+            {authorName ? <span>{authorName}</span> : null}
+            {date ? <span>{date}</span> : null}
+            {typedPost.readTimeMinutes ? (
+              <span>{typedPost.readTimeMinutes} min read</span>
+            ) : null}
+          </div>
+
+          {typedPost.excerpt ? (
+            <p className="print-edition-excerpt">{typedPost.excerpt}</p>
+          ) : null}
+
+          {heroUrl ? (
+            <img
+              src={heroUrl}
+              alt={typedPost.title}
+              className="print-edition-hero"
+            />
+          ) : null}
+
+          <section className="print-edition-body">
+            {typedPost.body?.length ? (
+              <PortableText value={typedPost.body} components={portableTextComponents} />
+            ) : null}
+          </section>
+
+          <p className="print-edition-mission">
+            Understanding Power in the Digital Revolution.
+          </p>
+
+          <section className="print-edition-club">
+            <div className="print-edition-club-mark">C</div>
+            <div>
+              <h2>Join The Commentator Club</h2>
+              <p>
+                Become part of our community of founders, policymakers,
+                investors and thinkers.
+              </p>
+            </div>
+            <div>
+              <h3>Members receive:</h3>
+              <ul>
+                <li>Revolution Rewired newsletter</li>
+                <li>Comment privileges</li>
+                <li>Editorial discussions</li>
+                <li>Exclusive member benefits</li>
+              </ul>
+            </div>
+            <div>
+              <strong>$5 per month</strong>
+              <span>thecommentator.ai/club</span>
+            </div>
+          </section>
+
+          <div className="print-edition-url">
+            Originally published at https://thecommentator.ai/posts/{typedPost.slug}
+          </div>
+
+          <div className="print-edition-copyright">
+            © 2026 Commentator Media LLC. All rights reserved.
+          </div>
+        </article>
+      </div>
+
+      <div className="screen-edition">
       <Header />
 
       <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6 lg:pt-16">
@@ -1232,6 +1309,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
           </div>
         </div>
       </div>
-    </main>
+          </div>
+</main>
   );
 }

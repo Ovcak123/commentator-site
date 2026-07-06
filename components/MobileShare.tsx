@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import PrintButton from "./PrintButton";
 
 type MobileShareProps = {
   title?: string;
@@ -40,7 +41,7 @@ export default function MobileShare({ title, className }: MobileShareProps) {
   }
 
   return (
-    <div className={className}>
+    <div className={`inline-flex items-center gap-4 ${className ?? ""}`}>
       <button
         type="button"
         onClick={handleShare}
@@ -75,6 +76,7 @@ export default function MobileShare({ title, className }: MobileShareProps) {
 
         <span>{copied ? "Copied" : "Share"}</span>
       </button>
+      <PrintButton />
     </div>
   );
 }

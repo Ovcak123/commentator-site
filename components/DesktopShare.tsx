@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import PrintButton from "./PrintButton";
 
 type DesktopShareProps = {
   title?: string;
@@ -157,7 +158,7 @@ export default function DesktopShare({
   }, [open]);
 
   return (
-    <div ref={wrapperRef} className={className}>
+    <div ref={wrapperRef} className={`inline-flex items-center gap-4 ${className ?? ""}`}>
       <div className="relative inline-flex items-center">
         <button
           type="button"
@@ -248,6 +249,7 @@ export default function DesktopShare({
           </div>
         )}
       </div>
+      <PrintButton />
     </div>
   );
 }
