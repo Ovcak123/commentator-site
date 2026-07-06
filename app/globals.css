@@ -381,6 +381,24 @@ img {
 .print-edition {
   display: none;
 }
+
+/* ==========================================================
+   ARTICLE TOOLBAR
+   ========================================================== */
+
+/* ==========================================================
+   ARTICLE TOOLBAR
+   ========================================================== */
+
+[aria-label="Print article"] {
+  color: #7da2ff !important;
+  opacity: 0.78 !important;
+}
+
+[aria-label="Print article"] svg {
+  color: currentColor !important;
+  opacity: 1 !important;
+}
 /* ==========================================================
    THE COMMENTATOR PRINT STYLES
    ========================================================== */
