@@ -113,7 +113,7 @@ function normalizeAuthor(value: any): string | undefined {
 
 function getLeadHref(lead?: HomeLead) {
   if (!lead?.slug) return "#";
-  return lead.type === "newsItem" ? `/news/${lead.slug}` : `/posts/${lead.slug}`;
+  return lead.type === "newsItem" ? `/news/${lead.slug}` : `/commentary/${lead.slug}`;
 }
 
 function getLeadMetaLabel(lead?: HomeLead) {
@@ -365,7 +365,7 @@ async function getHomeData(): Promise<{
       .map((p) => ({
         id: p.id,
         title: p.title,
-        href: `/posts/${p.slug}`,
+        href: `/commentary/${p.slug}`,
         readTimeMinutes: p.readTimeMinutes,
         section: "commentary" as const,
       })),
@@ -863,7 +863,7 @@ function MobileMostPopularSection({
               <MobileMostPopularRankedList
                 items={commentaryItems}
                 sectionTitle="Commentary"
-                hrefBuilder={(slug) => (slug ? `/posts/${slug}` : "#")}
+                hrefBuilder={(slug) => (slug ? `/commentary/${slug}` : "#")}
               />
             ) : null}
 
@@ -978,7 +978,7 @@ function CommentaryList({ items, maxItems }: { items: CommentaryPost[]; maxItems
           className="group relative overflow-visible"
         >
           <Link
-            href={`/posts/${p.slug}`}
+            href={`/commentary/${p.slug}`}
             className={`block no-underline hover:no-underline focus:outline-none transition-all duration-150 group-hover:translate-x-0.5 ${
   index === 0 ? "pt-1 pb-6" : "py-6"
 }`}
@@ -1033,7 +1033,7 @@ function MobileCommentaryFeature({ post }: { post: CommentaryPost }) {
       </div>
 
       <Link
-        href={`/posts/${post.slug}`}
+        href={`/commentary/${post.slug}`}
         className="group relative block overflow-visible no-underline hover:no-underline focus:outline-none"
       >
                 <h3
@@ -1065,7 +1065,7 @@ function MobileCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
   return (
     <article className="group relative overflow-visible pb-14">
       <Link
-        href={`/posts/${post.slug}`}
+        href={`/commentary/${post.slug}`}
         className="block no-underline hover:no-underline focus:outline-none"
       >
                 {post.heroImageUrl ? (
@@ -1115,7 +1115,7 @@ function MobileMicroCommentaryList({ items }: { items: CommentaryPost[] }) {
           }`}
         >
           <Link
-            href={`/posts/${p.slug}`}
+            href={`/commentary/${p.slug}`}
             className="block no-underline hover:no-underline focus:outline-none"
             title={p.title}
           >
@@ -1438,7 +1438,7 @@ function DesktopCommentaryMiniStack({ items }: { items: CommentaryPost[] }) {
         {items.map((p) => (
           <article key={p.id}>
             <Link
-              href={p.slug ? `/posts/${p.slug}` : "#"}
+              href={p.slug ? `/commentary/${p.slug}` : "#"}
               className="group block no-underline hover:no-underline focus:outline-none"
             >
               <div className="grid grid-cols-[1fr_112px] items-end gap-5">
@@ -1491,7 +1491,7 @@ function DesktopCommentaryReentryFeature({ post }: { post: CommentaryPost }) {
   return (
     <article className="group relative overflow-visible py-6">
       <Link
-        href={`/posts/${post.slug}`}
+        href={`/commentary/${post.slug}`}
         className="block no-underline hover:no-underline focus:outline-none"
       >
         {post.heroImageUrl ? (
@@ -1544,7 +1544,7 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
               }`}
             >
               <Link
-                href={`/posts/${p.slug}`}
+                href={`/commentary/${p.slug}`}
                 className="block no-underline hover:no-underline focus:outline-none"
                 title={p.title}
               >
@@ -1592,7 +1592,7 @@ function MobileMoreCommentaryList({ items }: { items: CommentaryPost[] }) {
             }`}
           >
             <Link
-              href={`/posts/${p.slug}`}
+              href={`/commentary/${p.slug}`}
               className="block no-underline hover:no-underline focus:outline-none"
               title={p.title}
             >
@@ -1955,7 +1955,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                         {secondaryLead && secondaryLead.slug ? (
         <article className="mt-0 mb-8 pt-3">
           <Link
-            href={`/posts/${secondaryLead.slug}`}
+            href={`/commentary/${secondaryLead.slug}`}
             className="group block no-underline hover:no-underline focus:outline-none"
           >
             <div className="grid gap-7 lg:grid-cols-[1.18fr_0.82fr] lg:items-stretch">
@@ -2027,7 +2027,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                           return (
                             <article key={p.id}>
                               <Link
-                                href={p.slug ? `/posts/${p.slug}` : "#"}
+                                href={p.slug ? `/commentary/${p.slug}` : "#"}
                                 className="group block no-underline hover:no-underline focus:outline-none"
                               >
                                 <h4
@@ -2071,7 +2071,7 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
                         return (
                           <article key={p.id}>
                             <Link
-                              href={p.slug ? `/posts/${p.slug}` : "#"}
+                              href={p.slug ? `/commentary/${p.slug}` : "#"}
                               className="group block no-underline hover:no-underline focus:outline-none"
                             >
                               <h4

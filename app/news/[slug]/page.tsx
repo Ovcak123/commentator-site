@@ -956,7 +956,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     .map((d: any) => ({
       id: d._id,
       title: d.title ?? "Untitled",
-      href: d.slug ? `/posts/${d.slug}` : "#",
+      href: d.slug ? `/commentary/${d.slug}` : "#",
       readTimeMinutes: normalizeMinutes(d.readTimeMinutes) ?? estimateMinutesFromText(d.text),
       excerpt: typeof d.excerpt === "string" ? d.excerpt : undefined,
       author: normalizeAuthor(d.author),

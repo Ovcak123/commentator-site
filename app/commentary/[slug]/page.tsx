@@ -1004,7 +1004,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     .map((p: any) => ({
       id: p._id,
       title: p.title,
-      href: `/posts/${p.slug}`,
+      href: `/commentary/${p.slug}`,
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
     }));
 
@@ -1013,7 +1013,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
     .map((p: any) => ({
       id: p._id,
       title: p.title,
-      href: `/posts/${p.slug}`,
+      href: `/commentary/${p.slug}`,
       readTimeMinutes: normalizeMinutes(p.readTimeMinutes),
       excerpt: typeof p.excerpt === "string" ? p.excerpt : undefined,
       author: normalizeAuthor(p.author),
@@ -1029,7 +1029,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
       ? {
           id: explicitLead.id,
           title: explicitLead.title,
-          href: `/posts/${explicitLead.slug}`,
+          href: `/commentary/${explicitLead.slug}`,
           readTimeMinutes: explicitLead.readTimeMinutes,
           excerpt: explicitLead.excerpt,
           author: explicitLead.author,
@@ -1126,7 +1126,7 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
           </section>
 
           <div className="print-edition-url">
-            Originally published at https://thecommentator.ai/posts/{typedPost.slug}
+            Originally published at https://thecommentator.ai/commentary/{typedPost.slug}
           </div>
 
           <div className="print-edition-copyright">
