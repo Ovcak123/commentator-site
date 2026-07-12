@@ -58,7 +58,7 @@ async function getSearchResults(q: string): Promise<Hit[]> {
     hits.push({
       id: p._id,
       title: p.title,
-      href: `/posts/${p.slug}`,
+      href: `/commentary/${p.slug}`,
       kind: "Commentary",
       meta: p.author ? String(p.author) : undefined,
     });
