@@ -91,7 +91,7 @@ export default defineConfig({
   title: 'Commentator Studio',
 
   projectId: 'o6cs8ags',
-dataset: 'production',
+  dataset: 'production',
 
   plugins: [
     deskTool({
@@ -101,6 +101,7 @@ dataset: 'production',
           .items([
             S.documentTypeListItem('post').title('Commentary'),
             S.documentTypeListItem('newsItem').title('News'),
+            S.documentTypeListItem('author').title('Authors'),
             S.documentTypeListItem('feedRead').title('Feed Read'),
 
             S.divider(),

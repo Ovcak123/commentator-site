@@ -19,7 +19,16 @@ type Post = {
   author?: any;
   publishedAt?: string;
   slug?: string;
-  heroImage?: any;
+  heroImage?: {
+  asset?: any;
+  crop?: any;
+  hotspot?: any;
+  alt?: string;
+  decorative?: boolean;
+  caption?: string;
+  credit?: string;
+  promptNotes?: string;
+};
   excerpt?: string;
   body?: any[];
   readTimeMinutes?: number;
@@ -978,6 +987,14 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
 
   const authorName = normalizeAuthor(typedPost.author);
   const date = formatDate(typedPost.publishedAt);
+  const heroAlt =
+  typedPost.heroImage?.alt?.trim() || typedPost.title;
+
+const heroCaption =
+  typedPost.heroImage?.caption?.trim() || "";
+
+const heroCredit =
+  typedPost.heroImage?.credit?.trim() || "";
 
   const heroUrl =
     typedPost.heroImage && typedPost.heroImage.asset
@@ -1175,15 +1192,25 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
             </header>
 
             {heroUrl ? (
-              <div className="mt-10 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                <img
-                  src={heroUrl}
-                  alt={typedPost.title}
-                  className="h-auto w-full"
-                  loading="lazy"
-                />
-              </div>
-            ) : null}
+  <figure className="mt-10">
+    <div className="overflow-hidden bg-white/5 ring-1 ring-white/10">
+      <img
+        src={heroUrl}
+        alt={heroAlt}
+        className="h-auto w-full"
+        loading="lazy"
+      />
+    </div>
+
+    {heroCaption || heroCredit ? (
+      <figcaption className="mt-2 text-[12px] leading-[1.45] text-[#9C9488] md:text-[12.5px]">
+        {heroCaption ? <span>{heroCaption}</span> : null}
+        {heroCaption && heroCredit ? <span> </span> : null}
+        {heroCredit ? <span>{heroCredit}</span> : null}
+      </figcaption>
+    ) : null}
+  </figure>
+) : null}
 
             {/* MOBILE SHARE (TOP) — below hero, above body */}
             <div className="mt-3 flex justify-end lg:hidden">

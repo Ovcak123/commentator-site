@@ -86,8 +86,7 @@ export default defineType({
     defineField({
       name: "heroImage",
       title: "Hero image",
-      type: "image",
-      options: { hotspot: true },
+      type: "editorialImage",
     }),
 
     defineField({

@@ -949,8 +949,17 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     estimateMinutesFromText(item?.text) ??
     estimateMinutesFromText(item?.excerpt);
 
-  const authorName = normalizeAuthor(item?.author);
+    const authorName = normalizeAuthor(item?.author);
   const date = formatDate(item?.publishedAt);
+
+  const heroAlt =
+    item?.heroImage?.alt?.trim() || item.title;
+
+  const heroCaption =
+    item?.heroImage?.caption?.trim() || "";
+
+  const heroCredit =
+    item?.heroImage?.credit?.trim() || "";
 
   const mostRead: SidebarItem[] = (mostReadDocs ?? [])
     .map((d: any) => ({
@@ -1096,15 +1105,25 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               ) : null}
             </header>
 
-            {heroUrl ? (
-              <div className="mt-10 overflow-hidden bg-white/5 ring-1 ring-white/10">
-                <img
-                  src={heroUrl}
-                  alt={item.title}
-                  className="h-auto w-full"
-                  loading="lazy"
-                />
-              </div>
+                        {heroUrl ? (
+              <figure className="mt-10">
+                <div className="overflow-hidden bg-white/5 ring-1 ring-white/10">
+                  <img
+                    src={heroUrl}
+                    alt={heroAlt}
+                    className="h-auto w-full"
+                    loading="lazy"
+                  />
+                </div>
+
+                {heroCaption || heroCredit ? (
+                  <figcaption className="mt-2 text-[12px] leading-[1.45] text-[#9C9488] md:text-[12.5px]">
+                    {heroCaption ? <span>{heroCaption}</span> : null}
+                    {heroCaption && heroCredit ? <span> </span> : null}
+                    {heroCredit ? <span>{heroCredit}</span> : null}
+                  </figcaption>
+                ) : null}
+              </figure>
             ) : null}
 
             <div className="mt-3 flex justify-end lg:hidden">
@@ -1112,7 +1131,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             </div>
 
             <section
-               className="mt-5 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
+               className="mt-0 max-w-none prose prose-invert text-[16.8px] leading-[1.58] md:text-[18px] lg:mt-10 lg:leading-relaxed
   prose-headings:text-[#D8CBB8]
   prose-p:text-[#CBC3B8]
   prose-strong:text-[#D8CBB8]

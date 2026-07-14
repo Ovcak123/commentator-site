@@ -70,15 +70,13 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'array',
-      of: [{ type: 'block' }],
+      type: 'richText',
     }),
 
     defineField({
       name: 'heroImage',
       title: 'Hero image',
-      type: 'image',
-      options: { hotspot: true },
+      type: 'editorialImage',
     }),
   ],
 })
