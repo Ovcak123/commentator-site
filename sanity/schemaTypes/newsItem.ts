@@ -63,11 +63,28 @@ export default defineType({
     }),
 
     defineField({
-      name: "author",
-      title: "Author",
-      type: "string",
-      description: "Optional. If blank, the site will show Robin Shepherd.",
-    }),
+  name: "authors",
+  title: "Authors",
+  type: "array",
+  description:
+    "Select the author or authors responsible for this News article.",
+  of: [
+    {
+      type: "reference",
+      to: [{ type: "author" }],
+    },
+  ],
+}),
+
+defineField({
+  name: "author",
+  title: "Legacy author",
+  type: "string",
+  description:
+    "Temporary fallback for articles not yet migrated to Author documents.",
+  hidden: ({ document }) =>
+    Array.isArray(document?.authors) && document.authors.length > 0,
+}),
 
     defineField({
       name: "excerpt",
