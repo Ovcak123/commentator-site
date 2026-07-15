@@ -1165,16 +1165,29 @@ const authorFooter = Array.isArray(referencedAuthor?.authorFooter)
 
               {authorName ? (
   <div className="mt-6 flex items-center gap-3">
-    {authorPortraitUrl ? (
-      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10">
-        <img
-          src={authorPortraitUrl}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover"
-        />
-      </div>
-    ) : null}
+                  {authorPortraitUrl ? (
+                authorSlug ? (
+                  <Link href={`/authors/${authorSlug}`} className="shrink-0">
+                    <div className="h-[70px] w-[70px] overflow-hidden rounded-full ring-1 ring-white/10 lg:h-[74px] lg:w-[74px]">
+                      <img
+                        src={authorPortraitUrl}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="h-[70px] w-[70px] shrink-0 overflow-hidden rounded-full ring-1 ring-white/10 lg:h-[74px] lg:w-[74px]">
+                    <img
+                      src={authorPortraitUrl}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                )
+              ) : null}
 
     <p className="text-xs">
       {authorSlug ? (
