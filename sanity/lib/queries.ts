@@ -2,7 +2,7 @@
 
 /**
  * Canonical GROQ queries used by the Next.js frontend.
- * Keep ALL commonly-imported queries here to prevent broken imports.
+ * Keep ALL commonly imported queries here to prevent broken imports.
  */
 
 /** Homepage + listings (Commentary posts) */
@@ -12,7 +12,13 @@ export const postsQuery = `
     title,
     excerpt,
     subtitle,
-    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    "author": coalesce(
+      author->name,
+      author.name,
+      author->title,
+      author.title,
+      author
+    ),
     publishedAt,
     readTimeMinutes,
     "slug": slug.current,
@@ -20,14 +26,26 @@ export const postsQuery = `
   }
 `;
 
-/** ✅ Single post for article page (/posts/[slug]) */
+/** Single Commentary article page (/commentary/[slug]) */
 export const singlePostQuery = `
   *[_type == "post" && slug.current == $slug][0]{
     _id,
     title,
     subtitle,
     excerpt,
-    "author": coalesce(author, author->name, author.name, author->title, author.title),
+
+    "author": select(
+      count(authors) > 0 => authors[0]->{
+        _id,
+        name,
+        "slug": slug.current,
+        portrait,
+        authorFooter
+      },
+      defined(author) => author,
+      null
+    ),
+
     publishedAt,
     readTimeMinutes,
     "slug": slug.current,
@@ -36,7 +54,7 @@ export const singlePostQuery = `
   }
 `;
 
-/** ✅ Static page content (About / Freedom Reloaded) */
+/** Static page content (About / Freedom Reloaded) */
 export const pageBySlugQuery = `
   *[_type == "page" && slug.current == $slug][0]{
     _id,
@@ -52,7 +70,13 @@ export const newsItemsQuery = `
     _id,
     title,
     excerpt,
-    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    "author": coalesce(
+      author->name,
+      author.name,
+      author->title,
+      author.title,
+      author
+    ),
     source,
     publishedAt,
     readTimeMinutes,

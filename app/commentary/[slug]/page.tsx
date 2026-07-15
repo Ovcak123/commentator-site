@@ -207,12 +207,50 @@ const portableTextComponents: PortableTextComponents = {
     link: ({ children, value }) => {
       const href = value?.href || value?.url || "";
       const isExternal = typeof href === "string" && /^https?:\/\//i.test(href);
+
       if (!href) return <>{children}</>;
+
       return (
         <a
           href={href}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
+        >
+          {children}
+        </a>
+      );
+    },
+  },
+};
+
+const authorFooterComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => (
+      <p className="m-0 text-[16px] italic leading-[1.8] text-[#C8C0B5] md:text-[17px]">
+        {children}
+      </p>
+    ),
+  },
+
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold text-[#CBC3B8]">{children}</strong>
+    ),
+
+    em: ({ children }) => <em>{children}</em>,
+
+    link: ({ children, value }) => {
+      const href = value?.href || value?.url || "";
+      const isExternal = typeof href === "string" && /^https?:\/\//i.test(href);
+
+      if (!href) return <>{children}</>;
+
+      return (
+        <a
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noreferrer noopener" : undefined}
+          className="text-[#D08A57] underline decoration-[#D08A57]/45 underline-offset-[3px] transition-colors hover:text-[#E39A66]"
         >
           {children}
         </a>
@@ -985,7 +1023,30 @@ export default async function CommentaryArticlePage({ params }: PageProps) {
   const typedPost: Post | null = post;
   if (!typedPost || !typedPost.title) notFound();
 
-  const authorName = normalizeAuthor(typedPost.author);
+   const authorName = normalizeAuthor(typedPost.author);
+
+  const referencedAuthor =
+    typedPost.author &&
+    typeof typedPost.author === "object" &&
+    !Array.isArray(typedPost.author)
+      ? typedPost.author
+      : null;
+
+  const authorSlug =
+    typeof referencedAuthor?.slug === "string"
+      ? referencedAuthor.slug.trim()
+      : "";
+
+    const authorPortrait = referencedAuthor?.portrait;
+
+  const authorPortraitUrl = authorPortrait
+    ? urlFor(authorPortrait).width(240).height(240).fit("crop").url()
+    : "";
+
+  const authorFooter = Array.isArray(referencedAuthor?.authorFooter)
+    ? referencedAuthor.authorFooter
+    : [];
+
   const date = formatDate(typedPost.publishedAt);
   const heroAlt =
   typedPost.heroImage?.alt?.trim() || typedPost.title;
@@ -1181,13 +1242,42 @@ const heroCredit =
                 </p>
               ) : null}
 
-              {authorName ? (
-                <p className="mt-6 text-xs">
-                  <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
-                  {date ? <span className="text-[#CBC3B8]">{` • ${date}`}</span> : null}
-                </p>
+                            {authorName ? (
+                <div className="mt-6 flex items-center gap-3">
+                                    {authorPortraitUrl ? (
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10">
+                      <img
+                        src={authorPortraitUrl}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ) : null}
+
+                  <p className="text-xs">
+                    {authorSlug ? (
+                      <Link
+                        href={`/authors/${authorSlug}`}
+                        className="uppercase tracking-[0.16em] text-[#C67C4E] no-underline transition-colors hover:text-[#D78A58] hover:no-underline"
+                      >
+                        {authorName}
+                      </Link>
+                    ) : (
+                      <span className="uppercase tracking-[0.16em] text-[#C67C4E]">
+                        {authorName}
+                      </span>
+                    )}
+
+                    {date ? (
+                      <span className="text-[#CBC3B8]">{` • ${date}`}</span>
+                    ) : null}
+                  </p>
+                </div>
               ) : date ? (
-                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#CBC3B8]">{date}</p>
+                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#CBC3B8]">
+                  {date}
+                </p>
               ) : null}
             </header>
 
@@ -1231,7 +1321,7 @@ const heroCredit =
   prose-hr:border-white/10
 "
             >
-              {typedPost.body?.length ? (
+                            {typedPost.body?.length ? (
                 <PortableText value={typedPost.body} components={portableTextComponents} />
               ) : (
                 <p>
@@ -1240,6 +1330,18 @@ const heroCredit =
                 </p>
               )}
             </section>
+
+                                    {authorFooter.length > 0 ? (
+              <section className="not-prose mt-12">
+                <PortableText
+                  value={authorFooter}
+                  components={authorFooterComponents}
+                />
+              </section>
+            ) : null}
+
+            {/* DIVIDER BELOW AUTHOR FOOTER */}
+            <div className="mt-10 border-t border-white/10" />
 
             {/* MOBILE SHARE (BOTTOM) — end of article */}
             <div className="mt-10 flex justify-end lg:hidden">
