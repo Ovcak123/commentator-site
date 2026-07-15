@@ -64,24 +64,51 @@ export const pageBySlugQuery = `
   }
 `;
 
-/** News items */
+/** News items for homepage and listings */
 export const newsItemsQuery = `
   *[_type == "newsItem"] | order(publishedAt desc, _createdAt desc){
     _id,
     title,
     excerpt,
-    "author": coalesce(
-      author->name,
-      author.name,
-      author->title,
-      author.title,
-      author
+    "author": select(
+      count(authors) > 0 => authors[0]->name,
+      defined(author) => author,
+      null
     ),
     source,
     publishedAt,
     readTimeMinutes,
     "slug": slug.current,
     "heroImageUrl": heroImage.asset->url
+  }
+`;
+
+/** Single News article page (/news/[slug]) */
+export const singleNewsItemQuery = `
+  *[_type == "newsItem" && slug.current == $slug][0]{
+    _id,
+    title,
+    excerpt,
+
+    "author": select(
+      count(authors) > 0 => authors[0]->{
+        _id,
+        name,
+        "slug": slug.current,
+        portrait,
+        authorFooter
+      },
+      defined(author) => author,
+      null
+    ),
+
+    source,
+    externalUrl,
+    publishedAt,
+    readTimeMinutes,
+    "slug": slug.current,
+    heroImage,
+    body
   }
 `;
 

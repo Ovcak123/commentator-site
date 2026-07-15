@@ -4,6 +4,7 @@ export default defineType({
   name: "newsItem",
   title: "News Item",
   type: "document",
+
   fields: [
     defineField({
       name: "title",
@@ -24,7 +25,10 @@ export default defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "title", maxLength: 96 },
+      options: {
+        source: "title",
+        maxLength: 96,
+      },
       validation: (Rule) => Rule.required(),
     }),
 
@@ -39,7 +43,8 @@ export default defineType({
       name: "isLead",
       title: "Lead",
       type: "boolean",
-      description: "Tick to make this the homepage lead story (only one allowed)",
+      description:
+        "Tick to make this the homepage lead story (only one allowed).",
       initialValue: false,
     }),
 
@@ -47,14 +52,14 @@ export default defineType({
       name: "source",
       title: "Source",
       type: "string",
-      description: "Optional (e.g., TechWire, Brussels Briefing).",
+      description: "Optional, for example TechWire or Brussels Briefing.",
     }),
 
     defineField({
       name: "externalUrl",
       title: "External URL (optional)",
       type: "url",
-      description: "Optional: if this News item links to an external source.",
+      description: "Optional: use when this News item links to an external source.",
       validation: (Rule) =>
         Rule.uri({
           allowRelative: false,
@@ -63,35 +68,35 @@ export default defineType({
     }),
 
     defineField({
-  name: "authors",
-  title: "Authors",
-  type: "array",
-  description:
-    "Select the author or authors responsible for this News article.",
-  of: [
-    {
-      type: "reference",
-      to: [{ type: "author" }],
-    },
-  ],
-}),
+      name: "authors",
+      title: "Authors",
+      type: "array",
+      description:
+        "Optional. Select an author for substantial reporting or analysis. Leave empty for unsigned or institutional News articles.",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "author" }],
+        },
+      ],
+    }),
 
-defineField({
-  name: "author",
-  title: "Legacy author",
-  type: "string",
-  description:
-    "Temporary fallback for articles not yet migrated to Author documents.",
-  hidden: ({ document }) =>
-    Array.isArray(document?.authors) && document.authors.length > 0,
-}),
+    defineField({
+      name: "author",
+      title: "Legacy author",
+      type: "string",
+      description:
+        "Temporary fallback for older News articles not yet connected to an Author document.",
+      hidden: ({ document }) =>
+        Array.isArray(document?.authors) && document.authors.length > 0,
+    }),
 
     defineField({
       name: "excerpt",
       title: "Excerpt",
       type: "text",
       rows: 3,
-      description: "Short summary shown in lists / previews.",
+      description: "Short summary shown in lists and previews.",
     }),
 
     defineField({

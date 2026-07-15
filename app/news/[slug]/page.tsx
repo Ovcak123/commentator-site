@@ -27,7 +27,17 @@ const singleNewsQuery = `
     slug,
     source,
     externalUrl,
-    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    "author": select(
+  count(authors) > 0 => authors[0]->{
+    _id,
+    name,
+    "slug": slug.current,
+    portrait,
+    authorFooter
+  },
+  defined(author) => author,
+  null
+),
     publishedAt,
     excerpt,
     body,
@@ -83,7 +93,44 @@ const portableTextComponents: PortableTextComponents = {
     },
   },
 };
+const authorFooterComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => (
+      <p className="m-0 text-[16px] italic leading-[1.8] text-[#C8C0B5] md:text-[17px]">
+        {children}
+      </p>
+    ),
+  },
 
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold text-[#CBC3B8]">
+        {children}
+      </strong>
+    ),
+
+    em: ({ children }) => <em>{children}</em>,
+
+    link: ({ children, value }) => {
+      const href = value?.href || value?.url || "";
+      const isExternal =
+        typeof href === "string" && /^https?:\/\//i.test(href);
+
+      if (!href) return <>{children}</>;
+
+      return (
+        <a
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noreferrer noopener" : undefined}
+          className="text-[#D08A57] underline decoration-[#D08A57]/45 underline-offset-[3px] transition-colors hover:text-[#E39A66]"
+        >
+          {children}
+        </a>
+      );
+    },
+  },
+};
 /* ---------- helpers ---------- */
 
 const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
@@ -950,6 +997,27 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
     estimateMinutesFromText(item?.excerpt);
 
     const authorName = normalizeAuthor(item?.author);
+    const referencedAuthor =
+  item?.author &&
+  typeof item.author === "object" &&
+  !Array.isArray(item.author)
+    ? item.author
+    : null;
+
+const authorSlug =
+  typeof referencedAuthor?.slug === "string"
+    ? referencedAuthor.slug.trim()
+    : "";
+
+const authorPortrait = referencedAuthor?.portrait;
+
+const authorPortraitUrl = authorPortrait
+  ? urlFor(authorPortrait).width(240).height(240).fit("crop").url()
+  : "";
+
+const authorFooter = Array.isArray(referencedAuthor?.authorFooter)
+  ? referencedAuthor.authorFooter
+  : [];
   const date = formatDate(item?.publishedAt);
 
   const heroAlt =
@@ -1096,13 +1164,42 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
               ) : null}
 
               {authorName ? (
-                <p className="mt-6 text-xs">
-                  <span className="uppercase tracking-[0.16em] text-[#C67C4E]">{authorName}</span>
-                  {date ? <span className="text-[#CBC3B8]">{` • ${date}`}</span> : null}
-                </p>
-              ) : date ? (
-                <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#CBC3B8]">{date}</p>
-              ) : null}
+  <div className="mt-6 flex items-center gap-3">
+    {authorPortraitUrl ? (
+      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10">
+        <img
+          src={authorPortraitUrl}
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover"
+        />
+      </div>
+    ) : null}
+
+    <p className="text-xs">
+      {authorSlug ? (
+        <Link
+          href={`/authors/${authorSlug}`}
+          className="uppercase tracking-[0.16em] text-[#C67C4E] no-underline transition-colors hover:text-[#D78A58] hover:no-underline"
+        >
+          {authorName}
+        </Link>
+      ) : (
+        <span className="uppercase tracking-[0.16em] text-[#C67C4E]">
+          {authorName}
+        </span>
+      )}
+
+      {date ? (
+        <span className="text-[#CBC3B8]">{` • ${date}`}</span>
+      ) : null}
+    </p>
+  </div>
+) : date ? (
+  <p className="mt-6 text-xs uppercase tracking-[0.16em] text-[#CBC3B8]">
+    {date}
+  </p>
+) : null}
             </header>
 
                         {heroUrl ? (
@@ -1145,7 +1242,18 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
             >
               <PortableText value={item.body ?? []} components={portableTextComponents} />
             </section>
+{authorFooter.length > 0 ? (
+  <>
+    <section className="not-prose mt-12">
+      <PortableText
+        value={authorFooter}
+        components={authorFooterComponents}
+      />
+    </section>
 
+    <div className="mt-10 border-t border-white/10" />
+  </>
+) : null}
             <div className="mt-10 flex justify-end lg:hidden">
               <MobileShare title={item.title} />
             </div>
