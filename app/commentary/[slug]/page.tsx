@@ -1245,7 +1245,7 @@ const heroCredit =
                             {authorName ? (
                 <div className="mt-6 flex items-center gap-3">
                                     {authorPortraitUrl ? (
-                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10">
+                    <div className="h-[70px] w-[70px] shrink-0 overflow-hidden rounded-full ring-1 ring-white/10 lg:h-[74px] lg:w-[74px]">
                       <img
                         src={authorPortraitUrl}
                         alt=""
