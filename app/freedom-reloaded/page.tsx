@@ -1,12 +1,57 @@
 // app/freedom-reloaded/page.tsx
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "../../components/Header";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import { client } from "../../sanity/lib/client";
+import { siteConfig } from "../../lib/siteConfig";
 import { PortableText } from "next-sanity";
 
 export const revalidate = 0;
+
+const pageTitle = "Freedom Reloaded";
+
+const pageDescription =
+  "The Commentator’s case for renewing freedom, democracy, and open society in the digital age.";
+
+const canonicalPath = "/freedom-reloaded";
+
+export const metadata: Metadata = {
+  title: pageTitle,
+  description: pageDescription,
+
+  alternates: {
+    canonical: canonicalPath,
+  },
+
+  openGraph: {
+    type: "website",
+    url: canonicalPath,
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
 
 const freedomReloadedQuery = `
   *[_type == "freedomReloadedPage"][0]{

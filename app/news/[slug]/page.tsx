@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
@@ -9,7 +10,29 @@ import MobileShare from "../../../components/MobileShare";
 import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
 import { urlFor } from "../../../sanity/lib/image";
+import { siteConfig } from "../../../lib/siteConfig";
 import { PortableText, type PortableTextComponents } from "next-sanity";
+
+type PageProps = {
+  params: { slug: string };
+};
+
+type NewsMetadataItem = {
+  title?: string;
+  excerpt?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  slug?: string;
+  heroImage?: any;
+  heroAlt?: string;
+  referencedAuthors?: Array<{
+    name?: string;
+  }>;
+  referencedAuthor?: {
+    name?: string;
+  };
+  legacyAuthor?: string;
+};
 
 type SidebarItem = {
   id: string;
@@ -20,6 +43,123 @@ type SidebarItem = {
   author?: string;
   heroImageUrl?: string;
 };
+
+/* ---------- metadata ---------- */
+
+const newsMetadataQuery = `
+  *[_type == "newsItem" && slug.current == $slug][0]{
+    title,
+    excerpt,
+    publishedAt,
+    "updatedAt": _updatedAt,
+    "slug": slug.current,
+    heroImage,
+    "heroAlt": heroImage.alt,
+    "referencedAuthors": authors[]->{
+      name
+    },
+    "referencedAuthor": author->{
+      name
+    },
+    "legacyAuthor": select(
+      author._type == "reference" => null,
+      author
+    )
+  }
+`;
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const item: NewsMetadataItem | null = await client.fetch(
+    newsMetadataQuery,
+    { slug: params.slug },
+    { cache: "no-store" as any }
+  );
+
+  if (!item?.title || !item.slug) {
+    return {
+      title: "News Article Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const canonicalPath = `/news/${item.slug}`;
+
+  const description =
+    typeof item.excerpt === "string" && item.excerpt.trim()
+      ? item.excerpt.trim()
+      : siteConfig.description;
+
+  const author =
+    item.referencedAuthors?.[0]?.name ??
+    item.referencedAuthor?.name ??
+    item.legacyAuthor ??
+    undefined;
+
+  const heroImageUrl = item.heroImage
+    ? urlFor(item.heroImage).width(1200).height(630).fit("crop").url()
+    : "";
+
+  const heroImageAlt =
+    typeof item.heroAlt === "string" && item.heroAlt.trim()
+      ? item.heroAlt.trim()
+      : item.title;
+
+  return {
+    title: item.title,
+    description,
+
+    alternates: {
+      canonical: canonicalPath,
+    },
+
+    openGraph: {
+      type: "article",
+      url: canonicalPath,
+      siteName: siteConfig.name,
+      locale: siteConfig.locale,
+      title: item.title,
+      description,
+      publishedTime: item.publishedAt,
+      modifiedTime: item.updatedAt,
+      authors: author ? [author] : undefined,
+      section: "News",
+      images: heroImageUrl
+        ? [
+            {
+              url: heroImageUrl,
+              width: 1200,
+              height: 630,
+              alt: heroImageAlt,
+            },
+          ]
+        : undefined,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: item.title,
+      description,
+      images: heroImageUrl ? [heroImageUrl] : undefined,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+  };
+}
 
 const singleNewsQuery = `
   *[_type == "newsItem" && slug.current == $slug][0]{

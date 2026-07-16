@@ -1,13 +1,58 @@
 // app/about/page.tsx
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Children, Fragment } from "react";
 import Header from "../../components/Header";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import { client } from "../../sanity/lib/client";
+import { siteConfig } from "../../lib/siteConfig";
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
 export const revalidate = 0;
+
+const pageTitle = "The Mission";
+
+const pageDescription =
+  "Discover The Commentator’s mission, editorial purpose, and approach to understanding power in the digital revolution.";
+
+const canonicalPath = "/about";
+
+export const metadata: Metadata = {
+  title: pageTitle,
+  description: pageDescription,
+
+  alternates: {
+    canonical: canonicalPath,
+  },
+
+  openGraph: {
+    type: "website",
+    url: canonicalPath,
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
 
 const aboutPageQuery = `
   *[_type == "aboutPage"][0]{

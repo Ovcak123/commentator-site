@@ -3,11 +3,56 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+import type { Metadata } from "next";
 import Header from "../../components/Header";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import Link from "next/link";
 import { client } from "../../sanity/lib/client";
+import { siteConfig } from "../../lib/siteConfig";
 import type { ReactNode } from "react";
+
+const pageTitle = "Search";
+
+const pageDescription =
+  "Search The Commentator’s commentary, news, and curated reading on power in the digital age.";
+
+const canonicalPath = "/search";
+
+export const metadata: Metadata = {
+  title: pageTitle,
+  description: pageDescription,
+
+  alternates: {
+    canonical: canonicalPath,
+  },
+
+  openGraph: {
+    type: "website",
+    url: canonicalPath,
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
 
 type Hit = {
   id: string;

@@ -3,6 +3,7 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "next-sanity";
@@ -10,6 +11,7 @@ import { PortableText, type PortableTextComponents } from "next-sanity";
 import Header from "../../../components/Header";
 import { client } from "../../../sanity/lib/client";
 import { urlFor } from "../../../sanity/lib/image";
+import { siteConfig } from "../../../lib/siteConfig";
 
 type PageProps = {
   params: {
@@ -25,6 +27,13 @@ type Author = {
   portrait?: any;
 };
 
+type AuthorMetadataRecord = {
+  name?: string;
+  slug?: string;
+  bio?: any[];
+  portrait?: any;
+};
+
 type AuthorArticle = {
   _id: string;
   _type: "post" | "newsItem";
@@ -35,6 +44,15 @@ type AuthorArticle = {
   slug?: string;
   heroImageUrl?: string;
 };
+
+const authorMetadataQuery = `
+  *[_type == "author" && slug.current == $slug][0]{
+    name,
+    "slug": slug.current,
+    bio,
+    portrait
+  }
+`;
 
 const authorBySlugQuery = `
   *[_type == "author" && slug.current == $slug][0]{
@@ -61,6 +79,112 @@ const authorArticlesQuery = `
     "heroImageUrl": heroImage.asset->url
   }
 `;
+
+function portableTextToPlainText(value?: any[]): string {
+  if (!Array.isArray(value)) return "";
+
+  return value
+    .filter(
+      (block) =>
+        block?._type === "block" &&
+        Array.isArray(block.children)
+    )
+    .map((block) =>
+      block.children
+        .map((child: any) =>
+          typeof child?.text === "string" ? child.text : ""
+        )
+        .join("")
+    )
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const author: AuthorMetadataRecord | null = await client.fetch(
+    authorMetadataQuery,
+    { slug: params.slug },
+    { cache: "no-store" as any }
+  );
+
+  if (!author?.name || !author.slug) {
+    return {
+      title: "Author Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const canonicalPath = `/authors/${author.slug}`;
+
+  const biography = portableTextToPlainText(author.bio);
+
+  const description = biography
+    ? biography.length > 200
+      ? `${biography.slice(0, 197).trimEnd()}...`
+      : biography
+    : `Read the latest work by ${author.name} in The Commentator.`;
+
+  const portraitUrl = author.portrait
+    ? urlFor(author.portrait)
+        .width(1200)
+        .height(1200)
+        .fit("crop")
+        .url()
+    : "";
+
+  return {
+    title: author.name,
+    description,
+
+    alternates: {
+      canonical: canonicalPath,
+    },
+
+    openGraph: {
+      type: "profile",
+      url: canonicalPath,
+      siteName: siteConfig.name,
+      locale: siteConfig.locale,
+      title: author.name,
+      description,
+      images: portraitUrl
+        ? [
+            {
+              url: portraitUrl,
+              width: 1200,
+              height: 1200,
+              alt: author.name,
+            },
+          ]
+        : undefined,
+    },
+
+    twitter: {
+      card: portraitUrl ? "summary_large_image" : "summary",
+      title: author.name,
+      description,
+      images: portraitUrl ? [portraitUrl] : undefined,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+  };
+}
 
 function formatDate(dateString?: string): string {
   if (!dateString) return "";
@@ -113,7 +237,9 @@ const bioComponents: PortableTextComponents = {
 
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-[#E0D5C5]">{children}</strong>
+      <strong className="font-semibold text-[#E0D5C5]">
+        {children}
+      </strong>
     ),
 
     em: ({ children }) => <em>{children}</em>,

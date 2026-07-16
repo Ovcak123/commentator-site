@@ -1,10 +1,55 @@
 // app/contact/page.tsx
 
+import type { Metadata } from "next";
 import Header from "../../components/Header";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import Link from "next/link";
+import { siteConfig } from "../../lib/siteConfig";
 
 export const revalidate = 0;
+
+const pageTitle = "Contact";
+
+const pageDescription =
+  "Contact The Commentator editorial team, submit news tips, and learn about commentary submissions.";
+
+const canonicalPath = "/contact";
+
+export const metadata: Metadata = {
+  title: pageTitle,
+  description: pageDescription,
+
+  alternates: {
+    canonical: canonicalPath,
+  },
+
+  openGraph: {
+    type: "website",
+    url: canonicalPath,
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
 
 const MAJOR_HEADLINE_SERIF_CLASS = "font-serif tracking-[-0.022em]";
 

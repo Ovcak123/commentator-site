@@ -2,14 +2,43 @@
 
 // app/page.tsx
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
+import type { Metadata } from "next";
 import Header from "../components/Header";
 import CommentatorClubCard from "../components/CommentatorClubCard";
 import Link from "next/link";
 import { client } from "../sanity/lib/client";
 import { newsItemsQuery } from "../sanity/lib/queries";
+import { siteConfig } from "../lib/siteConfig";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: {
+    absolute: siteConfig.name,
+  },
+
+  description: siteConfig.description,
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: siteConfig.name,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    locale: siteConfig.locale,
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+  },
+};
 
 /* ---------- types ---------- */
 

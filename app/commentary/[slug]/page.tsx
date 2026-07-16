@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
@@ -10,6 +11,7 @@ import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
 import { singlePostQuery } from "../../../sanity/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
+import { siteConfig } from "../../../lib/siteConfig";
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
 type Post = {
@@ -20,15 +22,15 @@ type Post = {
   publishedAt?: string;
   slug?: string;
   heroImage?: {
-  asset?: any;
-  crop?: any;
-  hotspot?: any;
-  alt?: string;
-  decorative?: boolean;
-  caption?: string;
-  credit?: string;
-  promptNotes?: string;
-};
+    asset?: any;
+    crop?: any;
+    hotspot?: any;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    credit?: string;
+    promptNotes?: string;
+  };
   excerpt?: string;
   body?: any[];
   readTimeMinutes?: number;
@@ -36,6 +38,23 @@ type Post = {
 
 type PageProps = {
   params: { slug: string };
+};
+
+type CommentaryMetadataPost = {
+  title?: string;
+  excerpt?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  slug?: string;
+  heroImage?: any;
+  heroAlt?: string;
+  referencedAuthors?: Array<{
+    name?: string;
+  }>;
+  referencedAuthor?: {
+    name?: string;
+  };
+  legacyAuthor?: string;
 };
 
 type SidebarItem = {
@@ -60,6 +79,121 @@ type ExplicitLead = {
 };
 
 /* ---------- queries ---------- */
+
+const commentaryMetadataQuery = `
+  *[_type == "post" && slug.current == $slug][0]{
+    title,
+    excerpt,
+    publishedAt,
+    "updatedAt": _updatedAt,
+    "slug": slug.current,
+    heroImage,
+    "heroAlt": heroImage.alt,
+    "referencedAuthors": authors[]->{
+      name
+    },
+    "referencedAuthor": author->{
+      name
+    },
+    "legacyAuthor": select(
+      author._type == "reference" => null,
+      author
+    )
+  }
+`;
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const post: CommentaryMetadataPost | null = await client.fetch(
+    commentaryMetadataQuery,
+    { slug: params.slug },
+    { cache: "no-store" as any }
+  );
+
+  if (!post?.title || !post.slug) {
+    return {
+      title: "Commentary Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const canonicalPath = `/commentary/${post.slug}`;
+
+  const description =
+    typeof post.excerpt === "string" && post.excerpt.trim()
+      ? post.excerpt.trim()
+      : siteConfig.description;
+
+  const author =
+    post.referencedAuthors?.[0]?.name ??
+    post.referencedAuthor?.name ??
+    post.legacyAuthor ??
+    undefined;
+
+  const heroImageUrl = post.heroImage
+    ? urlFor(post.heroImage).width(1200).height(630).fit("crop").url()
+    : "";
+
+  const heroImageAlt =
+    typeof post.heroAlt === "string" && post.heroAlt.trim()
+      ? post.heroAlt.trim()
+      : post.title;
+
+  return {
+    title: post.title,
+    description,
+
+    alternates: {
+      canonical: canonicalPath,
+    },
+
+    openGraph: {
+      type: "article",
+      url: canonicalPath,
+      siteName: siteConfig.name,
+      locale: siteConfig.locale,
+      title: post.title,
+      description,
+      publishedTime: post.publishedAt,
+      modifiedTime: post.updatedAt,
+      authors: author ? [author] : undefined,
+      section: "Commentary",
+      images: heroImageUrl
+        ? [
+            {
+              url: heroImageUrl,
+              width: 1200,
+              height: 630,
+              alt: heroImageAlt,
+            },
+          ]
+        : undefined,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description,
+      images: heroImageUrl ? [heroImageUrl] : undefined,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+  };
+}
 
 const mostReadQuery = `
   *[_type == "post"] | order(publishedAt desc, _createdAt desc)[0...5]{
