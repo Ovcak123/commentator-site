@@ -56,6 +56,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={siteConfig.language}>
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={`${siteConfig.name} RSS Feed`}
+          href={`${siteConfig.url}/feed.xml`}
+        />
+      </head>
+
       <body className="antialiased">
         <div className="main-shell">{children}</div>
 
