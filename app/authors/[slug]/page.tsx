@@ -9,6 +9,7 @@ import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
 import Header from "../../../components/Header";
+import JsonLd from "../../../components/JsonLd";
 import { client } from "../../../sanity/lib/client";
 import { urlFor } from "../../../sanity/lib/image";
 import { siteConfig } from "../../../lib/siteConfig";
@@ -282,12 +283,54 @@ export default async function AuthorPage({ params }: PageProps) {
     { cache: "no-store" as any }
   );
 
-  const portraitUrl = author.portrait
+    const portraitUrl = author.portrait
     ? urlFor(author.portrait).width(600).height(600).fit("crop").url()
     : "";
 
+  const authorUrl = `${siteConfig.url}/authors/${author.slug}`;
+  const authorPageId = `${authorUrl}#webpage`;
+  const personId = `${authorUrl}#person`;
+
+  const biography = portableTextToPlainText(author.bio);
+
+  const authorJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": authorPageId,
+        url: authorUrl,
+        name: author.name,
+        description:
+          biography || `Read the latest work by ${author.name} in The Commentator.`,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        mainEntity: {
+          "@id": personId,
+        },
+      },
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: author.name,
+        url: authorUrl,
+        description: biography || undefined,
+        image: portraitUrl || undefined,
+        worksFor: {
+          "@id": siteConfig.organizationId,
+        },
+        mainEntityOfPage: {
+          "@id": authorPageId,
+        },
+      },
+    ],
+  };
+
   return (
-    <main className="min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
+        <main className="min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
+      <JsonLd data={authorJsonLd} />
       <Header />
 
       <div className="mx-auto max-w-6xl px-4 pt-12 pb-24 lg:px-6 lg:pt-24">

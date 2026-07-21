@@ -16,4 +16,7 @@ export const siteConfig = {
   language: "en",
 
   publisher: "The Commentator",
+
+  organizationId: "https://www.thecommentator.com/#organization",
+  websiteId: "https://www.thecommentator.com/#website",
 } as const;

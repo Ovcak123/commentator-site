@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import Header from "../../components/Header";
+import JsonLd from "../../components/JsonLd";
 import { client } from "../../sanity/lib/client";
 import { urlFor } from "../../sanity/lib/image";
 import { siteConfig } from "../../lib/siteConfig";
@@ -109,15 +110,61 @@ export const metadata: Metadata = {
 };
 
 export default async function AuthorsPage() {
-  const authors: AuthorRecord[] = await client.fetch(
+    const authors: AuthorRecord[] = await client.fetch(
     authorsQuery,
     {},
     { cache: "no-store" as any }
   );
 
+  const authorsUrl = `${siteConfig.url}/authors`;
+  const authorsPageId = `${authorsUrl}#webpage`;
+  const authorsListId = `${authorsUrl}#authors`;
+
+  const authorsJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": authorsPageId,
+        url: authorsUrl,
+        name: `Authors | ${siteConfig.name}`,
+        description:
+          "Meet the writers and contributors behind The Commentator's coverage of artificial intelligence, frontier technology, geopolitics, democracy, economics, and national security.",
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        mainEntity: {
+          "@id": authorsListId,
+        },
+      },
+      {
+        "@type": "ItemList",
+        "@id": authorsListId,
+        name: `${siteConfig.name} authors`,
+        numberOfItems: authors.length,
+        itemListElement: authors.map((author, index) => {
+          const authorUrl = `${siteConfig.url}/authors/${author.slug}`;
+
+          return {
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@id": `${authorUrl}#person`,
+              "@type": "Person",
+              name: author.name,
+              url: authorUrl,
+            },
+          };
+        }),
+      },
+    ],
+  };
+
   return (
-    <main className="min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
-      <Header />
+      <main className="min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
+      <JsonLd data={authorsJsonLd} />
+      <Header />  
 
       <div className="mx-auto max-w-6xl px-4 pb-24 pt-12 lg:px-6 lg:pt-24">
         <section className="mx-auto w-full max-w-[58rem]">

@@ -5,6 +5,7 @@
 import type { Metadata } from "next";
 import Header from "../components/Header";
 import CommentatorClubCard from "../components/CommentatorClubCard";
+import JsonLd from "../components/JsonLd";
 import Link from "next/link";
 import { client } from "../sanity/lib/client";
 import { newsItemsQuery } from "../sanity/lib/queries";
@@ -1703,11 +1704,55 @@ const mobileMostPopularNews = newsItems.slice(0, 5);
       ? mobileReentryList[mobileReentryList.length - 1]
       : undefined;
 
-      const desktopMostPopularCommentary = mostRead.filter((item) => item.section === "commentary");
-  const desktopMostPopularNews = mostRead.filter((item) => item.section === "news");
+        const desktopMostPopularCommentary = mostRead.filter(
+    (item) => item.section === "commentary",
+  );
+  const desktopMostPopularNews = mostRead.filter(
+    (item) => item.section === "news",
+  );
+
+  const homepageJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": siteConfig.organizationId,
+        name: siteConfig.name,
+        legalName: siteConfig.legalName,
+        url: siteConfig.url,
+        description: siteConfig.description,
+      },
+      {
+        "@type": "WebSite",
+        "@id": siteConfig.websiteId,
+        url: siteConfig.url,
+        name: siteConfig.name,
+        description: siteConfig.description,
+        inLanguage: siteConfig.language,
+        publisher: {
+          "@id": siteConfig.organizationId,
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${siteConfig.url}/#webpage`,
+        url: siteConfig.url,
+        name: siteConfig.name,
+        description: siteConfig.description,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        about: {
+          "@id": siteConfig.organizationId,
+        },
+      },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
+            <JsonLd data={homepageJsonLd} />
       <Header />
 
       {lead && lead.slug && (

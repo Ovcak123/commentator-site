@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
 import CommentatorClubCard from "../../../components/CommentatorClubCard";
+import JsonLd from "../../../components/JsonLd";
 import MobileShare from "../../../components/MobileShare";
 import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
@@ -1260,7 +1261,7 @@ const heroCredit =
     )
     .slice(0, 6);
 
-  const latestNews: SidebarItem[] = (latestNewsDocs || [])
+    const latestNews: SidebarItem[] = (latestNewsDocs || [])
     .filter((n: any) => !!n?.slug)
     .map((n: any) => ({
       id: n._id,
@@ -1269,8 +1270,65 @@ const heroCredit =
       readTimeMinutes: normalizeMinutes(n.readTimeMinutes),
     }));
 
+  const articleUrl = `${siteConfig.url}/commentary/${typedPost.slug || params.slug}`;
+  const articlePageId = `${articleUrl}#webpage`;
+  const articleId = `${articleUrl}#article`;
+
+  const commentaryJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": articlePageId,
+        url: articleUrl,
+        name: typedPost.title,
+        description: typedPost.excerpt?.trim() || siteConfig.description,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        about: {
+          "@id": articleId,
+        },
+        mainEntity: {
+          "@id": articleId,
+        },
+      },
+      {
+        "@type": "Article",
+        "@id": articleId,
+        headline: typedPost.title,
+        description: typedPost.excerpt?.trim() || siteConfig.description,
+        url: articleUrl,
+        mainEntityOfPage: {
+          "@id": articlePageId,
+        },
+        articleSection: "Commentary",
+        inLanguage: siteConfig.language,
+        datePublished: typedPost.publishedAt,
+        image: heroUrl ? [heroUrl] : undefined,
+        author: authorName
+          ? {
+              "@type": "Person",
+              name: authorName,
+              url: authorSlug
+                ? `${siteConfig.url}/authors/${authorSlug}`
+                : undefined,
+            }
+          : undefined,
+        publisher: {
+          "@id": siteConfig.organizationId,
+        },
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+      },
+    ],
+  };  
+
   return (
     <main className="commentary min-h-screen bg-[#0B0D10] text-[#CBC3B8]">
+            <JsonLd data={commentaryJsonLd} />
       <div className="print-edition">
         <div className="print-edition-masthead">
           <div className="print-edition-mark">C</div>

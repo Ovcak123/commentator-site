@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Header from "../../components/Header";
+import JsonLd from "../../components/JsonLd";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import Link from "next/link";
 import { siteConfig } from "../../lib/siteConfig";
@@ -154,8 +155,35 @@ function DesktopCommentatorClubPanel() {
 }
 
 export default function ContactPage() {
+  const contactUrl = `${siteConfig.url}${canonicalPath}`;
+  const contactPageId = `${contactUrl}#webpage`;
+
+  const contactJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": contactPageId,
+        url: contactUrl,
+        name: pageTitle,
+        description: pageDescription,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        mainEntity: {
+          "@id": siteConfig.organizationId,
+        },
+        about: {
+          "@id": siteConfig.organizationId,
+        },
+      },
+    ],
+  };
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+        <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+      <JsonLd data={contactJsonLd} />
             {/* FULL-PAGE BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
         <img

@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
 import CommentatorClubCard from "../../../components/CommentatorClubCard";
+import JsonLd from "../../../components/JsonLd";
 import MobileShare from "../../../components/MobileShare";
 import DesktopShare from "../../../components/DesktopShare";
 import { client } from "../../../sanity/lib/client";
@@ -1193,15 +1194,72 @@ const authorFooter = Array.isArray(referencedAuthor?.authorFooter)
     }))
     .filter((x: SidebarItem) => x.href !== "#");
 
-  const heroUrl =
+    const heroUrl =
     item?.heroImage && item.heroImage.asset
       ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
       : item?.heroImage
         ? urlFor(item.heroImage).width(1600).height(900).fit("crop").url()
         : "";
 
+  const articleUrl = `${siteConfig.url}/news/${item.slug?.current || params.slug}`;
+  const articlePageId = `${articleUrl}#webpage`;
+  const articleId = `${articleUrl}#article`;
+
+  const newsJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": articlePageId,
+        url: articleUrl,
+        name: item.title,
+        description: item.excerpt?.trim() || siteConfig.description,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        about: {
+          "@id": articleId,
+        },
+        mainEntity: {
+          "@id": articleId,
+        },
+      },
+      {
+        "@type": "NewsArticle",
+        "@id": articleId,
+        headline: item.title,
+        description: item.excerpt?.trim() || siteConfig.description,
+        url: articleUrl,
+        mainEntityOfPage: {
+          "@id": articlePageId,
+        },
+        articleSection: "News",
+        inLanguage: siteConfig.language,
+        datePublished: item.publishedAt,
+        image: heroUrl ? [heroUrl] : undefined,
+        author: authorName
+          ? {
+              "@type": "Person",
+              name: authorName,
+              url: authorSlug
+                ? `${siteConfig.url}/authors/${authorSlug}`
+                : undefined,
+            }
+          : undefined,
+        publisher: {
+          "@id": siteConfig.organizationId,
+        },
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+      },
+    ],
+  };
+
   return (
-    <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
+        <main className="news min-h-screen bg-[#0B0D10] text-[#E6E9EE]">
+      <JsonLd data={newsJsonLd} />
       <div className="print-edition">
         <div className="print-edition-masthead">
           <div className="print-edition-mark">C</div>

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Children, Fragment } from "react";
 import Header from "../../components/Header";
+import JsonLd from "../../components/JsonLd";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import { client } from "../../sanity/lib/client";
 import { siteConfig } from "../../lib/siteConfig";
@@ -212,8 +213,35 @@ export default async function AboutPage() {
   const page = await getAboutPage();
   const body = page?.body;
 
+  const aboutUrl = `${siteConfig.url}${canonicalPath}`;
+  const aboutPageId = `${aboutUrl}#webpage`;
+
+  const aboutJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": aboutPageId,
+        url: aboutUrl,
+        name: pageTitle,
+        description: pageDescription,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        mainEntity: {
+          "@id": siteConfig.organizationId,
+        },
+        about: {
+          "@id": siteConfig.organizationId,
+        },
+      },
+    ],
+  };
+
   return (
-            <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+                        <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+      <JsonLd data={aboutJsonLd} />
             {/* FULL-PAGE BACKGROUND */}
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
                                 <img

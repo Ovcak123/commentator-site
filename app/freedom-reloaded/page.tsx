@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "../../components/Header";
+import JsonLd from "../../components/JsonLd";
 import CommentatorClubCard from "../../components/CommentatorClubCard";
 import { client } from "../../sanity/lib/client";
 import { siteConfig } from "../../lib/siteConfig";
@@ -172,8 +173,68 @@ export default async function FreedomReloadedPage() {
   const headline = page?.headline || "Freedom Reloaded";
   const body = page?.body;
 
+  const freedomReloadedUrl = `${siteConfig.url}${canonicalPath}`;
+  const freedomReloadedPageId = `${freedomReloadedUrl}#webpage`;
+  const freedomReloadedWorkId = `${freedomReloadedUrl}#creativework`;
+
+  const freedomReloadedJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": freedomReloadedPageId,
+        url: freedomReloadedUrl,
+        name: headline,
+        description: pageDescription,
+        inLanguage: siteConfig.language,
+        isPartOf: {
+          "@id": siteConfig.websiteId,
+        },
+        publisher: {
+          "@id": siteConfig.organizationId,
+        },
+        mainEntity: {
+          "@id": freedomReloadedWorkId,
+        },
+        about: [
+          {
+            "@type": "Thing",
+            name: "Freedom",
+          },
+          {
+            "@type": "Thing",
+            name: "Democracy",
+          },
+          {
+            "@type": "Thing",
+            name: "Open society",
+          },
+          {
+            "@type": "Thing",
+            name: "Digital age",
+          },
+        ],
+      },
+      {
+        "@type": "CreativeWork",
+        "@id": freedomReloadedWorkId,
+        name: headline,
+        description: pageDescription,
+        url: freedomReloadedUrl,
+        inLanguage: siteConfig.language,
+        publisher: {
+          "@id": siteConfig.organizationId,
+        },
+        mainEntityOfPage: {
+          "@id": freedomReloadedPageId,
+        },
+      },
+    ],
+  };
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+        <main className="relative min-h-screen overflow-hidden bg-[#0B0D10] text-[#E6E9EE]">
+      <JsonLd data={freedomReloadedJsonLd} />
             {/* FULL-PAGE BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-50 md:opacity-50">
         <img
