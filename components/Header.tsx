@@ -104,7 +104,7 @@ export default function Header({
         aria-label="Primary navigation"
       >
         <Link href="/about" className={navLinkClass("/about")}>
-          Mission
+          About
         </Link>
 
         <Link
