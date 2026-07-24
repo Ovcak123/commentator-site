@@ -283,9 +283,7 @@ export default async function AboutPage() {
               The Mission
             </h1>
 
-            <p className="mt-4 max-w-[40rem] text-[1rem] leading-8 text-[#AEB8C4] md:mt-5 md:text-[1.08rem] md:leading-8">
-              What The Commentator is for, how it is positioned, and why it exists.
-            </p>
+            
           </div>
 
           <div
