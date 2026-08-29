@@ -944,7 +944,7 @@ function DesktopNewsSection({ items }: { items: SidebarItem[] }) {
     <section className="space-y-8">
       <SectionHeader title="More News" />
 
-      <div className="space-y-10">
+      <div className="space-y-20">
         {leadItem ? (
           <article className="group relative overflow-visible">
             <Link
@@ -988,7 +988,7 @@ function DesktopNewsSection({ items }: { items: SidebarItem[] }) {
         ) : null}
 
         {thumbnailItems.length > 0 ? (
-          <div className="space-y-7">
+          <div className="space-y-20">
             {thumbnailItems.map((item) => (
               <article key={item.id} className="group relative overflow-visible">
                 <Link

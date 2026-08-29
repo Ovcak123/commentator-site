@@ -824,7 +824,7 @@ function MobileCommentaryThumbnailSection({ items }: { items: SidebarItem[] }) {
   const thumbnailItems = items.slice(1, 6);
 
   return (
-    <section className="space-y-12">
+    <section className="space-y-10">
       <SectionHeader title="More Commentary" />
 
       <div className="space-y-10">
@@ -931,7 +931,7 @@ function DesktopCommentarySection({ items }: { items: SidebarItem[] }) {
     <section className="space-y-6">
       <SectionHeader title="More Commentary" />
 
-      <div className="space-y-10">
+      <div className="space-y-20">
         {leadItem && (
           <article className="group relative overflow-visible">
             <Link
@@ -975,7 +975,7 @@ function DesktopCommentarySection({ items }: { items: SidebarItem[] }) {
         )}
 
         {thumbnailItems.length > 0 && (
-          <div className="space-y-8">
+          <div className="space-y-20">
             {thumbnailItems.map((item) => (
               <article key={item.id} className="group relative overflow-visible">
                 <Link
