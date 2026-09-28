@@ -162,18 +162,15 @@ export default function ClubPage() {
 
               <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#e4ddd4] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:mt-10 lg:max-w-[38rem] lg:text-[1.16rem] lg:leading-9 lg:text-[#ddd8d1]">
                 <p>
-                  Premium intelligence for decision-makers and investors.
-                  Receive the weekly Intelligence Brief, timely Intelligence
-                  Alerts, and the Revolution Rewired podcast.
-                </p>
-
-                <p>
-                  Comment on articles and submit ideas for editorial
-                  consideration. Join a community shaping the conversation
-                  about the digital revolution. Selected member comments go in
-                  Top Ten From The Club in the weekly Intelligence Brief,
-                  highlighting them to leaders in tech, politics, finance, and
-                  business.
+                  Get ahead of the prevailing narratives. Dispense with the
+                  received wisdom. Help chart a new path forward. Members
+                  receive the weekly Intelligence Brief, timely Intelligence
+                  Alerts, and the Revolution Rewired podcast. You comment on
+                  articles and submit ideas for editorial consideration. You
+                  join a community shaping the conversation about the digital
+                  revolution. Selected member comments go in Top Ten From The
+                  Club in the weekly Intelligence Brief, highlighting them to
+                  leaders in tech, politics, finance, and business.
                 </p>
 
                 <p className="text-[#f6eee2] lg:text-[#f0e8dc]">
