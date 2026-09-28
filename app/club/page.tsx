@@ -115,6 +115,18 @@ function PaymentMethodsRow() {
   );
 }
 
+function DiagonalOldPrice({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="relative inline-block whitespace-nowrap text-[1.5rem] font-medium leading-none text-[#aeb4b9] sm:text-[1.7rem]">
+      {children}
+      <span
+        aria-hidden="true"
+        className="absolute left-[-5%] top-1/2 h-[2px] w-[110%] origin-center -rotate-[18deg] bg-current"
+      />
+    </span>
+  );
+}
+
 export default function ClubPage() {
   return (
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
@@ -150,19 +162,22 @@ export default function ClubPage() {
 
               <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#e4ddd4] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:mt-10 lg:max-w-[38rem] lg:text-[1.16rem] lg:leading-9 lg:text-[#ddd8d1]">
                 <p>
-                  The Commentator Club is a high-agency network operating at the
-                  intersection of technology, intelligence, and politics.
+                  Premium intelligence for decision-makers and investors.
+                  Receive the weekly Intelligence Brief, timely Intelligence
+                  Alerts, and the Revolution Rewired podcast.
                 </p>
 
                 <p>
-                  Members share ideas with each other and with our editorial
-                  team. They are seen and heard by CEOs, founders, strategists,
-                  elected representatives, leading writers, and entrepreneurs.
+                  Comment on articles and submit ideas for editorial
+                  consideration. Join a community shaping the conversation
+                  about the digital revolution. Selected member comments go in
+                  Top Ten From The Club in the weekly Intelligence Brief,
+                  highlighting them to leaders in tech, politics, finance, and
+                  business.
                 </p>
 
                 <p className="text-[#f6eee2] lg:text-[#f0e8dc]">
-                  This is where serious readers become participants in shaping
-                  what comes next.
+                  Like what we do? Support our work by signing up.
                 </p>
               </div>
 
@@ -195,12 +210,13 @@ export default function ClubPage() {
       >
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-8 md:py-18">
           <div className="mb-10 max-w-3xl">
-            <h2 className="text-[2.3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#f7f1e8] sm:text-[2.9rem] lg:text-[3.9rem]">
-              Join for the price of a cup of coffee — and stay in the room.
+            <h2 className="relative -top-3 text-[2.3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#f7f1e8] sm:text-[2.9rem] lg:text-[3.9rem]">
+              Join for the price of a cup of coffee and stay in the room.
             </h2>
 
             <p className="mt-4 text-[1.1rem] leading-8 text-[#d7d1c8] sm:mt-5 sm:text-xl lg:text-2xl">
-              $5 a month or $50 a year.
+              Try the Club free for one month. Then $5 a month or $50 a year
+              at the introductory membership rate.
             </p>
           </div>
 
@@ -211,12 +227,16 @@ export default function ClubPage() {
                   <h3 className="text-[1.75rem] font-semibold text-[#f7f1e8] sm:text-[2rem]">
                     Monthly
                   </h3>
-                  <p className="mt-3 text-[2.7rem] font-semibold leading-none text-[#f1e5d7] sm:text-[3.2rem]">
-                    $5
-                    <span className="ml-2 text-[1.35rem] font-normal text-[#c4c8cc] sm:text-[1.65rem]">
-                      / month
-                    </span>
-                  </p>
+
+                  <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-2">
+                    <DiagonalOldPrice>$7.50</DiagonalOldPrice>
+                    <p className="text-[2.7rem] font-semibold leading-none text-[#f1e5d7] sm:text-[3.2rem]">
+                      $5
+                      <span className="ml-2 text-[1.35rem] font-normal text-[#c4c8cc] sm:text-[1.65rem]">
+                        / month
+                      </span>
+                    </p>
+                  </div>
                 </div>
 
                 <span className="rounded-full border border-[#506273] bg-[rgba(18,31,44,0.88)] px-4 py-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#d7bc9e]">
@@ -224,11 +244,15 @@ export default function ClubPage() {
                 </span>
               </div>
 
+              <p className="mb-5 text-[1.15rem] font-semibold text-[#f7f1e8]">
+                First month free
+              </p>
+
               <ul className="mb-8 space-y-4 text-[1.05rem] leading-8 text-[#d8dbe0] sm:text-[1.15rem]">
-                <li>Full access to The Commentator Club</li>
-                <li>Comment and contribute</li>
-                <li>Tip Sheet access</li>
-                <li>Weekly newsletter</li>
+                <li>Weekly Intelligence Brief</li>
+                <li>Intelligence Alerts</li>
+                <li>Revolution Rewired podcast</li>
+                <li>Comment on articles and submit ideas</li>
                 <li>Cancel any time</li>
               </ul>
 
@@ -237,7 +261,7 @@ export default function ClubPage() {
                   href="#"
                   className="inline-flex w-full items-center justify-center rounded-2xl bg-[#c40f0f] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(139,0,0,0.28)] transition hover:opacity-90 sm:text-lg"
                 >
-                  Join Monthly →
+                  Start Your Free Month →
                 </a>
               </div>
             </div>
@@ -248,12 +272,16 @@ export default function ClubPage() {
                   <h3 className="text-[1.75rem] font-semibold text-[#fbf3e8] sm:text-[2rem]">
                     Annual
                   </h3>
-                  <p className="mt-3 text-[2.7rem] font-semibold leading-none text-[#f3dfc1] sm:text-[3.2rem]">
-                    $50
-                    <span className="ml-2 text-[1.35rem] font-normal text-[#e2c793] sm:text-[1.65rem]">
-                      / year
-                    </span>
-                  </p>
+
+                  <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-2">
+                    <DiagonalOldPrice>$70</DiagonalOldPrice>
+                    <p className="text-[2.7rem] font-semibold leading-none text-[#f3dfc1] sm:text-[3.2rem]">
+                      $50
+                      <span className="ml-2 text-[1.35rem] font-normal text-[#e2c793] sm:text-[1.65rem]">
+                        / year
+                      </span>
+                    </p>
+                  </div>
                 </div>
 
                 <span className="rounded-full border border-[#d0a15e] bg-[rgba(53,35,19,0.78)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.22em] text-[#f0c98d] shadow-[0_0_24px_rgba(214,164,95,0.08)]">
@@ -261,10 +289,15 @@ export default function ClubPage() {
                 </span>
               </div>
 
+              <p className="mb-5 text-[1.15rem] font-semibold text-[#fbf3e8]">
+                First month free
+              </p>
+
               <ul className="mb-8 space-y-4 text-[1.05rem] leading-8 text-[#e6dacd] sm:text-[1.15rem]">
                 <li>Everything in monthly</li>
-                <li>Lower annual price</li>
-                <li>Simplest way to stay in the room</li>
+                <li>Save $10 compared with twelve monthly payments</li>
+                <li>Support The Commentator for the year ahead</li>
+                <li>Cancel any time</li>
               </ul>
 
               <div className="mt-auto">
@@ -272,7 +305,7 @@ export default function ClubPage() {
                   href="#"
                   className="inline-flex w-full items-center justify-center rounded-2xl bg-[#c40f0f] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(139,0,0,0.28)] transition hover:opacity-90 sm:text-lg"
                 >
-                  Join Annual →
+                  Start Your Free Month →
                 </a>
               </div>
             </div>
@@ -280,11 +313,17 @@ export default function ClubPage() {
 
           <div className="mt-10 text-center sm:mt-12">
             <p className="text-[13px] font-medium tracking-[0.01em] text-[#99A2AD]">
-              Payments secured by <span className="text-[#C8CDD4]">Stripe</span>
+              Payments secured by{" "}
+              <span className="text-[#C8CDD4]">Stripe</span>
             </p>
 
             <PaymentMethodsRow />
           </div>
+
+          <p className="mx-auto mt-10 max-w-2xl text-center text-[1.02rem] leading-7 text-[#cbd2d8] sm:text-lg">
+            Just want the news? Register free for weekday Daily Updates.
+            Ordinary articles are open to everyone.
+          </p>
         </div>
       </section>
 
@@ -303,56 +342,68 @@ export default function ClubPage() {
             <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7">
               <div className="mb-5 h-2 w-14 rounded-full bg-[#d4ac83]" />
               <h3 className="text-[1.6rem] font-semibold text-[#f7f1e8] sm:text-2xl">
-                Comment where it matters
+                Weekly Intelligence Brief
               </h3>
               <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Exclusive ability to contribute your thoughts to our articles —
-                read by your top level peers.
+                Unique analysis bringing original reporting, expert
+                perspectives, and strategic insight to the developments shaping
+                what comes next.
               </p>
             </div>
 
             <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7">
               <div className="mb-5 h-2 w-14 rounded-full bg-[#b92a1f]" />
               <h3 className="text-[1.6rem] font-semibold text-[#f7f1e8] sm:text-2xl">
-                Get ahead of the news cycle
+                Intelligence Alerts
               </h3>
               <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Advance notice of time-sensitive and potentially market-moving
-                stories via our Tip Sheet.
+                Timely alerts on significant and potentially market-moving
+                developments, backed by evidence and sent only when there is
+                something important to know.
               </p>
             </div>
 
             <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7">
               <div className="mb-5 h-2 w-14 rounded-full bg-[#6689ae]" />
               <h3 className="text-[1.6rem] font-semibold text-[#f7f1e8] sm:text-2xl">
-                Weekly strategic insight
+                Revolution Rewired
               </h3>
               <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Revolution Rewired — our agenda-setting newsletter on what’s
-                coming next, including select member contributions.
+                A weekly podcast exploring the forces reshaping technology,
+                power, markets, and society.
               </p>
             </div>
 
             <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7">
               <div className="mb-5 h-2 w-14 rounded-full bg-[#d4ac83]" />
               <h3 className="text-[1.6rem] font-semibold text-[#f7f1e8] sm:text-2xl">
-                Direct line to the editorial team
+                Comment on articles
               </h3>
               <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Submit ideas, shape coverage, and receive priority
-                consideration.
+                Add your perspective beneath our freely accessible journalism.
+                Club members have exclusive commenting privileges.
               </p>
             </div>
 
-            <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7 md:col-span-2 xl:col-span-2">
+            <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7">
               <div className="mb-5 h-2 w-14 rounded-full bg-[#b92a1f]" />
               <h3 className="text-[1.6rem] font-semibold text-[#f7f1e8] sm:text-2xl">
-                Be part of the network
+                Submit article ideas
               </h3>
-              <p className="mt-4 max-w-3xl text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Join and support a community dedicated to understanding power in
-                the digital revolution, and to harnessing its potential for the
-                greater good.
+              <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
+                Send ideas and contributions to our editorial team for
+                consideration, with priority given to Club members.
+              </p>
+            </div>
+
+            <div className="rounded-[24px] border border-[#284055] bg-[linear-gradient(to_bottom,#0d1a27_0%,#09131c_100%)] p-6 shadow-[0_18px_42px_rgba(0,0,0,0.2)] sm:rounded-[26px] sm:p-7">
+              <div className="mb-5 h-2 w-14 rounded-full bg-[#6689ae]" />
+              <h3 className="text-[1.6rem] font-semibold text-[#f7f1e8] sm:text-2xl">
+                Join the community
+              </h3>
+              <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
+                Support a community dedicated to understanding the digital
+                revolution and harnessing its potential for the greater good.
               </p>
             </div>
           </div>
