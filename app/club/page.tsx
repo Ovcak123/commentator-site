@@ -131,7 +131,7 @@ export default function ClubPage() {
   return (
     <main className="min-h-screen bg-[#071019] text-[#f2efe9]">
       <section className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.18),transparent_30%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.1),transparent_24%),linear-gradient(to_bottom,#0d1824_0%,#0a1520_58%,#08131c_100%)] md:bg-[radial-gradient(circle_at_top,rgba(184,148,115,0.14),transparent_28%),radial-gradient(circle_at_78%_28%,rgba(120,22,18,0.08),transparent_22%),linear-gradient(to_bottom,#0c1622_0%,#09141d_58%,#08131c_100%)]">
-        <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-18 md:pt-18 lg:pb-20 lg:pt-24">
+        <div className="mx-auto max-w-7xl px-5 pb-12 pt-10 sm:px-6 md:px-8 md:pb-12 md:pt-18 lg:pb-8 lg:pt-24">
           <div className="mb-8 md:mb-10 lg:mb-12">
             <Link
               href="/"
@@ -162,33 +162,19 @@ export default function ClubPage() {
 
               <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#e4ddd4] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:mt-10 lg:max-w-[38rem] lg:text-[1.16rem] lg:leading-9 lg:text-[#ddd8d1]">
                 <p>
-                  Get ahead of the prevailing narratives. Dispense with the
-                  received wisdom. Help chart a new path forward. Members
-                  receive the weekly Intelligence Brief, timely Intelligence
-                  Alerts, and the Revolution Rewired podcast. You comment on
-                  articles and submit ideas for editorial consideration. You
-                  join a community shaping the conversation about the digital
-                  revolution. Selected member comments go in Top Ten From The
-                  Club in the weekly Intelligence Brief, highlighting them to
-                  leaders in tech, politics, finance, and business.
+                  The digital revolution is powering civilizational change. We
+                  at The Commentator know that. If you&apos;ve come this far,
+                  chances are you know it too. We also know people engage at
+                  different levels. We don&apos;t have a paywall for our daily
+                  articles. But The Commentator Club requests a small fee from
+                  those committed to the deepest level of understanding, and
+                  who want to make a difference. We also need your support. If
+                  you like what we do, sign up below.
                 </p>
-
-                <p className="text-[#f6eee2] lg:text-[#f0e8dc]">
-                  Like what we do? Support our work by signing up.
-                </p>
-              </div>
-
-              <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row lg:mt-11">
-                <a
-                  href="#benefits"
-                  className="inline-flex items-center justify-center rounded-2xl border border-[#4a6075] bg-[rgba(13,27,40,0.82)] px-7 py-4 text-base font-medium text-[#f3e9dc] transition hover:border-[#5f7b98] hover:bg-[#12202d] sm:text-lg lg:border-[#3e5368] lg:bg-[rgba(11,25,38,0.88)] lg:text-[#efe4d6]"
-                >
-                  Explore Benefits
-                </a>
               </div>
             </div>
 
-            <div className="hidden lg:block lg:order-2 lg:translate-x-2 lg:pt-44">
+            <div className="hidden lg:block lg:order-2 lg:translate-x-2 lg:pt-14">
               <div className="overflow-hidden rounded-[34px] border border-[#314659] bg-[linear-gradient(to_bottom,rgba(206,176,145,0.08),rgba(9,17,26,0.38))] p-4 shadow-[0_32px_90px_rgba(0,0,0,0.42)]">
                 <img
                   src="/images/commentator-club-hero.jpeg"
@@ -205,15 +191,15 @@ export default function ClubPage() {
         id="join"
         className="bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.08),transparent_24%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.08),transparent_20%),linear-gradient(to_bottom,#08131c_0%,#08121b_46%,#08121a_100%)] md:bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.07),transparent_24%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.07),transparent_18%),linear-gradient(to_bottom,#08131c_0%,#08121b_48%,#08121a_100%)]"
       >
-        <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 md:px-8 md:py-12">
           <div className="mb-10 max-w-3xl">
-            <h2 className="relative -top-3 text-[2.3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#f7f1e8] sm:text-[2.9rem] lg:text-[3.9rem]">
+            <h2 className="text-[2.3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#f7f1e8] sm:text-[2.9rem] lg:text-[3.9rem]">
               Join for the price of a cup of coffee and stay in the room.
             </h2>
 
             <p className="mt-4 text-[1.1rem] leading-8 text-[#d7d1c8] sm:mt-5 sm:text-xl lg:text-2xl">
-              Try the Club free for one month. Then $5 a month or $50 a year
-              at the introductory membership rate.
+              Try the Club free for one month. Then $5 a month or $50 a year at
+              the introductory membership rate.
             </p>
           </div>
 
@@ -377,8 +363,10 @@ export default function ClubPage() {
                 Comment on articles
               </h3>
               <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
-                Add your perspective beneath our freely accessible journalism.
-                Club members have exclusive commenting privileges.
+                Get exclusive commenting privileges beneath articles. Selected
+                member comments go in Top Ten From The Club in the weekly Brief,
+                highlighting them to leaders in tech, politics, finance, and
+                business.
               </p>
             </div>
 
