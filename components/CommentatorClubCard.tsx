@@ -18,7 +18,7 @@ export default function CommentatorClubCard() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-[38%] bg-[linear-gradient(to_left,rgba(255,255,255,0.03),transparent_72%)] opacity-80" />
 
         <div className="relative">
-          <div className="mb-3 inline-flex items-center rounded-full border border-[#F3D9C7]/[0.08] bg-black/5 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.24em] text-[#F0D8C7]/65">
+          <div className="mb-3 inline-flex items-center rounded-full border border-[#D8A77F]/[0.24] bg-black/5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#D8A77F]">
             Membership
           </div>
 
@@ -29,24 +29,33 @@ export default function CommentatorClubCard() {
           </h3>
 
           <p className="mt-4 max-w-none text-[14.2px] leading-[1.9] text-[#E9D6C8] transition-colors duration-150 group-hover:text-[#FAEEE5] lg:max-w-[64ch] lg:text-[16px] lg:leading-[1.82]">
-            Weekly premium <em>Intelligence Brief</em> and{" "}
-            <em>Intelligence Alerts</em> for decision-makers and investors.{" "}
-            <em>Revolution Rewired</em> podcast. Exclusive commenting
-            privileges. Submit article ideas for editorial consideration. If
-            you appreciate what we do, join us!
+            <em>Intelligence Brief</em> and <em>Intelligence Alerts</em> on tech,
+            power, and markets. <em>Revolution Rewired</em> podcast. Exclusive
+            commenting privileges. Submit article ideas for editorial
+            consideration. If you appreciate what we do, join us!
           </p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div className="text-[14px] font-bold text-white">
-              Try one-month Free Trial now. Then $5/month or $50/year
-            </div>
-
-            <div className="inline-flex shrink-0 items-center gap-2 text-[14px] font-bold text-white transition-all duration-150 group-hover:translate-x-0.5">
-              <span>Click to explore the Club</span>
-              <span aria-hidden="true" className="text-[17px] leading-none">
-                →
+          <div className="mt-6 text-[14px] font-bold text-white">
+            One month free. Then $5/month or $50/year.{" "}
+            <span className="inline-flex whitespace-nowrap items-center gap-2">
+              Click for more
+              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#E4B58D]/60 bg-[#D8A77F]/15 text-[#F2C49D] transition-all duration-200 group-hover:translate-x-1 group-hover:border-[#F2C49D] group-hover:bg-[#D8A77F]/25">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="h-[19px] w-[19px]"
+                >
+                  <path
+                    d="M4 12h15m-6-6 6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </span>
-            </div>
+            </span>
           </div>
         </div>
       </section>
