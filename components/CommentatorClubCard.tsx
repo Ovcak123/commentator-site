@@ -36,7 +36,7 @@ export default function CommentatorClubCard() {
           </p>
 
           <div className="mt-6 text-[14px] font-bold text-white">
-            One month free. Then $5/month or $50/year.{" "}
+            One month free. Then $5/mo or $50/yr.{" "}
             <span className="inline-flex whitespace-nowrap items-center gap-2">
               Click for more
               <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#E4B58D]/60 bg-[#D8A77F]/15 text-[#F2C49D] transition-all duration-200 group-hover:translate-x-1 group-hover:border-[#F2C49D] group-hover:bg-[#D8A77F]/25">
