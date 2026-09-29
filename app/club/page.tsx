@@ -163,12 +163,12 @@ export default function ClubPage() {
               <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#e4ddd4] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:mt-10 lg:max-w-[38rem] lg:text-[1.16rem] lg:leading-9 lg:text-[#ddd8d1]">
                 <p>
                   The digital revolution is powering civilizational change. If
-                  you&apos;ve come this far, chances are you know that. We also
-                  know people engage at different levels. We don&apos;t have a
+                  you’ve come this far, chances are you know the stakes are high.
+                  People engage with our work at different levels. There’s no
                   paywall for daily articles. But the Club requests a small fee
-                  from those committed to the deepest level of understanding,
-                  and who want to help make a difference. Your support matters.
-                  Sign up today.
+                  from those committed to the deepest level of understanding and
+                  who want to help make a difference. Your support matters. Sign
+                  up today.
                 </p>
               </div>
             </div>
@@ -234,7 +234,7 @@ export default function ClubPage() {
                 <li>Intelligence Alerts</li>
                 <li>Revolution Rewired podcast</li>
                 <li>Comment on articles and submit ideas</li>
-                <li>Cancel any time</li>
+                <li>Cancel renewal at any time</li>
               </ul>
 
               <div className="mt-auto">
@@ -278,7 +278,7 @@ export default function ClubPage() {
                 <li>Everything in monthly</li>
                 <li>Save $10 compared with twelve monthly payments</li>
                 <li>Support The Commentator for the year ahead</li>
-                <li>Cancel any time</li>
+                <li>Cancel renewal at any time</li>
               </ul>
 
               <div className="mt-auto">
