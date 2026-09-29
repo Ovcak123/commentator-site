@@ -162,14 +162,13 @@ export default function ClubPage() {
 
               <div className="mt-6 max-w-2xl space-y-5 text-[1.02rem] leading-8 text-[#e4ddd4] sm:mt-8 sm:text-[1.12rem] sm:leading-9 lg:mt-10 lg:max-w-[38rem] lg:text-[1.16rem] lg:leading-9 lg:text-[#ddd8d1]">
                 <p>
-                  The digital revolution is powering civilizational change. We
-                  at The Commentator know that. If you&apos;ve come this far,
-                  chances are you know it too. We also know people engage at
-                  different levels. We don&apos;t have a paywall for our daily
-                  articles. But The Commentator Club requests a small fee from
-                  those committed to the deepest level of understanding, and
-                  who want to make a difference. We also need your support. If
-                  you like what we do, sign up below.
+                  The digital revolution is powering civilizational change. If
+                  you&apos;ve come this far, chances are you know that. We also
+                  know people engage at different levels. We don&apos;t have a
+                  paywall for daily articles. But the Club requests a small fee
+                  from those committed to the deepest level of understanding,
+                  and who want to help make a difference. Your support matters.
+                  Sign up today.
                 </p>
               </div>
             </div>
@@ -191,15 +190,14 @@ export default function ClubPage() {
         id="join"
         className="bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.08),transparent_24%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.08),transparent_20%),linear-gradient(to_bottom,#08131c_0%,#08121b_46%,#08121a_100%)] md:bg-[radial-gradient(circle_at_50%_100%,rgba(174,34,24,0.07),transparent_24%),radial-gradient(circle_at_22%_12%,rgba(184,148,115,0.07),transparent_18%),linear-gradient(to_bottom,#08131c_0%,#08121b_48%,#08121a_100%)]"
       >
-        <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 md:px-8 md:py-12">
-          <div className="mb-10 max-w-3xl">
+        <div className="mx-auto max-w-7xl px-5 pb-6 pt-8 sm:px-6 md:px-8 md:pb-8 md:pt-10">
+          <div className="mb-8 max-w-3xl">
             <h2 className="text-[2.3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#f7f1e8] sm:text-[2.9rem] lg:text-[3.9rem]">
-              Join for the price of a cup of coffee and stay in the room.
+              Join for the price of a coffee.
             </h2>
 
             <p className="mt-4 text-[1.1rem] leading-8 text-[#d7d1c8] sm:mt-5 sm:text-xl lg:text-2xl">
-              Try the Club free for one month. Then $5 a month or $50 a year at
-              the introductory membership rate.
+              Try it free for a month at our introductory rate.
             </p>
           </div>
 
@@ -302,11 +300,6 @@ export default function ClubPage() {
 
             <PaymentMethodsRow />
           </div>
-
-          <p className="mx-auto mt-10 max-w-2xl text-center text-[1.02rem] leading-7 text-[#cbd2d8] sm:text-lg">
-            Just want the news? Register free for weekday Daily Updates.
-            Ordinary articles are open to everyone.
-          </p>
         </div>
       </section>
 
@@ -314,7 +307,7 @@ export default function ClubPage() {
         id="benefits"
         className="bg-[radial-gradient(circle_at_18%_0%,rgba(184,148,115,0.05),transparent_16%),radial-gradient(circle_at_82%_18%,rgba(70,112,156,0.04),transparent_20%),linear-gradient(to_bottom,#08121a_0%,#071119_48%,#071019_100%)] md:bg-[radial-gradient(circle_at_18%_0%,rgba(184,148,115,0.045),transparent_15%),radial-gradient(circle_at_82%_18%,rgba(70,112,156,0.035),transparent_20%),linear-gradient(to_bottom,#08121a_0%,#071119_48%,#071019_100%)]"
       >
-        <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl px-5 pb-12 pt-8 sm:px-6 md:px-8 md:pb-18 md:pt-10">
           <div className="mb-10">
             <h2 className="text-[2.35rem] font-semibold tracking-[-0.02em] text-[#f7f1e8] sm:text-[3rem] lg:text-[4rem]">
               Membership Benefits
@@ -341,8 +334,8 @@ export default function ClubPage() {
               </h3>
               <p className="mt-4 text-[1.02rem] leading-8 text-[#d3d7dc] sm:text-lg">
                 Timely alerts on significant and potentially market-moving
-                developments, backed by evidence and sent only when there is
-                something important to know.
+                developments. Sent only when there is something important to
+                know.
               </p>
             </div>
 
