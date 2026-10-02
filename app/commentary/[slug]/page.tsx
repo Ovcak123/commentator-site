@@ -1536,22 +1536,27 @@ const heroCredit =
               )}
             </section>
 
-                                    {authorFooter.length > 0 ? (
+                                                {authorFooter.length > 0 ? (
               <section className="not-prose mt-12">
-                <PortableText
-                  value={authorFooter}
-                  components={authorFooterComponents}
-                />
+                {authorSlug ? (
+                  <Link
+                    href={`/authors/${authorSlug}`}
+                    aria-label={`Read ${authorName || "the author"}'s full biography`}
+                    className="block no-underline [&_p]:transition-colors hover:[&_p]:text-[#E6B089]"
+                  >
+                    <PortableText
+                      value={authorFooter}
+                      components={authorFooterComponents}
+                    />
+                  </Link>
+                ) : (
+                  <PortableText
+                    value={authorFooter}
+                    components={authorFooterComponents}
+                  />
+                )}
               </section>
             ) : null}
-
-            {/* DIVIDER BELOW AUTHOR FOOTER */}
-            <div className="mt-10 border-t border-white/10" />
-
-            {/* MOBILE SHARE (BOTTOM) — end of article */}
-            <div className="mt-10 flex justify-end lg:hidden">
-              <MobileShare title={typedPost.title} />
-            </div>
 
             {/* DESKTOP SHARE (BOTTOM) — end of article (bottom-right, like mobile) */}
             <div className="mt-10 hidden justify-end lg:flex">

@@ -1456,10 +1456,23 @@ const authorFooter = Array.isArray(referencedAuthor?.authorFooter)
 {authorFooter.length > 0 ? (
   <>
     <section className="not-prose mt-12">
-      <PortableText
-        value={authorFooter}
-        components={authorFooterComponents}
-      />
+      {authorSlug ? (
+        <Link
+          href={`/authors/${authorSlug}`}
+          aria-label={`Read ${authorName || "the author"}'s full biography`}
+          className="block no-underline [&_p]:transition-colors hover:[&_p]:text-[#E6B089]"
+        >
+          <PortableText
+            value={authorFooter}
+            components={authorFooterComponents}
+          />
+        </Link>
+      ) : (
+        <PortableText
+          value={authorFooter}
+          components={authorFooterComponents}
+        />
+      )}
     </section>
 
     <div className="mt-10 border-t border-white/10" />
