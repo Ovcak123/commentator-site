@@ -248,7 +248,10 @@ const commentaryHomeQuery = `
     _id,
     title,
     excerpt,
-    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    "author": select(
+  count(authors) > 0 => array::join(authors[]->name, ", "),
+  coalesce(author->name, author.name, author->title, author.title, author)
+),
     publishedAt,
     readTimeMinutes,
     "slug": slug.current,
@@ -265,7 +268,10 @@ const explicitLeadQuery = `
     _type,
     title,
     excerpt,
-    "author": coalesce(author, author->name, author.name, author->title, author.title),
+    "author": select(
+  count(authors) > 0 => array::join(authors[]->name, ", "),
+  coalesce(author->name, author.name, author->title, author.title, author)
+),
     source,
     readTimeMinutes,
     "slug": slug.current,
